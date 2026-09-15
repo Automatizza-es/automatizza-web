@@ -158,6 +158,7 @@
 
 @layer components {
   .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid color-mix(in oklab, var(--border) 82%, transparent); background: color-mix(in oklab, var(--background) 94%, transparent); backdrop-filter: blur(16px); }
+  .logo-plate { display: inline-flex; align-items: center; background: var(--background); padding: .45rem .75rem; }
   .nav-link { color: var(--muted-foreground); font-size: .82rem; font-weight: 500; transition: color 180ms ease; }
   .nav-link:hover { color: var(--primary); }
   .section { padding-block: 6rem; }
@@ -267,7 +268,7 @@
 }
 
 @media (min-width: 640px) {
-  @utility page-shell { width: min(100% - 3rem, 1180px); }
+  .page-shell { width: min(100% - 3rem, 1180px); }
   .section { padding-block: 7rem; }
   .service-row { grid-template-columns: 2.5rem 3.5rem minmax(180px,.65fr) minmax(260px,1fr); align-items: center; gap: 1.5rem; }
   .calculator-grid { grid-template-columns: 1.15fr .85fr; }

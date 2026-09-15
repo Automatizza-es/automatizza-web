@@ -1,6 +1,10 @@
 # Roadmap
 
-- [ ] Construir la HOME corporativa completa de Automatizza.
-- [ ] Usar el logo oficial sin recrearlo y dejar pendiente el favicon oficial.
-- [ ] Crear solo una previsualización visual, sin lógica ni página `/calculadora`.
-- [ ] Validar la HOME en escritorio, tableta y móvil.
+- [x] Construir la HOME corporativa completa de Automatizza.
+- [x] Usar el logo oficial sin recrearlo y dejar pendiente el favicon oficial.
+- [x] Crear solo una previsualización visual, sin lógica ni página `/calculadora`.
+- [x] Validar la HOME en escritorio, tableta y móvil.
+
+## Pendiente (bloqueado por el usuario)
+- [ ] Favicon: pendiente del icono oficial de Automatizza que proporcionará la usuaria.
+- [ ] Calculadora real en `/calculadora`: se construirá más adelante.
