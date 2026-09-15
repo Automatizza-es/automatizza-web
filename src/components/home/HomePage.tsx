@@ -8,7 +8,6 @@ import {
   Menu,
   Minus,
   Phone,
-  Plus,
   Workflow,
   X,
 } from "lucide-react";
@@ -65,13 +64,9 @@ const phases = [
 ];
 
 function Logo({ inverse = false }: { inverse?: boolean }) {
-  return (
-    <img
-      src={logoAsset.url}
-      alt="Automatizza"
-      className={inverse ? "h-7 w-auto brightness-0 invert" : "h-7 w-auto"}
-    />
-  );
+  const image = <img src={logoAsset.url} alt="Automatizza" className="h-7 w-auto" />;
+  if (!inverse) return image;
+  return <span className="logo-plate">{image}</span>;
 }
 
 function SectionLabel({ number, children }: { number: string; children: string }) {
