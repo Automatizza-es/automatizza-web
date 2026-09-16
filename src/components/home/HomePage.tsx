@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   BarChart3,
@@ -108,7 +108,7 @@ function Header() {
             ))}
           </ul>
         </nav>
-        <Button asChild className="hidden h-11 rounded-sm px-5 shadow-none lg:inline-flex">
+        <Button asChild className="group hidden h-11 rounded-sm px-5 shadow-none lg:inline-flex">
           <a href="#contacto">Hablemos <ArrowRight /></a>
         </Button>
         <Button
@@ -196,10 +196,10 @@ function Hero() {
           <h1>Menos tareas repetitivas.<br /><span>Más tiempo para hacer crecer tu empresa.</span></h1>
           <p>Desarrollamos aplicaciones y automatizaciones adaptadas a tu forma de trabajar, incorporando inteligencia artificial cuando aporta valor. Desde una necesidad concreta hasta sistemas que conectan distintas áreas de tu empresa.</p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg" className="h-12 rounded-sm px-6 shadow-none">
+            <Button asChild size="lg" className="group h-12 rounded-sm px-6 shadow-none">
               <a href="#contacto">Hablemos de tu proyecto <ArrowRight /></a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="h-12 rounded-sm border-primary/20 px-6 shadow-none">
+            <Button asChild variant="outline" size="lg" className="group h-12 rounded-sm border-primary/20 px-6 shadow-none">
               <a href="#proyectos">Ver proyectos reales</a>
             </Button>
           </div>
@@ -372,7 +372,7 @@ function ContactSection() {
     <section className="contact-section" id="contacto">
       <div className="page-shell contact-layout">
         <div><SectionLabel number="08">Empecemos por el problema</SectionLabel><h2>¿Hay algún proceso de tu empresa que sabes que podría funcionar mejor?</h2></div>
-        <div><p>Cuéntanos cómo trabajáis ahora. Empezaremos por entender el problema.</p><Button asChild variant="secondary" size="lg" className="mt-8 h-12 rounded-sm px-6 shadow-none"><a href="mailto:info@automatizza.es">Hablemos de tu proyecto <ArrowRight /></a></Button><a className="contact-email" href="mailto:info@automatizza.es">info@automatizza.es</a></div>
+         <div><p>Cuéntanos cómo trabajáis ahora. Empezaremos por entender el problema.</p><Button asChild variant="secondary" size="lg" className="group mt-8 h-12 rounded-sm px-6 shadow-none"><a href="mailto:info@automatizza.es">Hablemos de tu proyecto <ArrowRight /></a></Button><a className="contact-email" href="mailto:info@automatizza.es">info@automatizza.es</a></div>
       </div>
     </section>
   );
@@ -389,6 +389,74 @@ function Footer() {
   );
 }
 
+function useEditorialMotion() {
+  useEffect(() => {
+    const root = document.documentElement;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mobile = window.matchMedia("(max-width: 639px)").matches;
+
+    if (reducedMotion) return;
+
+    root.classList.add("motion-ready");
+
+    const revealSelectors = [
+      ".section > .page-shell > .section-label",
+      ".editorial-heading",
+      ".problem-statement",
+      ".principle-note",
+      ".featured-copy",
+      ".silos-visual",
+      ".secondary-project",
+      ".calculator-layout > div:first-child",
+      ".calculator-preview",
+      ".about-layout > div",
+      ".contact-layout > div",
+    ];
+    const staggerSelectors = [".problem-list", ".service-list", ".phase-track"];
+    const revealItems = Array.from(document.querySelectorAll<HTMLElement>(revealSelectors.join(",")));
+    const staggerGroups = Array.from(document.querySelectorAll<HTMLElement>(staggerSelectors.join(",")));
+
+    revealItems.forEach((element, index) => {
+      element.classList.add("motion-reveal");
+      element.style.setProperty("--reveal-distance", index % 3 === 0 ? "18px" : "12px");
+    });
+
+    staggerGroups.forEach((group) => {
+      group.classList.add("motion-group");
+      Array.from(group.children).forEach((child, index) => {
+        if (!(child instanceof HTMLElement)) return;
+        child.classList.add("motion-item");
+        child.style.setProperty("--motion-delay", `${Math.min(index * (mobile ? 45 : 70), 280)}ms`);
+      });
+    });
+
+    const observed = [...revealItems, ...staggerGroups];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: mobile ? "0px 0px -4%" : "0px 0px -10%", threshold: 0.08 },
+    );
+
+    observed.forEach((element) => observer.observe(element));
+    const hero = document.querySelector<HTMLElement>(".hero-section");
+    const frame = window.requestAnimationFrame(() => hero?.classList.add("is-visible"));
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      observer.disconnect();
+      root.classList.remove("motion-ready");
+      revealItems.forEach((element) => element.classList.remove("motion-reveal", "is-visible"));
+      staggerGroups.forEach((group) => group.classList.remove("motion-group", "is-visible"));
+    };
+  }, []);
+}
+
 export function HomePage() {
+  useEditorialMotion();
   return <><Header /><main><Hero /><ProblemSection /><ServicesSection /><ProjectsSection /><ProcessSection /><CalculatorSection /><AboutSection /><ContactSection /></main><Footer /></>;
 }
