@@ -170,6 +170,8 @@
   .text-link { transition: color 220ms ease; }
   .text-link svg { width: 1rem; transition: transform 240ms ease; }
   .text-link:hover svg { transform: translateX(4px); }
+  .group > svg { transition: transform 240ms ease; }
+  .group:hover > svg { transform: translateX(3px); }
 
   .hero-section { position: relative; overflow: hidden; background: var(--background); padding-top: 5.25rem; }
   .hero-copy { max-width: 1040px; }

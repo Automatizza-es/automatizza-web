@@ -108,7 +108,7 @@ function Header() {
             ))}
           </ul>
         </nav>
-        <Button asChild className="hidden h-11 rounded-sm px-5 shadow-none lg:inline-flex">
+        <Button asChild className="group hidden h-11 rounded-sm px-5 shadow-none lg:inline-flex">
           <a href="#contacto">Hablemos <ArrowRight /></a>
         </Button>
         <Button
@@ -196,10 +196,10 @@ function Hero() {
           <h1>Menos tareas repetitivas.<br /><span>Más tiempo para hacer crecer tu empresa.</span></h1>
           <p>Desarrollamos aplicaciones y automatizaciones adaptadas a tu forma de trabajar, incorporando inteligencia artificial cuando aporta valor. Desde una necesidad concreta hasta sistemas que conectan distintas áreas de tu empresa.</p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg" className="h-12 rounded-sm px-6 shadow-none">
+            <Button asChild size="lg" className="group h-12 rounded-sm px-6 shadow-none">
               <a href="#contacto">Hablemos de tu proyecto <ArrowRight /></a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="h-12 rounded-sm border-primary/20 px-6 shadow-none">
+            <Button asChild variant="outline" size="lg" className="group h-12 rounded-sm border-primary/20 px-6 shadow-none">
               <a href="#proyectos">Ver proyectos reales</a>
             </Button>
           </div>
@@ -372,7 +372,7 @@ function ContactSection() {
     <section className="contact-section" id="contacto">
       <div className="page-shell contact-layout">
         <div><SectionLabel number="08">Empecemos por el problema</SectionLabel><h2>¿Hay algún proceso de tu empresa que sabes que podría funcionar mejor?</h2></div>
-        <div><p>Cuéntanos cómo trabajáis ahora. Empezaremos por entender el problema.</p><Button asChild variant="secondary" size="lg" className="mt-8 h-12 rounded-sm px-6 shadow-none"><a href="mailto:info@automatizza.es">Hablemos de tu proyecto <ArrowRight /></a></Button><a className="contact-email" href="mailto:info@automatizza.es">info@automatizza.es</a></div>
+         <div><p>Cuéntanos cómo trabajáis ahora. Empezaremos por entender el problema.</p><Button asChild variant="secondary" size="lg" className="group mt-8 h-12 rounded-sm px-6 shadow-none"><a href="mailto:info@automatizza.es">Hablemos de tu proyecto <ArrowRight /></a></Button><a className="contact-email" href="mailto:info@automatizza.es">info@automatizza.es</a></div>
       </div>
     </section>
   );
