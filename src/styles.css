@@ -158,7 +158,7 @@
 
 @layer components {
   .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid color-mix(in oklab, var(--border) 82%, transparent); background: color-mix(in oklab, var(--background) 94%, transparent); backdrop-filter: blur(16px); }
-  .logo-plate { display: inline-flex; align-items: center; background: var(--background); padding: .45rem .75rem; }
+  .logo-plate { display: inline-flex; align-items: center; background: var(--background); padding: .85rem 1.1rem; border-radius: .5rem; }
   .nav-link { color: var(--muted-foreground); font-size: .82rem; font-weight: 500; transition: color 220ms ease; }
   .nav-link:hover { color: var(--primary); }
   .section { padding-block: 6rem; }
