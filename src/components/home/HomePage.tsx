@@ -64,7 +64,7 @@ const phases = [
 ];
 
 function Logo({ inverse = false }: { inverse?: boolean }) {
-  const image = <img src={logoAsset.url} alt="Automatizza" className="h-7 w-auto" />;
+  const image = <img src={logoAsset.url} alt="Automatizza" className="h-14 w-auto" />;
   if (!inverse) return image;
   return <span className="logo-plate">{image}</span>;
 }
