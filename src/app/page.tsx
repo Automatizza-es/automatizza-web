@@ -1,16 +1,13 @@
-import Image from "next/image";
+import { HeroSection } from "@/components/home/HeroSection";
+import { Header } from "@/components/layout/Header";
 
 export default function Home() {
   return (
-    <main className="verification-screen">
-      <Image
-        src="/brand/automatizza-logo.png"
-        alt="Automatizza"
-        width={1909}
-        height={280}
-        priority
-      />
-      <p>Automatizza Web — rebuild</p>
-    </main>
+    <>
+      <Header />
+      <main>
+        <HeroSection />
+      </main>
+    </>
   );
 }
