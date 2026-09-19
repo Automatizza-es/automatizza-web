@@ -23,5 +23,8 @@ npm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 
+# Design-only references
+public/reference/referencia-glideapps.png
+
 # TypeScript
 *.tsbuildinfo

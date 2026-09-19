@@ -41,32 +41,50 @@ function ProblemIcon({ name }: { name: string }) {
 }
 
 export function ProblemSection() {
+  const fragmented = [problems[0], problems[2], problems[4]];
+  const manual = [problems[1], problems[3], problems[5]];
+
   return (
     <section className="problem-section" aria-labelledby="problem-title">
       <Container className="problem-layout">
-        <div className="problem-header">
+        <div className="problem-header" data-reveal>
           <p className="problem-eyebrow">EL PUNTO DE PARTIDA</p>
-          <h2 id="problem-title">Hay tareas que no deberían seguir quitándote tiempo.</h2>
+          <h2 id="problem-title">Hay tareas que no deberían seguir quitándote tiempo</h2>
           <p className="problem-description">
             Cuando la información y los procesos crecen sin una estructura común, el trabajo manual
             termina ocupando el lugar de las tareas que realmente hacen avanzar a la empresa.
           </p>
         </div>
 
-        <ol className="problem-list">
-          {problems.map((problem, index) => (
-            <li key={problem.title} className="problem-item">
-              <span className="problem-marker">
-                <span className="problem-number">{String(index + 1).padStart(2, "0")}</span>
-                <span className="problem-icon"><ProblemIcon name={problem.icon} /></span>
-              </span>
-              <span className="problem-heading">
-                <span className="problem-title">{problem.title}</span>
-              </span>
-              <span className="problem-context">{problem.context}</span>
-            </li>
-          ))}
-        </ol>
+        <div className="problem-system" data-reveal aria-label="Situaciones habituales que generan trabajo manual">
+          <div className="problem-family problem-family-fragmented">
+            <header><h3>Información fragmentada</h3></header>
+            <div className="problem-family-items">
+              {fragmented.map((problem) => (
+                <article key={problem.title}>
+                  <span className="problem-icon"><ProblemIcon name={problem.icon} /></span>
+                  <div><strong>{problem.title}</strong><small>{problem.context}</small></div>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="problem-consequence" aria-label="Consecuencia">
+            <span>CONSECUENCIA</span>
+            <strong>Más trabajo manual</strong>
+            <i aria-hidden="true" />
+          </div>
+          <div className="problem-family problem-family-manual">
+            <header><h3>Procesos manuales</h3></header>
+            <div className="problem-family-items">
+              {manual.map((problem) => (
+                <article key={problem.title}>
+                  <span className="problem-icon"><ProblemIcon name={problem.icon} /></span>
+                  <div><strong>{problem.title}</strong><small>{problem.context}</small></div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
       </Container>
     </section>
   );
