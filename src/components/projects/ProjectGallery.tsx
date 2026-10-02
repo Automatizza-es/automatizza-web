@@ -32,6 +32,8 @@ const projects = [
     image: "/reference/la-factory.png",
     alt: "Webapp de La Factory Coworking para la reserva de salas y servicios",
     position: "center top",
+    video: "/videos/la-factory-coworking.mp4",
+    videoType: "video/mp4" as const,
   },
 ];
 
@@ -48,9 +50,11 @@ export function ProjectGallery({ mode = "home", priority = false }: ProjectGalle
           <ProjectMedia
             alt={project.alt}
             image={project.image}
+            video={project.video}
+            videoType={project.videoType}
             imagePosition={project.position}
             priority={priority && index === 0}
-            showAsset={false}
+            showAsset={Boolean(project.video)}
           />
           <div className="project-card-copy">
             <p className="project-client">{project.client}</p>
