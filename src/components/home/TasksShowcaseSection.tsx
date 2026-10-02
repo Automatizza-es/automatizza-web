@@ -5,6 +5,62 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
 
+type FlowIconName = "form" | "crm" | "mail" | "erp" | "chart";
+
+function FlowIcon({ name }: { name: FlowIconName }) {
+  const common = {
+    width: 15,
+    height: 15,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (name === "form") {
+    return (
+      <svg {...common} stroke="#425066">
+        <path d="M6 3.5h8l4 4V20H6V3.5Z" />
+        <path d="M9 12h6M9 16h6" />
+      </svg>
+    );
+  }
+  if (name === "crm") {
+    return (
+      <svg {...common} stroke="#c2660f">
+        <circle cx="8" cy="8" r="2.75" />
+        <circle cx="17" cy="7" r="2" />
+        <circle cx="16" cy="17" r="2.5" />
+        <path d="m10.1 9.4 4.9-1.7M9.3 10.3l5.3 5.1" />
+      </svg>
+    );
+  }
+  if (name === "mail") {
+    return (
+      <svg {...common} stroke="#d1483f">
+        <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
+        <path d="m4.5 7 7.5 6 7.5-6" />
+      </svg>
+    );
+  }
+  if (name === "erp") {
+    return (
+      <svg {...common} stroke="#5b4fc4">
+        <rect x="5" y="3.5" width="14" height="17" rx="1" />
+        <path d="M9 8h6M9 12h6M9 16h3" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common} stroke="#1d8a52">
+      <path d="M4 20V9M11 20V4M18 20v-7" />
+      <path d="M4 20h17" />
+    </svg>
+  );
+}
+
 export function TasksShowcaseSection() {
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -188,19 +244,49 @@ export function TasksShowcaseSection() {
                 <h3>Mover información entre herramientas</h3>
                 <div className="task-card-ui task-card-ui-flow">
                   <div className="task-ui-flow-row">
-                    <span>Formulario</span>
-                    <i aria-hidden="true" />
-                    <span>CRM</span>
+                    <span className="task-ui-chip">
+                      <FlowIcon name="form" />
+                      Formulario
+                    </span>
+                    <span className="task-ui-link" aria-hidden="true">
+                      <i />
+                      <b>Z</b>
+                      <i />
+                    </span>
+                    <span className="task-ui-chip">
+                      <FlowIcon name="crm" />
+                      CRM
+                    </span>
                   </div>
                   <div className="task-ui-flow-row">
-                    <span>Gmail</span>
-                    <i aria-hidden="true" />
-                    <span>ERP</span>
+                    <span className="task-ui-chip">
+                      <FlowIcon name="mail" />
+                      Gmail
+                    </span>
+                    <span className="task-ui-link" aria-hidden="true">
+                      <i />
+                      <b>Z</b>
+                      <i />
+                    </span>
+                    <span className="task-ui-chip">
+                      <FlowIcon name="erp" />
+                      ERP
+                    </span>
                   </div>
                   <div className="task-ui-flow-row">
-                    <span>CRM</span>
-                    <i aria-hidden="true" />
-                    <span>Informe</span>
+                    <span className="task-ui-chip">
+                      <FlowIcon name="crm" />
+                      CRM
+                    </span>
+                    <span className="task-ui-link" aria-hidden="true">
+                      <i />
+                      <b>Z</b>
+                      <i />
+                    </span>
+                    <span className="task-ui-chip">
+                      <FlowIcon name="chart" />
+                      Informe
+                    </span>
                   </div>
                   <p className="task-ui-status">
                     <span aria-hidden="true">✓</span> Sincronizado automáticamente
