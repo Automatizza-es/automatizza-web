@@ -12,6 +12,8 @@ const projects = [
     image: "/images/hero-crm-dashboard.png",
     alt: "Dashboard real de la plataforma empresarial de Silos Spain",
     position: "center top",
+    video: "/videos/silos-spain.mp4",
+    videoType: "video/mp4" as const,
   },
   {
     slug: "apc",
