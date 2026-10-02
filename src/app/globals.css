@@ -934,26 +934,26 @@ a { color: inherit; text-decoration: none; }
 .task-ui-flow-row i::after { content: ""; position: absolute; right: 0; top: 50%; width: 5px; height: 5px; border-radius: 50%; background: var(--color-cyan); transform: translateY(-50%); }
 
 @media (min-width: 900px) {
-  .tasks-stage { --p1: clamp(0, calc((var(--p, 0) - .04) / .3), 1); --p2: clamp(0, calc((var(--p, 0) - .22) / .3), 1); --p3: clamp(0, calc((var(--p, 0) - .42) / .32), 1); --p4: clamp(0, calc((var(--p, 0) - .62) / .34), 1); --shift: calc(var(--p, 0) * -185px); }
+  .tasks-stage { --p1: clamp(0, calc((var(--p, 0) - .04) / .3), 1); --p2: clamp(0, calc((var(--p, 0) - .22) / .3), 1); --p3: clamp(0, calc((var(--p, 0) - .42) / .32), 1); --p4: clamp(0, calc((var(--p, 0) - .62) / .34), 1); --shift: calc(var(--p, 0) * -300px); }
   .tasks-cta { top: calc(64% + var(--p, 0) * 11%); }
   .tasks-cta { opacity: clamp(0, calc((var(--p, 0) - .55) * 3.2), 1); transform: translateX(-50%) translateY(calc((1 - clamp(0, calc((var(--p, 0) - .55) * 3.2), 1)) * 12px)); }
 
   /* the title recedes as the cards start landing, so it doesn't fight them for attention */
   .tasks-headline-text { opacity: calc(1 - var(--p, 0) * .72); }
 
-  .task-card-data { top: 13%; left: 18%; width: min(230px, 28%); --rot: -4deg; }
-  .task-card-docs { top: 2%; left: 40%; width: min(250px, 28%); --rot: 3deg; }
-  .task-card-followup { top: 23%; left: 60%; width: min(235px, 28%); --rot: -2.5deg; }
-  .task-card-flow { top: 7%; left: 76%; width: min(300px, 28%); --rot: 2deg; }
+  .task-card-data { top: 13%; left: 32%; width: min(230px, 28%); --rot: -4deg; }
+  .task-card-docs { top: 2%; left: 52%; width: min(250px, 28%); --rot: 3deg; }
+  .task-card-followup { top: 23%; left: 70%; width: min(235px, 28%); --rot: -2.5deg; }
+  .task-card-flow { top: 7%; left: 86%; width: min(300px, 28%); --rot: 2deg; }
 
   /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
      rules shared with the mobile fallback (same elements reuse data-reveal on <900px).
      Each card slides in from the right into its slot, then the shared --shift keeps
      panning the whole group left as later cards arrive — a "push" effect. */
-  .task-card-data[data-reveal] { opacity: var(--p1, 0) !important; transform: translate3d(calc((1 - var(--p1, 0)) * 170px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p1, 0)) * 11deg)) scale(calc(.92 + var(--p1, 0) * .08)) !important; }
-  .task-card-docs[data-reveal] { opacity: var(--p2, 0) !important; transform: translate3d(calc((1 - var(--p2, 0)) * 170px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p2, 0)) * 11deg)) scale(calc(.92 + var(--p2, 0) * .08)) !important; }
-  .task-card-followup[data-reveal] { opacity: var(--p3, 0) !important; transform: translate3d(calc((1 - var(--p3, 0)) * 170px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p3, 0)) * 11deg)) scale(calc(.92 + var(--p3, 0) * .08)) !important; }
-  .task-card-flow[data-reveal] { opacity: var(--p4, 0) !important; transform: translate3d(calc((1 - var(--p4, 0)) * 170px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p4, 0)) * 11deg)) scale(calc(.92 + var(--p4, 0) * .08)) !important; }
+  .task-card-data[data-reveal] { opacity: var(--p1, 0) !important; transform: translate3d(calc((1 - var(--p1, 0)) * 280px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p1, 0)) * 11deg)) scale(calc(.92 + var(--p1, 0) * .08)) !important; }
+  .task-card-docs[data-reveal] { opacity: var(--p2, 0) !important; transform: translate3d(calc((1 - var(--p2, 0)) * 280px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p2, 0)) * 11deg)) scale(calc(.92 + var(--p2, 0) * .08)) !important; }
+  .task-card-followup[data-reveal] { opacity: var(--p3, 0) !important; transform: translate3d(calc((1 - var(--p3, 0)) * 280px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p3, 0)) * 11deg)) scale(calc(.92 + var(--p3, 0) * .08)) !important; }
+  .task-card-flow[data-reveal] { opacity: var(--p4, 0) !important; transform: translate3d(calc((1 - var(--p4, 0)) * 280px + var(--shift)), 0, 0) rotate(calc(var(--rot) - (1 - var(--p4, 0)) * 11deg)) scale(calc(.92 + var(--p4, 0) * .08)) !important; }
 }
 
 @media (max-width: 899.98px) {
