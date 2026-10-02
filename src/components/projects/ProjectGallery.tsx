@@ -22,6 +22,8 @@ const projects = [
     image: "/reference/apc.png",
     alt: "Aplicación APC para la gestión operativa de transportistas",
     position: "center top",
+    video: "/videos/apc.mp4",
+    videoType: "video/mp4" as const,
   },
   {
     slug: "la-factory-coworking",
