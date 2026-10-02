@@ -681,13 +681,15 @@ a { color: inherit; text-decoration: none; }
 .project-card { display: flex; min-width: 0; flex-direction: column; }
 .project-card-silos-spain { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: clamp(2rem,4vw,3.5rem); }
 .project-card-silos-spain .project-card-copy { flex: 1; max-width: 400px; padding: 0; }
-.project-card-apc, .project-card-la-factory-coworking { justify-self: center; width: min(100%, 300px); }
+.project-card-apc, .project-card-la-factory-coworking { flex-direction: row; align-items: center; gap: clamp(1.25rem,2.5vw,2rem); }
+.project-card-apc .project-card-copy,
+.project-card-la-factory-coworking .project-card-copy { flex: 1; padding: 0; }
 .project-media { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #e7edf3; }
 .project-media::after { position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.5); content: ""; pointer-events: none; }
 .project-media img, .project-media video { width: 100%; height: 100%; object-fit: cover; background: #e7edf3; animation: project-media-drift 11s ease-in-out infinite alternate; transform-origin: center; }
 .project-card-silos-spain .project-media { flex: 0 0 56%; aspect-ratio: 16 / 9; max-height: 420px; }
 .project-card-apc .project-media,
-.project-card-la-factory-coworking .project-media { aspect-ratio: 9 / 16; }
+.project-card-la-factory-coworking .project-media { flex: 0 0 190px; aspect-ratio: 9 / 16; max-height: 360px; }
 .project-card-silos-spain .project-media img { object-position: center top !important; }
 .project-card-apc .project-media img { object-position: center 18% !important; }
 .project-card-la-factory-coworking .project-media img { object-position: center 12% !important; }
@@ -732,9 +734,15 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) {
   .calculator-shell { grid-template-columns: 1fr; }
   .calculator-image { width: min(100%,760px); margin-left: auto; }
-  .project-card-silos-spain { flex-direction: column; align-items: stretch; gap: 0; }
-  .project-card-silos-spain .project-media { flex: none; max-height: none; }
-  .project-card-silos-spain .project-card-copy { padding: 1.5rem .15rem 0; }
+  .project-card-silos-spain,
+  .project-card-apc,
+  .project-card-la-factory-coworking { flex-direction: column; align-items: stretch; gap: 0; }
+  .project-card-silos-spain .project-media,
+  .project-card-apc .project-media,
+  .project-card-la-factory-coworking .project-media { flex: none; max-height: none; }
+  .project-card-silos-spain .project-card-copy,
+  .project-card-apc .project-card-copy,
+  .project-card-la-factory-coworking .project-card-copy { padding: 1.5rem .15rem 0; }
 }
 
 @media (max-width: 720px) {
