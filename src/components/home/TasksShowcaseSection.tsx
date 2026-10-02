@@ -56,29 +56,24 @@ export function TasksShowcaseSection() {
 
           <Container className="tasks-inner">
             <div className="tasks-headline" data-reveal>
-              <p className="tasks-eyebrow">EL PUNTO DE PARTIDA</p>
-              <h2 id="tasks-title">Hay tareas que no deberían seguir quitándote tiempo</h2>
+              <div className="tasks-headline-text">
+                <p className="tasks-eyebrow">EL PUNTO DE PARTIDA</p>
+                <h2 id="tasks-title">Hay tareas que no deberían seguir quitándote tiempo</h2>
+              </div>
             </div>
 
             <div className="tasks-cta">
-              <div className="tasks-subtext-stack">
-                <p className="tasks-subtext tasks-subtext-start">
-                  Demasiado trabajo manual. Demasiado tiempo perdido.
-                </p>
-                <div className="tasks-subtext tasks-subtext-end">
-                  <p>
-                    Tu equipo decide.
-                    <br />
-                    Automatizza se ocupa del resto.
-                  </p>
-                  <Link className="button button-primary" href="#contacto">
-                    <span>Cuéntanos qué proceso quieres automatizar</span>
-                    <span className="button-arrow" aria-hidden="true">
-                      →
-                    </span>
-                  </Link>
-                </div>
-              </div>
+              <p>
+                Tu equipo decide.
+                <br />
+                Automatizza se ocupa del resto.
+              </p>
+              <Link className="button button-primary" href="#contacto">
+                <span>Cuéntanos qué proceso quieres automatizar</span>
+                <span className="button-arrow" aria-hidden="true">
+                  →
+                </span>
+              </Link>
             </div>
 
             <div className="tasks-cards">
