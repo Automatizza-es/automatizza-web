@@ -3,10 +3,10 @@ import { CalculatorSection } from "@/components/home/CalculatorSection";
 import { ContactSection } from "@/components/home/ContactSection";
 import { EditorialMotion } from "@/components/home/EditorialMotion";
 import { HeroSection } from "@/components/home/HeroSection";
-import { ProblemSection } from "@/components/home/ProblemSection";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { ProjectsSection } from "@/components/home/ProjectsSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
+import { TasksShowcaseSection } from "@/components/home/TasksShowcaseSection";
 import { Header } from "@/components/layout/Header";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
-        <ProblemSection />
+        <TasksShowcaseSection />
         <ServicesSection />
         <ProjectsSection />
         <ProcessSection />
