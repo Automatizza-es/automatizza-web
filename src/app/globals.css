@@ -890,17 +890,19 @@ a { color: inherit; text-decoration: none; }
 .tasks-connector-dot:nth-of-type(3) { opacity: var(--p3, 0); }
 .tasks-connector-dot:nth-of-type(4) { opacity: var(--p4, 0); }
 
-.tasks-inner { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: stretch; height: 100%; padding-block: clamp(2rem, 4vw, 3rem); gap: clamp(2rem, 4vw, 4rem); }
-.tasks-headline { display: flex; flex-direction: column; justify-content: center; transform-origin: left top; }
+.tasks-inner { position: relative; z-index: 2; height: 100%; }
+.tasks-headline { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-inline: clamp(1rem, 8vw, 5rem); text-align: center; pointer-events: none; }
 .tasks-eyebrow { margin: 0 0 1.35rem; color: var(--color-cyan); font-size: .75rem; font-weight: 700; letter-spacing: .16em; line-height: 1.4; }
-.tasks-headline h2 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(2.75rem, 4.2vw, 4rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.08; text-wrap: balance; }
-.tasks-subtext-stack { position: relative; min-height: 148px; margin-top: 1.5rem; }
+.tasks-headline h2 { margin: 0; max-width: 18ch; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(3rem, 6.2vw, 5.5rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.05; text-wrap: balance; }
+
+.tasks-cta { position: absolute; left: 50%; top: 66%; z-index: 3; width: min(90%, 560px); text-align: center; transform: translateX(-50%); }
+.tasks-subtext-stack { position: relative; min-height: 120px; }
 .tasks-subtext-start,
-.tasks-subtext-end { position: absolute; inset: 0 auto auto 0; width: 100%; }
-.tasks-subtext-start { color: #626977; font-size: 1.0625rem; line-height: 1.55; max-width: 420px; }
+.tasks-subtext-end { position: absolute; inset: 0 0 auto; width: 100%; }
+.tasks-subtext-start { color: #626977; font-size: 1.0625rem; line-height: 1.55; }
 .tasks-subtext-end p { margin: 0 0 1.35rem; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.3125rem; font-weight: 650; line-height: 1.32; }
 
-.tasks-cards { position: relative; height: 100%; }
+.tasks-cards { position: absolute; inset: 0; z-index: 2; }
 .task-card { position: absolute; padding: 1.1rem 1.15rem 1.25rem; background: var(--color-white); border: 1px solid #e1e5ec; box-shadow: 0 30px 60px -36px rgba(2, 19, 95, .3); transform-origin: center bottom; }
 .task-card-chrome { display: flex; align-items: center; justify-content: space-between; color: #a7afbe; font-size: .7rem; }
 .task-card-number { font-weight: 700; letter-spacing: .06em; }
@@ -937,34 +939,35 @@ a { color: inherit; text-decoration: none; }
 
 @media (min-width: 900px) {
   .tasks-stage { --p1: clamp(0, calc((var(--p, 0) - .04) / .3), 1); --p2: clamp(0, calc((var(--p, 0) - .22) / .3), 1); --p3: clamp(0, calc((var(--p, 0) - .42) / .32), 1); --p4: clamp(0, calc((var(--p, 0) - .62) / .34), 1); }
-  /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
-     rules shared with the mobile fallback (same elements reuse data-reveal on <900px). */
-  .tasks-headline[data-reveal] { opacity: 1 !important; transform: scale(calc(1 - var(--p, 0) * .22)) !important; }
+  .tasks-cta { top: calc(64% + var(--p, 0) * 11%); }
   .tasks-subtext-start { opacity: clamp(0, calc(1 - var(--p, 0) * 3.2), 1); }
   .tasks-subtext-end { opacity: clamp(0, calc((var(--p, 0) - .58) * 3.2), 1); transform: translateY(calc((1 - clamp(0, calc((var(--p, 0) - .58) * 3.2), 1)) * 12px)); }
 
-  .task-card-data { top: 3%; left: 0%; width: min(230px, 42%); --rot: -3deg; }
-  .task-card-docs { top: 0%; left: 38%; width: min(250px, 44%); --rot: 2.5deg; }
-  .task-card-followup { top: 50%; left: 4%; width: min(235px, 42%); --rot: -1.75deg; }
-  .task-card-flow { top: 46%; left: 46%; width: min(320px, 52%); --rot: 1.5deg; }
+  .task-card-data { top: 13%; left: 1%; width: min(230px, 29%); --rot: -4deg; }
+  .task-card-docs { top: 2%; left: 26%; width: min(250px, 29%); --rot: 3deg; }
+  .task-card-followup { top: 23%; left: 49%; width: min(235px, 29%); --rot: -2.5deg; }
+  .task-card-flow { top: 7%; left: 68%; width: min(320px, 31%); --rot: 2deg; }
 
-  .task-card-data[data-reveal] { opacity: var(--p1, 0) !important; transform: translate3d(0, calc((1 - var(--p1, 0)) * 56px), 0) rotate(calc(var(--rot) - (1 - var(--p1, 0)) * 9deg)) scale(calc(.92 + var(--p1, 0) * .08)) !important; }
-  .task-card-docs[data-reveal] { opacity: var(--p2, 0) !important; transform: translate3d(0, calc((1 - var(--p2, 0)) * 56px), 0) rotate(calc(var(--rot) - (1 - var(--p2, 0)) * 9deg)) scale(calc(.92 + var(--p2, 0) * .08)) !important; }
-  .task-card-followup[data-reveal] { opacity: var(--p3, 0) !important; transform: translate3d(0, calc((1 - var(--p3, 0)) * 56px), 0) rotate(calc(var(--rot) - (1 - var(--p3, 0)) * 9deg)) scale(calc(.92 + var(--p3, 0) * .08)) !important; }
-  .task-card-flow[data-reveal] { opacity: var(--p4, 0) !important; transform: translate3d(0, calc((1 - var(--p4, 0)) * 56px), 0) rotate(calc(var(--rot) - (1 - var(--p4, 0)) * 9deg)) scale(calc(.92 + var(--p4, 0) * .08)) !important; }
+  /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
+     rules shared with the mobile fallback (same elements reuse data-reveal on <900px). */
+  .task-card-data[data-reveal] { opacity: var(--p1, 0) !important; transform: translate3d(calc((1 - var(--p1, 0)) * -170px), 0, 0) rotate(calc(var(--rot) - (1 - var(--p1, 0)) * 11deg)) scale(calc(.92 + var(--p1, 0) * .08)) !important; }
+  .task-card-docs[data-reveal] { opacity: var(--p2, 0) !important; transform: translate3d(calc((1 - var(--p2, 0)) * -170px), 0, 0) rotate(calc(var(--rot) - (1 - var(--p2, 0)) * 11deg)) scale(calc(.92 + var(--p2, 0) * .08)) !important; }
+  .task-card-followup[data-reveal] { opacity: var(--p3, 0) !important; transform: translate3d(calc((1 - var(--p3, 0)) * -170px), 0, 0) rotate(calc(var(--rot) - (1 - var(--p3, 0)) * 11deg)) scale(calc(.92 + var(--p3, 0) * .08)) !important; }
+  .task-card-flow[data-reveal] { opacity: var(--p4, 0) !important; transform: translate3d(calc((1 - var(--p4, 0)) * -170px), 0, 0) rotate(calc(var(--rot) - (1 - var(--p4, 0)) * 11deg)) scale(calc(.92 + var(--p4, 0) * .08)) !important; }
 }
 
 @media (max-width: 899.98px) {
   .tasks-scroller { height: auto; }
   .tasks-stage { position: static; height: auto; padding-block: clamp(4.5rem, 9vw, 6rem) clamp(3rem, 6vw, 4rem); }
-  .tasks-inner { display: block; height: auto; padding-block: 0; }
-  .tasks-headline { text-align: left; }
-  .tasks-headline h2 { font-size: clamp(2.25rem, 8vw, 3rem); }
+  .tasks-inner { height: auto; }
+  .tasks-headline { position: static; inset: auto; display: block; padding-inline: 0; text-align: left; }
+  .tasks-headline h2 { max-width: none; font-size: clamp(2.25rem, 8vw, 3rem); }
+  .tasks-cta { position: static; inset: auto; top: auto; left: auto; width: auto; margin-top: 1.5rem; text-align: left; transform: none; }
   .tasks-subtext-stack { position: static; min-height: 0; }
-  .tasks-subtext-start { position: static; max-width: none; }
+  .tasks-subtext-start { position: static; }
   .tasks-subtext-end { position: static; margin-top: 1.1rem; }
   .tasks-subtext-end p { font-size: 1.1rem; }
-  .tasks-cards { position: static; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
+  .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; }
   .tasks-connector, .tasks-dotgrid { display: none; }
 
@@ -975,13 +978,14 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   .tasks-scroller { height: auto; }
   .tasks-stage { position: static; height: auto; padding-block: clamp(4.5rem, 9vw, 6rem) clamp(3rem, 6vw, 4rem); }
-  .tasks-inner { display: block; height: auto; padding-block: 0; }
-  .tasks-headline { text-align: left; }
-  .tasks-headline[data-reveal] { transform: none !important; }
+  .tasks-inner { height: auto; }
+  .tasks-headline { position: static; inset: auto; display: block; padding-inline: 0; text-align: left; }
+  .tasks-headline h2 { max-width: none; }
+  .tasks-cta { position: static; inset: auto; top: auto; left: auto; width: auto; margin-top: 1.5rem; text-align: left; transform: none; }
   .tasks-subtext-stack { position: static; min-height: 0; }
   .tasks-subtext-start { display: none; }
   .tasks-subtext-end { position: static; opacity: 1; transform: none; margin-top: 1.1rem; }
-  .tasks-cards { position: static; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
+  .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; }
   .task-card[data-reveal] { opacity: 1 !important; transform: none !important; }
   .tasks-connector-path, .tasks-connector-dot { display: none; }

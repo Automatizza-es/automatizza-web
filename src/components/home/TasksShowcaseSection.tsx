@@ -46,11 +46,11 @@ export function TasksShowcaseSection() {
             <span className="tasks-blob tasks-blob-b" />
             <span className="tasks-dotgrid" />
             <svg className="tasks-connector" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
-              <path className="tasks-connector-path" d="M190 150 Q 420 130 600 110 Q 480 360 230 530 Q 520 580 760 490" />
-              <circle className="tasks-connector-dot" cx="190" cy="150" r="5" />
-              <circle className="tasks-connector-dot" cx="600" cy="110" r="5" />
-              <circle className="tasks-connector-dot" cx="230" cy="530" r="5" />
-              <circle className="tasks-connector-dot" cx="760" cy="490" r="5" />
+              <path className="tasks-connector-path" d="M200 330 Q 350 200 500 240 Q 680 300 790 420 Q 900 320 1010 260" />
+              <circle className="tasks-connector-dot" cx="200" cy="330" r="5" />
+              <circle className="tasks-connector-dot" cx="500" cy="240" r="5" />
+              <circle className="tasks-connector-dot" cx="790" cy="420" r="5" />
+              <circle className="tasks-connector-dot" cx="1010" cy="260" r="5" />
             </svg>
           </div>
 
@@ -58,6 +58,9 @@ export function TasksShowcaseSection() {
             <div className="tasks-headline" data-reveal>
               <p className="tasks-eyebrow">EL PUNTO DE PARTIDA</p>
               <h2 id="tasks-title">Hay tareas que no deberían seguir quitándote tiempo</h2>
+            </div>
+
+            <div className="tasks-cta">
               <div className="tasks-subtext-stack">
                 <p className="tasks-subtext tasks-subtext-start">
                   Demasiado trabajo manual. Demasiado tiempo perdido.
