@@ -677,11 +677,16 @@ a { color: inherit; text-decoration: none; }
 
 .projects-section { padding-block: clamp(5.75rem,7vw,7rem); }
 .projects-header { max-width: 1040px; }
-.project-gallery { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1.5rem,2.4vw,2.25rem); margin-top: 4rem; }
+.project-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.5rem,2.4vw,2.25rem); margin-top: 4rem; }
 .project-card { display: flex; min-width: 0; flex-direction: column; }
+.project-card-silos-spain { grid-column: 1 / -1; }
+.project-card-silos-spain .project-card-copy { max-width: 640px; }
 .project-media { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #e7edf3; }
 .project-media::after { position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.5); content: ""; pointer-events: none; }
 .project-media img, .project-media video { width: 100%; height: 100%; object-fit: cover; background: #e7edf3; animation: project-media-drift 11s ease-in-out infinite alternate; transform-origin: center; }
+.project-card-silos-spain .project-media { aspect-ratio: 16 / 9; }
+.project-card-apc .project-media,
+.project-card-la-factory-coworking .project-media { aspect-ratio: 9 / 16; }
 .project-card-silos-spain .project-media img { object-position: center top !important; }
 .project-card-apc .project-media img { object-position: center 18% !important; }
 .project-card-la-factory-coworking .project-media img { object-position: center 12% !important; }
@@ -720,8 +725,6 @@ a { color: inherit; text-decoration: none; }
 .calculator-image img { display: block; width: 100%; height: auto; }
 
 @media (max-width: 1100px) {
-  .project-gallery { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .project-card:last-child { grid-column: 1 / 2; }
   .calculator-shell { grid-template-columns: minmax(0,.68fr) minmax(480px,1.15fr); gap: 3rem; }
 }
 
@@ -733,8 +736,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 720px) {
   .hero-network { opacity: .78; }
   .project-gallery { grid-template-columns: 1fr; gap: 3rem; margin-top: 3rem; }
-  .project-card:last-child { grid-column: auto; }
-  .project-media { aspect-ratio: 4 / 3; }
+  .project-card-silos-spain .project-card-copy { max-width: none; }
   .projects-page-intro { padding-block: 4.75rem 3rem; }
   .projects-page-intro h1 { font-size: clamp(2.75rem,12vw,3.4rem); }
   .projects-all-link { justify-content: flex-start; margin-top: 3rem; }
