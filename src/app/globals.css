@@ -882,13 +882,6 @@ a { color: inherit; text-decoration: none; }
 .tasks-blob-a { top: -14%; right: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(2, 160, 252, .16), transparent 70%); }
 .tasks-blob-b { bottom: -18%; left: -12%; width: 32vw; height: 32vw; background: radial-gradient(circle, rgba(2, 19, 95, .08), transparent 70%); }
 .tasks-dotgrid { position: absolute; top: 10%; right: 8%; width: 170px; height: 170px; background-image: radial-gradient(circle, #c3cedd 1px, transparent 1.6px); background-size: 18px 18px; opacity: .6; }
-.tasks-connector { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.tasks-connector-path { fill: none; stroke: var(--color-cyan); stroke-width: 1.5; stroke-dasharray: 1500; stroke-dashoffset: calc(1500 * (1 - var(--p, 0))); opacity: .5; }
-.tasks-connector-dot { fill: var(--color-cyan); }
-.tasks-connector-dot:nth-of-type(1) { opacity: var(--p1, 0); }
-.tasks-connector-dot:nth-of-type(2) { opacity: var(--p2, 0); }
-.tasks-connector-dot:nth-of-type(3) { opacity: var(--p3, 0); }
-.tasks-connector-dot:nth-of-type(4) { opacity: var(--p4, 0); }
 
 .tasks-inner { position: relative; z-index: 2; height: 100%; }
 .tasks-headline { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-inline: clamp(1rem, 8vw, 5rem); text-align: center; pointer-events: none; }
@@ -936,17 +929,17 @@ a { color: inherit; text-decoration: none; }
 .task-ui-link b { display: flex; flex-shrink: 0; width: 18px; height: 18px; align-items: center; justify-content: center; border-radius: 50%; background: var(--color-navy); color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: .6rem; font-weight: 700; font-style: normal; }
 
 @media (min-width: 900px) {
-  .tasks-stage { --p1: clamp(0, calc((var(--p, 0) - .04) / .3), 1); --p2: clamp(0, calc((var(--p, 0) - .22) / .3), 1); --p3: clamp(0, calc((var(--p, 0) - .42) / .32), 1); --p4: clamp(0, calc((var(--p, 0) - .62) / .34), 1); --shift: calc(var(--p, 0) * -180px); }
+  .tasks-stage { --p1: clamp(0, calc((var(--p, 0) - .04) / .3), 1); --p2: clamp(0, calc((var(--p, 0) - .22) / .3), 1); --p3: clamp(0, calc((var(--p, 0) - .42) / .32), 1); --p4: clamp(0, calc((var(--p, 0) - .62) / .34), 1); --shift: calc(var(--p, 0) * -150px); }
   .tasks-cta { top: calc(64% + var(--p, 0) * 11%); }
   .tasks-cta { opacity: clamp(0, calc((var(--p, 0) - .55) * 3.2), 1); transform: translateX(-50%) translateY(calc((1 - clamp(0, calc((var(--p, 0) - .55) * 3.2), 1)) * 12px)); }
 
   /* the title recedes as the cards start landing, so it doesn't fight them for attention */
   .tasks-headline-text { opacity: calc(1 - var(--p, 0) * .72); }
 
-  .task-card-data { top: 13%; left: 20%; width: min(215px, 26%); --rot: -4deg; }
-  .task-card-docs { top: 0%; left: 42%; width: min(230px, 26%); --rot: 3deg; }
-  .task-card-followup { top: 26%; left: 62%; width: min(215px, 26%); --rot: -2.5deg; }
-  .task-card-flow { top: 10%; left: 80%; width: min(270px, 26%); --rot: 2deg; }
+  .task-card-data { top: 22%; left: 18%; width: min(215px, 26%); --rot: -3deg; }
+  .task-card-docs { top: 22%; left: 40%; width: min(230px, 26%); --rot: 2deg; }
+  .task-card-followup { top: 22%; left: 60%; width: min(215px, 26%); --rot: -2deg; }
+  .task-card-flow { top: 22%; left: 80%; width: min(270px, 26%); --rot: 2.5deg; }
 
   /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
      rules shared with the mobile fallback (same elements reuse data-reveal on <900px).
@@ -968,7 +961,7 @@ a { color: inherit; text-decoration: none; }
   .tasks-cta p { font-size: 1.1rem; }
   .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; }
-  .tasks-connector, .tasks-dotgrid { display: none; }
+  .tasks-dotgrid { display: none; }
 
   .motion-ready .tasks-section [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 520ms ease, transform 540ms cubic-bezier(.22, .7, .25, 1); }
   .motion-ready .tasks-section [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
@@ -984,5 +977,4 @@ a { color: inherit; text-decoration: none; }
   .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; }
   .task-card[data-reveal] { opacity: 1 !important; transform: none !important; }
-  .tasks-connector-path, .tasks-connector-dot { display: none; }
 }
