@@ -892,45 +892,14 @@ a { color: inherit; text-decoration: none; }
 .tasks-cta p { margin: 0 0 1.35rem; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.3125rem; font-weight: 650; line-height: 1.32; }
 
 .tasks-cards { position: absolute; inset: 0; z-index: 2; }
-.task-card { position: absolute; display: flex; flex-direction: column; width: 236px; height: 322px; padding: 1.3rem 1.35rem 1.45rem; background: var(--color-white); border: 1px solid #e1e5ec; box-shadow: 0 46px 80px -30px rgba(2, 19, 95, .38); transform-origin: center bottom; }
-.task-card-chrome { display: flex; align-items: center; justify-content: space-between; color: #a7afbe; font-size: .72rem; }
-.task-card-number { font-weight: 700; letter-spacing: .06em; }
-.task-card-dots { letter-spacing: .12em; }
-.task-card-eyebrow { margin: .9rem 0 0; color: var(--color-cyan); font-size: .72rem; font-weight: 700; letter-spacing: .08em; }
-.task-card h3 { margin: .35rem 0 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.2rem; font-weight: 650; letter-spacing: -.01em; line-height: 1.22; }
-.task-card-ui { display: flex; flex: 1; flex-direction: column; justify-content: center; margin-top: 1rem; }
+.task-card { position: absolute; display: flex; flex-direction: column; transform-origin: center bottom; }
 
-.task-ui-label { margin: 0 0 .85rem; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.05rem; font-weight: 650; }
-.task-card-ui-form dl { display: grid; gap: .55rem; margin: 0; padding: 0; }
-.task-card-ui-form dl > div { display: flex; justify-content: space-between; gap: .5rem; padding-bottom: .45rem; border-bottom: 1px dashed #e6e9ef; font-size: .85rem; }
-.task-card-ui-form dt { margin: 0; color: #8a93a6; font-weight: 500; }
-.task-card-ui-form dd { margin: 0; color: var(--color-navy); font-weight: 600; text-align: right; }
-
-.task-ui-doc-head { display: flex; align-items: center; justify-content: space-between; padding: .7rem .8rem; background: #f6f8fb; border: 1px solid #e6e9ef; font-size: .88rem; font-weight: 650; color: var(--color-navy); }
-.task-ui-tag { padding: .18rem .45rem; background: #ffe3df; color: #c0392b; font-size: .65rem; font-weight: 700; letter-spacing: .04em; }
-.task-card-ui-doc ul { display: grid; gap: .55rem; margin: .8rem 0 0; padding: 0; list-style: none; }
-.task-card-ui-doc li { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: #4c5363; }
-.task-card-ui-doc li span { display: inline-flex; flex-shrink: 0; width: 15px; height: 15px; align-items: center; justify-content: center; border-radius: 50%; background: #eafbf1; color: #1d8a52; font-size: .62rem; }
-
-.task-card-ui-timeline ul { display: grid; gap: .75rem; margin: 0; padding: 0 0 0 1rem; list-style: none; border-left: 2px solid #e6e9ef; }
-.task-card-ui-timeline li { position: relative; font-size: .85rem; color: #4c5363; }
-.task-card-ui-timeline li::before { content: ""; position: absolute; left: -1.28rem; top: .35rem; width: 9px; height: 9px; border-radius: 50%; background: var(--color-cyan); }
-.task-card-ui-timeline time { display: block; margin-bottom: .15rem; color: #8a93a6; font-size: .72rem; font-weight: 600; }
-
-.task-card-ui-flow { display: grid; gap: .75rem; }
-.task-ui-flow-row { display: flex; align-items: center; gap: .45rem; }
-.task-ui-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .6rem; background: #f6f8fb; border: 1px solid #e6e9ef; font-size: .78rem; font-weight: 600; color: var(--color-navy); white-space: nowrap; }
-.task-ui-chip svg { flex-shrink: 0; width: 16px; height: 16px; }
-.task-ui-link { display: flex; flex: 1; align-items: center; gap: .3rem; min-width: 1.25rem; }
-.task-ui-link i { flex: 1; height: 1px; background: repeating-linear-gradient(to right, var(--color-cyan) 0 4px, transparent 4px 8px); }
-.task-ui-link b { display: flex; flex-shrink: 0; width: 20px; height: 20px; align-items: center; justify-content: center; border-radius: 50%; background: var(--color-navy); color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: .65rem; font-weight: 700; font-style: normal; }
-
-/* Card v2 — premium, illustrative redesign (rolling out one card at a time) */
-.task-card-v2 { width: 270px; height: 400px; padding: 1.85rem 1.7rem 2rem; background: linear-gradient(175deg, #ffffff, #f4f8ff); border: 1px solid #e9edf6; border-radius: 28px; box-shadow: 0 54px 90px -42px rgba(2, 19, 95, .36), 0 12px 28px -18px rgba(2, 19, 95, .12); }
+/* Card v2 — premium, illustrative redesign (all four cards) */
+.task-card-v2 { width: 250px; height: 390px; padding: 1.85rem 1.6rem 2rem; background: linear-gradient(175deg, #ffffff, #f4f8ff); border: 1px solid #e9edf6; border-radius: 28px; box-shadow: 0 54px 90px -42px rgba(2, 19, 95, .36), 0 12px 28px -18px rgba(2, 19, 95, .12); }
 .task-v2-number { display: inline-flex; align-self: flex-start; padding: .32rem .7rem; border-radius: 8px; background: #eef1f8; color: #8a93a6; font-size: .7rem; font-weight: 700; letter-spacing: .05em; }
 .task-v2-title { margin: 1rem 0 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.65rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.14; }
 .task-v2-subtitle { margin: .6rem 0 0; overflow: hidden; color: #70778a; font-size: .95rem; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
-.task-v2-visual, .task-v2-tl { position: relative; flex: 1; margin-top: 1.5rem; }
+.task-v2-visual, .task-v2-tl, .task-v2-connect { position: relative; flex: 1; margin-top: 1.5rem; }
 
 .task-v2-form { position: absolute; left: 50%; top: 50%; width: 196px; padding: 1.05rem 1.15rem 1.2rem; background: var(--color-white); border: 1px solid #e9edf4; border-radius: 18px; box-shadow: 0 26px 54px -22px rgba(2, 19, 95, .3); transform: translate(-50%, -50%) rotate(-3deg); }
 .task-v2-form-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .9rem; }
@@ -970,18 +939,23 @@ a { color: inherit; text-decoration: none; }
 .task-v2-tl-card strong { display: block; color: var(--color-navy); font-size: .8rem; font-weight: 650; }
 .task-v2-tl-card small { display: block; margin-top: .15rem; color: #9aa2b1; font-size: .68rem; }
 
+.task-v2-connect { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 1.5rem; }
+.task-v2-tile { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; padding: .7rem .4rem; background: var(--color-white); border: 1px solid #e9edf4; border-radius: 16px; box-shadow: 0 16px 30px -18px rgba(2, 19, 95, .25); text-align: center; }
+.task-v2-tile small { color: #626977; font-size: .66rem; font-weight: 600; line-height: 1.2; }
+.task-v2-hub { position: absolute; left: 50%; top: 50%; z-index: 2; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, var(--color-navy), #16308f); box-shadow: 0 18px 34px -14px rgba(2, 19, 95, .5); color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: 1.05rem; font-weight: 700; transform: translate(-50%, -50%); }
+
 @media (min-width: 900px) {
-  .tasks-stage { --shift: calc(var(--p, 0) * -70px); }
+  .tasks-stage { --shift: calc(var(--p, 0) * -40px); }
   .tasks-cta { top: calc(64% + var(--p, 0) * 11%); }
   .tasks-cta { opacity: clamp(0, calc((var(--p, 0) - .55) * 3.2), 1); transform: translateX(-50%) translateY(calc((1 - clamp(0, calc((var(--p, 0) - .55) * 3.2), 1)) * 12px)); }
 
   /* the title recedes as the cards start landing, so it doesn't fight them for attention */
   .tasks-headline-text { opacity: calc(1 - var(--p, 0) * .72); }
 
-  .task-card-data { top: 18%; left: 13%; --rot: -1.5deg; }
-  .task-card-docs { top: 18%; left: 33%; --rot: 1deg; }
-  .task-card-followup { top: 18%; left: 56%; --rot: -1deg; }
-  .task-card-flow { top: 18%; left: 78%; --rot: 1.5deg; }
+  .task-card-data { top: 18%; left: 5%; --rot: -1.5deg; }
+  .task-card-docs { top: 18%; left: 28%; --rot: 1deg; }
+  .task-card-followup { top: 18%; left: 51%; --rot: -1deg; }
+  .task-card-flow { top: 18%; left: 73%; --rot: 1.5deg; }
 
   /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
      rules shared with the mobile fallback (same elements reuse data-reveal on <900px).
@@ -1005,7 +979,7 @@ a { color: inherit; text-decoration: none; }
   .tasks-cta p { font-size: 1.1rem; }
   .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; height: auto; }
-  .task-v2-visual, .task-v2-tl { flex: none; height: 230px; }
+  .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 230px; }
   .tasks-dotgrid { display: none; }
 
   .motion-ready .tasks-section [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 520ms ease, transform 540ms cubic-bezier(.22, .7, .25, 1); }
@@ -1022,5 +996,5 @@ a { color: inherit; text-decoration: none; }
   .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; height: auto; }
   .task-card[data-reveal] { opacity: 1 !important; transform: none !important; }
-  .task-v2-visual, .task-v2-tl { flex: none; height: 230px; }
+  .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 230px; }
 }

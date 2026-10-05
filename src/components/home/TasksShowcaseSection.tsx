@@ -5,62 +5,6 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
 
-type FlowIconName = "form" | "crm" | "mail" | "erp" | "chart";
-
-function FlowIcon({ name }: { name: FlowIconName }) {
-  const common = {
-    width: 15,
-    height: 15,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    strokeWidth: 1.8,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    "aria-hidden": true,
-  };
-
-  if (name === "form") {
-    return (
-      <svg {...common} stroke="#425066">
-        <path d="M6 3.5h8l4 4V20H6V3.5Z" />
-        <path d="M9 12h6M9 16h6" />
-      </svg>
-    );
-  }
-  if (name === "crm") {
-    return (
-      <svg {...common} stroke="#c2660f">
-        <circle cx="8" cy="8" r="2.75" />
-        <circle cx="17" cy="7" r="2" />
-        <circle cx="16" cy="17" r="2.5" />
-        <path d="m10.1 9.4 4.9-1.7M9.3 10.3l5.3 5.1" />
-      </svg>
-    );
-  }
-  if (name === "mail") {
-    return (
-      <svg {...common} stroke="#d1483f">
-        <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
-        <path d="m4.5 7 7.5 6 7.5-6" />
-      </svg>
-    );
-  }
-  if (name === "erp") {
-    return (
-      <svg {...common} stroke="#5b4fc4">
-        <rect x="5" y="3.5" width="14" height="17" rx="1" />
-        <path d="M9 8h6M9 12h6M9 16h3" />
-      </svg>
-    );
-  }
-  return (
-    <svg {...common} stroke="#1d8a52">
-      <path d="M4 20V9M11 20V4M18 20v-7" />
-      <path d="M4 20h17" />
-    </svg>
-  );
-}
-
 function MailGlyph() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -116,6 +60,56 @@ function CheckGlyph({ color = "#fff" }: { color?: string }) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="m5 12.5 4.5 4.5L19 7" />
+    </svg>
+  );
+}
+
+type TileIconName = "form" | "mail" | "crm" | "invoice";
+
+function TileIcon({ name }: { name: TileIconName }) {
+  const common = {
+    width: 26,
+    height: 26,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "#02a0fc",
+    strokeWidth: 1.7,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (name === "form") {
+    return (
+      <svg {...common}>
+        <path d="M6 3.5h8l4 4V20H6V3.5Z" />
+        <path d="M14 3.5V8h4M9 12h6M9 15.5h6" />
+      </svg>
+    );
+  }
+  if (name === "mail") {
+    return (
+      <svg {...common}>
+        <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
+        <path d="m4.5 7 7.5 6 7.5-6" />
+      </svg>
+    );
+  }
+  if (name === "crm") {
+    return (
+      <svg {...common}>
+        <ellipse cx="12" cy="6" rx="7" ry="2.5" />
+        <path d="M5 6v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6" />
+        <path d="M5 12v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <path d="M6 3.5h8l4 4V20H6V3.5Z" />
+      <path d="M9 11.5h6M9 15h4" />
+      <circle cx="15.5" cy="16.5" r="3" />
+      <path d="m17.6 18.6 1.4 1.4" />
     </svg>
   );
 }
@@ -303,61 +297,32 @@ export function TasksShowcaseSection() {
                 </div>
               </article>
 
-              <article className="task-card task-card-flow" data-reveal>
-                <div className="task-card-chrome">
-                  <span className="task-card-number">04</span>
-                  <span className="task-card-dots" aria-hidden="true">
-                    •••
-                  </span>
-                </div>
-                <p className="task-card-eyebrow">DE HERRAMIENTAS AISLADAS A UN SOLO FLUJO</p>
-                <h3>Mover información entre herramientas</h3>
-                <div className="task-card-ui task-card-ui-flow">
-                  <div className="task-ui-flow-row">
-                    <span className="task-ui-chip">
-                      <FlowIcon name="form" />
-                      Formulario
-                    </span>
-                    <span className="task-ui-link" aria-hidden="true">
-                      <i />
-                      <b>Z</b>
-                      <i />
-                    </span>
-                    <span className="task-ui-chip">
-                      <FlowIcon name="crm" />
-                      CRM
-                    </span>
+              <article className="task-card task-card-flow task-card-v2" data-reveal>
+                <span className="task-v2-number">04</span>
+                <h3 className="task-v2-title">
+                  Datos
+                  <br />
+                  conectados
+                </h3>
+                <p className="task-v2-subtitle">Todo en un mismo flujo.</p>
+                <div className="task-v2-visual task-v2-connect" aria-hidden="true">
+                  <div className="task-v2-tile">
+                    <TileIcon name="form" />
+                    <small>Formulario web</small>
                   </div>
-                  <div className="task-ui-flow-row">
-                    <span className="task-ui-chip">
-                      <FlowIcon name="mail" />
-                      Gmail
-                    </span>
-                    <span className="task-ui-link" aria-hidden="true">
-                      <i />
-                      <b>Z</b>
-                      <i />
-                    </span>
-                    <span className="task-ui-chip">
-                      <FlowIcon name="erp" />
-                      ERP
-                    </span>
+                  <div className="task-v2-tile">
+                    <TileIcon name="mail" />
+                    <small>Email</small>
                   </div>
-                  <div className="task-ui-flow-row">
-                    <span className="task-ui-chip">
-                      <FlowIcon name="crm" />
-                      CRM
-                    </span>
-                    <span className="task-ui-link" aria-hidden="true">
-                      <i />
-                      <b>Z</b>
-                      <i />
-                    </span>
-                    <span className="task-ui-chip">
-                      <FlowIcon name="chart" />
-                      Informe
-                    </span>
+                  <div className="task-v2-tile">
+                    <TileIcon name="crm" />
+                    <small>CRM</small>
                   </div>
+                  <div className="task-v2-tile">
+                    <TileIcon name="invoice" />
+                    <small>Presupuestos</small>
+                  </div>
+                  <span className="task-v2-hub">Z</span>
                 </div>
               </article>
             </div>
