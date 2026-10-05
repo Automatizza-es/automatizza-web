@@ -95,6 +95,31 @@ function SheetGlyph() {
   );
 }
 
+function PlaneGlyph({ color = "#fff" }: { color?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 3 10.5 13.5M21 3l-6.5 18-4-8.5L2 8.5 21 3Z" />
+    </svg>
+  );
+}
+
+function BellGlyph({ color = "#fff" }: { color?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z" />
+      <path d="M10 19a2 2 0 0 0 4 0" />
+    </svg>
+  );
+}
+
+function CheckGlyph({ color = "#fff" }: { color?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m5 12.5 4.5 4.5L19 7" />
+    </svg>
+  );
+}
+
 export function TasksShowcaseSection() {
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -231,30 +256,50 @@ export function TasksShowcaseSection() {
                 </div>
               </article>
 
-              <article className="task-card task-card-followup" data-reveal>
-                <div className="task-card-chrome">
-                  <span className="task-card-number">03</span>
-                  <span className="task-card-dots" aria-hidden="true">
-                    •••
-                  </span>
-                </div>
-                <p className="task-card-eyebrow">DE ACTIVIDAD A AVANCE</p>
-                <h3>Seguimientos en marcha</h3>
-                <div className="task-card-ui task-card-ui-timeline">
-                  <ul>
-                    <li>
-                      <time>09:42</time>
-                      <span>Cliente solicita información</span>
-                    </li>
-                    <li>
-                      <time>09:43</time>
-                      <span>Responsable avisado</span>
-                    </li>
-                    <li>
-                      <time>09:43</time>
-                      <span>Seguimiento programado</span>
-                    </li>
-                  </ul>
+              <article className="task-card task-card-followup task-card-v2" data-reveal>
+                <span className="task-v2-number">03</span>
+                <h3 className="task-v2-title">
+                  Seguimiento
+                  <br />
+                  automático
+                </h3>
+                <p className="task-v2-subtitle">Nada se queda atrás.</p>
+                <div className="task-v2-tl" aria-hidden="true">
+                  <div className="task-v2-tl-item">
+                    <div className="task-v2-tl-rail">
+                      <span className="task-v2-tl-dot task-v2-tl-dot-a">
+                        <PlaneGlyph />
+                      </span>
+                      <span className="task-v2-tl-rail-line" />
+                    </div>
+                    <div className="task-v2-tl-card">
+                      <strong>Presupuesto enviado</strong>
+                      <small>Hoy · 10:24</small>
+                    </div>
+                  </div>
+                  <div className="task-v2-tl-item">
+                    <div className="task-v2-tl-rail">
+                      <span className="task-v2-tl-dot task-v2-tl-dot-b">
+                        <BellGlyph color="#2f6bf0" />
+                      </span>
+                      <span className="task-v2-tl-rail-line" />
+                    </div>
+                    <div className="task-v2-tl-card">
+                      <strong>Recordatorio automático</strong>
+                      <small>En 2 días</small>
+                    </div>
+                  </div>
+                  <div className="task-v2-tl-item">
+                    <div className="task-v2-tl-rail">
+                      <span className="task-v2-tl-dot task-v2-tl-dot-c">
+                        <CheckGlyph />
+                      </span>
+                    </div>
+                    <div className="task-v2-tl-card">
+                      <strong>Cliente respondido</strong>
+                      <small>Hoy · 16:30</small>
+                    </div>
+                  </div>
                 </div>
               </article>
 
