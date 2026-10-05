@@ -892,14 +892,15 @@ a { color: inherit; text-decoration: none; }
 .tasks-cta p { margin: 0 0 1.35rem; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.3125rem; font-weight: 650; line-height: 1.32; }
 
 .tasks-cards { position: absolute; inset: 0; z-index: 2; }
-.task-card { position: absolute; display: flex; flex-direction: column; transform-origin: center bottom; }
+.task-card { position: absolute; display: flex; flex-direction: column; transform-origin: center; }
 
 /* Card v2 — premium, illustrative redesign (all four cards) */
-.task-card-v2 { width: 250px; height: 390px; padding: 1.85rem 1.6rem 2rem; background: linear-gradient(175deg, #ffffff, #f4f8ff); border: 1px solid #e9edf6; border-radius: 28px; box-shadow: 0 54px 90px -42px rgba(2, 19, 95, .36), 0 12px 28px -18px rgba(2, 19, 95, .12); }
-.task-v2-number { display: inline-flex; align-self: flex-start; padding: .32rem .7rem; border-radius: 8px; background: #eef1f8; color: #8a93a6; font-size: .7rem; font-weight: 700; letter-spacing: .05em; }
-.task-v2-title { margin: 1rem 0 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.65rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.14; }
-.task-v2-subtitle { margin: .6rem 0 0; overflow: hidden; color: #70778a; font-size: .95rem; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
-.task-v2-visual, .task-v2-tl, .task-v2-connect { position: relative; flex: 1; margin-top: 1.5rem; }
+.task-card-v2 { width: 262px; height: 410px; padding: 1.9rem 1.65rem 2.05rem; background: linear-gradient(175deg, #ffffff, #f4f8ff); border: 1px solid #e9edf6; border-radius: 28px; box-shadow: 0 54px 90px -42px rgba(2, 19, 95, .36), 0 12px 28px -18px rgba(2, 19, 95, .12); }
+.task-v2-number { display: inline-flex; flex-shrink: 0; align-self: flex-start; padding: .32rem .7rem; border-radius: 8px; background: #eef1f8; color: #8a93a6; font-size: .7rem; font-weight: 700; letter-spacing: .05em; }
+.task-v2-header { flex-shrink: 0; margin-top: 1rem; min-height: 118px; }
+.task-v2-title { margin: 0; max-height: 2.4em; overflow: hidden; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; }
+.task-v2-subtitle { margin: .55rem 0 0; overflow: hidden; color: #70778a; font-size: .95rem; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.task-v2-visual, .task-v2-tl, .task-v2-connect { position: relative; flex: 1; margin-top: 1.25rem; }
 
 .task-v2-form { position: absolute; left: 50%; top: 50%; width: 196px; padding: 1.05rem 1.15rem 1.2rem; background: var(--color-white); border: 1px solid #e9edf4; border-radius: 18px; box-shadow: 0 26px 54px -22px rgba(2, 19, 95, .3); transform: translate(-50%, -50%) rotate(-3deg); }
 .task-v2-form-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .9rem; }
@@ -944,7 +945,7 @@ a { color: inherit; text-decoration: none; }
 .task-v2-tile small { color: #626977; font-size: .66rem; font-weight: 600; line-height: 1.2; }
 .task-v2-hub { position: absolute; left: 50%; top: 50%; z-index: 2; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, var(--color-navy), #16308f); box-shadow: 0 18px 34px -14px rgba(2, 19, 95, .5); color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: 1.05rem; font-weight: 700; transform: translate(-50%, -50%); }
 
-@media (min-width: 900px) {
+@media (min-width: 1040px) {
   .tasks-stage { --shift: calc(var(--p, 0) * -40px); }
   .tasks-cta { top: calc(64% + var(--p, 0) * 11%); }
   .tasks-cta { opacity: clamp(0, calc((var(--p, 0) - .55) * 3.2), 1); transform: translateX(-50%) translateY(calc((1 - clamp(0, calc((var(--p, 0) - .55) * 3.2), 1)) * 12px)); }
@@ -952,10 +953,10 @@ a { color: inherit; text-decoration: none; }
   /* the title recedes as the cards start landing, so it doesn't fight them for attention */
   .tasks-headline-text { opacity: calc(1 - var(--p, 0) * .72); }
 
-  .task-card-data { top: 18%; left: 5%; --rot: -1.5deg; }
-  .task-card-docs { top: 18%; left: 28%; --rot: 1deg; }
-  .task-card-followup { top: 18%; left: 51%; --rot: -1deg; }
-  .task-card-flow { top: 18%; left: 73%; --rot: 1.5deg; }
+  .task-card-data { top: 17%; left: 1%; --rot: -1.5deg; }
+  .task-card-docs { top: 17%; left: 24%; --rot: 1deg; }
+  .task-card-followup { top: 17%; left: 47%; --rot: -1deg; }
+  .task-card-flow { top: 17%; left: 70%; --rot: 1.5deg; }
 
   /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
      rules shared with the mobile fallback (same elements reuse data-reveal on <900px).
@@ -969,7 +970,7 @@ a { color: inherit; text-decoration: none; }
   .task-card-flow[data-reveal] { opacity: 1 !important; transform: translate3d(calc((1 - var(--p, 0)) * 115vw + var(--shift)), 0, 0) rotate(var(--rot)) !important; }
 }
 
-@media (max-width: 899.98px) {
+@media (max-width: 1039.98px) {
   .tasks-scroller { height: auto; }
   .tasks-stage { position: static; height: auto; padding-block: clamp(4.5rem, 9vw, 6rem) clamp(3rem, 6vw, 4rem); }
   .tasks-inner { height: auto; }
@@ -979,7 +980,7 @@ a { color: inherit; text-decoration: none; }
   .tasks-cta p { font-size: 1.1rem; }
   .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; height: auto; }
-  .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 230px; }
+  .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 245px; }
   .tasks-dotgrid { display: none; }
 
   .motion-ready .tasks-section [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 520ms ease, transform 540ms cubic-bezier(.22, .7, .25, 1); }
@@ -996,5 +997,5 @@ a { color: inherit; text-decoration: none; }
   .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
   .task-card { position: static; width: 100%; height: auto; }
   .task-card[data-reveal] { opacity: 1 !important; transform: none !important; }
-  .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 230px; }
+  .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 245px; }
 }

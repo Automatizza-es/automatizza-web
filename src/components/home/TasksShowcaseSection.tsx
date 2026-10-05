@@ -121,7 +121,7 @@ export function TasksShowcaseSection() {
     const el = stageRef.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (!window.matchMedia("(min-width: 900px)").matches) return;
+    if (!window.matchMedia("(min-width: 1040px)").matches) return;
 
     let frame = 0;
     const update = () => {
@@ -181,11 +181,13 @@ export function TasksShowcaseSection() {
             <div className="tasks-cards">
               <article className="task-card task-card-data task-card-v2" data-reveal>
                 <span className="task-v2-number">01</span>
-                <h3 className="task-v2-title">
-                  Copiar datos
-                  <br />a mano
-                </h3>
-                <p className="task-v2-subtitle">Todo se rellena solo.</p>
+                <div className="task-v2-header">
+                  <h3 className="task-v2-title">
+                    Copiar datos
+                    <br />a mano
+                  </h3>
+                  <p className="task-v2-subtitle">Todo se rellena solo.</p>
+                </div>
                 <div className="task-v2-visual" aria-hidden="true">
                   <div className="task-v2-form">
                     <div className="task-v2-form-head">
@@ -218,11 +220,13 @@ export function TasksShowcaseSection() {
 
               <article className="task-card task-card-docs task-card-v2" data-reveal>
                 <span className="task-v2-number">02</span>
-                <h3 className="task-v2-title">
-                  Agente WhatsApp
-                  <br />+ Teléfono
-                </h3>
-                <p className="task-v2-subtitle">Responde, deriva y registra.</p>
+                <div className="task-v2-header">
+                  <h3 className="task-v2-title">
+                    Agente WhatsApp
+                    <br />+ Teléfono
+                  </h3>
+                  <p className="task-v2-subtitle">Responde, deriva y registra.</p>
+                </div>
                 <div className="task-v2-visual" aria-hidden="true">
                   <div className="task-v2-phone">
                     <div className="task-v2-phone-head">
@@ -252,12 +256,14 @@ export function TasksShowcaseSection() {
 
               <article className="task-card task-card-followup task-card-v2" data-reveal>
                 <span className="task-v2-number">03</span>
-                <h3 className="task-v2-title">
-                  Seguimiento
-                  <br />
-                  automático
-                </h3>
-                <p className="task-v2-subtitle">Nada se queda atrás.</p>
+                <div className="task-v2-header">
+                  <h3 className="task-v2-title">
+                    Seguimiento
+                    <br />
+                    automático
+                  </h3>
+                  <p className="task-v2-subtitle">Nada se queda atrás.</p>
+                </div>
                 <div className="task-v2-tl" aria-hidden="true">
                   <div className="task-v2-tl-item">
                     <div className="task-v2-tl-rail">
@@ -299,12 +305,14 @@ export function TasksShowcaseSection() {
 
               <article className="task-card task-card-flow task-card-v2" data-reveal>
                 <span className="task-v2-number">04</span>
-                <h3 className="task-v2-title">
-                  Datos
-                  <br />
-                  conectados
-                </h3>
-                <p className="task-v2-subtitle">Todo en un mismo flujo.</p>
+                <div className="task-v2-header">
+                  <h3 className="task-v2-title">
+                    Datos
+                    <br />
+                    conectados
+                  </h3>
+                  <p className="task-v2-subtitle">Todo en un mismo flujo.</p>
+                </div>
                 <div className="task-v2-visual task-v2-connect" aria-hidden="true">
                   <div className="task-v2-tile">
                     <TileIcon name="form" />
