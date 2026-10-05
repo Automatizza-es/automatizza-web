@@ -150,10 +150,6 @@ export function TasksShowcaseSection() {
                       <dt>Producto</dt>
                       <dd>Instalación industrial</dd>
                     </div>
-                    <div>
-                      <dt>País</dt>
-                      <dd>España</dd>
-                    </div>
                   </dl>
                   <p className="task-ui-status">
                     <span aria-hidden="true">✓</span> Datos extraídos automáticamente
@@ -206,10 +202,6 @@ export function TasksShowcaseSection() {
                     <li>
                       <time>09:42</time>
                       <span>Cliente solicita información</span>
-                    </li>
-                    <li>
-                      <time>09:42</time>
-                      <span>CRM actualizado</span>
                     </li>
                     <li>
                       <time>09:43</time>
