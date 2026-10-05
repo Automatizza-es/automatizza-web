@@ -70,6 +70,22 @@ function MailGlyph() {
   );
 }
 
+function ChatGlyph() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 12.5a7.5 7.5 0 1 1 3.2 6.15L4 19.5l.9-3A7.44 7.44 0 0 1 4 12.5Z" />
+    </svg>
+  );
+}
+
+function PhoneGlyph() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6.5 4.5c.6 1.6 1.4 3 2.4 4.1-.9 1-1 1.8-.5 2.6 1 1.7 2.6 3.3 4.3 4.3.8.5 1.6.4 2.6-.5 1.1 1 2.5 1.8 4.1 2.4v2.4c0 1-.9 1.7-1.9 1.5A17 17 0 0 1 5 8.4c-.2-1 .5-1.9 1.5-1.9h0Z" />
+    </svg>
+  );
+}
+
 function SheetGlyph() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -181,34 +197,37 @@ export function TasksShowcaseSection() {
                 </div>
               </article>
 
-              <article className="task-card task-card-docs" data-reveal>
-                <div className="task-card-chrome">
-                  <span className="task-card-number">02</span>
-                  <span className="task-card-dots" aria-hidden="true">
-                    •••
-                  </span>
-                </div>
-                <p className="task-card-eyebrow">DE DATOS A DOCUMENTOS</p>
-                <h3>Presupuesto preparado</h3>
-                <div className="task-card-ui task-card-ui-doc">
-                  <div className="task-ui-doc-head">
-                    <span>Presupuesto #2481</span>
-                    <span className="task-ui-tag">PDF</span>
+              <article className="task-card task-card-docs task-card-v2" data-reveal>
+                <span className="task-v2-number">02</span>
+                <h3 className="task-v2-title">
+                  Agente WhatsApp
+                  <br />+ Teléfono
+                </h3>
+                <p className="task-v2-subtitle">Responde, deriva y registra.</p>
+                <div className="task-v2-visual" aria-hidden="true">
+                  <div className="task-v2-phone">
+                    <div className="task-v2-phone-head">
+                      <span className="task-v2-avatar" />
+                      <div>
+                        <strong>Cliente</strong>
+                        <small>En línea</small>
+                      </div>
+                    </div>
+                    <div className="task-v2-msg task-v2-msg-in">
+                      ¿Podríais enviarme un presupuesto?
+                      <time>10:24</time>
+                    </div>
+                    <div className="task-v2-msg task-v2-msg-out">
+                      ¡Claro! Te lo preparo ahora mismo.
+                      <time>10:25 ✓✓</time>
+                    </div>
                   </div>
-                  <ul>
-                    <li>
-                      <span aria-hidden="true">✓</span> Cliente
-                    </li>
-                    <li>
-                      <span aria-hidden="true">✓</span> Productos
-                    </li>
-                    <li>
-                      <span aria-hidden="true">✓</span> Tarifas
-                    </li>
-                    <li>
-                      <span aria-hidden="true">✓</span> PDF generado
-                    </li>
-                  </ul>
+                  <span className="task-v2-bubble task-v2-bubble-chat">
+                    <ChatGlyph />
+                  </span>
+                  <span className="task-v2-bubble task-v2-bubble-call">
+                    <PhoneGlyph />
+                  </span>
                 </div>
               </article>
 
