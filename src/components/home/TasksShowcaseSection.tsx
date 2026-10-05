@@ -61,6 +61,24 @@ function FlowIcon({ name }: { name: FlowIconName }) {
   );
 }
 
+function MailGlyph() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="5.5" width="18" height="13" rx="2" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+function SheetGlyph() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="4" y="3.5" width="16" height="17" rx="2" />
+      <path d="M4 10h16M4 15h16M10 10v10" />
+    </svg>
+  );
+}
+
 export function TasksShowcaseSection() {
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -126,31 +144,40 @@ export function TasksShowcaseSection() {
             </div>
 
             <div className="tasks-cards">
-              <article className="task-card task-card-data" data-reveal>
-                <div className="task-card-chrome">
-                  <span className="task-card-number">01</span>
-                  <span className="task-card-dots" aria-hidden="true">
-                    •••
+              <article className="task-card task-card-data task-card-v2" data-reveal>
+                <span className="task-v2-number">01</span>
+                <h3 className="task-v2-title">
+                  Copiar datos
+                  <br />a mano
+                </h3>
+                <p className="task-v2-subtitle">Todo se rellena solo.</p>
+                <div className="task-v2-visual" aria-hidden="true">
+                  <div className="task-v2-form">
+                    <div className="task-v2-form-head">
+                      <span className="task-v2-avatar" />
+                      <div>
+                        <strong>Nueva solicitud</strong>
+                        <small>Hace 2 min</small>
+                      </div>
+                    </div>
+                    <div className="task-v2-form-row">
+                      <span>Cliente</span>
+                      <b>Carlos Martín</b>
+                    </div>
+                    <div className="task-v2-form-row">
+                      <span>Empresa</span>
+                      <b>Example SL</b>
+                    </div>
+                    <div className="task-v2-form-check">
+                      <span>✓</span> Auto-completado
+                    </div>
+                  </div>
+                  <span className="task-v2-bubble task-v2-bubble-mail">
+                    <MailGlyph />
                   </span>
-                </div>
-                <p className="task-card-eyebrow">DE SOLICITUD A DATOS</p>
-                <h3>Copiar datos a mano</h3>
-                <div className="task-card-ui task-card-ui-form">
-                  <p className="task-ui-label">Nueva solicitud</p>
-                  <dl>
-                    <div>
-                      <dt>Cliente</dt>
-                      <dd>Carlos Martín</dd>
-                    </div>
-                    <div>
-                      <dt>Empresa</dt>
-                      <dd>Example SL</dd>
-                    </div>
-                    <div>
-                      <dt>Producto</dt>
-                      <dd>Instalación industrial</dd>
-                    </div>
-                  </dl>
+                  <span className="task-v2-bubble task-v2-bubble-sheet">
+                    <SheetGlyph />
+                  </span>
                 </div>
               </article>
 
