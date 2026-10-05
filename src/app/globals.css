@@ -936,10 +936,10 @@ a { color: inherit; text-decoration: none; }
   /* the title recedes as the cards start landing, so it doesn't fight them for attention */
   .tasks-headline-text { opacity: calc(1 - var(--p, 0) * .72); }
 
-  .task-card-data { top: 14%; left: 14%; --rot: -3deg; }
-  .task-card-docs { top: 25%; left: 38%; --rot: 2deg; }
-  .task-card-followup { top: 12%; left: 60%; --rot: -2deg; }
-  .task-card-flow { top: 23%; left: 82%; --rot: 2.5deg; }
+  .task-card-data { top: 18%; left: 14%; --rot: -1.5deg; }
+  .task-card-docs { top: 18%; left: 38%; --rot: 1deg; }
+  .task-card-followup { top: 18%; left: 60%; --rot: -1deg; }
+  .task-card-flow { top: 18%; left: 82%; --rot: 1.5deg; }
 
   /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
      rules shared with the mobile fallback (same elements reuse data-reveal on <900px).
