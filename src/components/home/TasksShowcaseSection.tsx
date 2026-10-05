@@ -151,9 +151,6 @@ export function TasksShowcaseSection() {
                       <dd>Instalación industrial</dd>
                     </div>
                   </dl>
-                  <p className="task-ui-status">
-                    <span aria-hidden="true">✓</span> Datos extraídos automáticamente
-                  </p>
                 </div>
               </article>
 
@@ -212,9 +209,6 @@ export function TasksShowcaseSection() {
                       <span>Seguimiento programado</span>
                     </li>
                   </ul>
-                  <p className="task-ui-status">
-                    <span aria-hidden="true">✓</span> Todo gestionado automáticamente
-                  </p>
                 </div>
               </article>
 
@@ -273,9 +267,6 @@ export function TasksShowcaseSection() {
                       Informe
                     </span>
                   </div>
-                  <p className="task-ui-status">
-                    <span aria-hidden="true">✓</span> Sincronizado automáticamente
-                  </p>
                 </div>
               </article>
             </div>
