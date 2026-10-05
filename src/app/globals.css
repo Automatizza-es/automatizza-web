@@ -891,8 +891,12 @@ a { color: inherit; text-decoration: none; }
 .tasks-cta { position: absolute; left: 50%; top: 66%; z-index: 3; width: min(90%, 560px); text-align: center; transform: translateX(-50%); }
 .tasks-cta p { margin: 0 0 1.35rem; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: 1.3125rem; font-weight: 650; line-height: 1.32; }
 
-.tasks-cards { position: absolute; inset: 0; z-index: 2; }
-.task-card { position: absolute; display: flex; flex-direction: column; transform-origin: center; }
+/* Horizontal "conveyor belt": vertical scroll drives one shared translateX
+   across the whole row, so cards slide in from the right and exit fully off
+   the left — never all four resting on screen together. */
+.tasks-carousel { position: absolute; inset: 0; z-index: 2; overflow: hidden; }
+.tasks-carousel-track { position: absolute; left: 0; top: 50%; display: flex; align-items: center; will-change: transform; }
+.task-card { display: flex; flex-direction: column; flex-shrink: 0; transform-origin: center; }
 
 /* Card v2 — premium, illustrative redesign (all four cards) */
 .task-card-v2 { width: 262px; height: 410px; padding: 1.9rem 1.65rem 2.05rem; background: linear-gradient(175deg, #ffffff, #f4f8ff); border: 1px solid #e9edf6; border-radius: 28px; box-shadow: 0 54px 90px -42px rgba(2, 19, 95, .36), 0 12px 28px -18px rgba(2, 19, 95, .12); }
@@ -946,28 +950,35 @@ a { color: inherit; text-decoration: none; }
 .task-v2-hub { position: absolute; left: 50%; top: 50%; z-index: 2; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, var(--color-navy), #16308f); box-shadow: 0 18px 34px -14px rgba(2, 19, 95, .5); color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: 1.05rem; font-weight: 700; transform: translate(-50%, -50%); }
 
 @media (min-width: 1040px) {
-  .tasks-stage { --shift: calc(var(--p, 0) * -40px); }
-  .tasks-cta { top: calc(64% + var(--p, 0) * 11%); }
-  .tasks-cta { opacity: clamp(0, calc((var(--p, 0) - .55) * 3.2), 1); transform: translateX(-50%) translateY(calc((1 - clamp(0, calc((var(--p, 0) - .55) * 3.2), 1)) * 12px)); }
+  /* The whole row is one strip, wider than the viewport. --tc-x carries its
+     left edge from fully off-stage right (100vw) to flush with the right
+     edge once card 4 has arrived — so earlier cards get pushed fully off
+     the left along the way, like items riding a baggage belt, instead of
+     each card animating to its own fixed resting slot. */
+  .tasks-stage {
+    --tc-card-w: clamp(300px, 38vw, 480px);
+    --tc-gap: clamp(20px, 2.4vw, 36px);
+    --tc-strip-w: calc(4 * var(--tc-card-w) + 3 * var(--tc-gap) + 2 * var(--page-gutter));
+    --tc-x: calc(100vw - var(--p, 0) * var(--tc-strip-w));
+  }
+  .tasks-carousel-track { gap: var(--tc-gap); padding-inline: var(--page-gutter); transform: translate3d(var(--tc-x), -50%, 0); }
 
-  /* the title recedes as the cards start landing, so it doesn't fight them for attention */
+  .tasks-cta { top: calc(80% + var(--p, 0) * 3%); }
+  .tasks-cta { opacity: clamp(0, calc((var(--p, 0) - .68) * 3.6), 1); transform: translateX(-50%) translateY(calc((1 - clamp(0, calc((var(--p, 0) - .68) * 3.6), 1)) * 12px)); }
+
+  /* the title recedes as the cards start arriving, so it doesn't fight them for attention */
   .tasks-headline-text { opacity: calc(1 - var(--p, 0) * .72); }
 
-  .task-card-data { top: 17%; left: 1%; --rot: -1.5deg; }
-  .task-card-docs { top: 17%; left: 24%; --rot: 1deg; }
-  .task-card-followup { top: 17%; left: 47%; --rot: -1deg; }
-  .task-card-flow { top: 17%; left: 70%; --rot: 1.5deg; }
+  .task-card-v2 { width: var(--tc-card-w); height: clamp(360px, 30vw, 460px); }
 
   /* higher-specificity, !important: must win over the generic [data-reveal]/.is-visible
-     rules shared with the mobile fallback (same elements reuse data-reveal on <900px).
-     No opacity/scale ramp: each card is fully opaque and at its resting tilt the whole
-     time, it's just off-stage (clipped by .tasks-stage overflow) at the start of the
-     scroll — a single continuous translateX carries it in and then keeps nudging it
-     left as later cards arrive, like a luggage belt, instead of easing in and settling. */
-  .task-card-data[data-reveal] { opacity: 1 !important; transform: translate3d(calc((1 - var(--p, 0)) * 115vw + var(--shift)), 0, 0) rotate(var(--rot)) !important; }
-  .task-card-docs[data-reveal] { opacity: 1 !important; transform: translate3d(calc((1 - var(--p, 0)) * 115vw + var(--shift)), 0, 0) rotate(var(--rot)) !important; }
-  .task-card-followup[data-reveal] { opacity: 1 !important; transform: translate3d(calc((1 - var(--p, 0)) * 115vw + var(--shift)), 0, 0) rotate(var(--rot)) !important; }
-  .task-card-flow[data-reveal] { opacity: 1 !important; transform: translate3d(calc((1 - var(--p, 0)) * 115vw + var(--shift)), 0, 0) rotate(var(--rot)) !important; }
+     rules shared with the mobile fallback (same elements reuse data-reveal below
+     1040px). Each card is fully opaque at a fixed, static tilt — only the shared
+     track transform above moves anything, so nothing fades or eases on its own. */
+  .task-card-data[data-reveal] { opacity: 1 !important; transform: rotate(-1.3deg) !important; }
+  .task-card-docs[data-reveal] { opacity: 1 !important; transform: rotate(.9deg) !important; }
+  .task-card-followup[data-reveal] { opacity: 1 !important; transform: rotate(-.9deg) !important; }
+  .task-card-flow[data-reveal] { opacity: 1 !important; transform: rotate(1.3deg) !important; }
 }
 
 @media (max-width: 1039.98px) {
@@ -978,8 +989,9 @@ a { color: inherit; text-decoration: none; }
   .tasks-headline h2 { max-width: none; font-size: clamp(2.25rem, 8vw, 3rem); }
   .tasks-cta { position: static; inset: auto; top: auto; left: auto; width: auto; margin-top: 1.5rem; text-align: left; transform: none; }
   .tasks-cta p { font-size: 1.1rem; }
-  .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
-  .task-card { position: static; width: 100%; height: auto; }
+  .tasks-carousel { position: static; inset: auto; overflow: visible; margin-top: clamp(2.5rem, 7vw, 3.5rem); }
+  .tasks-carousel-track { position: static; top: auto; left: auto; display: grid; gap: 1.5rem; padding-inline: 0; transform: none; }
+  .task-card { width: 100%; height: auto; }
   .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 245px; }
   .tasks-dotgrid { display: none; }
 
@@ -994,8 +1006,9 @@ a { color: inherit; text-decoration: none; }
   .tasks-headline { position: static; inset: auto; display: block; padding-inline: 0; text-align: left; }
   .tasks-headline h2 { max-width: none; }
   .tasks-cta { position: static; inset: auto; top: auto; left: auto; width: auto; opacity: 1; margin-top: 1.5rem; text-align: left; transform: none; }
-  .tasks-cards { position: static; inset: auto; height: auto; margin-top: clamp(2.5rem, 7vw, 3.5rem); display: grid; gap: 1.5rem; }
-  .task-card { position: static; width: 100%; height: auto; }
+  .tasks-carousel { position: static; inset: auto; overflow: visible; margin-top: clamp(2.5rem, 7vw, 3.5rem); }
+  .tasks-carousel-track { position: static; top: auto; left: auto; display: grid; gap: 1.5rem; padding-inline: 0; transform: none; }
+  .task-card { width: 100%; height: auto; }
   .task-card[data-reveal] { opacity: 1 !important; transform: none !important; }
   .task-v2-visual, .task-v2-tl, .task-v2-connect { flex: none; height: 245px; }
 }

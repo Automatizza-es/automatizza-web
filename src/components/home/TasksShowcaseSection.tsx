@@ -177,8 +177,10 @@ export function TasksShowcaseSection() {
                 </span>
               </Link>
             </div>
+          </Container>
 
-            <div className="tasks-cards">
+          <div className="tasks-carousel">
+            <div className="tasks-carousel-track">
               <article className="task-card task-card-data task-card-v2" data-reveal>
                 <span className="task-v2-number">01</span>
                 <div className="task-v2-header">
@@ -334,7 +336,7 @@ export function TasksShowcaseSection() {
                 </div>
               </article>
             </div>
-          </Container>
+          </div>
         </div>
       </div>
     </section>
