@@ -7,7 +7,7 @@ import { Container } from "@/components/layout/Container";
 
 function MailGlyph() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="3" y="5.5" width="18" height="13" rx="2" />
       <path d="m4 7 8 6 8-6" />
     </svg>
@@ -16,7 +16,7 @@ function MailGlyph() {
 
 function ChatGlyph() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M4 12.5a7.5 7.5 0 1 1 3.2 6.15L4 19.5l.9-3A7.44 7.44 0 0 1 4 12.5Z" />
     </svg>
   );
@@ -24,7 +24,7 @@ function ChatGlyph() {
 
 function PhoneGlyph() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M6.5 4.5c.6 1.6 1.4 3 2.4 4.1-.9 1-1 1.8-.5 2.6 1 1.7 2.6 3.3 4.3 4.3.8.5 1.6.4 2.6-.5 1.1 1 2.5 1.8 4.1 2.4v2.4c0 1-.9 1.7-1.9 1.5A17 17 0 0 1 5 8.4c-.2-1 .5-1.9 1.5-1.9h0Z" />
     </svg>
   );
@@ -32,7 +32,7 @@ function PhoneGlyph() {
 
 function SheetGlyph() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="4" y="3.5" width="16" height="17" rx="2" />
       <path d="M4 10h16M4 15h16M10 10v10" />
     </svg>
@@ -41,7 +41,7 @@ function SheetGlyph() {
 
 function PlaneGlyph({ color = "#fff" }: { color?: string }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M21 3 10.5 13.5M21 3l-6.5 18-4-8.5L2 8.5 21 3Z" />
     </svg>
   );
@@ -49,7 +49,7 @@ function PlaneGlyph({ color = "#fff" }: { color?: string }) {
 
 function BellGlyph({ color = "#fff" }: { color?: string }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z" />
       <path d="M10 19a2 2 0 0 0 4 0" />
     </svg>
@@ -58,7 +58,7 @@ function BellGlyph({ color = "#fff" }: { color?: string }) {
 
 function CheckGlyph({ color = "#fff" }: { color?: string }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="m5 12.5 4.5 4.5L19 7" />
     </svg>
   );
@@ -68,8 +68,8 @@ type TileIconName = "form" | "mail" | "crm" | "invoice";
 
 function TileIcon({ name }: { name: TileIconName }) {
   const common = {
-    width: 26,
-    height: 26,
+    width: 32,
+    height: 32,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "#02a0fc",
