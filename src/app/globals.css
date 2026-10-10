@@ -1054,6 +1054,131 @@ a { color: inherit; text-decoration: none; }
 .apc-scene.is-playing .apc-truck { transition: left 1700ms cubic-bezier(.45, 0, .25, 1) 1900ms; }
 .apc-scene.is-playing .apc-route-done { transition: width 1700ms cubic-bezier(.45, 0, .25, 1) 1900ms; }
 
+/* La Factory Coworking card: the coworker app on the phone opens out into the
+   desktop web app (same product, two formats). 1em = 10px at the 408px card;
+   inside .lf-web and .lf-mobile 1em = 10 app px, so app sizes read as px / 10. */
+.lf-scene { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(60% 50% at 50% 48%, rgba(216, 199, 178, .2) 0%, rgba(216, 199, 178, 0) 70%), radial-gradient(70% 50% at 50% 45%, #ffffff 0%, rgba(255, 255, 255, 0) 72%), linear-gradient(180deg, #f9f8f6 0%, #f0eeea 100%); color: #25231f; font-family: var(--font-sans), sans-serif; font-size: calc(100cqw / 40.8); }
+
+.lf-desk { position: absolute; top: 5.2em; left: 1.8em; width: 33.6em; overflow: hidden; border-radius: 1em; background: #ffffff; box-shadow: 0 2.2em 3.2em -1.8em rgba(37, 35, 31, .32), 0 .3em .9em -.3em rgba(37, 35, 31, .14), 0 0 0 .07em rgba(37, 35, 31, .09); }
+.lf-desk-bar { position: relative; display: flex; align-items: center; gap: .32em; height: 1.5em; padding: 0 .8em; border-bottom: .07em solid #ece6dc; background: #fbfaf7; }
+.lf-desk-bar i { width: .46em; height: .46em; border-radius: 50%; background: #e3dcd1; }
+.lf-desk-bar::after { position: absolute; top: .42em; left: 50%; width: 9em; height: .66em; margin-left: -4.5em; border-radius: 1em; background: #f1ece4; content: ""; }
+.lf-desk-screen { position: relative; height: 20.7em; overflow: hidden; background: #f5f1e9; }
+
+.lf-phone { position: absolute; top: 16.68em; left: 26.16em; width: 11em; font-size: 1.055em; padding: .3em; border-radius: 2.1em; background: linear-gradient(140deg, #f4f5f7 0%, #c8ccd2 35%, #eef0f2 55%, #b9bec5 100%); box-shadow: 0 2.6em 3.6em -2em rgba(37, 35, 31, .45), 0 .5em 1em -.5em rgba(37, 35, 31, .22), inset 0 0 0 .07em rgba(37, 35, 31, .18); }
+.lf-bezel { padding: .3em; border-radius: 1.8em; background: #0a0a0b; }
+.lf-screen { position: relative; overflow: hidden; height: 20.16em; border-radius: 1.5em; background: #f5f1e9; }
+.lf-island { position: absolute; top: .42em; left: 50%; width: 3em; height: .86em; margin-left: -1.5em; border-radius: 1em; background: #000000; }
+
+/* Shared app pieces (same Tailwind sizes on phone and desktop). */
+.lf-web, .lf-mobile { color: #25231f; line-height: 1.3; }
+.lf-web svg, .lf-mobile svg { flex: none; }
+.lf-toolbar { display: flex; align-items: center; gap: 1.6em; }
+.lf-lang { display: flex; align-items: center; gap: .4em; height: 2.6em; padding: 0 .85em; border-radius: 9em; background: #ffffff; box-shadow: 0 .05em .2em rgba(37, 35, 31, .12), 0 0 0 .07em rgba(37, 35, 31, .06); font-size: 1.4em; font-weight: 500; }
+.lf-lang svg { width: 1.15em; height: 1.15em; }
+.lf-lang svg:last-child { width: .85em; height: .85em; color: #746d65; }
+.lf-bell svg { display: block; width: 2.2em; height: 2.2em; }
+.lf-avatar { display: grid; width: 2.5em; height: 2.5em; place-items: center; border-radius: 50%; background: #e2d5c4; color: #5f4023; font-size: 1.6em; font-weight: 500; }
+.lf-greeting b { display: block; font-size: 2.4em; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; }
+.lf-greeting span { display: block; color: #746d65; font-size: 1.4em; }
+.lf-quota { display: flex; flex-direction: column; padding: 2em; border-radius: 2.4em; background: #ffffff; box-shadow: 0 .1em .3em rgba(37, 35, 31, .07); }
+.lf-quota-head { display: flex; align-items: center; justify-content: space-between; gap: .8em; }
+.lf-quota-head > span:first-child { color: #746d65; font-size: 1.4em; white-space: nowrap; }
+.lf-pill { display: flex; align-items: center; gap: .45em; padding: .3em .85em; border-radius: 9em; background: #f5f1e9; color: #5f4023; font-size: 1.2em; font-weight: 500; white-space: nowrap; }
+.lf-pill svg { width: 1.15em; height: 1.15em; }
+.lf-plan { margin-top: .3em; color: #5f4023; font-size: 2.4em; font-weight: 700; letter-spacing: -.02em; }
+.lf-hours { margin-top: .45em; font-size: 3em; font-weight: 700; line-height: 1.15; }
+.lf-muted { color: #746d65; font-size: 1.4em; }
+.lf-bar { display: block; height: 1em; margin: 1.6em 0 .8em; overflow: hidden; border-radius: 1em; background: rgba(216, 199, 178, .5); }
+.lf-bar span { display: block; width: 20%; height: 100%; border-radius: 1em; background: #5f4023; }
+.lf-action { display: flex; align-items: center; gap: 1.2em; margin-top: 1.6em; padding: 1.6em; border-radius: 2em; background: #ffffff; box-shadow: 0 .1em .3em rgba(37, 35, 31, .07); }
+.lf-action > div { min-width: 0; flex: 1; }
+.lf-action b { display: block; font-size: 1.6em; font-weight: 600; }
+.lf-action small { display: block; color: #746d65; font-size: 1.2em; line-height: 1.35; }
+.lf-action > svg { width: 1.6em; height: 1.6em; color: #746d65; }
+.lf-action-icon { display: grid; width: 4em; height: 4em; flex: none; place-items: center; border-radius: 50%; background: #f5f1e9; color: #5f4023; }
+.lf-action-icon svg { width: 2em; height: 2em; }
+.lf-section-head { display: flex; align-items: center; justify-content: space-between; }
+.lf-section-head b { font-size: 1.8em; font-weight: 600; }
+.lf-section-head span { display: flex; align-items: center; gap: .1em; color: #5f4023; font-size: 1.4em; font-weight: 500; }
+.lf-section-head svg { width: 1.15em; height: 1.15em; }
+.lf-room-photo { position: relative; display: block; overflow: hidden; }
+.lf-room-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.lf-capacity { position: absolute; top: .7em; right: .7em; display: flex; align-items: center; gap: .3em; padding: .25em .7em; border-radius: 9em; background: rgba(255, 255, 255, .9); font-size: 1.1em; }
+.lf-capacity svg { width: 1.1em; height: 1.1em; }
+
+/* Desktop web app. */
+.lf-web { position: absolute; top: 0; left: 0; display: grid; width: 100em; height: 61.6em; grid-template-columns: 17em minmax(0, 1fr); font-size: .336em; }
+.lf-sidebar { display: flex; flex-direction: column; padding: 2.2em 1.3em 2.4em; border-right: .1em solid #ece6dc; background: #ffffff; }
+.lf-brand { display: flex; align-items: center; gap: .65em; padding-left: .4em; font-size: 1.5em; font-weight: 600; }
+.lf-brand img { width: 2.6em; height: 2.6em; border-radius: .55em; }
+.lf-sidebar nav { display: flex; flex-direction: column; gap: .4em; margin-top: 3em; }
+.lf-sidebar nav span { display: flex; align-items: center; gap: .7em; height: 2.8em; padding: 0 .8em; border-radius: .8em; color: #746d65; font-size: 1.45em; white-space: nowrap; }
+.lf-sidebar nav svg { width: 1.2em; height: 1.2em; }
+.lf-sidebar nav .is-active { background: #f3ede4; color: #25231f; }
+.lf-me { display: flex; align-items: center; gap: .65em; margin-top: auto; padding: 1.2em .3em 0; border-top: .07em solid #ece6dc; font-size: 1.5em; }
+.lf-me .lf-avatar { width: 2.2em; height: 2.2em; font-size: .9em; }
+.lf-web-main { min-width: 0; padding: 2em 2em 0 2.4em; }
+.lf-web-side .lf-quota { padding: 1.8em; }
+.lf-web-main > .lf-toolbar { justify-content: flex-end; }
+.lf-web-main > .lf-greeting { margin-top: .4em; }
+.lf-web-grid { display: grid; grid-template-columns: minmax(0, 1fr) 27em; gap: 2.2em; margin-top: 2.6em; }
+.lf-rooms, .lf-bookings { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; }
+.lf-rooms { margin: 1.4em 0 2.6em; }
+.lf-bookings { margin-top: 1.4em; }
+.lf-room { display: flex; flex-direction: column; overflow: hidden; border-radius: 2em; background: #ffffff; box-shadow: 0 .1em .3em rgba(37, 35, 31, .07); }
+.lf-room .lf-room-photo { height: 11em; }
+.lf-room > b { padding: .75em .9em .6em; font-size: 1.6em; font-weight: 600; }
+.lf-room-button { display: flex; align-items: center; justify-content: center; gap: .3em; height: 2.6em; margin: 0 1em 1em; border-radius: .75em; background: #5f4023; color: #ffffff; font-size: 1.4em; font-weight: 500; }
+.lf-room-button svg { width: 1em; height: 1em; }
+.lf-booking { display: flex; align-items: flex-start; gap: 1.2em; padding: 1.6em; border-radius: 2em; background: #ffffff; box-shadow: 0 .1em .3em rgba(37, 35, 31, .07); }
+.lf-booking > div { min-width: 0; }
+.lf-booking > div b { display: block; font-size: 1.6em; font-weight: 600; }
+.lf-booking > div span { display: block; color: #746d65; font-size: 1.4em; white-space: nowrap; }
+.lf-booking-date { display: flex; width: 5.1em; flex: none; flex-direction: column; align-items: center; padding: .7em 0; border-radius: 1.1em; background: #f5f1e9; color: #5f4023; font-size: 1.1em; font-weight: 500; }
+.lf-booking-date b { font-size: 1.64em; font-weight: 700; line-height: 1.1; }
+.lf-web-side .lf-action { margin-top: 2.2em; }
+
+/* Phone app. */
+.lf-mobile { position: absolute; inset: 0; width: 40.2em; padding: 0 2em; overflow: hidden; background: #f5f1e9; font-size: calc(9.8em / 40.2); }
+.lf-mobile::after { position: absolute; bottom: .8em; left: 50%; width: 13em; height: .5em; margin-left: -6.5em; border-radius: 1em; background: #25231f; content: ""; }
+.lf-status { display: flex; align-items: center; justify-content: space-between; height: 5.4em; padding: .4em 1.6em 0 1.8em; }
+.lf-status > span:first-child { font-size: 1.6em; font-weight: 650; }
+.lf-status-icons { display: flex; align-items: center; gap: .5em; }
+.lf-status-icons i { display: block; height: 1.1em; }
+.lf-status-icons i:nth-child(1) { width: 1.7em; background: linear-gradient(#25231f, #25231f) 0 100% / 18% 40% no-repeat, linear-gradient(#25231f, #25231f) 33% 100% / 18% 60% no-repeat, linear-gradient(#25231f, #25231f) 66% 100% / 18% 80% no-repeat, linear-gradient(#25231f, #25231f) 100% 100% / 18% 100% no-repeat; }
+.lf-status-icons i:nth-child(2) { width: 1.45em; height: 1em; border-radius: 50% 50% 0 0 / 100% 100% 0 0; background: #25231f; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.lf-status-icons i:nth-child(3) { width: 2.4em; border: .14em solid #25231f; border-radius: .36em; background: linear-gradient(#25231f, #25231f) .16em 50% / 70% 62% no-repeat; }
+.lf-mobile-head { display: flex; align-items: center; justify-content: space-between; margin-top: 1.2em; }
+.lf-mobile-logo { width: 4.8em; height: 4.8em; border-radius: 1em; }
+.lf-mobile > .lf-greeting { margin-top: 2em; }
+.lf-mobile > .lf-quota { margin-top: 2.2em; }
+.lf-mobile > .lf-section-head { margin-top: 2.6em; }
+.lf-mobile > .lf-section-head b { font-size: 2em; }
+.lf-mobile-rooms { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em; margin-top: 1.4em; }
+.lf-mobile-rooms .lf-room-photo { height: 13em; border-radius: 2em 2em 0 0; }
+.lf-tabs { position: absolute; right: 0; bottom: 0; left: 0; display: grid; height: 8.4em; padding-bottom: 2.2em; grid-template-columns: repeat(4, 1fr); border-top: .1em solid rgba(37, 35, 31, .06); background: rgba(245, 241, 233, .96); }
+.lf-tabs span { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3em; color: #746d65; font-size: 1.25em; }
+.lf-tabs svg { width: 1.8em; height: 1.8em; }
+.lf-tabs .is-active { color: #5f4023; font-weight: 600; }
+
+/* Entrance (~3.2s, once): the phone appears centred, then steps aside to the
+   front while the desktop opens out of its footprint. Default = final state. */
+@keyframes lf-phone {
+  0% { opacity: 0; transform: translate(-12.32em, -5.8em) scale(1.2); animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+  28% { opacity: 1; transform: translate(-12.32em, -6.75em) scale(1.2); }
+  40% { opacity: 1; transform: translate(-12.32em, -6.75em) scale(1.2); animation-timing-function: cubic-bezier(.65, 0, .25, 1); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes lf-desk {
+  0%, 30% { opacity: 0; clip-path: inset(3.6em 8.6em 0 12.2em round 1.8em); }
+  32%, 40% { opacity: 1; clip-path: inset(3.6em 8.6em 0 12.2em round 1.8em); animation-timing-function: cubic-bezier(.65, 0, .25, 1); }
+  100% { opacity: 1; clip-path: inset(-5em round 1em); }
+}
+.lf-scene.is-armed:not(.is-playing) .lf-phone, .lf-scene.is-armed:not(.is-playing) .lf-desk { opacity: 0; }
+.lf-scene.is-playing .lf-phone { animation: lf-phone 3200ms both; }
+.lf-scene.is-playing .lf-desk { animation: lf-desk 3200ms both; }
+
 /* Below desktop the three cards keep their equal size and become a
    swipeable row, with the next card peeking in from the edge. */
 @media (max-width: 960px) {

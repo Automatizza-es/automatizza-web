@@ -3,11 +3,13 @@ import Link from "next/link";
 
 import { projects } from "@/components/projects/ProjectGallery";
 import { ApcVisual } from "@/components/projects/visuals/ApcVisual";
+import { LaFactoryVisual } from "@/components/projects/visuals/LaFactoryVisual";
 import { SilosSpainVisual } from "@/components/projects/visuals/SilosSpainVisual";
 
 const visuals: Partial<Record<string, ReactNode>> = {
   "silos-spain": <SilosSpainVisual />,
   apc: <ApcVisual />,
+  "la-factory-coworking": <LaFactoryVisual />,
 };
 
 // Home-only project cards: three equal cards, a large visual on top and the
