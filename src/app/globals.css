@@ -896,7 +896,7 @@ a { color: inherit; text-decoration: none; }
 .ss-scene { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(70% 50% at 50% 45%, #ffffff 0%, rgba(255, 255, 255, 0) 72%), linear-gradient(180deg, #f8f9fa 0%, #eef1f4 100%); color: #111111; font-family: var(--font-catamaran), var(--font-sans), sans-serif; font-size: calc(100cqw / 40.8); }
 .ss-scene::before { position: absolute; inset: 0 0 40% 0; background-image: radial-gradient(circle, rgba(120, 128, 116, .3) .1em, transparent .12em); background-size: 1.6em 1.6em; content: ""; -webkit-mask-image: radial-gradient(85% 100% at 50% 0%, #000 0%, transparent 78%); mask-image: radial-gradient(85% 100% at 50% 0%, #000 0%, transparent 78%); }
 
-.ss-laptop { position: absolute; top: 12.6em; left: 50%; width: 31em; margin-left: -15.5em; transform: perspective(90em) rotateX(4deg); transform-origin: 50% 100%; }
+.ss-laptop { position: absolute; top: 12.6em; left: 50%; width: 31em; margin-left: -15.5em; transform: perspective(90em) rotateX(13deg); transform-origin: 50% 100%; }
 .ss-lid { padding: .55em .55em .85em; border-radius: 1.3em 1.3em .4em .4em; background: linear-gradient(180deg, #2b2e34, #16181c); box-shadow: inset 0 0 0 .08em #3d4148; }
 .ss-screen { position: relative; overflow: hidden; aspect-ratio: 16 / 10; border-radius: .35em; background: #f5f5f5; }
 .ss-base { position: relative; width: 115%; height: 1.05em; margin-left: -7.5%; border-radius: .2em .2em 1.2em 1.2em / .2em .2em .9em .9em; background: linear-gradient(180deg, #f1f3f5 0%, #d4d8dd 45%, #a8aeb6 100%); box-shadow: 0 1.8em 2.6em -1.2em rgba(17, 24, 39, .4); }
@@ -967,7 +967,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Entrance (~5s, once): the laptop settles in, the dashboard fills,
    then the three elements lift off the screen one after another. */
-.ss-scene.is-armed:not(.is-playing) .ss-laptop { opacity: 0; transform: perspective(90em) translateY(2.4em) rotateX(16deg) scale(.96); }
+.ss-scene.is-armed:not(.is-playing) .ss-laptop { opacity: 0; transform: perspective(90em) translateY(2.4em) rotateX(22deg) scale(.96); }
 .ss-scene.is-armed:not(.is-playing) .ss-float { opacity: 0; translate: var(--fx) var(--fy); scale: .8; filter: blur(.35em); }
 .ss-scene.is-armed:not(.is-playing) .fx-in { opacity: 0; translate: 0 .6em; }
 .ss-scene.is-armed:not(.is-playing) .fx-grow { transform: scaleX(0); }
