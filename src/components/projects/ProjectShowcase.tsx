@@ -2,10 +2,12 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { projects } from "@/components/projects/ProjectGallery";
+import { ApcVisual } from "@/components/projects/visuals/ApcVisual";
 import { SilosSpainVisual } from "@/components/projects/visuals/SilosSpainVisual";
 
 const visuals: Partial<Record<string, ReactNode>> = {
   "silos-spain": <SilosSpainVisual />,
+  apc: <ApcVisual />,
 };
 
 // Home-only project cards: three equal cards, a large visual on top and the
