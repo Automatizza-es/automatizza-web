@@ -232,7 +232,7 @@ function InboxFlow() {
 
       <Connector delay={1250} />
 
-      <div className="ui-dark extract-panel">
+      <div className="ui-accent extract-panel">
         <div className="extract-head fx-in" style={at(1350)}>
           <Icon name="sparkle" size={15} />
           Datos extraídos
@@ -318,7 +318,7 @@ function LeadFlow() {
         </div>
       </div>
 
-      <div className="ui-dark follow-panel fx-in" style={at(2300)}>
+      <div className="ui-accent follow-panel fx-in" style={at(2300)}>
         <div className="follow-head">
           <Icon name="calendar" size={15} />
           Seguimiento activo
@@ -397,7 +397,7 @@ function ConnectFlow() {
       </span>
       <Lines paths={outPaths} className="connect-lines-h fx-draw" delay={1650} />
       <Lines paths={["M50 0 L50 100"]} className="connect-lines-v fx-draw-down" delay={1650} />
-      <ul className="ui-dark connect-targets">
+      <ul className="ui-accent connect-targets">
         {targets.map((target, index) => (
           <li className="fx-slide" style={at(1850 + index * 110)} key={target.label}>
             <Icon name={target.icon} size={15} />
