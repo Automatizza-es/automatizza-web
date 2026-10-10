@@ -654,8 +654,7 @@ export function ChangeShowcaseSection() {
             className="change-card-build"
             title={
               <>
-                Tu empresa ha cambiado. <br />
-                Tu software también debería.
+                <span>Tu empresa ha cambiado.</span> <span>Tu software también debería.</span>
               </>
             }
             punchline="No al revés."
