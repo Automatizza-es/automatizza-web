@@ -976,12 +976,12 @@ a { color: inherit; text-decoration: none; }
 .ss-scene.is-playing .fx-in { transition: opacity 500ms ease var(--d), translate 600ms cubic-bezier(.22, .7, .25, 1) var(--d); }
 .ss-scene.is-playing .fx-grow { transition: transform 800ms cubic-bezier(.22, .7, .25, 1) var(--d); }
 
-/* APC card — the driver app's home on a phone, today's route and a pickup
-   that switches from in progress to validated. Same em scaling as Silos
+/* APC card — the driver app's home on a phone above today's trip, with the
+   pickup switching from in progress to validated. Same em scaling as Silos
    Spain (1em = 10px at 408px card width). */
 .apc-scene { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(55% 45% at 50% 45%, rgba(141, 198, 63, .09) 0%, rgba(141, 198, 63, 0) 70%), radial-gradient(70% 50% at 50% 45%, #ffffff 0%, rgba(255, 255, 255, 0) 72%), linear-gradient(180deg, #f8f9fa 0%, #eef1f4 100%); color: #111111; font-family: var(--font-sans), sans-serif; font-size: calc(100cqw / 40.8); }
 
-.apc-phone { position: absolute; top: 4.4em; left: 50%; width: 17.6em; margin-left: -8.8em; padding: .5em; border-radius: 3em; background: linear-gradient(140deg, #f4f5f7 0%, #c8ccd2 35%, #eef0f2 55%, #b9bec5 100%); box-shadow: 0 3.4em 5em -2.6em rgba(17, 24, 39, .45), 0 .6em 1.2em -.6em rgba(17, 24, 39, .2), inset 0 0 0 .08em rgba(17, 24, 39, .18); }
+.apc-phone { position: absolute; top: 3.2em; left: 50%; width: 17.6em; margin-left: -8.8em; padding: .5em; font-size: .86em; border-radius: 3em; background: linear-gradient(140deg, #f4f5f7 0%, #c8ccd2 35%, #eef0f2 55%, #b9bec5 100%); box-shadow: 0 3.4em 5em -2.6em rgba(17, 24, 39, .45), 0 .6em 1.2em -.6em rgba(17, 24, 39, .2), inset 0 0 0 .08em rgba(17, 24, 39, .18); }
 .apc-phone::before, .apc-phone::after { position: absolute; width: .16em; border-radius: .1em; background: #b9bec5; content: ""; }
 .apc-phone::before { top: 8.5em; left: -.12em; height: 2.4em; box-shadow: 0 3.1em 0 #b9bec5; }
 .apc-phone::after { top: 10.5em; right: -.12em; height: 3.6em; }
@@ -1015,45 +1015,44 @@ a { color: inherit; text-decoration: none; }
 .apc-tabs svg { width: 2.6em; height: 2.6em; }
 .apc-tabs .is-active { color: #1c3157; font-weight: 600; }
 
-.apc-float { position: absolute; z-index: 2; padding: 1.1em 1.2em; border: .1em solid #e3e8f0; border-radius: 1.3em; background: #ffffff; box-shadow: 0 2.2em 3.6em -1.6em rgba(17, 24, 39, .32), 0 .4em 1em -.4em rgba(17, 24, 39, .12); color: #111111; font-size: .9em; }
-.apc-float svg { display: block; width: 100%; height: 100%; }
-.apc-float-route { top: 3.4em; left: 1.3em; width: 16.6em; --fx: 4em; }
-.apc-float-pickup { top: 30.4em; right: 1.3em; width: 16.6em; --fx: -4em; border-color: #cfe9d9; }
-.apc-float-head, .apc-pickup-head { display: flex; align-items: center; gap: .75em; }
-.apc-chip { display: inline-flex; flex-shrink: 0; width: 2.6em; height: 2.6em; padding: .6em; border-radius: .85em; background: #edf1f8; color: #1c3157; }
-.apc-float-head strong { display: block; font-size: 1.2em; font-weight: 700; line-height: 1.2; }
-.apc-float-head small { display: block; margin-top: .1em; color: #8a8f98; font-size: .95em; white-space: nowrap; }
-.apc-stops { position: relative; display: grid; gap: .8em; margin: 1em 0 0; padding: 0; list-style: none; }
-.apc-stops::before { position: absolute; top: 1em; bottom: 1em; left: .95em; width: .1em; background: #dfe5ee; content: ""; }
-.apc-stops li { position: relative; display: flex; align-items: center; gap: .75em; }
-.apc-stop-dot { display: inline-flex; flex-shrink: 0; width: 2em; height: 2em; padding: .45em; border: .14em solid #1c3157; border-radius: 50%; background: #ffffff; color: #ffffff; }
-.apc-stops .is-done .apc-stop-dot { border-color: #1f9d55; background: #1f9d55; }
-.apc-stops b { display: block; font-size: 1.05em; font-weight: 600; line-height: 1.2; }
-.apc-stops small { display: block; color: #8a8f98; font-size: .9em; }
-.apc-state-icon { position: relative; flex-shrink: 0; width: 2.5em; height: 2.5em; }
-.apc-state-icon > span { position: absolute; inset: 0; border-radius: 50%; }
-.apc-state-icon .apc-state-pending { border: .16em solid #e9a23b; background: #fff8ec; opacity: 0; }
-.apc-state-icon .apc-state-pending::after { position: absolute; inset: .62em; border-radius: 50%; background: #e9a23b; content: ""; }
-.apc-state-icon .apc-state-done { padding: .55em; background: #1f9d55; color: #ffffff; }
-.apc-state-label { display: grid; }
-.apc-state-label strong { grid-area: 1 / 1; font-size: 1.15em; white-space: nowrap; font-weight: 700; line-height: 1.2; }
-.apc-state-label .apc-state-pending { opacity: 0; }
-.apc-state-label .apc-state-done { color: #157a43; }
-.apc-pickup-data { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5em; margin: 1em 0 0; padding-top: .85em; border-top: .1em solid #eef1f5; }
-.apc-pickup-data dt { color: #8a8f98; font-size: .85em; }
-.apc-pickup-data dd { margin: .15em 0 0; font-size: 1.05em; font-weight: 650; white-space: nowrap; }
+/* Today's trip under the phone: origin (pickup) and destination (APC),
+   with the pickup status beside the origin instead of in a card. */
+.apc-route { position: absolute; top: 37.4em; right: 4.8em; left: 4.8em; height: 0; }
+.apc-route-line { position: absolute; top: -.07em; right: 0; left: 0; height: max(1px, .14em); background: repeating-linear-gradient(90deg, #a9b5c7 0 .55em, transparent .55em 1.1em); }
+.apc-route-done { position: absolute; top: -.08em; left: 0; width: 42%; height: .16em; border-radius: .1em; background: #1c3157; }
+.apc-node { position: absolute; top: 0; width: 1.1em; height: 1.1em; margin: -.55em 0 0 -.55em; border-radius: 50%; }
+.apc-node-origin { left: 0; background: #1f9d55; box-shadow: 0 0 0 .32em rgba(31, 157, 85, .16); }
+.apc-node-destination { left: 100%; border: .2em solid #1c3157; background: #ffffff; }
+.apc-truck { position: absolute; bottom: .02em; left: 42%; width: 3.4em; margin-left: -1.7em; filter: drop-shadow(0 .35em .4em rgba(17, 24, 39, .18)); }
+.apc-truck svg { display: block; width: 100%; height: auto; }
+.apc-stop { position: absolute; top: 1.35em; display: flex; flex-direction: column; gap: .2em; white-space: nowrap; }
+.apc-stop-origin { left: -.55em; }
+.apc-stop-destination { right: -.55em; align-items: flex-end; text-align: right; }
+.apc-stop b { color: #111111; font-size: 1.05em; font-weight: 650; }
+.apc-stop small { color: #8a8f98; font-size: .95em; }
+.apc-pickup-status { display: grid; font-size: .95em; font-weight: 650; }
+.apc-pickup-status > span { display: flex; grid-area: 1 / 1; align-items: center; gap: .4em; }
+.apc-status-pending { color: #b26b00; opacity: 0; }
+.apc-status-pending i { width: .65em; height: .65em; margin-inline: .2em; border-radius: 50%; background: #e9a23b; }
+.apc-status-done { color: #157a43; }
+.apc-status-done i { display: inline-flex; width: 1.25em; height: 1.25em; padding: .22em; border-radius: 50%; background: #1f9d55; color: #ffffff; }
+.apc-status-done svg { display: block; width: 100%; height: 100%; }
 
-/* Entrance (~3s, once): phone in, the two elements after it, then the
-   pickup flips to validated. Everything stays still afterwards. */
-.apc-scene.is-armed:not(.is-playing) .apc-phone { opacity: 0; transform: translateY(2.2em) scale(.97); }
-.apc-scene.is-armed:not(.is-playing) .apc-float { opacity: 0; translate: var(--fx) 0; scale: .94; }
-.apc-scene.is-armed:not(.is-playing) .apc-float-pickup { border-color: #e3e8f0; }
-.apc-scene.is-armed:not(.is-playing) .apc-state-pending { opacity: 1; }
-.apc-scene.is-armed:not(.is-playing) .apc-state-done { opacity: 0; scale: .6; }
+/* Entrance (~3.5s, once): phone and route in, the pickup turns validated,
+   then the truck covers a short stretch. Everything stays still afterwards. */
+.apc-scene.is-armed:not(.is-playing) .apc-phone { opacity: 0; transform: translateY(2em) scale(.97); }
+.apc-scene.is-armed:not(.is-playing) .apc-route { opacity: 0; }
+.apc-scene.is-armed:not(.is-playing) .apc-truck { left: 0%; }
+.apc-scene.is-armed:not(.is-playing) .apc-route-done { width: 0%; }
+.apc-scene.is-armed:not(.is-playing) .apc-node-origin { background: #e9a23b; box-shadow: 0 0 0 .32em rgba(233, 162, 59, .18); }
+.apc-scene.is-armed:not(.is-playing) .apc-status-pending { opacity: 1; }
+.apc-scene.is-armed:not(.is-playing) .apc-status-done { opacity: 0; }
 .apc-scene.is-playing .apc-phone { transition: opacity 800ms ease, transform 1100ms cubic-bezier(.2, .8, .2, 1); }
-.apc-scene.is-playing .apc-float { transition: opacity 600ms ease var(--d), translate 900ms cubic-bezier(.16, .84, .3, 1) var(--d), scale 900ms cubic-bezier(.16, .84, .3, 1) var(--d), border-color 400ms ease 2600ms; }
-.apc-scene.is-playing .apc-state-pending { transition: opacity 300ms ease 2600ms; }
-.apc-scene.is-playing .apc-state-done { transition: opacity 350ms ease 2600ms, scale 450ms cubic-bezier(.3, 1.4, .5, 1) 2600ms; }
+.apc-scene.is-playing .apc-route { transition: opacity 600ms ease 450ms; }
+.apc-scene.is-playing .apc-node-origin { transition: background-color 300ms ease 1500ms, box-shadow 300ms ease 1500ms; }
+.apc-scene.is-playing .apc-pickup-status > span { transition: opacity 300ms ease 1500ms; }
+.apc-scene.is-playing .apc-truck { transition: left 1700ms cubic-bezier(.45, 0, .25, 1) 1900ms; }
+.apc-scene.is-playing .apc-route-done { transition: width 1700ms cubic-bezier(.45, 0, .25, 1) 1900ms; }
 
 /* Below desktop the three cards keep their equal size and become a
    swipeable row, with the next card peeking in from the edge. */
