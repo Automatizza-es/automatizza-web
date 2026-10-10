@@ -1,12 +1,17 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { projects } from "@/components/projects/ProjectGallery";
+import { SilosSpainVisual } from "@/components/projects/visuals/SilosSpainVisual";
+
+const visuals: Partial<Record<string, ReactNode>> = {
+  "silos-spain": <SilosSpainVisual />,
+};
 
 // Home-only project cards: three equal cards, a large visual on top and the
-// name + a short line underneath. Each .showcase-stage is an empty slot,
-// scoped per project (.showcase-visual-<slug>), for that card's own visual
-// and micro-animations; the card gets .is-visible from <EditorialMotion />
-// when it scrolls into view.
+// name + a short line underneath. Each .showcase-stage holds that project's
+// visual from `visuals` (scoped per project as .showcase-visual-<slug>);
+// projects without one yet keep an empty slot.
 export function ProjectShowcase() {
   return (
     <ul className="showcase-grid" aria-label="Proyectos destacados">
@@ -20,7 +25,7 @@ export function ProjectShowcase() {
               tabIndex={-1}
               aria-hidden="true"
             >
-              <div className="showcase-stage" />
+              <div className="showcase-stage">{visuals[project.slug]}</div>
             </Link>
             <div className="showcase-copy">
               <h3>{project.client}.</h3> <p>{project.title}.</p>
