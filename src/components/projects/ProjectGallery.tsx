@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { ProjectMedia } from "@/components/projects/ProjectMedia";
 
-const projects = [
+export const projects = [
   {
     slug: "silos-spain",
     client: "Silos Spain",

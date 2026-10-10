@@ -873,6 +873,31 @@ a { color: inherit; text-decoration: none; }
   .motion-ready .process-journey .process-path::before { transition: none; transform: none; }
 }
 
+/* Projects (home) — three equal Glide-style cards: visual slot on top, name + one line below */
+.showcase-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.25rem, 2vw, 1.75rem); margin: 3.5rem 0 0; padding: 0; list-style: none; }
+.showcase-card { display: flex; min-width: 0; flex-direction: column; }
+.showcase-visual { position: relative; display: block; overflow: hidden; aspect-ratio: 15 / 16; border: 1px solid #d9dee7; background: linear-gradient(160deg, #ffffff 0%, #f5f8fb 100%); transition: border-color 220ms ease; }
+.showcase-card:hover .showcase-visual { border-color: #a9d8f6; }
+.showcase-stage { position: absolute; inset: 0; }
+.showcase-copy { flex: 1; margin-top: 1.35rem; padding-inline: .1rem; font-size: 1.0625rem; line-height: 1.55; }
+.showcase-copy h3, .showcase-copy p { display: inline; margin: 0; font-size: inherit; line-height: inherit; }
+.showcase-copy h3 { color: var(--color-navy); font-family: var(--font-sans), sans-serif; font-weight: 650; letter-spacing: -.005em; }
+.showcase-copy p { color: #626977; }
+.showcase-link { display: inline-flex; align-items: center; gap: .65rem; width: fit-content; margin-top: 1rem; padding-inline: .1rem; color: var(--color-navy); font-size: .88rem; font-weight: 700; }
+.showcase-link span { color: var(--color-cyan); transition: transform 180ms ease; }
+.showcase-link:hover span, .showcase-card:hover .showcase-link span { transform: translateX(4px); }
+.motion-ready .showcase-card[data-reveal]:nth-child(2) { transition-delay: 90ms; }
+.motion-ready .showcase-card[data-reveal]:nth-child(3) { transition-delay: 180ms; }
+
+/* Below desktop the three cards keep their equal size and become a
+   swipeable row, with the next card peeking in from the edge. */
+@media (max-width: 960px) {
+  .showcase-grid { grid-template-columns: none; grid-auto-columns: min(78%, 340px); grid-auto-flow: column; margin-inline: calc(-1 * var(--page-gutter)); padding: 0 var(--page-gutter) .25rem; overflow-x: auto; scroll-padding-inline: var(--page-gutter); scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .showcase-grid::-webkit-scrollbar { display: none; }
+  .showcase-card { scroll-snap-align: start; }
+  .showcase-copy { font-size: 1rem; }
+}
+
 /* "El cambio empieza aquí": four cards, each a small working interface */
 .change-section { position: relative; overflow: hidden; padding-block: clamp(5.5rem, 10vw, 8.5rem); background: radial-gradient(50% 28% at 50% 0%, rgba(2, 160, 252, .07), transparent 72%), #eef2f7; color: var(--color-dark-gray); isolation: isolate; }
 .change-header { text-align: center; }

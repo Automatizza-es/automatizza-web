@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
-import { ProjectGallery } from "@/components/projects/ProjectGallery";
+import { ProjectShowcase } from "@/components/projects/ProjectShowcase";
 
 export function ProjectsSection() {
   return (
@@ -16,7 +16,7 @@ export function ProjectsSection() {
           </p>
         </header>
 
-        <ProjectGallery />
+        <ProjectShowcase />
 
         <div className="projects-all-link" data-reveal>
           <Link href="/proyectos">
