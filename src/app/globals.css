@@ -1358,32 +1358,16 @@ a { color: inherit; text-decoration: none; }
 .change-visual.is-armed:not(.is-playing) .fx-draw-down { clip-path: inset(0 0 100% 0); }
 .change-visual.is-armed:not(.is-playing) .fx-mark { background-size: 0% 1.5px, 0% 100%; color: inherit; }
 
-.change-visual.is-armed:not(.is-playing) .build-module { border-color: #dde3ec; box-shadow: none; }
-.change-visual.is-armed:not(.is-playing) .build-module::after { opacity: .3; }
-.change-visual.is-armed:not(.is-playing) .build-status-plus { opacity: 1; }
-.change-visual.is-armed:not(.is-playing) .build-status-check { opacity: 0; scale: .5; }
-.change-visual.is-playing .build-module { transition: border-color 400ms ease var(--d, 0ms), box-shadow 400ms ease var(--d, 0ms); }
-.change-visual.is-playing .build-module::after { transition: opacity 400ms ease var(--d, 0ms); }
-.change-visual.is-playing .build-status > span { transition: opacity 300ms ease var(--d, 0ms), scale 300ms ease var(--d, 0ms); }
-.change-visual.is-playing .build-status-plus { transition-delay: calc(var(--d, 0ms) - 150ms); }
 
 .change-visual.is-playing .connect-flowline { transition: opacity 600ms ease 2600ms; }
 .change-visual.is-armed:not(.is-playing) .connect-flowline { opacity: 0; }
-.change-visual.is-playing .connect-flowline { animation: change-flow 1.8s linear 2600ms infinite; }
-.change-visual.is-playing .connect-hub { animation: change-glow 3.2s ease-in-out 2600ms infinite; }
 .change-visual.is-playing .chat-typing { animation: change-typing 1050ms ease 750ms both; }
-.change-visual.is-playing .chat-typing i { animation: change-dot 700ms ease-in-out infinite; }
+.change-visual.is-playing .chat-typing i { animation: change-dot 700ms ease-in-out 3; }
 .change-visual.is-playing .chat-typing i:nth-child(2) { animation-delay: 120ms; }
 .change-visual.is-playing .chat-typing i:nth-child(3) { animation-delay: 240ms; }
-.change-visual.is-playing .follow-dot-pending::after { animation: change-ring 2.6s ease-out 3700ms infinite; }
-.change-visual.is-playing .dash-chart-dot { animation: change-ring-dot 2.6s ease-out 3600ms infinite; }
 
-@keyframes change-flow { to { stroke-dashoffset: -32; } }
-@keyframes change-glow { 0%, 100% { box-shadow: 0 0 0 6px rgba(2, 160, 252, .08), 0 16px 30px -14px rgba(2, 19, 95, .6); } 50% { box-shadow: 0 0 0 10px rgba(2, 160, 252, .12), 0 16px 30px -14px rgba(2, 19, 95, .6); } }
 @keyframes change-typing { 0% { opacity: 0; translate: 0 6px; } 18%, 82% { opacity: 1; translate: 0 0; } 100% { opacity: 0; translate: 0 0; } }
 @keyframes change-dot { 0%, 100% { opacity: .4; translate: 0 0; } 50% { opacity: 1; translate: 0 -2px; } }
-@keyframes change-ring { 0% { opacity: .7; scale: .8; } 80%, 100% { opacity: 0; scale: 1.5; } }
-@keyframes change-ring-dot { 0% { box-shadow: 0 0 0 0 rgba(2, 160, 252, .45); } 80%, 100% { box-shadow: 0 0 0 9px rgba(2, 160, 252, 0); } }
 
 .motion-ready .change-card-half + .change-card-half[data-reveal] { transition-delay: 120ms; }
 
@@ -1451,8 +1435,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .change-visual :is(.connect-flowline, .connect-hub, .chat-typing, .dash-chart-dot),
-  .change-visual .follow-dot-pending::after { animation: none !important; }
+  .change-visual .chat-typing { animation: none !important; }
 }
 
 /* "Qué hacemos": editorial, static list after the projects. Type and thin

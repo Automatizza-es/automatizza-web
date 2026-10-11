@@ -434,8 +434,8 @@ function BuildFlow() {
   return (
     <div className="build-flow">
       <ul className="build-modules">
-        {modules.map((module, index) => (
-          <li className="build-module" style={at(200 + index * 550)} key={module.label}>
+        {modules.map((module) => (
+          <li className="build-module" key={module.label}>
             <Icon name={module.icon} size={17} />
             <span>{module.label}</span>
             <span className="build-status">
@@ -473,9 +473,9 @@ function BuildFlow() {
           </div>
 
           <div className="dash-kpis">
-            {kpis.map((kpi, index) => (
+            {kpis.map((kpi) => (
               <div className="dash-slot" key={kpi.label}>
-                <div className="dash-kpi fx-pop" style={at(450 + index * 550)}>
+                <div className="dash-kpi">
                   <span className="dash-kpi-label">
                     <i>
                       <Icon name={kpi.icon} size={12} />
