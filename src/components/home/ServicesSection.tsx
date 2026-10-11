@@ -14,9 +14,7 @@ export function ServicesSection() {
       <Container>
         <header className="whatwedo-header">
           <p className="section-eyebrow">QUÉ HACEMOS</p>
-          <h2 id="services-title">
-            La tecnología se adapta a tu negocio. <span>No al revés.</span>
-          </h2>
+          <h2 id="services-title">Ideas que se convierten en soluciones.</h2>
           <p className="whatwedo-lead">
             Tres palabras no bastan para definir lo que hacemos, pero estas cuatro áreas lo resumen:
           </p>

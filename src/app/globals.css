@@ -1455,28 +1455,27 @@ a { color: inherit; text-decoration: none; }
   .change-visual .follow-dot-pending::after { animation: none !important; }
 }
 
-/* "Qué hacemos": editorial, static list after the projects. Type and thin
-   rules only, so it reads differently from the card sections around it. */
-.whatwedo-section { padding-block: clamp(7rem, 10vw, 10rem); background: var(--color-white); }
-.whatwedo-header { max-width: 1040px; }
-.whatwedo-header h2 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(3rem, 5.6vw, 5.25rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.02; text-wrap: balance; }
-.whatwedo-header h2 span { color: var(--color-medium-gray); }
-.whatwedo-lead { max-width: 30rem; margin: 2.25rem 0 0; color: #626977; font-size: 1.125rem; line-height: 1.6; }
-.whatwedo-list { margin: clamp(4rem, 7vw, 6rem) 0 0; padding: 0; border-bottom: 1px solid #dfe3ea; list-style: none; }
-.whatwedo-row { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 29rem); gap: 2rem; align-items: baseline; padding: clamp(1.9rem, 3vw, 2.6rem) 0; border-top: 1px solid #dfe3ea; }
-.whatwedo-number { color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
-.whatwedo-row h3 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(2rem, 3.6vw, 3.25rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.08; }
-.whatwedo-row p { margin: 0; color: #626977; font-size: 1.125rem; line-height: 1.5; }
+/* "Qué hacemos": compact editorial list after the projects, a quiet pause
+   between the livelier sections. Type and thin rules only. */
+.whatwedo-section { padding-block: clamp(5rem, 7vw, 6.5rem); background: var(--color-white); }
+.whatwedo-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); gap: 1.25rem 3rem; align-items: end; }
+.whatwedo-header .section-eyebrow { grid-column: 1 / -1; margin-bottom: -.25rem; }
+.whatwedo-header h2 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(2rem, 3vw, 2.625rem); font-weight: 650; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
+.whatwedo-lead { margin: 0; color: #626977; font-size: 1rem; line-height: 1.6; }
+.whatwedo-list { margin: clamp(2.5rem, 4vw, 3.5rem) 0 0; padding: 0; border-bottom: 1px solid #e3e7ee; list-style: none; }
+.whatwedo-row { position: relative; display: grid; grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 26rem); gap: 1.5rem; align-items: baseline; padding: 1.35rem 0; border-top: 1px solid #e3e7ee; }
+.whatwedo-number { color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: .75rem; font-weight: 600; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+.whatwedo-row h3 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(1.15rem, 1.6vw, 1.375rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+.whatwedo-row p { margin: 0; color: #6b7280; font-size: .95rem; line-height: 1.55; }
 
 /* Hover (pointer devices only): a cyan rule draws in along the row's top
    border and the title eases a few pixels to the right. */
-.whatwedo-row { position: relative; }
 .whatwedo-row::before { position: absolute; top: -1px; left: 0; width: 100%; height: 1px; background: var(--color-cyan); content: ""; transform: scaleX(0); transform-origin: left; transition: transform 600ms cubic-bezier(.2, .8, .2, 1); }
 .whatwedo-row h3 { transition: transform 450ms cubic-bezier(.2, .8, .2, 1); }
 .whatwedo-row p { transition: color 300ms ease; }
 @media (hover: hover) {
   .whatwedo-row:hover::before { transform: scaleX(1); }
-  .whatwedo-row:hover h3 { transform: translateX(.5rem); }
+  .whatwedo-row:hover h3 { transform: translateX(.35rem); }
   .whatwedo-row:hover p { color: var(--color-dark-gray); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1484,17 +1483,16 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 900px) {
-  .whatwedo-row { grid-template-columns: 3.5rem minmax(0, 1fr); gap: 0.65rem 1rem; }
-  .whatwedo-row p { grid-column: 2; }
+  .whatwedo-header { grid-template-columns: 1fr; }
+  .whatwedo-lead { max-width: 30rem; }
 }
 
 @media (max-width: 720px) {
-  .whatwedo-section { padding-block: 5.5rem; }
-  .whatwedo-header h2 { font-size: clamp(2.45rem, 11vw, 3rem); line-height: 1.06; }
-  .whatwedo-lead { margin-top: 1.5rem; font-size: 1.0625rem; }
-  .whatwedo-list { margin-top: 3rem; }
-  .whatwedo-row { grid-template-columns: 2.5rem minmax(0, 1fr); padding: 1.6rem 0; }
-  .whatwedo-number { font-size: 0.875rem; }
-  .whatwedo-row h3 { font-size: 1.75rem; }
-  .whatwedo-row p { font-size: 1rem; }
+  .whatwedo-section { padding-block: 4.5rem; }
+  .whatwedo-header h2 { font-size: 1.875rem; }
+  .whatwedo-lead { font-size: .95rem; }
+  .whatwedo-list { margin-top: 2.25rem; }
+  .whatwedo-row { grid-template-columns: 2.25rem minmax(0, 1fr); gap: .3rem .75rem; padding: 1.1rem 0; }
+  .whatwedo-row p { grid-column: 2; font-size: .9rem; }
+  .whatwedo-row h3 { font-size: 1.125rem; }
 }
