@@ -32,7 +32,7 @@ export function ProcessSection() {
           <h2 id="process-title">
             Primero entendemos el proceso
             <br />
-            Después elegimos la tecnología
+            <span className="section-title-later">Después elegimos la tecnología</span>
           </h2>
         </header>
 
