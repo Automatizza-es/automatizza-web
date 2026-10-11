@@ -341,12 +341,12 @@ function LeadFlow() {
   );
 }
 
-// Each source tool starts slightly scattered (--cx/--cy/--cr) and settles into line.
-const sources: { icon: IconName; label: string; scatter: Record<string, string> }[] = [
-  { icon: "form", label: "Formulario", scatter: { "--cx": "-10px", "--cy": "8px", "--cr": "-7deg" } },
-  { icon: "mail", label: "Email", scatter: { "--cx": "18px", "--cy": "-4px", "--cr": "5deg" } },
-  { icon: "users", label: "CRM", scatter: { "--cx": "-4px", "--cy": "10px", "--cr": "4deg" } },
-  { icon: "doc", label: "Archivos", scatter: { "--cx": "14px", "--cy": "-8px", "--cr": "-6deg" } },
+// The source tools appear together, already in line; then the flow connects them.
+const sources: { icon: IconName; label: string }[] = [
+  { icon: "form", label: "Formulario" },
+  { icon: "mail", label: "Email" },
+  { icon: "users", label: "CRM" },
+  { icon: "doc", label: "Archivos" },
 ];
 
 const targets: { icon: IconName; label: string }[] = [
@@ -383,23 +383,23 @@ function ConnectFlow() {
   return (
     <div className="connect-flow">
       <ul className="connect-sources">
-        {sources.map((source, index) => (
-          <li className="connect-chip fx-settle" style={at(index * 120, source.scatter)} key={source.label}>
+        {sources.map((source) => (
+          <li className="connect-chip fx-in" style={at(0)} key={source.label}>
             <Icon name={source.icon} size={16} />
             <span>{source.label}</span>
           </li>
         ))}
       </ul>
-      <Lines paths={inPaths} className="connect-lines-h fx-draw" delay={950} />
-      <Lines paths={inPathsVertical} className="connect-lines-v fx-draw-down" delay={950} />
-      <span className="connect-hub fx-pop" style={at(1350)}>
+      <Lines paths={inPaths} className="connect-lines-h fx-draw" delay={550} />
+      <Lines paths={inPathsVertical} className="connect-lines-v fx-draw-down" delay={550} />
+      <span className="connect-hub fx-pop" style={at(950)}>
         <BrandMark size={28} />
       </span>
-      <Lines paths={outPaths} className="connect-lines-h fx-draw" delay={1650} />
-      <Lines paths={["M50 0 L50 100"]} className="connect-lines-v fx-draw-down" delay={1650} />
+      <Lines paths={outPaths} className="connect-lines-h fx-draw" delay={1250} />
+      <Lines paths={["M50 0 L50 100"]} className="connect-lines-v fx-draw-down" delay={1250} />
       <ul className="ui-accent connect-targets">
         {targets.map((target, index) => (
-          <li className="fx-slide" style={at(1850 + index * 110)} key={target.label}>
+          <li className="fx-slide" style={at(1450 + index * 110)} key={target.label}>
             <Icon name={target.icon} size={15} />
             {target.label}
             <span className="connect-target-ok">

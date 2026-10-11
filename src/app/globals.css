@@ -1277,7 +1277,7 @@ a { color: inherit; text-decoration: none; }
 .follow-steps strong { display: block; color: var(--color-navy); font-size: .7rem; font-weight: 600; line-height: 1.3; }
 .follow-steps small { display: block; margin-top: .1rem; color: #7b88a3; font-size: .63rem; }
 
-/* Card 3 — scattered tools line up and flow through one hub */
+/* Card 3 — the tools flow through one hub */
 .connect-flow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20px, .45fr) auto minmax(20px, .45fr) minmax(0, 1fr); height: 250px; }
 .connect-sources, .connect-targets { display: grid; min-width: 0; margin: 0; padding: 0; list-style: none; }
 .connect-sources { grid-template-rows: repeat(4, 1fr); align-items: center; }
@@ -1344,30 +1344,36 @@ a { color: inherit; text-decoration: none; }
    .is-armed (start state, applied instantly) when the visual mounts and
    .is-playing when it scrolls into view. Transitions only exist while
    playing, so each step eases in after its own --d delay. */
-.change-visual.is-playing :is(.fx-in, .fx-slide, .fx-pop, .fx-settle, .fx-draw, .fx-draw-down, .fx-type, .fx-mark) { transition: opacity 560ms ease var(--d, 0ms), translate 700ms cubic-bezier(.22, .7, .25, 1) var(--d, 0ms), scale 520ms cubic-bezier(.3, 1.3, .5, 1) var(--d, 0ms), rotate 800ms cubic-bezier(.22, .7, .25, 1) var(--d, 0ms), clip-path 900ms cubic-bezier(.6, 0, .25, 1) var(--d, 0ms), background-size 500ms ease var(--d, 0ms), color 400ms ease var(--d, 0ms); }
+.change-visual.is-playing :is(.fx-in, .fx-slide, .fx-pop, .fx-draw, .fx-draw-down, .fx-type, .fx-mark) { transition: opacity 560ms ease var(--d, 0ms), translate 700ms cubic-bezier(.22, .7, .25, 1) var(--d, 0ms), scale 520ms cubic-bezier(.3, 1.3, .5, 1) var(--d, 0ms), rotate 800ms cubic-bezier(.22, .7, .25, 1) var(--d, 0ms), clip-path 900ms cubic-bezier(.6, 0, .25, 1) var(--d, 0ms), background-size 500ms ease var(--d, 0ms), color 400ms ease var(--d, 0ms); }
 .change-visual.is-playing .fx-type { transition-duration: 560ms; transition-timing-function: steps(14, end); }
-.change-visual.is-playing .fx-settle { transition-duration: 700ms, 900ms, 520ms, 900ms; }
 .fx-draw, .fx-draw-down, .fx-type { clip-path: inset(0 -8px 0 0); }
 .fx-draw-down { clip-path: inset(0 0 -8px 0); }
 
 .change-visual.is-armed:not(.is-playing) .fx-in { opacity: 0; translate: 0 12px; }
 .change-visual.is-armed:not(.is-playing) .fx-slide { opacity: 0; translate: -12px 0; }
 .change-visual.is-armed:not(.is-playing) .fx-pop { opacity: 0; scale: .86; }
-.change-visual.is-armed:not(.is-playing) .fx-settle { opacity: .5; translate: var(--cx) var(--cy); rotate: var(--cr); }
 .change-visual.is-armed:not(.is-playing) .fx-draw, .change-visual.is-armed:not(.is-playing) .fx-type { clip-path: inset(0 100% 0 0); }
 .change-visual.is-armed:not(.is-playing) .fx-draw-down { clip-path: inset(0 0 100% 0); }
 .change-visual.is-armed:not(.is-playing) .fx-mark { background-size: 0% 1.5px, 0% 100%; color: inherit; }
 
 
-.change-visual.is-playing .connect-flowline { transition: opacity 600ms ease 2600ms; }
+.change-visual.is-playing .connect-flowline { transition: opacity 600ms ease 2100ms; }
 .change-visual.is-armed:not(.is-playing) .connect-flowline { opacity: 0; }
+.change-visual.is-playing .connect-flowline { animation: change-flow 1.8s linear 2100ms infinite; }
+.change-visual.is-playing .connect-hub { animation: change-glow 3.2s ease-in-out 2100ms infinite; }
 .change-visual.is-playing .chat-typing { animation: change-typing 1050ms ease 750ms both; }
-.change-visual.is-playing .chat-typing i { animation: change-dot 700ms ease-in-out 3; }
+.change-visual.is-playing .chat-typing i { animation: change-dot 700ms ease-in-out infinite; }
 .change-visual.is-playing .chat-typing i:nth-child(2) { animation-delay: 120ms; }
 .change-visual.is-playing .chat-typing i:nth-child(3) { animation-delay: 240ms; }
+.change-visual.is-playing .follow-dot-pending::after { animation: change-ring 2.6s ease-out 3700ms infinite; }
+.change-visual.is-playing .dash-chart-dot { animation: change-ring-dot 2.6s ease-out 3600ms infinite; }
 
+@keyframes change-flow { to { stroke-dashoffset: -32; } }
+@keyframes change-glow { 0%, 100% { box-shadow: 0 0 0 6px rgba(2, 160, 252, .08), 0 16px 30px -14px rgba(2, 19, 95, .6); } 50% { box-shadow: 0 0 0 10px rgba(2, 160, 252, .12), 0 16px 30px -14px rgba(2, 19, 95, .6); } }
 @keyframes change-typing { 0% { opacity: 0; translate: 0 6px; } 18%, 82% { opacity: 1; translate: 0 0; } 100% { opacity: 0; translate: 0 0; } }
 @keyframes change-dot { 0%, 100% { opacity: .4; translate: 0 0; } 50% { opacity: 1; translate: 0 -2px; } }
+@keyframes change-ring { 0% { opacity: .7; scale: .8; } 80%, 100% { opacity: 0; scale: 1.5; } }
+@keyframes change-ring-dot { 0% { box-shadow: 0 0 0 0 rgba(2, 160, 252, .45); } 80%, 100% { box-shadow: 0 0 0 9px rgba(2, 160, 252, 0); } }
 
 .motion-ready .change-card-half + .change-card-half[data-reveal] { transition-delay: 120ms; }
 
@@ -1435,7 +1441,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .change-visual .chat-typing { animation: none !important; }
+  .change-visual :is(.connect-flowline, .connect-hub, .chat-typing, .dash-chart-dot),
+  .change-visual .follow-dot-pending::after { animation: none !important; }
 }
 
 /* "Qué hacemos": editorial, static list after the projects. Type and thin
