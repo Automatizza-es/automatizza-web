@@ -27,7 +27,7 @@ export function ProcessSection() {
   return (
     <section className="process-section" id="forma-de-trabajar" aria-labelledby="process-title">
       <Container>
-        <header className="process-header" data-reveal>
+        <header className="section-header" data-reveal>
           <p className="section-eyebrow">FORMA DE TRABAJAR</p>
           <h2 id="process-title">
             Primero entendemos el proceso

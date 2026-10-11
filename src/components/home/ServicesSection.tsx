@@ -12,10 +12,10 @@ export function ServicesSection() {
   return (
     <section className="whatwedo-section" id="servicios" aria-labelledby="services-title">
       <Container>
-        <header className="whatwedo-header">
+        <header className="section-header">
           <p className="section-eyebrow">QUÉ HACEMOS</p>
           <h2 id="services-title">Ideas que se convierten en soluciones.</h2>
-          <p className="whatwedo-lead">
+          <p>
             Tres palabras no bastan para definir lo que hacemos, pero estas cuatro áreas lo resumen:
           </p>
         </header>

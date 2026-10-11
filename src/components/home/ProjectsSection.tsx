@@ -7,7 +7,7 @@ export function ProjectsSection() {
   return (
     <section className="projects-section projects-home" id="proyectos" aria-labelledby="projects-title">
       <Container>
-        <header className="projects-header" data-reveal>
+        <header className="section-header" data-reveal>
           <p className="section-eyebrow">PROYECTOS REALES</p>
           <h2 id="projects-title">Soluciones construidas para necesidades reales</h2>
           <p>

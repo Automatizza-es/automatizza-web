@@ -78,7 +78,7 @@ a { color: inherit; text-decoration: none; }
 
 .services-section { padding-block: clamp(6.5rem, 8vw, 8rem); background: var(--color-white); }
 .services-intro { width: min(100%, 820px); margin-left: clamp(0rem, 6vw, 6rem); }
-.services-intro h2, .projects-header h2, .process-header h2, .calculator-copy h2, .about-statement h2, .contact-layout h2 { margin: 0; font-family: var(--font-display), sans-serif; font-weight: 700; letter-spacing: -0.025em; text-wrap: balance; }
+.services-intro h2, .section-header h2, .calculator-copy h2, .about-statement h2, .contact-layout h2 { margin: 0; font-family: var(--font-display), sans-serif; font-weight: 700; letter-spacing: -0.025em; text-wrap: balance; }
 .services-intro h2 { color: var(--color-navy); font-size: clamp(2.9rem, 4.4vw, 4.25rem); line-height: 1.04; }
 .services-intro > p:last-child { max-width: 680px; margin: 1.75rem 0 0; color: #626977; font-size: 1.125rem; line-height: 1.58; }
 .services-composition { width: min(100%, 1060px); margin: clamp(4rem, 6vw, 5.5rem) auto 0; border-top: 1px solid #dfe3ea; }
@@ -94,10 +94,12 @@ a { color: inherit; text-decoration: none; }
 .services-principle span { color: var(--color-medium-gray); font-family: var(--font-sans), sans-serif; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
 
 .projects-section { padding-block: clamp(6.5rem, 8vw, 8rem); background: #eef2f7; }
-.projects-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr); gap: 2rem 5rem; align-items: end; }
-.projects-header .section-eyebrow { grid-column: 1 / -1; margin-bottom: -0.5rem; }
-.projects-header h2 { color: var(--color-navy); font-size: clamp(2.85rem, 4.25vw, 4rem); line-height: 1.04; }
-.projects-header > p:last-child { max-width: 480px; margin: 0; color: #626977; font-size: 1.0625rem; line-height: 1.6; }
+.section-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr); gap: 2rem 5rem; align-items: end; }
+.section-header .section-eyebrow { grid-column: 1 / -1; margin-bottom: -0.5rem; }
+/* Without an intro paragraph the title takes the full row. */
+.section-header h2:last-child { grid-column: 1 / -1; }
+.section-header h2 { color: var(--color-navy); font-size: clamp(2.85rem, 4.25vw, 4rem); line-height: 1.04; }
+.section-header > p:last-child { max-width: 480px; margin: 0; color: #626977; font-size: 1.0625rem; line-height: 1.6; }
 .project-featured { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(330px, 0.65fr); margin-top: 4rem; border: 1px solid #d9dee7; background: var(--color-white); }
 .project-visual { position: relative; min-height: 520px; overflow: hidden; border-right: 1px solid #d9dee7; background: #e9edf3; }
 .project-visual img { object-fit: cover; object-position: center top; }
@@ -121,8 +123,6 @@ a { color: inherit; text-decoration: none; }
 .project-asset-slot strong, .about-asset-slot strong { margin-top: 0.4rem; font-size: 0.875rem; font-weight: 500; }
 
 .process-section { padding-block: clamp(6.5rem, 9vw, 9rem); background: var(--color-white); }
-.process-header { width: min(100%, 890px); }
-.process-header h2 { color: var(--color-navy); font-size: clamp(2.9rem, 4.6vw, 4.4rem); line-height: 1.04; }
 .process-path { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin: 5.5rem 0 0; padding: 0; list-style: none; }
 .process-path::before { position: absolute; top: 9px; right: 10%; left: 10%; height: 1px; background: #cfd7e2; content: ""; }
 .process-path::after { position: absolute; top: 9px; left: 10%; width: 48%; height: 1px; background: var(--color-cyan); content: ""; }
@@ -209,7 +209,7 @@ a { color: inherit; text-decoration: none; }
   .problem-item { grid-template-columns: 74px minmax(0, 1fr); column-gap: 1rem; }
   .services-intro { margin-left: 0; }
   .service-line, .service-line:nth-child(2), .service-line:nth-child(3) { grid-template-columns: 50px minmax(0, 1fr) 160px; margin-left: 0; }
-  .projects-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .section-header { grid-template-columns: 1fr; gap: 1.5rem; }
   .project-featured { grid-template-columns: 1fr; }
   .project-visual { min-height: 430px; border-right: 0; border-bottom: 1px solid #d9dee7; }
   .project-featured-copy { padding: 3rem; }
@@ -252,7 +252,7 @@ a { color: inherit; text-decoration: none; }
   .problem-context { grid-column: 2; font-size: 1rem; }
   .section-eyebrow { font-size: 0.6875rem; letter-spacing: 0.13em; }
   .services-section, .projects-section, .process-section { padding-block: 5rem; }
-  .services-intro h2, .projects-header h2, .process-header h2, .calculator-copy h2 { font-size: clamp(2.45rem, 11vw, 3rem); line-height: 1.06; }
+  .services-intro h2, .section-header h2, .calculator-copy h2 { font-size: clamp(2.45rem, 11vw, 3rem); line-height: 1.06; }
   .service-line, .service-line:nth-child(2), .service-line:nth-child(3) { grid-template-columns: 38px minmax(0, 1fr); gap: 0.75rem; padding: 1.5rem 0; }
   .service-signal { grid-column: 2; padding-top: 0.25rem; }
   .services-principle { grid-template-columns: 1fr; gap: 0.75rem; margin-top: 2.5rem; }
@@ -265,7 +265,6 @@ a { color: inherit; text-decoration: none; }
   .project-secondary-copy { padding: 2rem 1.25rem; }
   .project-secondary h3 { font-size: 1.65rem; }
   .project-asset-slot { min-height: 180px; }
-  .process-header h2 { font-size: 2.65rem; }
   .process-path { margin-top: 3.5rem; }
   .calculator-section { padding-block: 5rem; }
   .calculator-shell { gap: 3rem; }
@@ -341,7 +340,6 @@ a { color: inherit; text-decoration: none; }
 .project-secondary { margin-top: 3.25rem; transform: translateX(-3rem); }
 
 .process-section { overflow: hidden; }
-.process-header { margin-left: clamp(0rem, 6vw, 5.5rem); }
 .process-journey { position: relative; height: 470px; margin-top: 3.25rem; }
 .process-journey > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .process-route-base, .process-route-active { fill: none; vector-effect: non-scaling-stroke; }
@@ -422,7 +420,6 @@ a { color: inherit; text-decoration: none; }
   .services-principle { margin-top: 2.5rem; }
   .project-featured { grid-template-columns: 1fr; }
   .project-visual { min-height: 430px; }
-  .process-header { margin-left: 0; }
   .process-journey { height: 540px; margin-top: 3.5rem; }
   .process-journey > svg { display: none; }
   .process-path { display: grid; gap: 0; }
@@ -676,7 +673,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .projects-section { padding-block: clamp(5.75rem,7vw,7rem); }
-.projects-header { max-width: 1040px; }
+.section-header { max-width: 1040px; }
 .project-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.5rem,2.4vw,2.25rem); margin-top: 4rem; }
 .project-card { display: flex; min-width: 0; flex-direction: column; }
 .project-card-silos-spain { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: clamp(2rem,4vw,3.5rem); }
@@ -766,15 +763,13 @@ a { color: inherit; text-decoration: none; }
 .hero h1 strong { color: var(--color-cyan); font: inherit; }
 
 .services-intro h2,
-.projects-header h2,
-.process-header h2,
+.section-header h2,
 .about-statement h2 { font-size: clamp(2.75rem,3.5vw,3.125rem); line-height: 1.06; }
-.projects-header h2 { max-width: 760px; }
+.section-header h2 { max-width: 760px; }
 .projects-page-intro h1 { font-size: clamp(3rem,4vw,3.375rem); line-height: 1.06; }
 .project-card h3,
 .project-gallery-page .project-card h3 { font-size: clamp(1.375rem,1.75vw,1.625rem); line-height: 1.16; }
 
-.process-header { width: min(100%,850px); }
 .process-journey { height: 420px; }
 .process-path li,
 .process-path li:nth-child(n) { width: min(18%,205px); }
@@ -784,8 +779,7 @@ a { color: inherit; text-decoration: none; }
 
 @media (max-width: 900px) {
   .services-intro h2,
-  .projects-header h2,
-  .process-header h2,
+  .section-header h2,
   .about-statement h2 { font-size: clamp(2.5rem,6.2vw,3rem); }
   .projects-page-intro h1 { font-size: clamp(2.75rem,7vw,3.25rem); }
   .process-journey { height: 680px; }
@@ -797,8 +791,7 @@ a { color: inherit; text-decoration: none; }
 
 @media (max-width: 600px) {
   .services-intro h2,
-  .projects-header h2,
-  .process-header h2,
+  .section-header h2,
   .about-statement h2 { font-size: clamp(2.35rem,10vw,2.75rem); }
   .projects-page-intro h1 { font-size: clamp(2.6rem,11vw,3rem); }
   .process-journey { height: 720px; }
@@ -810,8 +803,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Final scale and technical process pass */
-.projects-header h2 { max-width: 720px; font-size: clamp(2.375rem,3.1vw,2.75rem); line-height: 1.08; }
-.projects-header > p:last-child { font-size: 1rem; }
+.section-header h2 { max-width: 720px; font-size: clamp(2.375rem,3.1vw,2.75rem); line-height: 1.08; }
+.section-header > p:last-child { font-size: 1rem; }
 .projects-page-intro h1 { font-size: clamp(2.625rem,3.4vw,2.875rem); line-height: 1.08; }
 .project-card h3,
 .project-gallery-page .project-card h3 { font-size: clamp(1.125rem,1.4vw,1.3125rem); line-height: 1.23; }
@@ -819,7 +812,6 @@ a { color: inherit; text-decoration: none; }
 .project-media-neutral { border: 1px solid #dfe4ea; background: linear-gradient(145deg,#edf2f6 0%,#f7f9fb 58%,#eef3f7 100%); }
 .project-media-neutral::before { display: none; }
 
-.process-header h2 { font-size: clamp(2.5rem,3.1vw,2.75rem); line-height: 1.08; }
 .process-journey { height: 450px; margin-top: 2.75rem; }
 .process-path li:nth-child(1) { top: 48%; }
 .process-path li:nth-child(2) { top: 37%; }
@@ -848,8 +840,7 @@ a { color: inherit; text-decoration: none; }
 .calculator-copy .section-eyebrow { color: #02a0fc; font-family: var(--font-sans),sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
 
 @media (max-width: 900px) {
-  .projects-header h2,
-  .process-header h2,
+  .section-header h2,
   .calculator-copy h2 { font-size: clamp(2.35rem,5.6vw,2.7rem); }
   .projects-page-intro h1 { font-size: clamp(2.5rem,6vw,2.85rem); }
   .calculator-shell { grid-template-columns: 1fr; }
@@ -861,8 +852,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 600px) {
-  .projects-header h2,
-  .process-header h2,
+  .section-header h2,
   .calculator-copy h2 { font-size: clamp(2.2rem,9.5vw,2.55rem); }
   .projects-page-intro h1 { font-size: clamp(2.4rem,10vw,2.75rem); }
   .process-journey { height: 720px; }
@@ -1448,10 +1438,6 @@ a { color: inherit; text-decoration: none; }
 /* "Qué hacemos": compact editorial list after the projects, a quiet pause
    between the livelier sections. Type and thin rules only. */
 .whatwedo-section { padding-block: clamp(5rem, 7vw, 6.5rem); background: var(--color-white); }
-.whatwedo-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); gap: 1.25rem 3rem; align-items: end; }
-.whatwedo-header .section-eyebrow { grid-column: 1 / -1; margin-bottom: -.25rem; }
-.whatwedo-header h2 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(2.125rem, 3.2vw, 2.75rem); font-weight: 650; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
-.whatwedo-lead { margin: 0; color: #626977; font-size: 1.0625rem; line-height: 1.6; }
 .whatwedo-list { margin: clamp(2.5rem, 4vw, 3.5rem) 0 0; padding: 0; border-bottom: 1px solid #e3e7ee; list-style: none; }
 .whatwedo-row { position: relative; display: grid; grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 26rem); gap: 1.5rem; align-items: baseline; padding: 1.6rem 0; border-top: 1px solid #e3e7ee; }
 .whatwedo-number { color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
@@ -1472,15 +1458,9 @@ a { color: inherit; text-decoration: none; }
   .whatwedo-row::before, .whatwedo-row h3 { transition: none; }
 }
 
-@media (max-width: 900px) {
-  .whatwedo-header { grid-template-columns: 1fr; }
-  .whatwedo-lead { max-width: 30rem; }
-}
 
 @media (max-width: 720px) {
   .whatwedo-section { padding-block: 4.5rem; }
-  .whatwedo-header h2 { font-size: 1.875rem; }
-  .whatwedo-lead { font-size: .95rem; }
   .whatwedo-number { font-size: .75rem; }
   .whatwedo-list { margin-top: 2.25rem; }
   .whatwedo-row { grid-template-columns: 2.25rem minmax(0, 1fr); gap: .3rem .75rem; padding: 1.1rem 0; }
