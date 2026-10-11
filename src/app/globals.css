@@ -1454,3 +1454,32 @@ a { color: inherit; text-decoration: none; }
   .change-visual :is(.connect-flowline, .connect-hub, .chat-typing, .dash-chart-dot),
   .change-visual .follow-dot-pending::after { animation: none !important; }
 }
+
+/* "Qué hacemos": editorial, static list after the projects. Type and thin
+   rules only, so it reads differently from the card sections around it. */
+.whatwedo-section { padding-block: clamp(7rem, 10vw, 10rem); background: var(--color-white); }
+.whatwedo-header { max-width: 1040px; }
+.whatwedo-header h2 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(3rem, 5.6vw, 5.25rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.02; text-wrap: balance; }
+.whatwedo-header h2 span { color: var(--color-medium-gray); }
+.whatwedo-lead { max-width: 30rem; margin: 2.25rem 0 0; color: #626977; font-size: 1.125rem; line-height: 1.6; }
+.whatwedo-list { margin: clamp(4rem, 7vw, 6rem) 0 0; padding: 0; border-bottom: 1px solid #dfe3ea; list-style: none; }
+.whatwedo-row { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 29rem); gap: 2rem; align-items: baseline; padding: clamp(1.9rem, 3vw, 2.6rem) 0; border-top: 1px solid #dfe3ea; }
+.whatwedo-number { color: var(--color-cyan); font-family: var(--font-display), sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+.whatwedo-row h3 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(2rem, 3.6vw, 3.25rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.08; }
+.whatwedo-row p { margin: 0; color: #626977; font-size: 1.125rem; line-height: 1.5; }
+
+@media (max-width: 900px) {
+  .whatwedo-row { grid-template-columns: 3.5rem minmax(0, 1fr); gap: 0.65rem 1rem; }
+  .whatwedo-row p { grid-column: 2; }
+}
+
+@media (max-width: 720px) {
+  .whatwedo-section { padding-block: 5.5rem; }
+  .whatwedo-header h2 { font-size: clamp(2.45rem, 11vw, 3rem); line-height: 1.06; }
+  .whatwedo-lead { margin-top: 1.5rem; font-size: 1.0625rem; }
+  .whatwedo-list { margin-top: 3rem; }
+  .whatwedo-row { grid-template-columns: 2.5rem minmax(0, 1fr); padding: 1.6rem 0; }
+  .whatwedo-number { font-size: 0.875rem; }
+  .whatwedo-row h3 { font-size: 1.75rem; }
+  .whatwedo-row p { font-size: 1rem; }
+}
