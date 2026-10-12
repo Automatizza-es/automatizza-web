@@ -13,9 +13,9 @@ export function AboutSection() {
 
         <div className="about-copy">
           <p>
-            Entendemos primero el problema y la forma real de trabajar. Después diseñamos una
-            solución adaptada, utilizando automatización, software o inteligencia artificial solo
-            cuando aportan valor.
+            Nuestra misión es ayudar a las pequeñas y medianas empresas a competir a otro nivel,
+            poniendo a su alcance tecnología que les permita trabajar mejor, ganar competitividad y
+            crecer sin añadir complejidad.
           </p>
           <p className="about-principle">La tecnología es el medio. El proceso es el punto de partida.</p>
         </div>
