@@ -1,7 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
-
 import { Container } from "@/components/layout/Container";
+import { SavingsCalculator } from "@/components/home/SavingsCalculator";
 
 export function CalculatorSection() {
   return (
@@ -14,19 +12,10 @@ export function CalculatorSection() {
             Calcula cuánto te cuestan las tareas repetitivas de tu empresa y estima el tiempo y el
             valor económico que podrías recuperar al automatizarlas.
           </p>
-          <Link className="button button-primary" href="#contacto">
-            Calcular mi ahorro potencial <span aria-hidden="true">→</span>
-          </Link>
         </div>
 
-        <div className="calculator-image" data-reveal>
-          <Image
-            src="/reference/calculadora.png"
-            alt="Vista previa de la calculadora Automatizza con una estimación de ahorro"
-            width={1774}
-            height={790}
-            sizes="(max-width: 900px) calc(100vw - 3.5rem), 720px"
-          />
+        <div className="calculator-app" data-reveal>
+          <SavingsCalculator />
         </div>
       </Container>
     </section>
