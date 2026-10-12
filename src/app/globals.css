@@ -1507,7 +1507,9 @@ a { color: inherit; text-decoration: none; }
 .calc-result-detail span { color: #c9d2e4; font-size: .85rem; }
 .calc-result-detail b { margin-bottom: .8rem; font-family: var(--font-display), sans-serif; font-size: 1.35rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .calc-result-detail b:last-child { margin-bottom: 0; }
-.calc-disclaimer { margin: 1rem 0 0; color: var(--color-medium-gray); font-size: .75rem; line-height: 1.6; }
+.calc-insight { margin: 1.1rem 0 0; color: var(--color-dark-gray); font-size: .9rem; line-height: 1.6; }
+.calc-insight strong { color: var(--color-navy); }
+.calc-disclaimer { margin: .6rem 0 0; color: var(--color-medium-gray); font-size: .75rem; line-height: 1.6; }
 .calc-disclaimer strong { color: var(--color-dark-gray); }
 
 @media (max-width: 640px) {

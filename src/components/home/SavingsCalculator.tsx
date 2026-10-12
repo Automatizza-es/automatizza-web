@@ -57,8 +57,7 @@ export function SavingsCalculator() {
   const validRate = rate.trim() !== "" && Number.isFinite(hourly) && hourly > 0 && hourly <= 500;
   const monthlyCost = validRate ? values.employees * values.hours * hourly * values.days : 0;
   const share = values.automation / 100;
-  const annualCost = monthlyCost * 12;
-  const annualValue = annualCost * share;
+  const annualValue = monthlyCost * 12 * share;
   const annualHours = values.employees * values.hours * values.days * 12 * share;
 
   return (
@@ -130,19 +129,26 @@ export function SavingsCalculator() {
           </div>
 
           <div className="calc-result" aria-live="polite">
-            <span>Coste anual estimado</span>
-            <strong>{moneyFormat(annualCost)}</strong>
+            <span>Valor potencial anual</span>
+            <strong>{moneyFormat(annualValue)}</strong>
             <div className="calc-result-detail">
-              <i aria-hidden="true" />
-              <span>Potencial recuperable</span>
-              <b>{moneyFormat(annualValue)}</b>
               <i aria-hidden="true" />
               <span>Horas recuperables al año</span>
               <b>{numberFormat(annualHours)} h</b>
+              <i aria-hidden="true" />
+              <span>Coste mensual de estas tareas</span>
+              <b>{moneyFormat(monthlyCost)}</b>
             </div>
           </div>
         </div>
       </div>
+
+      <p className="calc-insight">
+        Con esta hipótesis, tu equipo podría recuperar <strong>{numberFormat(annualHours)} horas al año</strong>,
+        con un valor económico potencial de <strong>{moneyFormat(annualValue)} anuales</strong>. Ese tiempo podría
+        dedicarse a otras tareas de valor para la empresa. El ahorro económico efectivo dependerá de cómo se
+        reorganice el trabajo y de los costes de la solución.
+      </p>
 
       <p className="calc-disclaimer">
         <strong>Estimación orientativa, no ahorro garantizado.</strong> Representa el valor potencial del
