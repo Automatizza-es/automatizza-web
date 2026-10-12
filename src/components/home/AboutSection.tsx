@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Container } from "@/components/layout/Container";
 
 export function AboutSection() {
@@ -18,11 +20,15 @@ export function AboutSection() {
           <p className="about-principle">La tecnología es el medio. El proceso es el punto de partida.</p>
         </div>
 
-        <div className="about-asset-slot" data-asset-slot="automatizza-real-photo">
-          <div className="about-photo-mark" aria-hidden="true">A</div>
-          <span>Espacio preparado para fotografía real</span>
-          <strong>Automatizza · tecnología aplicada al negocio</strong>
-        </div>
+        <figure className="about-photo">
+          <Image
+            src="/about/equipo.jpg"
+            alt="El equipo de Automatizza revisando un proyecto en el portátil"
+            width={800}
+            height={900}
+            sizes="(max-width: 900px) calc(100vw - 2.5rem), 420px"
+          />
+        </figure>
       </Container>
     </section>
   );
