@@ -1585,5 +1585,6 @@ a { color: inherit; text-decoration: none; }
   .about-photo { grid-column: 2; grid-row: 1 / span 2; }
 }
 @media (max-width: 900px) {
-  .about-photo { grid-column: auto; grid-row: auto; min-height: 0; aspect-ratio: 4 / 3; }
+  .about-photo { grid-column: auto; grid-row: auto; width: 100%; min-height: 0; aspect-ratio: 4 / 3; }
+  .about-photo img { object-position: center top; }
 }
