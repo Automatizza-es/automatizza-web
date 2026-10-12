@@ -145,9 +145,10 @@ type ChangeCardProps = {
   punchline: string;
   className: string;
   children: ReactNode;
+  mini: ReactNode;
 };
 
-function ChangeCard({ wide = false, icon, title, punchline, className, children }: ChangeCardProps) {
+function ChangeCard({ wide = false, icon, title, punchline, className, children, mini }: ChangeCardProps) {
   return (
     <article
       className={`change-card ${wide ? "change-card-wide" : "change-card-half"} ${className}`}
@@ -165,6 +166,10 @@ function ChangeCard({ wide = false, icon, title, punchline, className, children 
       </div>
       <div className="change-visual" aria-hidden="true">
         {children}
+      </div>
+      {/* Phones only: a compact take on the same process. */}
+      <div className="change-mini" aria-hidden="true">
+        {mini}
       </div>
     </article>
   );
@@ -550,6 +555,99 @@ function BuildFlow() {
   );
 }
 
+// ---- Compact mobile versions: one short sequence each, then still. ----
+
+function MiniArrow({ delay }: { delay: number }) {
+  return (
+    <span className="mini-arrow cm-in" style={at(delay)}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </span>
+  );
+}
+
+function InboxMini() {
+  return (
+    <div className="mini-panel mini-inbox">
+      <div className="ui-light mini-tile">
+        <Icon name="mail" size={18} />
+        <span>Nuevo email</span>
+      </div>
+      <MiniArrow delay={150} />
+      <div className="ui-accent mini-tile cm-pop" style={at(450)}>
+        <span className="mini-ok">
+          <Icon name="check" size={12} />
+        </span>
+        <span>Lead creado</span>
+      </div>
+    </div>
+  );
+}
+
+function LeadMini() {
+  return (
+    <div className="mini-panel ui-light mini-lead">
+      <div className="mini-lead-head">
+        <Icon name="lead" size={16} />
+        <b>Nueva consulta</b>
+        <span className="mini-ok cm-pop" style={at(900)}>
+          <Icon name="check" size={12} />
+        </span>
+      </div>
+      <p className="mini-reply cm-in" style={at(150)}>
+        ¡Gracias por escribirnos!
+      </p>
+      <span className="mini-status cm-in" style={at(600)}>
+        <Icon name="check" size={13} />
+        Seguimiento programado
+      </span>
+    </div>
+  );
+}
+
+function ConnectMini() {
+  return (
+    <div className="mini-panel mini-connect">
+      <span className="ui-light mini-node">
+        <Icon name="mail" size={17} />
+      </span>
+      <span className="ui-light mini-node">
+        <Icon name="form" size={17} />
+      </span>
+      <MiniArrow delay={100} />
+      <span className="mini-hub cm-pop" style={at(350)}>
+        <BrandMark size={18} />
+      </span>
+      <MiniArrow delay={650} />
+      <span className="mini-done cm-pop" style={at(900)}>
+        <Icon name="check" size={15} />
+      </span>
+    </div>
+  );
+}
+
+function BuildMini() {
+  return (
+    <div className="mini-panel mini-build">
+      <div className="mini-modules">
+        {modules.map((module) => (
+          <span className="ui-accent mini-module" key={module.label}>
+            <Icon name={module.icon} size={17} />
+            {module.label}
+          </span>
+        ))}
+      </div>
+      <div className="ui-light mini-hubbar cm-in" style={at(250)}>
+        <span className="mini-hubbar-logo">
+          <BrandMark size={14} />
+        </span>
+        Tu negocio, en un solo lugar
+      </div>
+    </div>
+  );
+}
+
 export function ChangeShowcaseSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -562,7 +660,7 @@ export function ChangeShowcaseSection() {
     if (!section) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const visuals = Array.from(section.querySelectorAll<HTMLElement>(".change-visual"));
+    const visuals = Array.from(section.querySelectorAll<HTMLElement>(".change-visual, .change-mini"));
     const timers: number[] = [];
     let nextSlot = 0;
 
@@ -616,6 +714,7 @@ export function ChangeShowcaseSection() {
             className="change-card-inbox"
             title="¿Otra vez haciendo lo mismo?"
             punchline="Que se haga solo."
+            mini={<InboxMini />}
           >
             <InboxFlow />
           </ChangeCard>
@@ -630,6 +729,7 @@ export function ChangeShowcaseSection() {
               </>
             }
             punchline="Cada oportunidad cuenta."
+            mini={<LeadMini />}
           >
             <LeadFlow />
           </ChangeCard>
@@ -644,6 +744,7 @@ export function ChangeShowcaseSection() {
               </>
             }
             punchline="Adiós al caos."
+            mini={<ConnectMini />}
           >
             <ConnectFlow />
           </ChangeCard>
@@ -658,6 +759,7 @@ export function ChangeShowcaseSection() {
               </>
             }
             punchline="No al revés."
+            mini={<BuildMini />}
           >
             <BuildFlow />
           </ChangeCard>
