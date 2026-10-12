@@ -14,6 +14,7 @@ type SliderId = "employees" | "hours" | "days" | "automation";
 const sliders: {
   id: SliderId;
   label: string;
+  hint?: string;
   min: number;
   max: number;
   step: number;
@@ -31,7 +32,8 @@ const sliders: {
   { id: "days", label: "Días laborables al mes", min: 15, max: 23, step: 1, format: (v) => numberFormat(v) },
   {
     id: "automation",
-    label: "Tiempo recuperable",
+    label: "Tiempo que podrías liberar",
+    hint: "Parte de esas horas que dejaría de ir a tareas repetitivas y podría dedicarse a lo que de verdad aporta valor.",
     min: 0,
     max: 100,
     step: 5,
@@ -81,6 +83,11 @@ export function SavingsCalculator() {
                     <span>{slider.label}</span>
                     <output htmlFor={`calc-${slider.id}`}>{slider.format(value)}</output>
                   </label>
+                  {slider.hint ? (
+                    <small className="calc-slider-hint" id={`calc-${slider.id}-hint`}>
+                      {slider.hint}
+                    </small>
+                  ) : null}
                   <input
                     type="range"
                     id={`calc-${slider.id}`}
@@ -88,6 +95,7 @@ export function SavingsCalculator() {
                     max={slider.max}
                     step={slider.step}
                     value={value}
+                    aria-describedby={slider.hint ? `calc-${slider.id}-hint` : undefined}
                     onChange={(event) =>
                       setValues((current) => ({ ...current, [slider.id]: Number(event.target.value) }))
                     }
