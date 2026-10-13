@@ -149,37 +149,32 @@ const demonstrations = [
   {
     id: "captar",
     title: "Captar",
-    description: "Un correo o formulario se convierte en una oportunidad en tu CRM.",
-    outcome: "Una oportunidad lista para tu equipo.",
+    description: "De correo a oportunidad.",
   },
   {
     id: "seguir",
     title: "Seguir",
-    description: "La consulta se registra, tu equipo recibe el aviso y el seguimiento queda programado.",
-    outcome: "Cada consulta tiene un siguiente paso.",
+    description: "El siguiente paso, programado.",
   },
   {
     id: "conectar",
     title: "Conectar",
-    description: "Tus herramientas comparten información en un sistema centralizado.",
-    outcome: "La misma información, en todas tus herramientas.",
+    description: "Tu información, conectada.",
   },
 ];
 
 function CaptureDemo() {
   return (
     <div className={styles.capture}>
-      <div className={`${styles.paper} ${styles.step}`} style={at(0)}>
+      <div className={`${styles.mail} ${styles.step}`} style={at(0)}>
         <div className={styles.paperHeading}>
           <span className={styles.appIcon}><Icon name="mail" size={20} /></span>
-          <span>Correo recibido</span>
-          <small>09:41</small>
+          <span>Nuevo correo</span>
         </div>
         <div className={styles.mailContent}>
-          <span className={styles.meta}>Marta López · Control Digital</span>
           <h3>Solicitud de presupuesto</h3>
-          <p>Hola, necesitamos presupuesto para <mark className={styles.highlight}>50 unidades del modelo X.</mark></p>
-          <span className={styles.signature}>Gracias, Marta</span>
+          <p>50 unidades del modelo X.</p>
+          <span className={styles.meta}>Marta López · Control Digital</span>
         </div>
       </div>
       <span className={`${styles.arrow} ${styles.step}`} style={at(400)} aria-hidden="true">
@@ -187,19 +182,14 @@ function CaptureDemo() {
       </span>
       <div className={`${styles.paper} ${styles.record} ${styles.step}`} style={at(700)}>
         <div className={styles.paperHeading}>
-          <span className={styles.appIcon}><Icon name="lead" size={20} /></span>
           <span>Nueva oportunidad</span>
           <small>CRM</small>
         </div>
         <div className={styles.recordContent}>
-          <span className={styles.recordLabel}>CONTACTO</span>
           <h3>Marta López</h3>
-          <p className={styles.company}>Control Digital S.L.</p>
-          <dl className={styles.recordFields}>
-            <div className={styles.step} style={at(1050)}><dt>Interés</dt><dd>50 uds. · Modelo X</dd></div>
-            <div className={styles.step} style={at(1250)}><dt>Origen</dt><dd>Correo electrónico</dd></div>
-          </dl>
-          <span className={`${styles.success} ${styles.step}`} style={at(1550)}><Icon name="check" size={16} /> Creada automáticamente</span>
+          <p className={styles.company}>Control Digital</p>
+          <p className={`${styles.request} ${styles.step}`} style={at(1000)}>50 unidades · Modelo X</p>
+          <span className={`${styles.success} ${styles.step}`} style={at(1300)}><Icon name="check" size={14} /> Creada en tu CRM</span>
         </div>
       </div>
     </div>
@@ -207,9 +197,9 @@ function CaptureDemo() {
 }
 
 const followSteps = [
-  { icon: "doc" as IconName, title: "Consulta registrada", detail: "Guardada en el CRM", time: "09:41" },
-  { icon: "send" as IconName, title: "Responsable notificado", detail: "Laura ya tiene la información", time: "09:41" },
-  { icon: "calendar" as IconName, title: "Seguimiento programado", detail: "Mañana · 10:00", time: "Listo" },
+  { icon: "check" as IconName, title: "Consulta registrada", detail: "En tu CRM" },
+  { icon: "check" as IconName, title: "Laura notificada", detail: "Responsable asignada" },
+  { icon: "calendar" as IconName, title: "Seguimiento programado", detail: "Mañana · 10:00" },
 ];
 
 function FollowDemo() {
@@ -217,15 +207,13 @@ function FollowDemo() {
     <div className={`${styles.follow} ${styles.paper}`}>
       <div className={`${styles.consultation} ${styles.step}`} style={at(0)}>
         <span className={styles.avatar}>JL</span>
-        <div><h3>Juan López</h3><p>Nueva consulta · Formulario web</p></div>
-        <span className={styles.consultationIcon}><Icon name="form" size={22} /></span>
+        <div><h3>Juan López</h3><p>Consulta recibida</p></div>
       </div>
       <ol className={styles.timeline}>
         {followSteps.map((step, index) => (
           <li className={styles.step} style={at(400 + index * 450)} key={step.title}>
             <span className={styles.timelineIcon}><Icon name={step.icon} size={20} /></span>
             <div><h4>{step.title}</h4><p>{step.detail}</p></div>
-            <span className={styles.time}>{step.time}</span>
           </li>
         ))}
       </ol>
@@ -260,7 +248,7 @@ function ConnectDemo() {
         {inPathsVertical.map((d) => <path className={styles.flowLine} d={d} key={`flow-${d}`} />)}
       </svg>
       <div className={`${styles.central} ${styles.step}`} style={at(550)}>
-        <span className={styles.hub}><BrandMark size={34} /></span>
+        <span className={styles.hub}><BrandMark size={28} /></span>
         <span>Tu sistema</span>
       </div>
       <svg className={`${styles.connectionLines} ${styles.horizontalLines}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -272,7 +260,7 @@ function ConnectDemo() {
         <path className={styles.flowLine} d="M50 0 V100" />
       </svg>
       <div className={`${styles.paper} ${styles.sharedData} ${styles.step}`} style={at(950)}>
-        <div className={styles.paperHeading}><Icon name="layers" size={20} /><span>Datos sincronizados</span></div>
+        <div className={styles.paperHeading}><span>Un solo sistema</span></div>
         <ul>
           {(["Clientes", "Proyectos", "Facturación"]).map((label, index) => (
             <li className={styles.step} style={at(1150 + index * 180)} key={label}><span>{label}</span><Icon name="check" size={17} /></li>
@@ -299,17 +287,37 @@ function useMediaQuery(query: string) {
 export function ChangeShowcaseSection() {
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const scrollEnabled = useMediaQuery(scrollMedia);
+  const [fitsViewport, setFitsViewport] = useState(true);
+  const scrollEnabled = useMediaQuery(scrollMedia) && fitsViewport;
   const verticalTabs = useMediaQuery("(min-width: 1000px)");
   const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const compositionRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const activeRef = useRef(0);
-  const manualRef = useRef<{ index: number; scrollY: number } | null>(null);
 
   const select = useCallback((index: number) => {
     activeRef.current = index;
     setActive(index);
+  }, []);
+
+  useEffect(() => {
+    const composition = compositionRef.current;
+    if (!composition) return;
+    const header = document.querySelector<HTMLElement>(".site-header");
+    const measure = () => {
+      const top = (header?.offsetHeight ?? 72) + 24;
+      composition.style.setProperty("--pin-top", `${top}px`);
+      setFitsViewport(composition.offsetHeight + top + 24 <= window.innerHeight);
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(composition);
+    if (header) observer.observe(header);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   useEffect(() => {
@@ -327,37 +335,29 @@ export function ChangeShowcaseSection() {
 
   useEffect(() => {
     if (!scrollEnabled) {
-      manualRef.current = null;
       return;
     }
-    const pinnedStage = stageRef.current;
-    manualRef.current = null;
+    const pinnedComposition = compositionRef.current;
+    const tabs = [...tabRefs.current];
     let frame = 0;
     const update = () => {
       frame = 0;
       const track = trackRef.current;
-      const stage = stageRef.current;
-      if (!track || !stage) return;
+      const composition = compositionRef.current;
+      if (!track || !composition) return;
       const rect = track.getBoundingClientRect();
-      if (rect.top > window.innerHeight || rect.bottom < 0) {
-        manualRef.current = null;
-        return;
-      }
-      const travel = track.offsetHeight - stage.offsetHeight;
+      const travel = track.offsetHeight - composition.offsetHeight;
       if (travel <= 0) return;
       // The existing body overflow creates a separate sticky containing block.
       // Keep pinning local to this section instead of changing global overflow.
-      const top = parseFloat(getComputedStyle(stage).getPropertyValue("--pin-top")) || 104;
+      const top = parseFloat(getComputedStyle(composition).getPropertyValue("--pin-top")) || 96;
       const offset = Math.max(0, Math.min(travel, top - rect.top));
-      stage.style.setProperty("--pin-offset", `${offset}px`);
+      composition.style.setProperty("--pin-offset", `${offset}px`);
       const progress = Math.max(0, Math.min(1, (top - rect.top) / travel));
-      let next = Math.min(2, Math.floor(progress * 3));
-      const manual = manualRef.current;
-      if (manual) {
-        const delta = window.scrollY - manual.scrollY;
-        const steps = Math.trunc(delta / (travel / 3));
-        next = Math.max(0, Math.min(2, manual.index + steps));
-      }
+      tabs.forEach((tab, index) => {
+        tab?.style.setProperty("--scroll-progress", Math.max(0, Math.min(1, progress * 3 - index)).toFixed(4));
+      });
+      const next = Math.min(2, Math.floor(progress * 3));
       if (next !== activeRef.current) select(next);
     };
     const schedule = () => {
@@ -365,18 +365,31 @@ export function ChangeShowcaseSection() {
     };
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    const observer = new ResizeObserver(schedule);
+    if (pinnedComposition) observer.observe(pinnedComposition);
     schedule();
     return () => {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       window.cancelAnimationFrame(frame);
-      pinnedStage?.style.removeProperty("--pin-offset");
+      observer.disconnect();
+      pinnedComposition?.style.removeProperty("--pin-offset");
+      tabs.forEach((tab) => tab?.style.removeProperty("--scroll-progress"));
     };
   }, [scrollEnabled, select]);
 
   const choose = (index: number, focus = false) => {
-    manualRef.current = { index, scrollY: window.scrollY };
-    select(index);
+    const track = trackRef.current;
+    const composition = compositionRef.current;
+    if (scrollEnabled && track && composition) {
+      const top = parseFloat(getComputedStyle(composition).getPropertyValue("--pin-top")) || 96;
+      const travel = track.offsetHeight - composition.offsetHeight;
+      const target = window.scrollY + track.getBoundingClientRect().top - top + travel * ((index + 0.5) / 3);
+      if (Math.abs(window.scrollY - target) < 1) select(index);
+      else window.scrollTo({ top: target, behavior: "smooth" });
+    } else {
+      select(index);
+    }
     if (focus) tabRefs.current[index]?.focus({ preventScroll: true });
   };
 
@@ -393,62 +406,63 @@ export function ChangeShowcaseSection() {
 
   return (
     <section className={styles.section} id="automatizacion-en-accion" aria-labelledby="change-title" data-scroll={scrollEnabled}>
-      <Container>
-        <header className="section-header">
-          <p className="section-eyebrow">AUTOMATIZACIÓN EN ACCIÓN</p>
-          <h2 id="change-title">Hay otra forma de trabajar.</h2>
-          <p>Procesos que avanzan, información que se organiza y herramientas que trabajan juntas.</p>
-        </header>
+      <Container className={styles.container}>
         <div className={styles.track} ref={trackRef}>
-          <div className={styles.stage} ref={stageRef}>
-            <div className={styles.navigation}>
-              <div className={styles.tabs} role="tablist" aria-label="Demostraciones de automatización" aria-orientation={verticalTabs ? "vertical" : "horizontal"}>
-                {demonstrations.map((demo, index) => (
-                  <button
-                    className={styles.tab}
-                    id={`automation-tab-${demo.id}`}
-                    role="tab"
-                    aria-selected={active === index}
-                    aria-controls={`automation-panel-${demo.id}`}
-                    aria-labelledby={`automation-label-${demo.id}`}
-                    aria-describedby={`automation-description-${demo.id}`}
-                    tabIndex={active === index ? 0 : -1}
-                    type="button"
-                    key={demo.id}
-                    ref={(element) => { tabRefs.current[index] = element; }}
-                    onClick={() => choose(index)}
-                    onKeyDown={(event) => onTabKeyDown(event, index)}
-                  >
-                    <span className={styles.tabHeading}><small aria-hidden="true">0{index + 1}</small><span id={`automation-label-${demo.id}`}>{demo.title}</span></span>
-                    <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{demo.description}</span>
-                  </button>
-                ))}
-              </div>
-              <p className={styles.mobileDescription} aria-hidden="true">{demonstrations[active].description}</p>
-            </div>
-            <div className={styles.demonstration}>
-              <div className={styles.workspaceHeading} aria-hidden="true"><BrandMark size={19} /><span>Tu espacio de trabajo</span><small>Demostración</small></div>
-              <div className={styles.panels}>
-                {demonstrations.map((demo, index) => {
-                  const Demo = demoComponents[index];
-                  return (
-                    <div
-                      className={styles.panel}
-                      id={`automation-panel-${demo.id}`}
-                      role="tabpanel"
-                      aria-labelledby={`automation-tab-${demo.id}`}
-                      aria-hidden={active !== index}
-                      inert={active !== index}
+          <div className={styles.composition} ref={compositionRef}>
+            <header className={`section-header ${styles.heading}`}>
+              <p className="section-eyebrow">AUTOMATIZACIÓN EN ACCIÓN</p>
+              <h2 id="change-title">Hay otra forma de trabajar.</h2>
+              <p>Procesos que avanzan, información que se organiza y herramientas que trabajan juntas.</p>
+            </header>
+            <div className={styles.stage} ref={stageRef}>
+              <div className={styles.navigation}>
+                <div className={styles.tabs} role="tablist" aria-label="Demostraciones de automatización" aria-orientation={verticalTabs ? "vertical" : "horizontal"}>
+                  {demonstrations.map((demo, index) => (
+                    <button
+                      className={styles.tab}
+                      style={{ "--tab-progress": index <= active ? 1 : 0 } as CSSProperties}
+                      id={`automation-tab-${demo.id}`}
+                      role="tab"
+                      aria-selected={active === index}
+                      aria-controls={`automation-panel-${demo.id}`}
+                      aria-labelledby={`automation-label-${demo.id}`}
+                      aria-describedby={`automation-description-${demo.id}`}
                       tabIndex={active === index ? 0 : -1}
-                      data-active={active === index}
-                      data-playing={playing}
+                      type="button"
                       key={demo.id}
+                      ref={(element) => { tabRefs.current[index] = element; }}
+                      onClick={() => choose(index)}
+                      onKeyDown={(event) => onTabKeyDown(event, index)}
                     >
-                      <div className={styles.canvas}><Demo /></div>
-                      <p className={`${styles.outcome} ${styles.step}`} style={at(1750)}><Icon name="check" size={16} />{demo.outcome}</p>
-                    </div>
-                  );
-                })}
+                      <span className={styles.tabHeading} id={`automation-label-${demo.id}`}>{demo.title}</span>
+                      <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{demo.description}</span>
+                    </button>
+                  ))}
+                </div>
+                <p className={styles.mobileDescription} aria-hidden="true">{demonstrations[active].description}</p>
+              </div>
+              <div className={styles.demonstration}>
+                <div className={styles.panels}>
+                  {demonstrations.map((demo, index) => {
+                    const Demo = demoComponents[index];
+                    return (
+                      <div
+                        className={styles.panel}
+                        id={`automation-panel-${demo.id}`}
+                        role="tabpanel"
+                        aria-labelledby={`automation-tab-${demo.id}`}
+                        aria-hidden={active !== index}
+                        inert={active !== index}
+                        tabIndex={active === index ? 0 : -1}
+                        data-active={active === index}
+                        data-playing={playing}
+                        key={demo.id}
+                      >
+                        <div className={styles.canvas}><Demo /></div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
