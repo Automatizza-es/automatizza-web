@@ -38,13 +38,13 @@ export function HeroSection() {
             <circle cx="1230" cy="460" r="4" />
           </g>
           <g className={styles.travelers}>
-            <circle r="3.5">
+            <circle r="4.2">
               <animateMotion dur="18s" repeatCount="indefinite" path="M-30 188 154 188 258 86 430 86" />
             </circle>
-            <circle r="3">
+            <circle r="3.6">
               <animateMotion dur="22s" begin="-4s" repeatCount="indefinite" path="M844 316 1010 316 1134 440 1470 440" />
             </circle>
-            <circle r="3">
+            <circle r="3.6">
               <animateMotion dur="20s" begin="-6s" repeatCount="indefinite" path="M556 598 672 482 834 482 948 596" />
             </circle>
           </g>
@@ -53,10 +53,10 @@ export function HeroSection() {
       <Container className={styles.inner}>
         <div className={styles.copy}>
           <h1 id="hero-title" className={styles.title}>
-            <span className={styles.statement}>
-              <span className={styles.lead}>La tecnología</span>{" "}
+            <span className={styles.lead}>La tecnología</span>{" "}
+            <span className={styles.adaptation}>
               <strong className={styles.emphasis}>se adapta a ti.</strong>
-            </span>
+            </span>{" "}
             <span className={styles.closing}>No al revés.</span>
           </h1>
           <p className={styles.description}>
