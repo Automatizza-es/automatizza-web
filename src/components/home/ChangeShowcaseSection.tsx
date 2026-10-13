@@ -1,13 +1,20 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import Link from "next/link";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 
 import { Container } from "@/components/layout/Container";
+import styles from "./ChangeShowcaseSection.module.css";
 
-// Delay (ms) for an element's step in its card's entrance sequence.
-const at = (ms: number, extra?: Record<string, string>) =>
-  ({ "--d": `${ms}ms`, ...extra }) as CSSProperties;
+const at = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
 type IconName =
   | "mail"
@@ -138,631 +145,313 @@ function BrandMark({ size = 26 }: { size?: number }) {
   );
 }
 
-type ChangeCardProps = {
-  wide?: boolean;
-  icon: IconName;
-  title: ReactNode;
-  punchline: string;
-  className: string;
-  children: ReactNode;
-  mini: ReactNode;
-};
-
-function ChangeCard({ wide = false, icon, title, punchline, className, children, mini }: ChangeCardProps) {
-  return (
-    <article
-      className={`change-card ${wide ? "change-card-wide" : "change-card-half"} ${className}`}
-      data-reveal
-    >
-      <div className="change-copy">
-        <span className="change-chip">
-          <Icon name={icon} size={21} />
-        </span>
-        <h3>{title}</h3>
-        <Link className="change-punchline" href="#contacto">
-          {punchline}
-          <span aria-hidden="true">→</span>
-        </Link>
-      </div>
-      <div className="change-visual" aria-hidden="true">
-        {children}
-      </div>
-      {/* Phones only: a compact take on the same process. */}
-      <div className="change-mini" aria-hidden="true">
-        {mini}
-      </div>
-    </article>
-  );
-}
-
-function Connector({ delay }: { delay: number }) {
-  return (
-    <span className="inbox-connector fx-draw" style={at(delay)}>
-      <svg viewBox="0 0 40 20" fill="none">
-        <path d="M2 10h34" />
-        <path d="m31 5 5 5-5 5" />
-      </svg>
-    </span>
-  );
-}
-
-const extracted: { icon: IconName; label: string; value: string }[] = [
-  { icon: "user", label: "Nombre", value: "Marta López" },
-  { icon: "building", label: "Empresa", value: "Control Digital S.L." },
-  { icon: "mail", label: "Email", value: "marta@controldigital.es" },
-  { icon: "doc", label: "Solicitud", value: "50 uds. · Modelo X" },
+const demonstrations = [
+  {
+    id: "captar",
+    title: "Captar",
+    description: "Un correo o formulario se convierte en una oportunidad en tu CRM.",
+    outcome: "Una oportunidad lista para tu equipo.",
+  },
+  {
+    id: "seguir",
+    title: "Seguir",
+    description: "La consulta se registra, tu equipo recibe el aviso y el seguimiento queda programado.",
+    outcome: "Cada consulta tiene un siguiente paso.",
+  },
+  {
+    id: "conectar",
+    title: "Conectar",
+    description: "Tus herramientas comparten información en un sistema centralizado.",
+    outcome: "La misma información, en todas tus herramientas.",
+  },
 ];
 
-function InboxFlow() {
+function CaptureDemo() {
   return (
-    <div className="inbox-flow">
-      <div className="ui-light mail-panel fx-in" style={at(0)}>
-        <div className="mail-head">
-          <span className="mail-app">
-            <Icon name="mail" size={15} />
-          </span>
-          <strong>Nuevo email</strong>
-          <time>09:41</time>
+    <div className={styles.capture}>
+      <div className={`${styles.paper} ${styles.step}`} style={at(0)}>
+        <div className={styles.paperHeading}>
+          <span className={styles.appIcon}><Icon name="mail" size={20} /></span>
+          <span>Correo recibido</span>
+          <small>09:41</small>
         </div>
-        <dl className="mail-meta">
-          <div>
-            <dt>De</dt>
-            <dd>
-              <mark className="fx-mark" style={at(900)}>
-                marta@controldigital.es
-              </mark>
-            </dd>
-          </div>
-          <div>
-            <dt>Asunto</dt>
-            <dd>Solicitud de presupuesto</dd>
-          </div>
-        </dl>
-        <p className="mail-body">
-          Hola, soy{" "}
-          <mark className="fx-mark" style={at(500)}>
-            Marta López
-          </mark>
-          , de{" "}
-          <mark className="fx-mark" style={at(700)}>
-            Control Digital S.L.
-          </mark>{" "}
-          Necesitamos presupuesto para{" "}
-          <mark className="fx-mark" style={at(1100)}>
-            50 unidades del modelo X
-          </mark>
-          .
-        </p>
-      </div>
-
-      <Connector delay={1250} />
-
-      <div className="ui-accent extract-panel">
-        <div className="extract-head fx-in" style={at(1350)}>
-          <Icon name="sparkle" size={15} />
-          Datos extraídos
+        <div className={styles.mailContent}>
+          <span className={styles.meta}>Marta López · Control Digital</span>
+          <h3>Solicitud de presupuesto</h3>
+          <p>Hola, necesitamos presupuesto para <mark className={styles.highlight}>50 unidades del modelo X.</mark></p>
+          <span className={styles.signature}>Gracias, Marta</span>
         </div>
-        {extracted.map((row, index) => (
-          <div className="extract-row fx-slide" style={at(1450 + index * 150)} key={row.label}>
-            <Icon name={row.icon} size={15} />
-            <div>
-              <small>{row.label}</small>
-              <b>{row.value}</b>
-            </div>
-          </div>
-        ))}
       </div>
-
-      <Connector delay={2050} />
-
-      <div className="ui-light record-panel">
-        <div className="record-head">
-          <span>
-            <Icon name="lead" size={15} />
-          </span>
-          <strong>Nuevo lead</strong>
+      <span className={`${styles.arrow} ${styles.step}`} style={at(400)} aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16m-5-5 5 5-5 5" /></svg>
+      </span>
+      <div className={`${styles.paper} ${styles.record} ${styles.step}`} style={at(700)}>
+        <div className={styles.paperHeading}>
+          <span className={styles.appIcon}><Icon name="lead" size={20} /></span>
+          <span>Nueva oportunidad</span>
           <small>CRM</small>
         </div>
-        <dl className="record-fields">
-          {extracted.map((row, index) => (
-            <div key={row.label}>
-              <dt>{row.label === "Solicitud" ? "Interés" : row.label}</dt>
-              <dd>
-                <span className="fx-type" style={at(2250 + index * 160)}>
-                  {row.value}
-                </span>
-              </dd>
-            </div>
-          ))}
-        </dl>
-        <span className="record-status fx-pop" style={at(2950)}>
-          <i>
-            <Icon name="check" size={11} />
-          </i>
-          Completado automáticamente
-        </span>
+        <div className={styles.recordContent}>
+          <span className={styles.recordLabel}>CONTACTO</span>
+          <h3>Marta López</h3>
+          <p className={styles.company}>Control Digital S.L.</p>
+          <dl className={styles.recordFields}>
+            <div className={styles.step} style={at(1050)}><dt>Interés</dt><dd>50 uds. · Modelo X</dd></div>
+            <div className={styles.step} style={at(1250)}><dt>Origen</dt><dd>Correo electrónico</dd></div>
+          </dl>
+          <span className={`${styles.success} ${styles.step}`} style={at(1550)}><Icon name="check" size={16} /> Creada automáticamente</span>
+        </div>
       </div>
     </div>
   );
 }
 
 const followSteps = [
-  { title: "Respuesta enviada", time: "09:42", done: true },
-  { title: "Añadido al CRM", time: "09:42", done: true },
-  { title: "Seguimiento programado", time: "Jueves, 10:00", done: false },
+  { icon: "doc" as IconName, title: "Consulta registrada", detail: "Guardada en el CRM", time: "09:41" },
+  { icon: "send" as IconName, title: "Responsable notificado", detail: "Laura ya tiene la información", time: "09:41" },
+  { icon: "calendar" as IconName, title: "Seguimiento programado", detail: "Mañana · 10:00", time: "Listo" },
 ];
 
-function LeadFlow() {
+function FollowDemo() {
   return (
-    <div className="lead-flow">
-      <div className="ui-light chat-panel">
-        <div className="chat-head fx-in" style={at(0)}>
-          <span className="chat-avatar">JL</span>
-          <div>
-            <strong>Juan López</strong>
-            <small>Formulario web · hace 1 min</small>
-          </div>
-          <span className="chat-new">Nueva consulta</span>
-        </div>
-        <div className="chat-thread">
-          <p className="chat-bubble chat-bubble-in fx-in" style={at(250)}>
-            Hola, me gustaría saber más sobre vuestros servicios.
-          </p>
-          <p className="chat-bubble chat-bubble-out fx-in" style={at(1850)}>
-            ¡Hola, Juan! Gracias por escribir. Te envío toda la información.
-            <small>
-              <Icon name="check" size={11} />
-              Respondido en 30 s
-            </small>
-          </p>
-          <span className="chat-typing">
-            <i />
-            <i />
-            <i />
-          </span>
-        </div>
+    <div className={`${styles.follow} ${styles.paper}`}>
+      <div className={`${styles.consultation} ${styles.step}`} style={at(0)}>
+        <span className={styles.avatar}>JL</span>
+        <div><h3>Juan López</h3><p>Nueva consulta · Formulario web</p></div>
+        <span className={styles.consultationIcon}><Icon name="form" size={22} /></span>
       </div>
-
-      <div className="ui-accent follow-panel fx-in" style={at(2300)}>
-        <div className="follow-head">
-          <Icon name="calendar" size={15} />
-          Seguimiento activo
-        </div>
-        <ol className="follow-steps">
-          {followSteps.map((step, index) => (
-            <li className="fx-slide" style={at(2550 + index * 260)} key={step.title}>
-              <span className={`follow-dot ${step.done ? "" : "follow-dot-pending"}`}>
-                <Icon name={step.done ? "check" : "calendar"} size={11} />
-              </span>
-              <div>
-                <strong>{step.title}</strong>
-                <small>{step.time}</small>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <ol className={styles.timeline}>
+        {followSteps.map((step, index) => (
+          <li className={styles.step} style={at(400 + index * 450)} key={step.title}>
+            <span className={styles.timelineIcon}><Icon name={step.icon} size={20} /></span>
+            <div><h4>{step.title}</h4><p>{step.detail}</p></div>
+            <span className={styles.time}>{step.time}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }
 
-// The source tools appear together, already in line; then the flow connects them.
-const sources: { icon: IconName; label: string }[] = [
-  { icon: "form", label: "Formulario" },
-  { icon: "mail", label: "Email" },
-  { icon: "users", label: "CRM" },
-  { icon: "doc", label: "Archivos" },
+const sources = [
+  { icon: "form" as IconName, label: "Formulario" },
+  { icon: "mail" as IconName, label: "Correo" },
+  { icon: "folder" as IconName, label: "Archivos" },
 ];
+const inPaths = [18, 50, 82].map((y) => `M0 ${y} C55 ${y} 45 50 100 50`);
+const inPathsVertical = [17, 50, 83].map((x) => `M${x} 0 C${x} 55 50 45 50 100`);
 
-const targets: { icon: IconName; label: string }[] = [
-  { icon: "lead", label: "Leads" },
-  { icon: "users", label: "Clientes" },
-  { icon: "folder", label: "Proyectos" },
-  { icon: "invoice", label: "Facturación" },
-  { icon: "tasks", label: "Tareas" },
-];
-
-const inPaths = [12.5, 37.5, 62.5, 87.5].map((y) => `M0 ${y} C55 ${y} 45 50 100 50`);
-const outPaths = [10, 30, 50, 70, 90].map((y) => `M0 50 C55 50 45 ${y} 100 ${y}`);
-const inPathsVertical = [12.5, 37.5, 62.5, 87.5].map((x) => `M${x} 0 C${x} 55 50 45 50 100`);
-
-function Lines({ paths, className, delay }: { paths: string[]; className: string; delay: number }) {
+function ConnectDemo() {
   return (
-    <svg
-      className={`connect-lines ${className}`}
-      style={at(delay)}
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-    >
-      {paths.map((d) => (
-        <path key={d} d={d} />
-      ))}
-      {paths.map((d) => (
-        <path key={`flow-${d}`} className="connect-flowline" d={d} />
-      ))}
-    </svg>
-  );
-}
-
-function ConnectFlow() {
-  return (
-    <div className="connect-flow">
-      <ul className="connect-sources">
-        {sources.map((source) => (
-          <li className="connect-chip fx-in" style={at(0)} key={source.label}>
-            <Icon name={source.icon} size={16} />
-            <span>{source.label}</span>
+    <div className={styles.connect}>
+      <ul className={styles.sources}>
+        {sources.map((source, index) => (
+          <li className={`${styles.source} ${styles.step}`} style={at(index * 100)} key={source.label}>
+            <Icon name={source.icon} size={22} /><span>{source.label}</span>
           </li>
         ))}
       </ul>
-      <Lines paths={inPaths} className="connect-lines-h fx-draw" delay={550} />
-      <Lines paths={inPathsVertical} className="connect-lines-v fx-draw-down" delay={550} />
-      <span className="connect-hub fx-pop" style={at(950)}>
-        <BrandMark size={28} />
-      </span>
-      <Lines paths={outPaths} className="connect-lines-h fx-draw" delay={1250} />
-      <Lines paths={["M50 0 L50 100"]} className="connect-lines-v fx-draw-down" delay={1250} />
-      <ul className="ui-accent connect-targets">
-        {targets.map((target, index) => (
-          <li className="fx-slide" style={at(1450 + index * 110)} key={target.label}>
-            <Icon name={target.icon} size={15} />
-            {target.label}
-            <span className="connect-target-ok">
-              <Icon name="check" size={12} />
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-const modules: { icon: IconName; label: string }[] = [
-  { icon: "users", label: "Clientes" },
-  { icon: "invoice", label: "Facturación" },
-  { icon: "folder", label: "Proyectos" },
-];
-
-const kpis = [
-  { icon: "users" as IconName, label: "Clientes", value: "248", delta: "+12%" },
-  { icon: "invoice" as IconName, label: "Facturación", value: "24.800 €", delta: "+18%" },
-  { icon: "folder" as IconName, label: "Proyectos", value: "16", delta: "activos" },
-];
-
-const activity = [
-  { icon: "user" as IconName, text: "Nuevo cliente registrado", time: "5 min", tone: "green" },
-  { icon: "invoice" as IconName, text: "Factura F-118 enviada", time: "20 min", tone: "blue" },
-  { icon: "folder" as IconName, text: "Proyecto actualizado", time: "1 h", tone: "violet" },
-];
-
-function BuildFlow() {
-  return (
-    <div className="build-flow">
-      <ul className="build-modules">
-        {modules.map((module) => (
-          <li className="build-module" key={module.label}>
-            <Icon name={module.icon} size={17} />
-            <span>{module.label}</span>
-            <span className="build-status">
-              <span className="build-status-plus">
-                <Icon name="plus" size={13} />
-              </span>
-              <span className="build-status-check">
-                <Icon name="check" size={12} />
-              </span>
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="ui-light dash">
-        <aside className="dash-side">
-          <span className="dash-logo">
-            <BrandMark size={17} />
-          </span>
-          <span className="is-active">
-            <Icon name="home" size={15} />
-          </span>
-          <Icon name="users" size={15} />
-          <Icon name="invoice" size={15} />
-          <Icon name="folder" size={15} />
-          <Icon name="chart" size={15} />
-        </aside>
-        <div className="dash-main">
-          <div className="dash-top">
-            <div>
-              <small>Panel</small>
-              <strong>Tu negocio, en un solo lugar</strong>
-            </div>
-            <span className="dash-pill">Hoy</span>
-          </div>
-
-          <div className="dash-kpis">
-            {kpis.map((kpi) => (
-              <div className="dash-slot" key={kpi.label}>
-                <div className="dash-kpi">
-                  <span className="dash-kpi-label">
-                    <i>
-                      <Icon name={kpi.icon} size={12} />
-                    </i>
-                    {kpi.label}
-                  </span>
-                  <b>
-                    {kpi.value}
-                    <em>{kpi.delta}</em>
-                  </b>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="dash-lower">
-            <div className="dash-card dash-activity">
-              <h4>Actividad reciente</h4>
-              <ul>
-                {activity.map((item, index) => (
-                  <li className="fx-in" style={at(1950 + index * 150)} key={item.text}>
-                    <i className={`tone-${item.tone}`}>
-                      <Icon name={item.icon} size={11} />
-                    </i>
-                    <span>{item.text}</span>
-                    <time>{item.time}</time>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="dash-card dash-chart fx-in" style={at(1950)}>
-              <div className="dash-chart-head">
-                <h4>Facturación</h4>
-                <span className="fx-pop" style={at(3100)}>
-                  +18%
-                </span>
-              </div>
-              <div className="dash-chart-plot">
-                <svg viewBox="0 0 200 80" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="change-chart-fill" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0" stopColor="#02a0fc" stopOpacity=".22" />
-                      <stop offset="1" stopColor="#02a0fc" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    className="dash-chart-area fx-in"
-                    style={at(2700)}
-                    d="M0 66 C18 64 28 52 46 55 S76 44 96 46 S130 30 150 28 S184 12 200 8 L200 80 L0 80Z"
-                  />
-                  <path
-                    className="dash-chart-line fx-draw"
-                    style={at(2200)}
-                    d="M0 66 C18 64 28 52 46 55 S76 44 96 46 S130 30 150 28 S184 12 200 8"
-                  />
-                </svg>
-                <span className="dash-chart-dot fx-pop" style={at(3100)} />
-              </div>
-              <div className="dash-chart-axis">
-                <span>Ene</span>
-                <span>Feb</span>
-                <span>Mar</span>
-                <span>Abr</span>
-                <span>May</span>
-                <span>Jun</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ---- Compact mobile versions: one short sequence each, then still. ----
-
-function MiniArrow({ delay }: { delay: number }) {
-  return (
-    <span className="mini-arrow cm-in" style={at(delay)}>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M5 12h14M13 6l6 6-6 6" />
+      <svg className={`${styles.connectionLines} ${styles.horizontalLines}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {inPaths.map((d) => <path className={styles.draw} d={d} key={d} pathLength="1" />)}
+        {inPaths.map((d) => <path className={styles.flowLine} d={d} key={`flow-${d}`} />)}
       </svg>
-    </span>
-  );
-}
-
-function InboxMini() {
-  return (
-    <div className="mini-panel mini-inbox">
-      <div className="ui-light mini-tile">
-        <Icon name="mail" size={18} />
-        <span>Nuevo email</span>
+      <svg className={`${styles.connectionLines} ${styles.verticalLines}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {inPathsVertical.map((d) => <path className={styles.draw} d={d} key={d} pathLength="1" />)}
+        {inPathsVertical.map((d) => <path className={styles.flowLine} d={d} key={`flow-${d}`} />)}
+      </svg>
+      <div className={`${styles.central} ${styles.step}`} style={at(550)}>
+        <span className={styles.hub}><BrandMark size={34} /></span>
+        <span>Tu sistema</span>
       </div>
-      <MiniArrow delay={150} />
-      <div className="ui-accent mini-tile cm-pop" style={at(450)}>
-        <span className="mini-ok">
-          <Icon name="check" size={12} />
-        </span>
-        <span>Lead creado</span>
+      <svg className={`${styles.connectionLines} ${styles.horizontalLines}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path className={styles.draw} d="M0 50 H100" pathLength="1" />
+        <path className={styles.flowLine} d="M0 50 H100" />
+      </svg>
+      <svg className={`${styles.connectionLines} ${styles.verticalLines}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path className={styles.draw} d="M50 0 V100" pathLength="1" />
+        <path className={styles.flowLine} d="M50 0 V100" />
+      </svg>
+      <div className={`${styles.paper} ${styles.sharedData} ${styles.step}`} style={at(950)}>
+        <div className={styles.paperHeading}><Icon name="layers" size={20} /><span>Datos sincronizados</span></div>
+        <ul>
+          {(["Clientes", "Proyectos", "Facturación"]).map((label, index) => (
+            <li className={styles.step} style={at(1150 + index * 180)} key={label}><span>{label}</span><Icon name="check" size={17} /></li>
+          ))}
+        </ul>
       </div>
-    </div>
-  );
-}
-
-function LeadMini() {
-  return (
-    <div className="mini-panel ui-light mini-lead">
-      <div className="mini-lead-head">
-        <Icon name="lead" size={16} />
-        <b>Nueva consulta</b>
-        <span className="mini-ok cm-pop" style={at(900)}>
-          <Icon name="check" size={12} />
-        </span>
-      </div>
-      <p className="mini-reply cm-in" style={at(150)}>
-        ¡Gracias por escribirnos!
-      </p>
-      <span className="mini-status cm-in" style={at(600)}>
-        <Icon name="check" size={13} />
-        Seguimiento programado
-      </span>
     </div>
   );
 }
 
-function ConnectMini() {
-  return (
-    <div className="mini-panel mini-connect">
-      <span className="ui-light mini-node">
-        <Icon name="mail" size={17} />
-      </span>
-      <span className="ui-light mini-node">
-        <Icon name="form" size={17} />
-      </span>
-      <MiniArrow delay={100} />
-      <span className="mini-hub cm-pop" style={at(350)}>
-        <BrandMark size={18} />
-      </span>
-      <MiniArrow delay={650} />
-      <span className="mini-done cm-pop" style={at(900)}>
-        <Icon name="check" size={15} />
-      </span>
-    </div>
-  );
-}
+const demoComponents = [CaptureDemo, FollowDemo, ConnectDemo];
+const scrollMedia = "(min-width: 1000px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)";
 
-function BuildMini() {
-  return (
-    <div className="mini-panel mini-build">
-      <div className="mini-modules">
-        {modules.map((module) => (
-          <span className="ui-accent mini-module" key={module.label}>
-            <Icon name={module.icon} size={17} />
-            {module.label}
-          </span>
-        ))}
-      </div>
-      <div className="ui-light mini-hubbar cm-in" style={at(250)}>
-        <span className="mini-hubbar-logo">
-          <BrandMark size={14} />
-        </span>
-        Tu negocio, en un solo lugar
-      </div>
-    </div>
-  );
+function useMediaQuery(query: string) {
+  const subscribe = useCallback((notify: () => void) => {
+    const media = window.matchMedia(query);
+    media.addEventListener("change", notify);
+    return () => media.removeEventListener("change", notify);
+  }, [query]);
+  const getSnapshot = useCallback(() => window.matchMedia(query).matches, [query]);
+  return useSyncExternalStore(subscribe, getSnapshot, () => false);
 }
 
 export function ChangeShowcaseSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const scrollEnabled = useMediaQuery(scrollMedia);
+  const verticalTabs = useMediaQuery("(min-width: 1000px)");
+  const trackRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const activeRef = useRef(0);
+  const manualRef = useRef<{ index: number; scrollY: number } | null>(null);
 
-  // Each card's mini-interface plays its sequence once it is well inside the
-  // viewport. Cards entering together (the two half cards on desktop) are
-  // staggered so they never animate at the same time. Without JS or with
-  // reduced motion, nothing is armed and the CSS default is the final state.
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const visuals = Array.from(section.querySelectorAll<HTMLElement>(".change-visual, .change-mini"));
-    const timers: number[] = [];
-    let nextSlot = 0;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const inView =
-            entry.intersectionRatio >= 0.4 ||
-            entry.intersectionRect.height >= window.innerHeight * 0.5;
-          if (!entry.isIntersecting || !inView) return;
-          observer.unobserve(entry.target);
-
-          const now = performance.now();
-          const start = Math.max(now, nextSlot);
-          nextSlot = start + 900;
-          timers.push(
-            window.setTimeout(() => entry.target.classList.add("is-playing"), start - now),
-          );
-        });
-      },
-      { threshold: [0, 0.2, 0.4, 0.6] },
-    );
-
-    visuals.forEach((visual) => {
-      visual.classList.add("is-armed");
-      observer.observe(visual);
-    });
-
-    return () => {
-      observer.disconnect();
-      timers.forEach((timer) => window.clearTimeout(timer));
-      visuals.forEach((visual) => visual.classList.remove("is-armed", "is-playing"));
-    };
+  const select = useCallback((index: number) => {
+    activeRef.current = index;
+    setActive(index);
   }, []);
 
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setPlaying(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!scrollEnabled) {
+      manualRef.current = null;
+      return;
+    }
+    const pinnedStage = stageRef.current;
+    manualRef.current = null;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const track = trackRef.current;
+      const stage = stageRef.current;
+      if (!track || !stage) return;
+      const rect = track.getBoundingClientRect();
+      if (rect.top > window.innerHeight || rect.bottom < 0) {
+        manualRef.current = null;
+        return;
+      }
+      const travel = track.offsetHeight - stage.offsetHeight;
+      if (travel <= 0) return;
+      // The existing body overflow creates a separate sticky containing block.
+      // Keep pinning local to this section instead of changing global overflow.
+      const top = parseFloat(getComputedStyle(stage).getPropertyValue("--pin-top")) || 104;
+      const offset = Math.max(0, Math.min(travel, top - rect.top));
+      stage.style.setProperty("--pin-offset", `${offset}px`);
+      const progress = Math.max(0, Math.min(1, (top - rect.top) / travel));
+      let next = Math.min(2, Math.floor(progress * 3));
+      const manual = manualRef.current;
+      if (manual) {
+        const delta = window.scrollY - manual.scrollY;
+        const steps = Math.trunc(delta / (travel / 3));
+        next = Math.max(0, Math.min(2, manual.index + steps));
+      }
+      if (next !== activeRef.current) select(next);
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    schedule();
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      window.cancelAnimationFrame(frame);
+      pinnedStage?.style.removeProperty("--pin-offset");
+    };
+  }, [scrollEnabled, select]);
+
+  const choose = (index: number, focus = false) => {
+    manualRef.current = { index, scrollY: window.scrollY };
+    select(index);
+    if (focus) tabRefs.current[index]?.focus({ preventScroll: true });
+  };
+
+  const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let next: number;
+    if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = 2;
+    else if (event.key === (verticalTabs ? "ArrowDown" : "ArrowRight")) next = (index + 1) % 3;
+    else if (event.key === (verticalTabs ? "ArrowUp" : "ArrowLeft")) next = (index + 2) % 3;
+    else return;
+    event.preventDefault();
+    choose(next, true);
+  };
+
   return (
-    <section className="change-section" ref={sectionRef} aria-labelledby="change-title">
+    <section className={styles.section} id="automatizacion-en-accion" aria-labelledby="change-title" data-scroll={scrollEnabled}>
       <Container>
-        <header className="change-header" data-reveal>
-          <p className="change-eyebrow">EL CAMBIO EMPIEZA AQUÍ</p>
-          <h2 id="change-title">
-            Tu empresa podría <span>funcionar mucho mejor.</span>
-          </h2>
-          <p className="change-subtitle">Y probablemente ya sabes por dónde empezar.</p>
+        <header className="section-header">
+          <p className="section-eyebrow">AUTOMATIZACIÓN EN ACCIÓN</p>
+          <h2 id="change-title">Hay otra forma de trabajar.</h2>
+          <p>Procesos que avanzan, información que se organiza y herramientas que trabajan juntas.</p>
         </header>
-
-        <div className="change-grid">
-          <ChangeCard
-            wide
-            icon="mail"
-            className="change-card-inbox"
-            title="¿Otra vez haciendo lo mismo?"
-            punchline="Que se haga solo."
-            mini={<InboxMini />}
-          >
-            <InboxFlow />
-          </ChangeCard>
-
-          <ChangeCard
-            icon="users"
-            className="change-card-leads"
-            title={
-              <>
-                ¿Y si no se escapara <br />
-                ninguno?
-              </>
-            }
-            punchline="Cada oportunidad cuenta."
-            mini={<LeadMini />}
-          >
-            <LeadFlow />
-          </ChangeCard>
-
-          <ChangeCard
-            icon="layers"
-            className="change-card-connect"
-            title={
-              <>
-                Todo conectado. <br />
-                Por fin.
-              </>
-            }
-            punchline="Adiós al caos."
-            mini={<ConnectMini />}
-          >
-            <ConnectFlow />
-          </ChangeCard>
-
-          <ChangeCard
-            wide
-            icon="chart"
-            className="change-card-build"
-            title={
-              <>
-                <span>Tu empresa ha cambiado.</span> <span>Tu software también debería.</span>
-              </>
-            }
-            punchline="No al revés."
-            mini={<BuildMini />}
-          >
-            <BuildFlow />
-          </ChangeCard>
+        <div className={styles.track} ref={trackRef}>
+          <div className={styles.stage} ref={stageRef}>
+            <div className={styles.navigation}>
+              <div className={styles.tabs} role="tablist" aria-label="Demostraciones de automatización" aria-orientation={verticalTabs ? "vertical" : "horizontal"}>
+                {demonstrations.map((demo, index) => (
+                  <button
+                    className={styles.tab}
+                    id={`automation-tab-${demo.id}`}
+                    role="tab"
+                    aria-selected={active === index}
+                    aria-controls={`automation-panel-${demo.id}`}
+                    aria-labelledby={`automation-label-${demo.id}`}
+                    aria-describedby={`automation-description-${demo.id}`}
+                    tabIndex={active === index ? 0 : -1}
+                    type="button"
+                    key={demo.id}
+                    ref={(element) => { tabRefs.current[index] = element; }}
+                    onClick={() => choose(index)}
+                    onKeyDown={(event) => onTabKeyDown(event, index)}
+                  >
+                    <span className={styles.tabHeading}><small aria-hidden="true">0{index + 1}</small><span id={`automation-label-${demo.id}`}>{demo.title}</span></span>
+                    <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{demo.description}</span>
+                  </button>
+                ))}
+              </div>
+              <p className={styles.mobileDescription} aria-hidden="true">{demonstrations[active].description}</p>
+            </div>
+            <div className={styles.demonstration}>
+              <div className={styles.workspaceHeading} aria-hidden="true"><BrandMark size={19} /><span>Tu espacio de trabajo</span><small>Demostración</small></div>
+              <div className={styles.panels}>
+                {demonstrations.map((demo, index) => {
+                  const Demo = demoComponents[index];
+                  return (
+                    <div
+                      className={styles.panel}
+                      id={`automation-panel-${demo.id}`}
+                      role="tabpanel"
+                      aria-labelledby={`automation-tab-${demo.id}`}
+                      aria-hidden={active !== index}
+                      inert={active !== index}
+                      tabIndex={active === index ? 0 : -1}
+                      data-active={active === index}
+                      data-playing={playing}
+                      key={demo.id}
+                    >
+                      <div className={styles.canvas}><Demo /></div>
+                      <p className={`${styles.outcome} ${styles.step}`} style={at(1750)}><Icon name="check" size={16} />{demo.outcome}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </Container>
     </section>
