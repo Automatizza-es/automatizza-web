@@ -19,10 +19,10 @@
 }
 
 .network svg { width: 100%; height: 100%; }
-.lines path { fill: none; stroke: currentColor; stroke-opacity: 0.5; stroke-width: 1.15; vector-effect: non-scaling-stroke; transition: stroke-opacity 600ms ease, stroke-width 600ms ease; }
+.lines path { fill: none; stroke: currentColor; stroke-opacity: 0.5; stroke-width: 1.15; vector-effect: non-scaling-stroke; transition: stroke-opacity 400ms ease, stroke-width 400ms ease, filter 400ms ease; }
 .routes path { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 2 26; stroke-linecap: round; vector-effect: non-scaling-stroke; animation: route 24s linear infinite; }
 .routes path:nth-child(even) { animation-direction: reverse; }
-.nodes circle { fill: var(--color-white); stroke: currentColor; stroke-width: 1.6; transition: fill 600ms ease, filter 600ms ease; }
+.nodes circle { fill: var(--color-white); stroke: currentColor; stroke-width: 1.6; transition: fill 400ms ease, filter 400ms ease; }
 .travelers { fill: currentColor; stroke: currentColor; stroke-width: 4; stroke-opacity: 0.14; }
 
 .inner { display: grid; padding-block: clamp(6rem, 10vw, 9rem); place-items: center; }
@@ -40,6 +40,9 @@
 .adaptation { animation-name: adaptation-enter; animation-delay: 90ms; }
 .emphasis { display: inline-block; color: var(--color-cyan); font: inherit; white-space: nowrap; }
 .word { display: inline-block; transform-origin: center 65%; transition: transform 560ms cubic-bezier(0.22, 1.25, 0.36, 1); }
+.wordAdapt { position: relative; isolation: isolate; }
+.particles { position: absolute; z-index: -1; top: 50%; left: 50%; width: 0; height: 0; pointer-events: none; }
+.particle { position: absolute; width: var(--size); height: var(--size); border-radius: 50%; background: var(--color-cyan); opacity: 0; box-shadow: 0 0 8px rgba(2, 160, 252, 0.4); }
 .closing { margin-top: 0.08em; animation-delay: 180ms; }
 .description {
   max-width: 570px;
@@ -63,6 +66,12 @@
 @keyframes enter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes adaptation-enter { from { opacity: 0; transform: translateY(6px) scaleX(0.985); } to { opacity: 1; transform: none; } }
 @keyframes route { to { stroke-dashoffset: -112; } }
+@keyframes converge {
+  0% { opacity: 0; transform: translate(var(--from-x), var(--from-y)) scale(0.8); }
+  15% { opacity: 1; }
+  80% { opacity: 0.9; transform: translate(var(--to-x), var(--to-y)) scale(0.85); }
+  100% { opacity: 0; transform: translate(var(--to-x), var(--to-y)) scale(0.2); }
+}
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .wordStart:hover { transform: translateY(-0.01em) scale(1.04, 1.02); }
@@ -76,15 +85,19 @@
   .emphasis:has(.wordEnd:hover) .wordAdapt { transform: translateX(-0.035em); }
   .emphasis:has(.wordEnd:hover) .wordStart { transform: translateX(-0.02em); }
 
-  /* Each word activates a small, different part of the existing network. */
+  /* The burst runs once per hover; the resting network stays unchanged. */
+  .wordAdapt:hover .particle { animation: converge 1700ms cubic-bezier(0.4, 0, 0.2, 1) var(--delay) both; }
+
   .hero:has(.wordStart:hover) .lines path:nth-child(-n + 2),
+  .hero:has(.wordAdapt:hover) .lines path:nth-child(2),
   .hero:has(.wordAdapt:hover) .lines path:nth-child(4),
   .hero:has(.wordAdapt:hover) .lines path:nth-child(5),
-  .hero:has(.wordEnd:hover) .lines path:nth-child(6) { stroke-opacity: 0.85; stroke-width: 1.4; }
+  .hero:has(.wordEnd:hover) .lines path:nth-child(6) { stroke-opacity: 1; stroke-width: 2; filter: drop-shadow(0 0 4px rgba(2, 160, 252, 0.4)); }
 
   .hero:has(.wordStart:hover) .nodes circle:nth-child(-n + 4),
+  .hero:has(.wordAdapt:hover) .nodes circle:nth-child(4),
   .hero:has(.wordAdapt:hover) .nodes circle:nth-child(n + 8):nth-child(-n + 10),
-  .hero:has(.wordEnd:hover) .nodes circle:nth-child(11) { fill: rgba(2, 160, 252, 0.22); filter: drop-shadow(0 0 4px rgba(2, 160, 252, 0.3)); }
+  .hero:has(.wordEnd:hover) .nodes circle:nth-child(11) { fill: var(--color-cyan); filter: drop-shadow(0 0 7px rgba(2, 160, 252, 0.65)); }
 }
 
 @media (max-width: 900px) {
@@ -107,5 +120,5 @@
 @media (prefers-reduced-motion: reduce) {
   .lead, .adaptation, .closing, .description, .actions, .routes path { animation: none; }
   .word, .lines path, .nodes circle, .button, .arrow { transition: none; }
-  .travelers { display: none; }
+  .travelers, .particles { display: none; }
 }

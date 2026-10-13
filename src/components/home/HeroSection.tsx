@@ -1,7 +1,21 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 
 import { Container } from "@/components/layout/Container";
 import styles from "./HeroSection.module.css";
+
+const convergenceParticles = Array.from({ length: 24 }, (_, index) => {
+  const angle = (index / 24) * Math.PI * 2;
+  const distance = 2.6 + (index % 4) * 0.45;
+  return {
+    "--from-x": `${(Math.cos(angle) * distance).toFixed(3)}em`,
+    "--from-y": `${(Math.sin(angle) * distance * 0.58).toFixed(3)}em`,
+    "--to-x": `${(Math.cos(angle) * 0.7).toFixed(3)}em`,
+    "--to-y": `${(Math.sin(angle) * 0.15).toFixed(3)}em`,
+    "--delay": `${(index % 6) * 65}ms`,
+    "--size": `${index % 3 === 0 ? 5 : 4}px`,
+  } as CSSProperties;
+});
 
 export function HeroSection() {
   return (
@@ -57,7 +71,14 @@ export function HeroSection() {
             <span className={styles.adaptation}>
               <strong className={styles.emphasis}>
                 <span className={`${styles.word} ${styles.wordStart}`}>se</span>{" "}
-                <span className={`${styles.word} ${styles.wordAdapt}`}>adapta</span>{" "}
+                <span className={`${styles.word} ${styles.wordAdapt}`}>
+                  adapta
+                  <span className={styles.particles} aria-hidden="true">
+                    {convergenceParticles.map((style, index) => (
+                      <i className={styles.particle} key={index} style={style} />
+                    ))}
+                  </span>
+                </span>{" "}
                 <span className={`${styles.word} ${styles.wordEnd}`}>a ti.</span>
               </strong>
             </span>{" "}
