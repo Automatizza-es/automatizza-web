@@ -303,12 +303,18 @@ export function ChangeShowcaseSection() {
 
   useEffect(() => {
     const composition = compositionRef.current;
-    if (!composition) return;
+    const track = trackRef.current;
+    if (!composition || !track) return;
     const header = document.querySelector<HTMLElement>(".site-header");
     const measure = () => {
-      const top = (header?.offsetHeight ?? 72) + 24;
+      const headerHeight = header?.offsetHeight ?? 72;
+      const height = composition.getBoundingClientRect().height;
+      // Stabilize the complete composition in the available viewport, before
+      // its heading travels all the way to the site header.
+      const top = Math.max(headerHeight + 24, (window.innerHeight + headerHeight - height) / 2);
       composition.style.setProperty("--pin-top", `${top}px`);
-      setFitsViewport(composition.offsetHeight + top + 24 <= window.innerHeight);
+      track.style.setProperty("--composition-height", `${height}px`);
+      setFitsViewport(height + top + 24 <= window.innerHeight);
     };
     const observer = new ResizeObserver(measure);
     observer.observe(composition);
@@ -338,21 +344,23 @@ export function ChangeShowcaseSection() {
       return;
     }
     const pinnedComposition = compositionRef.current;
+    const pinnedTrack = trackRef.current;
     const tabs = [...tabRefs.current];
-    let frame = 0;
     const update = () => {
-      frame = 0;
       const track = trackRef.current;
       const composition = compositionRef.current;
       if (!track || !composition) return;
       const rect = track.getBoundingClientRect();
-      const travel = track.offsetHeight - composition.offsetHeight;
+      const travel = rect.height - composition.getBoundingClientRect().height;
       if (travel <= 0) return;
-      // The existing body overflow creates a separate sticky containing block.
-      // Keep pinning local to this section instead of changing global overflow.
+      // Reserve the original layout space while the browser holds the whole
+      // composition fixed. No transform needs to chase the viewport scroll.
       const top = parseFloat(getComputedStyle(composition).getPropertyValue("--pin-top")) || 96;
-      const offset = Math.max(0, Math.min(travel, top - rect.top));
-      composition.style.setProperty("--pin-offset", `${offset}px`);
+      const distance = top - rect.top;
+      composition.style.setProperty("--pin-left", `${rect.left}px`);
+      composition.style.setProperty("--pin-width", `${rect.width}px`);
+      composition.style.setProperty("--pin-travel", `${travel}px`);
+      track.dataset.pin = distance < 0 ? "before" : distance <= travel ? "pinned" : "after";
       const progress = Math.max(0, Math.min(1, (top - rect.top) / travel));
       tabs.forEach((tab, index) => {
         tab?.style.setProperty("--scroll-progress", Math.max(0, Math.min(1, progress * 3 - index)).toFixed(4));
@@ -360,20 +368,19 @@ export function ChangeShowcaseSection() {
       const next = Math.min(2, Math.floor(progress * 3));
       if (next !== activeRef.current) select(next);
     };
-    const schedule = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    const observer = new ResizeObserver(schedule);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    const observer = new ResizeObserver(update);
     if (pinnedComposition) observer.observe(pinnedComposition);
-    schedule();
+    update();
     return () => {
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
       observer.disconnect();
-      pinnedComposition?.style.removeProperty("--pin-offset");
+      if (pinnedTrack) delete pinnedTrack.dataset.pin;
+      pinnedComposition?.style.removeProperty("--pin-left");
+      pinnedComposition?.style.removeProperty("--pin-width");
+      pinnedComposition?.style.removeProperty("--pin-travel");
       tabs.forEach((tab) => tab?.style.removeProperty("--scroll-progress"));
     };
   }, [scrollEnabled, select]);
@@ -383,8 +390,9 @@ export function ChangeShowcaseSection() {
     const composition = compositionRef.current;
     if (scrollEnabled && track && composition) {
       const top = parseFloat(getComputedStyle(composition).getPropertyValue("--pin-top")) || 96;
-      const travel = track.offsetHeight - composition.offsetHeight;
-      const target = window.scrollY + track.getBoundingClientRect().top - top + travel * ((index + 0.5) / 3);
+      const rect = track.getBoundingClientRect();
+      const travel = rect.height - composition.getBoundingClientRect().height;
+      const target = window.scrollY + rect.top - top + travel * ((index + 0.5) / 3);
       if (Math.abs(window.scrollY - target) < 1) select(index);
       else window.scrollTo({ top: target, behavior: "smooth" });
     } else {
