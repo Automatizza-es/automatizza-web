@@ -13,16 +13,16 @@
   z-index: -1;
   inset: 0;
   color: var(--color-cyan);
-  opacity: 0.42;
+  opacity: 0.7;
   pointer-events: none;
-  mask-image: radial-gradient(ellipse at center, transparent 6%, rgba(0, 0, 0, 0.25) 35%, #000 78%);
+  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.42) 38%, #000 75%);
 }
 
 .network svg { width: 100%; height: 100%; }
-.lines path { fill: none; stroke: #cadbe9; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.lines path { fill: none; stroke: currentColor; stroke-opacity: 0.5; stroke-width: 1.15; vector-effect: non-scaling-stroke; }
 .routes path { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 2 26; stroke-linecap: round; vector-effect: non-scaling-stroke; animation: route 24s linear infinite; }
 .routes path:nth-child(even) { animation-direction: reverse; }
-.nodes circle { fill: var(--color-white); stroke: currentColor; stroke-width: 1.4; }
+.nodes circle { fill: var(--color-white); stroke: currentColor; stroke-width: 1.6; }
 .travelers { fill: currentColor; stroke: currentColor; stroke-width: 4; stroke-opacity: 0.14; }
 
 .inner { display: grid; padding-block: clamp(6rem, 10vw, 9rem); place-items: center; }
@@ -80,7 +80,7 @@
   .description { max-width: 340px; margin-top: 1.8rem; font-size: 1rem; line-height: 1.65; }
   .actions { flex-direction: column; align-items: center; gap: 0.65rem; margin-top: 1.75rem; }
   .button { min-height: 48px; }
-  .network { opacity: 0.35; }
+  .network { opacity: 0.6; }
 }
 
 @media (prefers-reduced-motion: reduce) {
