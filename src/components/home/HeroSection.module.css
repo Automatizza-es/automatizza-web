@@ -35,12 +35,13 @@
   font-weight: 650;
   letter-spacing: -0.065em;
   line-height: 1.09;
+  text-wrap: balance;
 }
-.lead, .adaptation, .closing { display: block; animation: enter 640ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-.adaptation { animation-name: adaptation-enter; animation-delay: 90ms; }
+.lead, .benefit, .closing { display: block; animation: enter 640ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.benefit { animation-name: benefit-enter; animation-delay: 90ms; }
 .emphasis { display: inline-block; color: var(--color-cyan); font: inherit; white-space: nowrap; }
 .word { display: inline-block; transform-origin: center 65%; transition: transform 560ms cubic-bezier(0.22, 1.25, 0.36, 1); }
-.wordAdapt { position: relative; isolation: isolate; }
+.wordTime { position: relative; isolation: isolate; }
 .particles { position: absolute; z-index: -1; top: 50%; left: 50%; width: 0; height: 0; pointer-events: none; }
 .particle { position: absolute; width: var(--size); height: var(--size); border-radius: 50%; background: var(--color-cyan); opacity: 0; box-shadow: 0 0 8px rgba(2, 160, 252, 0.4); }
 .closing { margin-top: 0.08em; animation-delay: 180ms; }
@@ -64,7 +65,7 @@
 .button:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 4px; }
 
 @keyframes enter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@keyframes adaptation-enter { from { opacity: 0; transform: translateY(6px) scaleX(0.985); } to { opacity: 1; transform: none; } }
+@keyframes benefit-enter { from { opacity: 0; transform: translateY(6px) scaleX(0.985); } to { opacity: 1; transform: none; } }
 @keyframes route { to { stroke-dashoffset: -112; } }
 @keyframes converge {
   0% { opacity: 0; transform: translate(var(--from-x), var(--from-y)) scale(0.8); }
@@ -74,30 +75,23 @@
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .wordStart:hover { transform: translateY(-0.01em) scale(1.04, 1.02); }
-  .wordAdapt:hover { transform: translateY(-0.015em) scale(1.055, 1.025); }
-  .wordEnd:hover { transform: translateY(-0.01em) scale(1.04, 1.02); }
+  .wordMore:hover { transform: translateY(-0.01em) scale(1.04, 1.02); }
+  .wordTime:hover { transform: translateY(-0.015em) scale(1.055, 1.025); }
 
-  .emphasis:has(.wordStart:hover) .wordAdapt { transform: translateX(0.035em); }
-  .emphasis:has(.wordStart:hover) .wordEnd { transform: translateX(0.02em); }
-  .emphasis:has(.wordAdapt:hover) .wordStart { transform: translateX(-0.065em) scaleX(1.01); }
-  .emphasis:has(.wordAdapt:hover) .wordEnd { transform: translateX(0.065em) scaleX(1.01); }
-  .emphasis:has(.wordEnd:hover) .wordAdapt { transform: translateX(-0.035em); }
-  .emphasis:has(.wordEnd:hover) .wordStart { transform: translateX(-0.02em); }
+  .emphasis:has(.wordMore:hover) .wordTime { transform: translateX(0.035em); }
+  .emphasis:has(.wordTime:hover) .wordMore { transform: translateX(-0.065em) scaleX(1.01); }
 
   /* The burst runs once per hover; the resting network stays unchanged. */
-  .wordAdapt:hover .particle { animation: converge 1700ms cubic-bezier(0.4, 0, 0.2, 1) var(--delay) both; }
+  .wordTime:hover .particle { animation: converge 1700ms cubic-bezier(0.4, 0, 0.2, 1) var(--delay) both; }
 
-  .hero:has(.wordStart:hover) .lines path:nth-child(-n + 2),
-  .hero:has(.wordAdapt:hover) .lines path:nth-child(2),
-  .hero:has(.wordAdapt:hover) .lines path:nth-child(4),
-  .hero:has(.wordAdapt:hover) .lines path:nth-child(5),
-  .hero:has(.wordEnd:hover) .lines path:nth-child(6) { stroke-opacity: 1; stroke-width: 2; filter: drop-shadow(0 0 4px rgba(2, 160, 252, 0.4)); }
+  .hero:has(.wordMore:hover) .lines path:nth-child(-n + 2),
+  .hero:has(.wordTime:hover) .lines path:nth-child(2),
+  .hero:has(.wordTime:hover) .lines path:nth-child(4),
+  .hero:has(.wordTime:hover) .lines path:nth-child(5) { stroke-opacity: 1; stroke-width: 2; filter: drop-shadow(0 0 4px rgba(2, 160, 252, 0.4)); }
 
-  .hero:has(.wordStart:hover) .nodes circle:nth-child(-n + 4),
-  .hero:has(.wordAdapt:hover) .nodes circle:nth-child(4),
-  .hero:has(.wordAdapt:hover) .nodes circle:nth-child(n + 8):nth-child(-n + 10),
-  .hero:has(.wordEnd:hover) .nodes circle:nth-child(11) { fill: var(--color-cyan); filter: drop-shadow(0 0 7px rgba(2, 160, 252, 0.65)); }
+  .hero:has(.wordMore:hover) .nodes circle:nth-child(-n + 4),
+  .hero:has(.wordTime:hover) .nodes circle:nth-child(4),
+  .hero:has(.wordTime:hover) .nodes circle:nth-child(n + 8):nth-child(-n + 10) { fill: var(--color-cyan); filter: drop-shadow(0 0 7px rgba(2, 160, 252, 0.65)); }
 }
 
 @media (max-width: 900px) {
@@ -118,7 +112,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lead, .adaptation, .closing, .description, .actions, .routes path { animation: none; }
+  .lead, .benefit, .closing, .description, .actions, .routes path { animation: none; }
   .word, .lines path, .nodes circle, .button, .arrow { transition: none; }
   .travelers, .particles { display: none; }
 }

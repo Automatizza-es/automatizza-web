@@ -67,22 +67,21 @@ export function HeroSection() {
       <Container className={styles.inner}>
         <div className={styles.copy}>
           <h1 id="hero-title" className={styles.title}>
-            <span className={styles.lead}>La tecnología</span>{" "}
-            <span className={styles.adaptation}>
+            <span className={styles.lead}>Menos tareas repetitivas.</span>{" "}
+            <span className={styles.benefit}>
               <strong className={styles.emphasis}>
-                <span className={`${styles.word} ${styles.wordStart}`}>se</span>{" "}
-                <span className={`${styles.word} ${styles.wordAdapt}`}>
-                  adapta
+                <span className={`${styles.word} ${styles.wordMore}`}>Más</span>{" "}
+                <span className={`${styles.word} ${styles.wordTime}`}>
+                  tiempo
                   <span className={styles.particles} aria-hidden="true">
                     {convergenceParticles.map((style, index) => (
                       <i className={styles.particle} key={index} style={style} />
                     ))}
                   </span>
-                </span>{" "}
-                <span className={`${styles.word} ${styles.wordEnd}`}>a ti.</span>
+                </span>
               </strong>
             </span>{" "}
-            <span className={styles.closing}>No al revés.</span>
+            <span className={styles.closing}>para hacer crecer tu empresa.</span>
           </h1>
           <p className={styles.description}>
             Creamos aplicaciones y automatizaciones a medida que conectan procesos y simplifican tu día a día.
