@@ -1,0 +1,88 @@
+.hero {
+  position: relative;
+  display: grid;
+  min-height: min(800px, calc(100svh - 80px));
+  overflow: hidden;
+  background: var(--color-white);
+  isolation: isolate;
+  place-items: center;
+}
+
+.network {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  color: var(--color-cyan);
+  opacity: 0.3;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, transparent 18%, #000 78%);
+}
+
+.network svg { width: 100%; height: 100%; }
+.lines path { fill: none; stroke: #cadbe9; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.routes path { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 2 26; stroke-linecap: round; vector-effect: non-scaling-stroke; animation: route 24s linear infinite; }
+.routes path:nth-child(even) { animation-direction: reverse; }
+.nodes circle { fill: var(--color-white); stroke: currentColor; stroke-width: 1.4; }
+.travelers { fill: currentColor; }
+
+.inner { display: grid; padding-block: clamp(6rem, 10vw, 9rem); place-items: center; }
+.copy { width: 100%; text-align: center; }
+.title {
+  margin: 0;
+  color: #171b27;
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(3.25rem, 6.05vw, 5.5rem);
+  font-weight: 650;
+  letter-spacing: -0.065em;
+  line-height: 1.09;
+  animation: enter 650ms ease-out both;
+}
+.statement, .closing { display: block; }
+.lead, .emphasis { display: inline-block; }
+.emphasis { color: var(--color-cyan); font: inherit; }
+.closing { margin-top: 0.08em; }
+.description {
+  max-width: 570px;
+  margin: 2.2rem auto 0;
+  color: #575e6b;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+  animation: enter 650ms 100ms ease-out both;
+}
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 2rem; animation: enter 650ms 160ms ease-out both; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; border: 1px solid transparent; border-radius: 999px; padding: 0.75rem 1.4rem; font-size: 0.875rem; font-weight: 550; transition: background-color 180ms ease, border-color 180ms ease; }
+.primary { gap: 0.85rem; background: var(--color-navy); color: var(--color-white); }
+.primary:hover { background: #0a226f; }
+.arrow { transition: transform 180ms ease; }
+.primary:hover .arrow { transform: translateX(2px); }
+.secondary { border-color: #e1e4ea; background: var(--color-white); color: var(--color-navy); }
+.secondary:hover { border-color: #c5cad4; background: #f7f8fa; }
+.button:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 4px; }
+
+@keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes route { to { stroke-dashoffset: -112; } }
+
+@media (max-width: 900px) {
+  .hero { min-height: min(760px, calc(100svh - 72px)); }
+  .title { font-size: clamp(3.25rem, 7.8vw, 4.375rem); }
+  .lead, .emphasis { display: block; }
+  .inner { padding-block: 5.5rem; }
+}
+
+@media (max-width: 600px) {
+  .hero { min-height: min(740px, calc(100svh - 72px)); }
+  .inner { padding-block: 4rem 4.5rem; }
+  .title { font-size: clamp(2.25rem, 10.8vw, 3.75rem); letter-spacing: -0.06em; line-height: 1.12; }
+  .closing { margin-top: 0.12em; }
+  .description { max-width: 340px; margin-top: 1.8rem; font-size: 1rem; line-height: 1.65; }
+  .actions { flex-direction: column; align-items: center; gap: 0.65rem; margin-top: 1.75rem; }
+  .button { min-height: 48px; }
+  .network { opacity: 0.23; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title, .description, .actions, .routes path { animation: none; }
+  .button, .arrow { transition: none; }
+  .travelers { display: none; }
+}

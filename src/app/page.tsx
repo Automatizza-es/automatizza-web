@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <EditorialMotion />
-      <Header />
+      <Header redesign />
       <main>
         <HeroSection />
         <ChangeShowcaseSection />
