@@ -55,7 +55,11 @@ export function HeroSection() {
           <h1 id="hero-title" className={styles.title}>
             <span className={styles.lead}>La tecnología</span>{" "}
             <span className={styles.adaptation}>
-              <strong className={styles.emphasis}>se adapta a ti.</strong>
+              <strong className={styles.emphasis}>
+                <span className={`${styles.word} ${styles.wordStart}`}>se</span>{" "}
+                <span className={`${styles.word} ${styles.wordAdapt}`}>adapta</span>{" "}
+                <span className={`${styles.word} ${styles.wordEnd}`}>a ti.</span>
+              </strong>
             </span>{" "}
             <span className={styles.closing}>No al revés.</span>
           </h1>
