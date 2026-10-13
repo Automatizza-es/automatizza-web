@@ -284,7 +284,7 @@ function ConnectDemo() {
 }
 
 const demoComponents = [CaptureDemo, FollowDemo, ConnectDemo];
-const scrollMedia = "(min-width: 1000px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)";
+const scrollMedia = "(min-width: 1000px) and (min-height: 680px) and (prefers-reduced-motion: no-preference)";
 
 function useMediaQuery(query: string) {
   const subscribe = useCallback((notify: () => void) => {
