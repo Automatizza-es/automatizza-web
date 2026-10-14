@@ -33,7 +33,11 @@ const demonstrations = [
     title: "Que nada se quede atrás.",
     description: "Cada solicitud llega a quien corresponde, con las tareas y el seguimiento organizados.",
   },
-  { id: "conectar", title: "Conectar", description: "Próximamente." },
+  {
+    id: "conectar",
+    title: "Todo conectado.",
+    description: "La información entra una vez y aparece donde tiene que estar.",
+  },
 ];
 
 const invoiceFields = [
@@ -106,10 +110,6 @@ function DocumentDemo() {
   );
 }
 
-function PlaceholderDemo({ title }: { title: string }) {
-  return <div className={styles.placeholder}><span>{title}</span><p>Próximamente.</p></div>;
-}
-
 const coordinationSteps = [
   { label: "Solicitud recibida", icon: "received" },
   { label: "Responsable asignado", icon: "assigned" },
@@ -146,6 +146,85 @@ function CoordinationDemo() {
           </li>
         ))}
       </ol>
+    </div>
+  );
+}
+
+const systemSources = [
+  { label: "Formulario", icon: "form" },
+  { label: "Email", icon: "mail" },
+  { label: "CRM", icon: "clients" },
+  { label: "Archivos", icon: "files" },
+] as const;
+const systemResults = [
+  { label: "Leads", icon: "lead" },
+  { label: "Clientes", icon: "clients" },
+  { label: "Proyectos", icon: "projects" },
+  { label: "Facturación", icon: "invoice" },
+  { label: "Tareas", icon: "tasks" },
+] as const;
+type SystemIconName = typeof systemSources[number]["icon"] | typeof systemResults[number]["icon"];
+
+function SystemIcon({ name }: { name: SystemIconName }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {name === "form" && <><rect x="5" y="3.5" width="14" height="17" rx="2" /><path d="M8.5 8h7M8.5 12h7M8.5 16h4" /></>}
+      {name === "mail" && <><rect x="3.5" y="5.5" width="17" height="13" rx="2" /><path d="m4.5 7 7.5 6 7.5-6" /></>}
+      {name === "clients" && <><circle cx="9" cy="8.5" r="3" /><path d="M3.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8M15.5 5.8a3 3 0 0 1 0 5.4M17.5 14.6c1.6.6 2.7 2.1 3 4.4" /></>}
+      {name === "files" && <><rect x="7" y="3.5" width="13" height="13" rx="2" /><path d="M15.5 20.5h-10a2 2 0 0 1-2-2v-10" /></>}
+      {name === "lead" && <><circle cx="9.5" cy="8" r="3.5" /><path d="M3 20c.8-3.6 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5.9M17.5 13.5v6M14.5 16.5h6" /></>}
+      {name === "projects" && <path d="M3.5 7A1.5 1.5 0 0 1 5 5.5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18Z" />}
+      {name === "invoice" && <><path d="M6 3.5h12v17l-3-2-3 2-3-2-3 2Z" /><path d="M9 8.5h6M9 12h6M9 15.5h3" /></>}
+      {name === "tasks" && <><rect x="4" y="4" width="16" height="16" rx="3" /><path d="m8 12 3 3 5-6" /></>}
+    </svg>
+  );
+}
+
+const systemInPaths = [12.5, 37.5, 62.5, 87.5].map((y) => `M0 ${y} C50 ${y} 50 50 100 50`);
+const systemOutPaths = [10, 30, 50, 70, 90].map((y) => `M0 50 C50 50 55 ${y} 100 ${y}`);
+const systemInMobilePaths = [25, 75].map((x) => `M${x} 0 C${x} 55 50 45 50 100`);
+const systemOutMobilePaths = ["M50 0 V100"];
+
+function SystemWires({ paths, mobilePaths }: { paths: string[]; mobilePaths: string[] }) {
+  return (
+    <>
+      {[paths, mobilePaths].map((routes, orientation) => (
+        <svg className={`${styles.systemWires} ${orientation === 1 ? styles.systemWiresMobile : styles.systemWiresDesktop}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" key={orientation}>
+          {routes.map((d) => <path d={d} key={d} />)}
+          {routes.map((d, index) => <path className={styles.systemPulse} d={d} pathLength="1" style={{ "--route-delay": `${index * -1.15}s` } as CSSProperties} key={`pulse-${d}`} />)}
+        </svg>
+      ))}
+    </>
+  );
+}
+
+function ConnectedDemo() {
+  return (
+    <div className={styles.connectedScene} role="group" aria-label="Automatizza conecta tus fuentes de información y la distribuye donde hace falta">
+      <div className={styles.connectedFlow}>
+        <ul className={styles.systemSources} aria-label="Fuentes de información">
+          {systemSources.map((source) => <li key={source.icon}><SystemIcon name={source.icon} /><span>{source.label}</span></li>)}
+        </ul>
+        <SystemWires paths={systemInPaths} mobilePaths={systemInMobilePaths} />
+        <div className={styles.systemCore} role="img" aria-label="Automatizza, núcleo que conecta y distribuye la información">
+          <span className={styles.systemMark}>
+            <svg width="34" height="34" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M7 3h20L15 18.5h3.5L15 23H2L14 8H3Z" />
+              <path d="M19 14.4h10.5L19.5 24.6H30L26.5 29h-16L21 18.3h-4.5Z" />
+            </svg>
+          </span>
+          <span className={styles.systemName}>Automatizza</span>
+        </div>
+        <SystemWires paths={systemOutPaths} mobilePaths={systemOutMobilePaths} />
+        <ul className={styles.systemResults} aria-label="Información disponible en cada destino">
+          {systemResults.map((result) => (
+            <li key={result.icon}>
+              <SystemIcon name={result.icon} /><span>{result.label}</span>
+              <svg className={styles.systemCheck} width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 8 3 3 7-7" /></svg>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
@@ -327,7 +406,7 @@ export function ChangeShowcaseSection() {
                       data-active={active === index}
                       key={demo.id}
                     >
-                      {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo /> : <PlaceholderDemo title={demo.title} />}
+                      {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo /> : <ConnectedDemo />}
                     </div>
                   ))}
                 </div>

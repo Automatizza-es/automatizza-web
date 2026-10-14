@@ -55,9 +55,6 @@
 .registeredInvoice dd { margin: 0; color: #283746; font-weight: 450; text-align: right; }
 .registeredInvoice .registeredStatus { display: inline-flex; align-items: center; gap: 0.35rem; }
 .registeredStatus svg { color: #6397b1; }
-.placeholder { display: grid; height: 100%; min-height: 380px; align-content: center; justify-items: center; background: #faf9f7; color: #81868d; }
-.placeholder > span { color: #5f6974; font-size: 1rem; font-weight: 450; }
-.placeholder p { margin: 0.6rem 0 0; font-size: 0.8125rem; }
 
 .coordinationScene { position: relative; width: 100%; min-height: 380px; aspect-ratio: 1.95; overflow: hidden; background: #e4d9ca; }
 .officePhoto { object-fit: cover; object-position: center; }
@@ -72,12 +69,34 @@
 .panel[data-active="true"] .coordinationLabel:last-child .coordinationIcon { animation: coordination-confirm 5.5s ease-in-out infinite; }
 @keyframes coordination-confirm { 0%, 100% { background-color: #eef2f3; } 50% { background-color: #dfeaed; } }
 
+.connectedScene { display: grid; width: 100%; min-height: 380px; aspect-ratio: 1.95; padding: 2rem; background: radial-gradient(ellipse at 50% 50%, #edf0f4 0%, #fafbfb 53%, #fff 100%); place-items: center; }
+.connectedFlow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(40px, 0.4fr) 70px minmax(40px, 0.4fr) minmax(0, 1.15fr); align-items: center; width: 100%; }
+.systemSources, .systemResults { display: grid; height: 272px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.systemSources { grid-template-rows: repeat(4, 1fr); align-items: center; }
+.systemSources li { display: flex; align-items: center; gap: 0.65rem; min-height: 44px; padding: 0.7rem 0.85rem; border: 1px solid #e1e6eb; border-radius: 10px; background: #fff; box-shadow: 0 10px 25px -20px rgba(28, 45, 65, 0.23); color: #455363; font-size: 0.875rem; font-weight: 450; }
+.systemSources svg, .systemResults svg { flex-shrink: 0; color: #8197a4; }
+.systemResults { grid-template-rows: repeat(5, 1fr); padding-inline: 1rem; border: 1px solid #e2e7ec; border-radius: 13px; background: linear-gradient(135deg, #fff, #f7f9fa); box-shadow: 0 18px 34px -26px rgba(28, 45, 65, 0.3); }
+.systemResults li { display: flex; align-items: center; gap: 0.65rem; min-width: 0; border-bottom: 1px solid #e9edf0; color: #354455; font-size: 0.875rem; font-weight: 450; }
+.systemResults li:last-child { border-bottom: 0; }
+.systemResults .systemCheck { margin-left: auto; color: #7399a6; }
+.systemCore { position: relative; display: grid; width: 70px; height: 70px; place-items: center; }
+.systemMark { display: grid; width: 70px; height: 70px; border: 1px solid #1f2f68; border-radius: 20px; background: linear-gradient(145deg, #172b68, #0a174e); color: #75bae0; box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.9), 0 0 0 8px #e6ebf0, 0 22px 35px -17px rgba(15, 33, 82, 0.4); place-items: center; }
+.systemName { position: absolute; top: calc(100% + 1.05rem); color: #7b858f; font-size: 0.6875rem; white-space: nowrap; }
+.systemWires { display: block; width: 100%; height: 272px; overflow: visible; }
+.systemWires path { fill: none; stroke: #d4dee6; stroke-width: 1.1; vector-effect: non-scaling-stroke; }
+.systemWires .systemPulse { stroke: #719ab2; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 0.025 0.975; opacity: 0; }
+.panel[data-active="true"] .systemPulse { animation: document-pulse 5.8s linear var(--route-delay, 0s) infinite; }
+.systemWiresMobile { display: none; }
+
 @media (min-width: 1000px) and (max-width: 1100px) {
   .stage { grid-template-columns: 215px minmax(0, 1fr); gap: 3rem; }
   .floatingDocument { padding: 0.8rem 0.65rem; }
   .registeredInvoice { padding-inline: 0.85rem; width: 33%; right: 3%; }
   .registeredInvoice > div { font-size: 0.75rem; gap: 0.4rem; }
   .extraction { font-size: 0.6875rem; }
+  .connectedScene { padding: 1.5rem; }
+  .systemSources li, .systemResults li { font-size: 0.8125rem; gap: 0.5rem; }
+  .systemResults { padding-inline: 0.8rem; }
 }
 
 @media (max-width: 999px) {
@@ -111,7 +130,6 @@
   .extractionLoader { width: 15px; height: 15px; flex-shrink: 0; }
   .registeredInvoice { top: 38%; right: 9%; width: 82%; padding: 0.9rem 1.1rem; }
   .registeredInvoice > div { padding-block: 0.8rem; font-size: 0.8125rem; }
-  .placeholder { min-height: 530px; }
   .coordinationScene { min-height: 530px; aspect-ratio: auto; }
   .officePhoto { object-position: 54% center; }
   .coordinationLabel { gap: 0.5rem; padding: 0.65rem 0.75rem; font-size: 0.75rem; }
@@ -119,6 +137,19 @@
   .coordinationLabel:nth-child(2) { top: 31%; right: 6%; }
   .coordinationLabel:nth-child(3) { top: 57%; left: 6%; }
   .coordinationLabel:nth-child(4) { top: 83%; right: 6%; }
+  .connectedScene { min-height: 530px; aspect-ratio: auto; padding: 1.5rem; }
+  .connectedFlow { grid-template-columns: 1fr; justify-items: center; }
+  .systemSources { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, 1fr); gap: 0.5rem; width: 100%; height: 92px; }
+  .systemSources li { min-height: 42px; gap: 0.5rem; padding: 0.65rem 0.6rem; font-size: 0.75rem; }
+  .systemSources svg { width: 16px; height: 16px; }
+  .systemWiresDesktop { display: none; }
+  .systemWiresMobile { display: block; width: 100%; height: 38px; }
+  .systemCore, .systemMark { width: 60px; height: 60px; }
+  .systemMark { border-radius: 17px; }
+  .systemMark > svg { width: 30px; height: 30px; }
+  .systemName { top: calc(100% + 0.65rem); padding-inline: 0.3rem; background: #fafbfb; font-size: 0.625rem; }
+  .systemResults { width: 100%; height: 190px; padding-inline: 1rem; }
+  .systemResults li { font-size: 0.8125rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -126,4 +157,5 @@
   .section .panel[data-active] .extractionLoader { animation: none; }
   .section .panel[data-active] .connectionPulse { animation: none; opacity: 0; }
   .section .panel[data-active] .coordinationLabel:last-child .coordinationIcon { animation: none; }
+  .section .panel[data-active] .systemPulse { animation: none; opacity: 0; }
 }
