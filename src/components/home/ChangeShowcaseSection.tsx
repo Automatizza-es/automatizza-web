@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   useCallback,
   useEffect,
@@ -27,7 +28,11 @@ const demonstrations = [
     title: "Lo repetitivo, resuelto.",
     description: "Los datos de tus documentos se registran automáticamente, sin copiar ni pegar.",
   },
-  { id: "seguir", title: "Seguir", description: "Próximamente." },
+  {
+    id: "seguir",
+    title: "Que nada se quede atrás.",
+    description: "Cada solicitud llega a quien corresponde, con las tareas y el seguimiento organizados.",
+  },
   { id: "conectar", title: "Conectar", description: "Próximamente." },
 ];
 
@@ -103,6 +108,46 @@ function DocumentDemo() {
 
 function PlaceholderDemo({ title }: { title: string }) {
   return <div className={styles.placeholder}><span>{title}</span><p>Próximamente.</p></div>;
+}
+
+const coordinationSteps = [
+  { label: "Solicitud recibida", icon: "received" },
+  { label: "Responsable asignado", icon: "assigned" },
+  { label: "Seguimiento programado", icon: "scheduled" },
+  { label: "Cliente atendido", icon: "completed" },
+] as const;
+
+function CoordinationIcon({ icon }: { icon: typeof coordinationSteps[number]["icon"] }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {icon === "received" && <path d="M3 10.5V16h14v-5.5h-4l-1.5 2h-3l-1.5-2H3Zm7-8v6m-2.5-2.5L10 8.5 12.5 6" />}
+      {icon === "assigned" && <><circle cx="10" cy="6" r="3" /><path d="M4 17c.5-3.5 2.5-5 6-5s5.5 1.5 6 5" /></>}
+      {icon === "scheduled" && <><rect x="3" y="4.5" width="14" height="12.5" rx="2" /><path d="M6.5 2.5v4M13.5 2.5v4M3 9h14m-9 3h4" /></>}
+      {icon === "completed" && <><circle cx="10" cy="10" r="7" /><path d="m6.5 10 2.5 2.5 4.5-5" /></>}
+    </svg>
+  );
+}
+
+function CoordinationDemo() {
+  return (
+    <div className={styles.coordinationScene} role="group" aria-label="Personas y equipos coordinados para atender cada solicitud">
+      <Image
+        className={styles.officePhoto}
+        src="/images/automation/team-office-v1.webp"
+        alt="Equipos trabajando y colaborando en una oficina de dos plantas."
+        fill
+        sizes="(max-width: 600px) calc(100vw - 40px), (max-width: 999px) 90vw, 800px"
+      />
+      <ol className={styles.coordinationSteps} aria-label="Seguimiento de una solicitud">
+        {coordinationSteps.map((step) => (
+          <li className={styles.coordinationLabel} key={step.icon}>
+            <span className={styles.coordinationIcon}><CoordinationIcon icon={step.icon} /></span>
+            <span>{step.label}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
 }
 
 const scrollMedia = "(min-width: 1000px) and (min-height: 680px) and (prefers-reduced-motion: no-preference)";
@@ -281,7 +326,7 @@ export function ChangeShowcaseSection() {
                       data-active={active === index}
                       key={demo.id}
                     >
-                      {index === 0 ? <DocumentDemo /> : <PlaceholderDemo title={demo.title} />}
+                      {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo /> : <PlaceholderDemo title={demo.title} />}
                     </div>
                   ))}
                 </div>

@@ -58,6 +58,19 @@
 .placeholder > span { color: #5f6974; font-size: 1rem; font-weight: 450; }
 .placeholder p { margin: 0.6rem 0 0; font-size: 0.8125rem; }
 
+.coordinationScene { position: relative; width: 100%; min-height: 380px; aspect-ratio: 1.95; overflow: hidden; background: #e4d9ca; }
+.officePhoto { object-fit: cover; object-position: center; }
+.coordinationSteps { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+.coordinationLabel { position: absolute; display: flex; align-items: center; gap: 0.6rem; padding: 0.65rem 0.85rem; border: 1px solid rgba(255, 255, 255, 0.85); border-radius: 9px; background: rgba(255, 255, 255, 0.96); box-shadow: 0 10px 28px -18px rgba(45, 38, 29, 0.35); color: #35404c; font-size: 0.8125rem; font-weight: 450; line-height: 1.4; white-space: nowrap; }
+.coordinationLabel:nth-child(1) { top: 8%; left: 8%; }
+.coordinationLabel:nth-child(2) { top: 10%; right: 12%; }
+.coordinationLabel:nth-child(3) { top: 61%; left: 23%; }
+.coordinationLabel:nth-child(4) { top: 64%; right: 5%; }
+.coordinationIcon { display: grid; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #eef2f3; color: #708994; place-items: center; }
+.coordinationLabel:first-child .coordinationIcon, .coordinationLabel:last-child .coordinationIcon { color: #6397b1; }
+.panel[data-active="true"] .coordinationLabel:last-child .coordinationIcon { animation: coordination-confirm 5.5s ease-in-out infinite; }
+@keyframes coordination-confirm { 0%, 100% { background-color: #eef2f3; } 50% { background-color: #dfeaed; } }
+
 @media (min-width: 1000px) and (max-width: 1100px) {
   .stage { grid-template-columns: 215px minmax(0, 1fr); gap: 3rem; }
   .floatingDocument { padding: 0.8rem 0.65rem; }
@@ -81,6 +94,7 @@
   .stage { margin-top: 2.5rem; }
   .tabs { gap: 1rem; }
   .tab:first-child { flex: 1.7; }
+  .tab:nth-child(2) { flex: 1.7; }
   .tabHeading, .tab[aria-selected="true"] .tabHeading { font-size: 0.9375rem; }
   .demonstration { border-radius: 12px; }
   .documentScene { min-height: 530px; aspect-ratio: auto; background-position: 23% center; }
@@ -97,10 +111,18 @@
   .registeredInvoice { top: 38%; right: 9%; width: 82%; padding: 0.9rem 1.1rem; }
   .registeredInvoice > div { padding-block: 0.8rem; font-size: 0.8125rem; }
   .placeholder { min-height: 530px; }
+  .coordinationScene { min-height: 530px; aspect-ratio: auto; }
+  .officePhoto { object-position: 54% center; }
+  .coordinationLabel { gap: 0.5rem; padding: 0.65rem 0.75rem; font-size: 0.75rem; }
+  .coordinationLabel:nth-child(1) { top: 6%; left: 6%; }
+  .coordinationLabel:nth-child(2) { top: 31%; right: 6%; }
+  .coordinationLabel:nth-child(3) { top: 57%; left: 6%; }
+  .coordinationLabel:nth-child(4) { top: 83%; right: 6%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .section .panel, .section .tabHeading, .section .tabDescription, .section .tab::after { transition: none; }
   .section .panel[data-active] .extractionLoader { animation: none; }
   .section .panel[data-active] .connectionPulse { animation: none; opacity: 0; }
+  .section .panel[data-active] .coordinationLabel:last-child .coordinationIcon { animation: none; }
 }
