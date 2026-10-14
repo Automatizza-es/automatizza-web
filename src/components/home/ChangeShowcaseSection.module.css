@@ -58,7 +58,24 @@
 
 .coordinationScene { position: relative; width: 100%; min-height: 380px; aspect-ratio: 1.95; overflow: hidden; background: #e4d9ca; }
 .officePhoto { object-fit: cover; object-position: center; }
-.officeMotionDefinitions { position: absolute; pointer-events: none; }
+.officeActorPlane { position: absolute; pointer-events: none; }
+.officeWalker, .officeStandingRegistration, .officeSeated { position: absolute; inset: 0; }
+.officeStandingRegistration { transform-origin: 0 0; }
+.officeStandingImage { clip-path: inset(0 0 50% 0); }
+.officeSeatedImage { clip-path: inset(50% 0 0 0); }
+.officeSeated { transform-origin: 55.5% 87.6%; }
+.officeChairForeground { clip-path: inset(87.6% 39.2% 0 50.9%); }
+.coordinationScene[data-active="true"][data-ready="true"] .officeWalker { animation: office-walk 10s ease-in-out infinite; }
+.coordinationScene[data-active="true"][data-ready="true"] .officeSeated { animation: office-look 8s ease-in-out infinite; }
+@keyframes office-walk {
+  0%, 12%, 100% { transform: translateX(0); }
+  42%, 62% { transform: translateX(calc(-1 * var(--actor-step))); }
+}
+@keyframes office-look {
+  0%, 100% { transform: rotate(0deg); }
+  30%, 48% { transform: rotate(-2.5deg); }
+  73%, 85% { transform: rotate(1.5deg); }
+}
 .coordinationSteps { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
 .coordinationLabel { position: absolute; display: flex; align-items: center; gap: 0.6rem; padding: 0.65rem 0.85rem; border: 1px solid rgba(255, 255, 255, 0.85); border-radius: 9px; background: rgba(255, 255, 255, 0.96); box-shadow: 0 10px 28px -18px rgba(45, 38, 29, 0.35); color: #35404c; font-size: 0.8125rem; font-weight: 450; line-height: 1.4; white-space: nowrap; }
 .coordinationLabel:nth-child(1) { top: 8%; left: 8%; }
@@ -154,7 +171,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section .officePhoto { filter: none !important; }
+  .section .coordinationScene[data-active][data-ready] :is(.officeWalker, .officeSeated) { animation: none; }
   .section .panel, .section .tabHeading, .section .tabDescription, .section .tab::after { transition: none; }
   .section .panel[data-active] .extractionLoader { animation: none; }
   .section .panel[data-active] .connectionPulse { animation: none; opacity: 0; }

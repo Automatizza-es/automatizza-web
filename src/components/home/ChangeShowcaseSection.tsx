@@ -4,7 +4,6 @@ import Image from "next/image";
 import {
   useCallback,
   useEffect,
-  useId,
   useRef,
   useState,
   useSyncExternalStore,
@@ -129,67 +128,77 @@ function CoordinationIcon({ icon }: { icon: typeof coordinationSteps[number]["ic
   );
 }
 
-function officePostureMap(viewBox: string, seated: boolean) {
-  const shape = seated
-    ? "M915 712Q940 706 952 729L958 763 975 798 984 849 863 849 879 799 891 768 894 739Q897 719 915 712Z"
-    : "M993 207Q1010 201 1020 217L1021 247 1034 272 1030 321 1016 335 996 320 980 290 987 266 991 247 985 232Q983 215 993 207Z";
-  const color = seated ? "#f08089" : "#f88088";
-  const center = seated ? 'cx="925" cy="762" rx="125" ry="145"' : 'cx="1005" cy="239" rx="95" ry="135"';
-  // Include a soft margin around each silhouette so the head and shoulders
-  // can actually move, instead of pinning their outline to the original pose.
-  const map = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" preserveAspectRatio="none"><defs><radialGradient id="posture"><stop offset="0" stop-color="${color}"/><stop offset="0.5" stop-color="${color}"/><stop offset="1" stop-color="#808080"/></radialGradient><filter id="feather"><feGaussianBlur stdDeviation="7"/></filter><mask id="figure"><path d="${shape}" fill="white" stroke="white" stroke-width="28" stroke-linejoin="round" filter="url(#feather)"/></mask></defs><path fill="#808080" d="M0 0H1672V941H0Z"/><ellipse ${center} fill="url(#posture)" mask="url(#figure)"/></svg>`;
-  return `data:image/svg+xml,${encodeURIComponent(map)}`;
-}
-
 function CoordinationDemo({ active }: { active: boolean }) {
   const sceneRef = useRef<HTMLDivElement>(null);
-  const filterId = `office-posture-${useId().replace(/:/g, "")}`;
-  const motionAllowed = useMediaQuery("(prefers-reduced-motion: no-preference)") && active;
   const mobile = useMediaQuery("(max-width: 600px)");
-  const [mapViewBox, setMapViewBox] = useState("0 0 1672 941");
+  const [plane, setPlane] = useState({ width: 0, height: 0, left: 0, top: 0 });
+  const [cleanLoaded, setCleanLoaded] = useState(false);
+  const [standingLoaded, setStandingLoaded] = useState(false);
+  const [seatedLoaded, setSeatedLoaded] = useState(false);
+  const [chairLoaded, setChairLoaded] = useState(false);
+  const [assetFailed, setAssetFailed] = useState(false);
+  const ready = cleanLoaded && standingLoaded && seatedLoaded && chairLoaded && !assetFailed && plane.width > 0;
 
   useEffect(() => {
     const scene = sceneRef.current;
     if (!scene) return;
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-      if (!width || !height) return;
-      const ratio = width / height;
-      const visibleWidth = Math.min(1672, 941 * ratio);
-      const visibleHeight = Math.min(941, 1672 / ratio);
-      // Match the photo's object-fit and mobile object-position exactly.
-      const x = (1672 - visibleWidth) * (mobile ? 0.54 : 0.5);
-      const y = (941 - visibleHeight) / 2;
-      setMapViewBox(`${x} ${y} ${visibleWidth} ${visibleHeight}`);
+      const scale = Math.max(width / 1600, height / 900);
+      const imageWidth = 1600 * scale;
+      const imageHeight = 900 * scale;
+      setPlane({
+        width: imageWidth,
+        height: imageHeight,
+        left: (width - imageWidth) * (mobile ? 0.54 : 0.5),
+        top: (height - imageHeight) / 2,
+      });
     });
     observer.observe(scene);
     return () => observer.disconnect();
   }, [mobile]);
 
+  const horizontalScale = plane.width / 1672;
+  const verticalScale = plane.height / 941;
+  const layerStyle = {
+    ...plane,
+    opacity: ready ? 1 : 0,
+    "--actor-step": `${18 * horizontalScale}px`,
+  } as CSSProperties;
+
   return (
-    <div className={styles.coordinationScene} ref={sceneRef} role="group" aria-label="Personas y equipos coordinados para atender cada solicitud">
-      <svg className={styles.officeMotionDefinitions} width="0" height="0" aria-hidden="true" focusable="false">
-        <defs>
-          <filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
-            <feImage href={officePostureMap(mapViewBox, false)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="standingPosture" />
-            <feDisplacementMap in="SourceGraphic" in2="standingPosture" scale="0" xChannelSelector="R" yChannelSelector="B" result="standingGesture">
-              {motionAllowed && <animate attributeName="scale" values="0;12;0;-6;0" keyTimes="0;0.3;0.6;0.82;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="6s" repeatCount="indefinite" />}
-            </feDisplacementMap>
-            <feImage href={officePostureMap(mapViewBox, true)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="seatedPosture" />
-            <feDisplacementMap in="standingGesture" in2="seatedPosture" scale="0" xChannelSelector="R" yChannelSelector="B">
-              {motionAllowed && <animate attributeName="scale" values="8;0;-4;0;8" keyTimes="0;0.35;0.62;0.84;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="8s" repeatCount="indefinite" />}
-            </feDisplacementMap>
-          </filter>
-        </defs>
-      </svg>
+    <div className={styles.coordinationScene} ref={sceneRef} data-active={active} data-ready={ready} role="group" aria-label="Personas y equipos coordinados para atender cada solicitud">
       <Image
         className={styles.officePhoto}
-        style={{ filter: motionAllowed ? `url(#${filterId})` : undefined }}
         src="/images/automation/team-office-v1.webp"
+        loading="eager"
         alt="Equipos trabajando y colaborando en una oficina de dos plantas."
         fill
         sizes="(max-width: 600px) 950px, (max-width: 999px) 90vw, 800px"
       />
+      <Image
+        className={styles.officePhoto}
+        style={{ opacity: ready ? 1 : 0 }}
+        src="/images/automation/team-office-clean-v1.webp"
+        loading="eager"
+        alt=""
+        aria-hidden="true"
+        fill
+        sizes="(max-width: 600px) 950px, (max-width: 999px) 90vw, 800px"
+        onLoad={() => setCleanLoaded(true)}
+        onError={() => setAssetFailed(true)}
+      />
+      <div className={styles.officeActorPlane} style={layerStyle} aria-hidden="true">
+        <div className={styles.officeWalker}>
+          <div className={styles.officeStandingRegistration} style={{ transform: `matrix(0.732, 0, 0, 0.824, ${278.652 * horizontalScale}, ${45.968 * verticalScale})` }}>
+            <Image className={styles.officeStandingImage} src="/images/automation/team-office-actors-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setStandingLoaded(true)} onError={() => setAssetFailed(true)} />
+          </div>
+        </div>
+        <div className={styles.officeSeated}>
+          <Image className={styles.officeSeatedImage} src="/images/automation/team-office-actors-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setSeatedLoaded(true)} onError={() => setAssetFailed(true)} />
+        </div>
+        <Image className={styles.officeChairForeground} src="/images/automation/team-office-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setChairLoaded(true)} onError={() => setAssetFailed(true)} />
+      </div>
       <ol className={styles.coordinationSteps} aria-label="Seguimiento de una solicitud">
         {coordinationSteps.map((step) => (
           <li className={styles.coordinationLabel} key={step.icon}>
