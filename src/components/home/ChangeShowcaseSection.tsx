@@ -133,11 +133,11 @@ function officePostureMap(viewBox: string, seated: boolean) {
   const shape = seated
     ? "M915 712Q940 706 952 729L958 763 975 798 984 849 863 849 879 799 891 768 894 739Q897 719 915 712Z"
     : "M993 207Q1010 201 1020 217L1021 247 1034 272 1030 321 1016 335 996 320 980 290 987 266 991 247 985 232Q983 215 993 207Z";
-  const color = seated ? "#dd8084" : "#ed8088";
-  const center = seated ? 'cx="925" cy="783" rx="78" ry="92"' : 'cx="1005" cy="246" rx="48" ry="91"';
-  // Neutral grey leaves every pixel outside the two soft figure masks still.
-  // The coloured channels create a small, continuous posture shift in place.
-  const map = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" preserveAspectRatio="none"><defs><radialGradient id="posture"><stop stop-color="${color}"/><stop offset="1" stop-color="#808080"/></radialGradient><clipPath id="figure"><path d="${shape}"/></clipPath><filter id="feather"><feGaussianBlur stdDeviation="2"/></filter></defs><path fill="#808080" d="M0 0H1672V941H0Z"/><g filter="url(#feather)"><ellipse ${center} fill="url(#posture)" clip-path="url(#figure)"/></g></svg>`;
+  const color = seated ? "#f08089" : "#f88088";
+  const center = seated ? 'cx="925" cy="762" rx="125" ry="145"' : 'cx="1005" cy="239" rx="95" ry="135"';
+  // Include a soft margin around each silhouette so the head and shoulders
+  // can actually move, instead of pinning their outline to the original pose.
+  const map = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" preserveAspectRatio="none"><defs><radialGradient id="posture"><stop offset="0" stop-color="${color}"/><stop offset="0.5" stop-color="${color}"/><stop offset="1" stop-color="#808080"/></radialGradient><filter id="feather"><feGaussianBlur stdDeviation="7"/></filter><mask id="figure"><path d="${shape}" fill="white" stroke="white" stroke-width="28" stroke-linejoin="round" filter="url(#feather)"/></mask></defs><path fill="#808080" d="M0 0H1672V941H0Z"/><ellipse ${center} fill="url(#posture)" mask="url(#figure)"/></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(map)}`;
 }
 
@@ -173,11 +173,11 @@ function CoordinationDemo({ active }: { active: boolean }) {
           <filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
             <feImage href={officePostureMap(mapViewBox, false)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="standingPosture" />
             <feDisplacementMap in="SourceGraphic" in2="standingPosture" scale="0" xChannelSelector="R" yChannelSelector="B" result="standingGesture">
-              {motionAllowed && <animate attributeName="scale" values="0;5.2;0;-2.8;0" keyTimes="0;0.3;0.6;0.82;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="11s" repeatCount="indefinite" />}
+              {motionAllowed && <animate attributeName="scale" values="0;12;0;-6;0" keyTimes="0;0.3;0.6;0.82;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="6s" repeatCount="indefinite" />}
             </feDisplacementMap>
             <feImage href={officePostureMap(mapViewBox, true)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="seatedPosture" />
             <feDisplacementMap in="standingGesture" in2="seatedPosture" scale="0" xChannelSelector="R" yChannelSelector="B">
-              {motionAllowed && <animate attributeName="scale" values="4.8;0;-2.6;0;4.8" keyTimes="0;0.35;0.62;0.84;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="13s" repeatCount="indefinite" />}
+              {motionAllowed && <animate attributeName="scale" values="8;0;-4;0;8" keyTimes="0;0.35;0.62;0.84;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="8s" repeatCount="indefinite" />}
             </feDisplacementMap>
           </filter>
         </defs>
