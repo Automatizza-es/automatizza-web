@@ -38,15 +38,40 @@ const invoiceFields = [
   ["Importe", "889,35 €"],
 ];
 
+const documentPaths = [
+  "M155 175 C155 245 380 235 430 285",
+  "M335 145 C335 210 450 220 450 285",
+  "M515 175 C515 225 485 230 475 285",
+];
+const mobileDocumentPaths = [
+  "M155 0 C155 180 350 170 440 240",
+  "M500 0 V240",
+  "M850 0 C850 180 650 170 560 240",
+];
+
+function ConnectionPulses({ paths }: { paths: string[] }) {
+  return paths.map((d, index) => (
+    <path
+      className={styles.connectionPulse}
+      d={d}
+      pathLength="1"
+      style={{ "--pulse-delay": `${index * -1.4}s` } as CSSProperties}
+      key={d}
+    />
+  ));
+}
+
 function DocumentDemo() {
   return (
     <div className={styles.documentScene} role="group" aria-label="De tus documentos a datos registrados automáticamente">
       <svg className={styles.documentConnections} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
         <path d="M155 175 C155 245 380 235 430 285M335 145 C335 210 450 220 450 285M515 175 C515 225 485 230 475 285M560 285 H660" />
         <circle cx="660" cy="285" r="2.5" />
+        <ConnectionPulses paths={documentPaths} />
       </svg>
       <svg className={`${styles.documentConnections} ${styles.documentConnectionsMobile}`} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
         <path d="M155 0 C155 180 350 170 440 240M500 0 V240M850 0 C850 180 650 170 560 240M500 340 V520" />
+        <ConnectionPulses paths={mobileDocumentPaths} />
       </svg>
       <ul className={styles.floatingDocuments} aria-label="Documentos de origen">
         {["factura.pdf", "pedido.pdf", "solicitud.pdf"].map((name) => (

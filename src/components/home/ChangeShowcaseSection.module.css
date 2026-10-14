@@ -29,6 +29,13 @@
 .documentConnections path { fill: none; stroke: #8e979b; stroke-width: 1; opacity: 0.65; vector-effect: non-scaling-stroke; }
 .documentConnections circle { fill: #778b96; opacity: 0.6; }
 .documentConnectionsMobile { display: none; }
+.documentConnections .connectionPulse { stroke: #718d9a; stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 0.045 0.955; opacity: 0; }
+.panel[data-active="true"] .connectionPulse { animation: document-pulse 4.8s linear var(--pulse-delay, 0s) infinite; }
+@keyframes document-pulse {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  15%, 70% { opacity: 0.75; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
 .floatingDocuments { margin: 0; padding: 0; list-style: none; }
 .floatingDocument { position: absolute; display: flex; flex-direction: column; gap: 0.6rem; width: 15%; padding: 1rem 0.85rem; border: 1px solid rgba(255, 255, 255, 0.85); border-radius: 8px; background: rgba(255, 255, 255, 0.94); box-shadow: 0 10px 30px -16px rgba(54, 48, 38, 0.28); color: #35404c; font-size: clamp(0.6875rem, 1vw, 0.8125rem); font-weight: 450; }
 .floatingDocument:nth-child(1) { left: 8%; top: 15%; }
@@ -95,4 +102,5 @@
 @media (prefers-reduced-motion: reduce) {
   .section .panel, .section .tabHeading, .section .tabDescription, .section .tab::after { transition: none; }
   .section .panel[data-active] .extractionLoader { animation: none; }
+  .section .panel[data-active] .connectionPulse { animation: none; opacity: 0; }
 }
