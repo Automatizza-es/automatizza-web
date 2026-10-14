@@ -130,14 +130,17 @@ function CoordinationIcon({ icon }: { icon: typeof coordinationSteps[number]["ic
 
 function CoordinationDemo({ active }: { active: boolean }) {
   const sceneRef = useRef<HTMLDivElement>(null);
+  const walkerRef = useRef<HTMLDivElement>(null);
   const mobile = useMediaQuery("(max-width: 600px)");
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [plane, setPlane] = useState({ width: 0, height: 0, left: 0, top: 0 });
   const [cleanLoaded, setCleanLoaded] = useState(false);
   const [standingLoaded, setStandingLoaded] = useState(false);
+  const [walkingLoaded, setWalkingLoaded] = useState(false);
   const [seatedLoaded, setSeatedLoaded] = useState(false);
   const [chairLoaded, setChairLoaded] = useState(false);
   const [assetFailed, setAssetFailed] = useState(false);
-  const ready = cleanLoaded && standingLoaded && seatedLoaded && chairLoaded && !assetFailed && plane.width > 0;
+  const ready = cleanLoaded && standingLoaded && walkingLoaded && seatedLoaded && chairLoaded && !assetFailed && plane.width > 0;
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -160,10 +163,68 @@ function CoordinationDemo({ active }: { active: boolean }) {
 
   const horizontalScale = plane.width / 1672;
   const verticalScale = plane.height / 941;
+
+  useEffect(() => {
+    const walker = walkerRef.current;
+    const scene = sceneRef.current;
+    if (!walker || !scene || !active || !ready || reducedMotion) return;
+
+    // One clock keeps the footsteps, route and pauses in sync. Only the cutout
+    // moves; the architecture and foreground furniture remain separate layers.
+    const travelTime = 4.5;
+    const turnTime = 3.5;
+    const restTime = 4.5;
+    const cycleTime = travelTime * 2 + turnTime + restTime;
+    let elapsed = 0;
+    let previousTime: number | null = null;
+    let visible = false;
+    let animationFrame = 0;
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    });
+    observer.observe(scene);
+
+    const animate = (time: number) => {
+      if (!visible || document.hidden) {
+        previousTime = time;
+        animationFrame = requestAnimationFrame(animate);
+        return;
+      }
+      if (previousTime !== null) {
+        elapsed += Math.min(time - previousTime, 50);
+      }
+      previousTime = time;
+      const phase = (elapsed / 1000) % cycleTime;
+      const returnStart = travelTime + turnTime;
+      const returnEnd = returnStart + travelTime;
+      const outward = phase < travelTime;
+      const returning = phase >= returnStart && phase < returnEnd;
+      const position = outward ? phase / travelTime
+        : phase < returnStart ? 1
+          : returning ? 1 - (phase - returnStart) / travelTime : 0;
+      const walkTime = outward ? phase : phase - returnStart;
+
+      walker.style.setProperty("--walk-offset", `${-180 * position * horizontalScale}px`);
+      walker.style.setProperty("--walk-facing", phase < returnStart - 0.5 || phase >= cycleTime - 0.5 ? "1" : "-1");
+      walker.style.setProperty("--walk-frame", String(Math.floor(Math.max(0, walkTime) / 0.1875) % 8));
+      walker.dataset.walking = String(outward || returning);
+      animationFrame = requestAnimationFrame(animate);
+    };
+    animationFrame = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      observer.disconnect();
+      walker.dataset.walking = "false";
+      walker.style.removeProperty("--walk-offset");
+      walker.style.removeProperty("--walk-facing");
+      walker.style.removeProperty("--walk-frame");
+    };
+  }, [active, ready, reducedMotion, horizontalScale]);
+
   const layerStyle = {
     ...plane,
     opacity: ready ? 1 : 0,
-    "--actor-step": `${18 * horizontalScale}px`,
+    "--actor-center": `${1005 * horizontalScale}px`,
   } as CSSProperties;
 
   return (
@@ -189,9 +250,14 @@ function CoordinationDemo({ active }: { active: boolean }) {
         onError={() => setAssetFailed(true)}
       />
       <div className={styles.officeActorPlane} style={layerStyle} aria-hidden="true">
-        <div className={styles.officeWalker}>
-          <div className={styles.officeStandingRegistration} style={{ transform: `matrix(0.732, 0, 0, 0.824, ${278.652 * horizontalScale}, ${45.968 * verticalScale})` }}>
-            <Image className={styles.officeStandingImage} src="/images/automation/team-office-actors-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setStandingLoaded(true)} onError={() => setAssetFailed(true)} />
+        <div className={styles.officeWalker} ref={walkerRef}>
+          <div className={styles.officeFacing}>
+            <div className={styles.officeStandingRegistration} style={{ transform: `matrix(0.732, 0, 0, 0.824, ${278.652 * horizontalScale}, ${45.968 * verticalScale})` }}>
+              <Image className={styles.officeStandingImage} src="/images/automation/team-office-actors-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setStandingLoaded(true)} onError={() => setAssetFailed(true)} />
+            </div>
+            <div className={styles.officeWalkingPose} style={{ left: 945.6 * horizontalScale, top: 196.5 * verticalScale, width: 118.8 * horizontalScale, height: 220 * verticalScale }}>
+              <Image className={styles.officeWalkSheet} src="/images/automation/team-office-walk-v1.webp" alt="" width={3072} height={512} unoptimized loading="eager" onLoad={() => setWalkingLoaded(true)} onError={() => setAssetFailed(true)} />
+            </div>
           </div>
         </div>
         <div className={styles.officeSeated}>

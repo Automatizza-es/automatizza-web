@@ -4,6 +4,20 @@ Assets preparados con la herramienta integrada `image_gen`. El fondo permanece i
 
 - Fondo: `public/images/automation/team-office-clean-v1.webp`.
 - Figuras con transparencia real: `public/images/automation/team-office-actors-v1.webp`.
+- Ciclo de pasos: `public/images/automation/team-office-walk-v1.webp`.
+
+## Recorrido y ciclo de pasos
+
+La caminante recorre 180 unidades de la imagen original hacia el centro durante 4,5 segundos. Se detiene 3,5 segundos, vuelve orientada hacia la derecha durante 4,5 segundos y descansa 4,5 segundos. Ocho poses cambian las piernas, las rodillas, los pies y los brazos durante el desplazamiento; en las pausas se utiliza la figura original. Los fotogramas se empaquetaron con la misma altura, eje de cabeza y línea de suelo para evitar saltos. El reloj se pausa fuera de pantalla y con la pestaña del navegador oculta, y se cancela al salir del caso 02 o activar `prefers-reduced-motion`. La pared y las sillas permanecen en capas fijas.
+
+Generado con la herramienta integrada `image_gen`, con transparencia; la referencia fue la figura ya extraída. Prompt del asset final:
+
+Use case: stylized-concept
+Asset type: production transparent walking-cycle sprite sheet for a premium website illustration.
+Input image 1 is a reference for the EXACT standing/walking brunette woman in the UPPER part of the transparent reference, not the seated woman below.
+Create an eight-frame realistic walking cycle of this same adult woman, facing LEFT in all eight frames. Preserve her brown blazer, dark navy tailored trousers, flat dark shoes, long brunette hair, face, body proportions, softly lit photorealistic 3D architectural illustration aesthetic. No cartoon exaggeration.
+Layout: exactly FOUR columns and TWO rows of equally sized cells, read left to right then next row. Overall canvas 1536 by 1024, each cell 384 by 512. One full-body woman per cell, all same scale, head top around y55 of each cell, ground baseline at y480, hips centered at x192. All cells have genuinely transparent backgrounds. No lines, no borders, no labels, no numbers, no floor, no shadows outside the person, no scenery, no other people.
+Animation requirements: frames must be sequential phases of ONE full walk cycle: 1 left-foot-forward contact, 2 downward weight transfer, 3 passing (rear knee bent and moving forward), 4 upward (raised heel, advancing knee), 5 right-foot-forward contact, 6 downward transfer, 7 passing with opposite leg raised and bent, 8 upward opposite phase. Two steps alternate naturally. Visible changing angles of thighs, knees, ankles and feet; heel-to-toe planted contact. Modest professional walking pace, not running. Slight natural opposite arm swing, bent relaxed elbows. Torso, face and clothing remain remarkably consistent across cells; no zoom, no changes in hair length or lighting. Frame 8 should loop naturally to frame 1. Crisp clean cutout edges and alpha transparency.
 
 ## Fondo limpio
 
