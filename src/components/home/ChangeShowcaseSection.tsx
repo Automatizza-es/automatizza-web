@@ -4,6 +4,7 @@ import Image from "next/image";
 import {
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
   useSyncExternalStore,
@@ -128,15 +129,66 @@ function CoordinationIcon({ icon }: { icon: typeof coordinationSteps[number]["ic
   );
 }
 
-function CoordinationDemo() {
+function officePostureMap(viewBox: string, seated: boolean) {
+  const shape = seated
+    ? "M915 712Q940 706 952 729L958 763 975 798 984 849 863 849 879 799 891 768 894 739Q897 719 915 712Z"
+    : "M993 207Q1010 201 1020 217L1021 247 1034 272 1030 321 1016 335 996 320 980 290 987 266 991 247 985 232Q983 215 993 207Z";
+  const color = seated ? "#dd8084" : "#ed8088";
+  const center = seated ? 'cx="925" cy="783" rx="78" ry="92"' : 'cx="1005" cy="246" rx="48" ry="91"';
+  // Neutral grey leaves every pixel outside the two soft figure masks still.
+  // The coloured channels create a small, continuous posture shift in place.
+  const map = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" preserveAspectRatio="none"><defs><radialGradient id="posture"><stop stop-color="${color}"/><stop offset="1" stop-color="#808080"/></radialGradient><clipPath id="figure"><path d="${shape}"/></clipPath><filter id="feather"><feGaussianBlur stdDeviation="2"/></filter></defs><path fill="#808080" d="M0 0H1672V941H0Z"/><g filter="url(#feather)"><ellipse ${center} fill="url(#posture)" clip-path="url(#figure)"/></g></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(map)}`;
+}
+
+function CoordinationDemo({ active }: { active: boolean }) {
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const filterId = `office-posture-${useId().replace(/:/g, "")}`;
+  const motionAllowed = useMediaQuery("(prefers-reduced-motion: no-preference)") && active;
+  const mobile = useMediaQuery("(max-width: 600px)");
+  const [mapViewBox, setMapViewBox] = useState("0 0 1672 941");
+
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (!width || !height) return;
+      const ratio = width / height;
+      const visibleWidth = Math.min(1672, 941 * ratio);
+      const visibleHeight = Math.min(941, 1672 / ratio);
+      // Match the photo's object-fit and mobile object-position exactly.
+      const x = (1672 - visibleWidth) * (mobile ? 0.54 : 0.5);
+      const y = (941 - visibleHeight) / 2;
+      setMapViewBox(`${x} ${y} ${visibleWidth} ${visibleHeight}`);
+    });
+    observer.observe(scene);
+    return () => observer.disconnect();
+  }, [mobile]);
+
   return (
-    <div className={styles.coordinationScene} role="group" aria-label="Personas y equipos coordinados para atender cada solicitud">
+    <div className={styles.coordinationScene} ref={sceneRef} role="group" aria-label="Personas y equipos coordinados para atender cada solicitud">
+      <svg className={styles.officeMotionDefinitions} width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
+            <feImage href={officePostureMap(mapViewBox, false)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="standingPosture" />
+            <feDisplacementMap in="SourceGraphic" in2="standingPosture" scale="0" xChannelSelector="R" yChannelSelector="B" result="standingGesture">
+              {motionAllowed && <animate attributeName="scale" values="0;2.2;0;-1.2;0" keyTimes="0;0.3;0.6;0.82;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="14s" repeatCount="indefinite" />}
+            </feDisplacementMap>
+            <feImage href={officePostureMap(mapViewBox, true)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="seatedPosture" />
+            <feDisplacementMap in="standingGesture" in2="seatedPosture" scale="0" xChannelSelector="R" yChannelSelector="B">
+              {motionAllowed && <animate attributeName="scale" values="2.6;0;-1.5;0;2.6" keyTimes="0;0.35;0.62;0.84;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="17s" repeatCount="indefinite" />}
+            </feDisplacementMap>
+          </filter>
+        </defs>
+      </svg>
       <Image
         className={styles.officePhoto}
+        style={{ filter: motionAllowed ? `url(#${filterId})` : undefined }}
         src="/images/automation/team-office-v1.webp"
         alt="Equipos trabajando y colaborando en una oficina de dos plantas."
         fill
-        sizes="(max-width: 600px) calc(100vw - 40px), (max-width: 999px) 90vw, 800px"
+        sizes="(max-width: 600px) 950px, (max-width: 999px) 90vw, 800px"
       />
       <ol className={styles.coordinationSteps} aria-label="Seguimiento de una solicitud">
         {coordinationSteps.map((step) => (
@@ -406,7 +458,7 @@ export function ChangeShowcaseSection() {
                       data-active={active === index}
                       key={demo.id}
                     >
-                      {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo /> : <ConnectedDemo />}
+                      {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo active={active === 1} /> : <ConnectedDemo />}
                     </div>
                   ))}
                 </div>
