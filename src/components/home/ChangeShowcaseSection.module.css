@@ -59,15 +59,11 @@
 .coordinationScene { position: relative; width: 100%; min-height: 380px; aspect-ratio: 1.95; overflow: hidden; background: #e4d9ca; }
 .officePhoto { object-fit: cover; object-position: center; }
 .officeActorPlane { position: absolute; pointer-events: none; }
-.officeWalker, .officeFacing, .officeStandingRegistration, .officeSeated { position: absolute; inset: 0; }
+.officeWalker, .officeFacing, .officeSeated { position: absolute; inset: 0; }
 .officeWalker { transform: translate3d(var(--walk-offset, 0px), 0, 0); }
 .officeFacing { transform: scaleX(var(--walk-facing, 1)); transform-origin: var(--actor-center) 0; }
-.officeStandingRegistration { transform-origin: 0 0; transition: opacity 160ms ease; }
-.officeStandingImage { clip-path: inset(0 0 50% 0); }
-.officeWalkingPose { position: absolute; overflow: hidden; opacity: 0; transition: opacity 160ms ease; }
+.officeWalkingPose { position: absolute; overflow: hidden; }
 .officeWalkSheet { display: block; width: 800%; height: 100%; max-width: none; transform: translateX(calc(var(--walk-frame, 0) * -12.5%)); }
-.officeWalker[data-walking="true"] .officeWalkingPose { opacity: 1; }
-.officeWalker[data-walking="true"] .officeStandingRegistration { opacity: 0; }
 .officeSeatedImage { clip-path: inset(50% 0 0 0); }
 .officeSeated { transform-origin: 55.5% 87.6%; }
 .officeChairForeground { clip-path: inset(87.6% 39.2% 0 50.9%); }
@@ -175,9 +171,6 @@
   .section .coordinationScene[data-active][data-ready] :is(.officeWalker, .officeSeated) { animation: none; }
   .section .officeWalker { transform: none; }
   .section .officeFacing { transform: none; }
-  .section .officeStandingRegistration, .section .officeWalkingPose { transition: none; }
-  .section .officeStandingRegistration { opacity: 1; }
-  .section .officeWalkingPose { opacity: 0; }
   .section .panel, .section .tabHeading, .section .tabDescription, .section .tab::after { transition: none; }
   .section .panel[data-active] .extractionLoader { animation: none; }
   .section .panel[data-active] .connectionPulse { animation: none; opacity: 0; }

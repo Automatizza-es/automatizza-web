@@ -8,7 +8,7 @@ Assets preparados con la herramienta integrada `image_gen`. El fondo permanece i
 
 ## Recorrido y ciclo de pasos
 
-La caminante recorre 180 unidades de la imagen original hacia el centro durante 4,5 segundos. Se detiene 3,5 segundos, vuelve orientada hacia la derecha durante 4,5 segundos y descansa 4,5 segundos. Ocho poses cambian las piernas, las rodillas, los pies y los brazos durante el desplazamiento; en las pausas se utiliza la figura original. Los fotogramas se empaquetaron con la misma altura, eje de cabeza y línea de suelo para evitar saltos. El reloj se pausa fuera de pantalla y con la pestaña del navegador oculta, y se cancela al salir del caso 02 o activar `prefers-reduced-motion`. La pared y las sillas permanecen en capas fijas.
+La caminante recorre 180 unidades de la imagen original hacia el centro durante 4,5 segundos. Se detiene 3,5 segundos, vuelve orientada hacia la derecha durante 4,5 segundos y descansa 4,5 segundos. Ocho poses cambian las piernas, las rodillas, los pies y los brazos durante el desplazamiento; en las pausas se mantiene el fotograma de contacto del mismo ciclo, con ambos pies apoyados. Así no cambia la proporción del cuerpo al detenerse. Los fotogramas se empaquetaron con la misma altura, eje de cabeza y línea de suelo para evitar saltos. El reloj se pausa fuera de pantalla y con la pestaña del navegador oculta, y se cancela al salir del caso 02 o activar `prefers-reduced-motion`. La pared y las sillas permanecen en capas fijas.
 
 Generado con la herramienta integrada `image_gen`, con transparencia; la referencia fue la figura ya extraída. Prompt del asset final:
 

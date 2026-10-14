@@ -135,12 +135,11 @@ function CoordinationDemo({ active }: { active: boolean }) {
   const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [plane, setPlane] = useState({ width: 0, height: 0, left: 0, top: 0 });
   const [cleanLoaded, setCleanLoaded] = useState(false);
-  const [standingLoaded, setStandingLoaded] = useState(false);
   const [walkingLoaded, setWalkingLoaded] = useState(false);
   const [seatedLoaded, setSeatedLoaded] = useState(false);
   const [chairLoaded, setChairLoaded] = useState(false);
   const [assetFailed, setAssetFailed] = useState(false);
-  const ready = cleanLoaded && standingLoaded && walkingLoaded && seatedLoaded && chairLoaded && !assetFailed && plane.width > 0;
+  const ready = cleanLoaded && walkingLoaded && seatedLoaded && chairLoaded && !assetFailed && plane.width > 0;
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -206,7 +205,10 @@ function CoordinationDemo({ active }: { active: boolean }) {
 
       walker.style.setProperty("--walk-offset", `${-180 * position * horizontalScale}px`);
       walker.style.setProperty("--walk-facing", phase < returnStart - 0.5 || phase >= cycleTime - 0.5 ? "1" : "-1");
-      walker.style.setProperty("--walk-frame", String(Math.floor(Math.max(0, walkTime) / 0.1875) % 8));
+      // Hold a grounded contact pose from the same sheet during pauses, so the
+      // body never switches to the differently proportioned original cutout.
+      const frame = outward || returning ? Math.floor(Math.max(0, walkTime) / 0.1875) % 8 : 0;
+      walker.style.setProperty("--walk-frame", String(frame));
       walker.dataset.walking = String(outward || returning);
       animationFrame = requestAnimationFrame(animate);
     };
@@ -252,9 +254,6 @@ function CoordinationDemo({ active }: { active: boolean }) {
       <div className={styles.officeActorPlane} style={layerStyle} aria-hidden="true">
         <div className={styles.officeWalker} ref={walkerRef}>
           <div className={styles.officeFacing}>
-            <div className={styles.officeStandingRegistration} style={{ transform: `matrix(0.732, 0, 0, 0.824, ${278.652 * horizontalScale}, ${45.968 * verticalScale})` }}>
-              <Image className={styles.officeStandingImage} src="/images/automation/team-office-actors-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setStandingLoaded(true)} onError={() => setAssetFailed(true)} />
-            </div>
             <div className={styles.officeWalkingPose} style={{ left: 945.6 * horizontalScale, top: 196.5 * verticalScale, width: 118.8 * horizontalScale, height: 220 * verticalScale }}>
               <Image className={styles.officeWalkSheet} src="/images/automation/team-office-walk-v1.webp" alt="" width={3072} height={512} unoptimized loading="eager" onLoad={() => setWalkingLoaded(true)} onError={() => setAssetFailed(true)} />
             </div>
