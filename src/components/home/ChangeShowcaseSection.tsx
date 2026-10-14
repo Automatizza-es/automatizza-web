@@ -281,8 +281,9 @@ export function ChangeShowcaseSection() {
         <div className={styles.track} ref={trackRef}>
           <div className={styles.composition} ref={compositionRef}>
             <header className={`section-header ${styles.heading}`}>
-              <p className="section-eyebrow">AUTOMATIZACIÓN EN ACCIÓN</p>
-              <h2 id="change-title">Menos tareas repetitivas.<br />Más tiempo para hacer crecer tu empresa.</h2>
+              <p className="section-eyebrow">EN LA PRÁCTICA</p>
+              <h2 id="change-title">Cuando todo fluye.</h2>
+              <p>Menos trabajo manual, equipos mejor coordinados y herramientas que trabajan juntas.</p>
             </header>
             <div className={styles.stage}>
               <div className={styles.navigation}>
