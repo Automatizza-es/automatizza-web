@@ -173,11 +173,11 @@ function CoordinationDemo({ active }: { active: boolean }) {
           <filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
             <feImage href={officePostureMap(mapViewBox, false)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="standingPosture" />
             <feDisplacementMap in="SourceGraphic" in2="standingPosture" scale="0" xChannelSelector="R" yChannelSelector="B" result="standingGesture">
-              {motionAllowed && <animate attributeName="scale" values="0;2.2;0;-1.2;0" keyTimes="0;0.3;0.6;0.82;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="14s" repeatCount="indefinite" />}
+              {motionAllowed && <animate attributeName="scale" values="0;5.2;0;-2.8;0" keyTimes="0;0.3;0.6;0.82;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="11s" repeatCount="indefinite" />}
             </feDisplacementMap>
             <feImage href={officePostureMap(mapViewBox, true)} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="seatedPosture" />
             <feDisplacementMap in="standingGesture" in2="seatedPosture" scale="0" xChannelSelector="R" yChannelSelector="B">
-              {motionAllowed && <animate attributeName="scale" values="2.6;0;-1.5;0;2.6" keyTimes="0;0.35;0.62;0.84;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="17s" repeatCount="indefinite" />}
+              {motionAllowed && <animate attributeName="scale" values="4.8;0;-2.6;0;4.8" keyTimes="0;0.35;0.62;0.84;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" dur="13s" repeatCount="indefinite" />}
             </feDisplacementMap>
           </filter>
         </defs>
