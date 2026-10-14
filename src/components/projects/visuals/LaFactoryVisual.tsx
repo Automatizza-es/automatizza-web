@@ -176,7 +176,7 @@ function Greeting() {
 }
 
 // Desktop web app: sidebar, rooms and bookings on the left, plan on the right.
-function WebHome() {
+export function WebHome() {
   return (
     <div className="lf-web">
       <aside className="lf-sidebar">

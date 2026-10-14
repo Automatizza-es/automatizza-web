@@ -1,0 +1,149 @@
+.page { --project-surface: #f3f5f6; background: #fff; color: #02135f; }
+.apc { --project-surface: #f1f4f5; }
+.la-factory-coworking { --project-surface: #f5f1e9; }
+.container { max-width: 1120px; }
+.hero { padding-top: clamp(2rem, 4vw, 3.5rem); }
+.back { display: inline-flex; gap: .7rem; align-items: center; color: #6d7580; font-size: .8rem; }
+.back:hover { color: #02135f; }
+.eyebrow { margin: 3rem 0 1.6rem; color: #02a0fc; font-size: .6875rem; font-weight: 650; letter-spacing: .13em; line-height: 1.7; text-transform: uppercase; }
+.eyebrow span { padding-inline: .6rem; color: #a1a6ae; }
+.heroCopy { display: grid; grid-template-columns: 1.3fr 1fr; align-items: end; gap: clamp(2.5rem, 5vw, 5rem); }
+.heroCopy h1 { max-width: 690px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2.5rem, 4.1vw, 3.5rem); font-weight: 600; letter-spacing: -.04em; line-height: 1.09; text-wrap: balance; }
+.introduction > p { margin: 0; color: #6d7580; font-size: .9375rem; line-height: 1.75; }
+.tags { display: flex; flex-wrap: wrap; gap: .5rem 1rem; padding: 1.3rem 0 0; margin: 1.5rem 0 0; border-top: 1px solid #e4e6e9; list-style: none; color: #787e88; font-size: .6875rem; }
+.heroFigure { margin: 3.5rem 0 0; }
+.heroStage { position: relative; height: clamp(440px, 44vw, 560px); overflow: hidden; border-radius: 8px; background: var(--project-surface); container-type: inline-size; }
+.page figcaption { margin-top: 1rem; color: #8a8f98; font-size: .6875rem; line-height: 1.6; }
+.context { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 6rem; padding-block: 5.5rem; margin-top: 2rem; border-bottom: 1px solid #e4e6e9; }
+.sectionLabel { margin: 0 0 1.25rem; color: #8a8f98; font-size: .6875rem; line-height: 1.5; }
+.context h2, .feature h3 { margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; text-wrap: balance; }
+.context div > p:last-child, .featureCopy > p:last-child { margin: 1.3rem 0 0; color: #6d7580; font-size: .9375rem; line-height: 1.75; }
+.context .status { grid-column: 1 / -1; max-width: 830px; margin: .5rem 0 0; color: #8a8f98; font-size: .75rem; line-height: 1.75; }
+.inside { padding-block: 4.5rem 0; }
+.insideHeading .eyebrow { margin-top: 0; }
+.insideHeading h2 { max-width: 800px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.9rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.2; }
+.feature { display: grid; grid-template-columns: .75fr 1.5fr; align-items: center; gap: 4rem; margin-top: 3.5rem; }
+.feature + .feature { margin-top: 5rem; }
+.feature.reverse { grid-template-columns: 1.5fr .75fr; }
+.reverse .featureCopy { grid-column: 2; grid-row: 1; }
+.reverse > figure { grid-column: 1; grid-row: 1; }
+.recording, .dashboardFigure, .operationFigure, .factoryWebFigure { min-width: 0; margin: 0; }
+.recordingSurface { display: flex; justify-content: center; align-items: center; padding: 2.75rem; background: var(--project-surface); border-radius: 6px; }
+.recording video { display: block; max-width: 100%; background: #fff; border-radius: 6px; box-shadow: 0 18px 40px -25px rgba(20, 25, 40, .28); }
+.wideRecording video { width: 100%; aspect-ratio: 1280 / 758; }
+.phoneRecording video { width: 230px; max-height: 490px; }
+.dashboard { position: relative; container-type: inline-size; aspect-ratio: 16 / 12; border: 1px solid #e5e7e9; border-radius: 6px; overflow: hidden; background: #f5f5f5; }
+.dashboard :global(.ss-app) { font-size: calc(100cqw / 62); font-family: var(--font-catamaran), sans-serif; }
+.dashboard :global(.ss-nav), .dashboard :global(.ss-user) { font-size: 1.15em; }
+.operationStage { position: relative; container-type: inline-size; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 6px; }
+.operationStage.visual :global(.apc-scene) { font-size: calc(100cqw / 48); }
+.operationStage.visual :global(.apc-phone) { top: 1.4em; font-size: .72em; }
+.operationStage.visual :global(.apc-route) { top: 30em; left: 3.2em; right: 3.2em; }
+.factoryWeb { position: relative; container-type: inline-size; overflow: hidden; aspect-ratio: 100 / 61.6; border: 1px solid #e8e2d8; border-radius: 6px; background: #f5f1e9; }
+.factoryWeb :global(.lf-web) { font-size: calc(100cqw / 100); }
+.rooms { margin: 4rem 0 0; }
+.rooms > div { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.rooms img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; }
+.contact { margin-top: 5.5rem; padding-block: 4.5rem; border-top: 1px solid #e4e6e9; scroll-margin-top: 90px; }
+.contact .eyebrow { margin-top: 0; }
+.contact h2 { max-width: 670px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.15; text-wrap: balance; }
+.contactLink { display: inline-flex; align-items: center; gap: 1.5rem; margin-top: 2rem; padding-bottom: .7rem; border-bottom: 1px solid #02135f; font-size: .9rem; }
+.otherProjects { border-top: 1px solid #e4e6e9; padding-block: 2.5rem 3.5rem; }
+.otherProjects > div { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.otherProjects a { display: flex; justify-content: space-between; gap: 1.5rem; padding-block: .5rem; font-family: var(--font-display), sans-serif; font-size: 1.375rem; }
+.otherProjects a small { display: block; margin-top: .5rem; color: #8a8f98; font-family: var(--font-sans), sans-serif; font-size: .75rem; font-weight: 400; }
+.contactLink span, .otherProjects a > span:last-child { transition: transform 250ms ease; }
+.footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; border-top: 1px solid #e4e6e9; padding-block: 1.8rem; color: #8a8f98; font-size: .75rem; }
+.footer > a:first-child { color: #02135f; font-weight: 600; }
+.page a:focus-visible, .page video:focus-visible { outline: 2px solid #02135f; outline-offset: 6px; }
+
+/* Recompose the existing home visuals into wide product portraits. The home
+   keeps its original proportions and entrances; here the interface is visible
+   immediately, without waiting for a multi-step animation. */
+.visual :global(.ss-scene), .visual :global(.apc-scene), .visual :global(.lf-scene) { font-size: calc(100cqw / 72); }
+.visual :global(.ss-laptop) { top: 4.5em; width: 44em; margin-left: -22em; transform: perspective(100em) rotateX(2deg) rotateY(6deg); }
+.visual :global(.ss-app) { font-size: .64em; }
+.visual :global(.ss-topbar) { height: 4.4em; }
+.visual :global(.ss-page) { padding-block: 1.2em; }
+.visual :global(.ss-kpi) { padding-block: .8em; }
+.visual :global(.ss-kpis) { margin-top: 1em; }
+.visual :global(.ss-panel) { padding-block: .9em; }
+.visual :global(.ss-float-quote) { top: 2em; right: 2em; }
+.visual :global(.ss-float-request) { top: 19em; left: 2em; }
+.visual :global(.ss-float-activity) { top: auto; bottom: 2em; right: 2em; }
+.visual :global(.ss-scene.is-armed:not(.is-playing) .ss-laptop) { opacity: 1; transform: perspective(100em) rotateX(2deg) rotateY(6deg); }
+.visual :global(.ss-scene.is-armed:not(.is-playing) .ss-float), .visual :global(.ss-scene.is-armed:not(.is-playing) .fx-in) { opacity: 1; translate: none; scale: 1; filter: none; }
+.visual :global(.ss-scene.is-armed:not(.is-playing) .fx-grow) { transform: none; }
+.visual :global(.ss-scene .ss-laptop), .visual :global(.ss-scene .ss-float), .visual :global(.ss-scene .fx-in), .visual :global(.ss-scene .fx-grow) { transition: none; }
+.apc .heroStage { height: clamp(500px, 50vw, 640px); }
+.visual :global(.apc-phone) { top: 1.4em; font-size: .86em; }
+.visual :global(.apc-route) { top: 37.4em; left: 13em; right: 13em; }
+.visual :global(.apc-scene.is-armed:not(.is-playing) .apc-phone) { opacity: 1; transform: none; }
+.visual :global(.apc-scene.is-armed:not(.is-playing) .apc-route) { opacity: 1; }
+.visual :global(.apc-scene.is-armed:not(.is-playing) .apc-truck) { left: 42%; }
+.visual :global(.apc-scene.is-armed:not(.is-playing) .apc-route-done) { width: 42%; }
+.visual :global(.apc-scene.is-armed:not(.is-playing) .apc-node-origin) { background: #1f9d55; box-shadow: 0 0 0 .32em rgba(31, 157, 85, .16); }
+.visual :global(.apc-scene.is-armed:not(.is-playing) .apc-status-done) { opacity: 1; }
+.visual :global(.apc-scene.is-armed:not(.is-playing) .apc-status-pending) { opacity: 0; }
+.visual :global(.apc-scene *) { transition: none; }
+.visual :global(.lf-desk) { top: 3em; left: 5em; width: 52em; font-size: .95em; }
+.visual :global(.lf-desk-screen) { height: 32.032em; }
+.visual :global(.lf-web) { font-size: .52em; }
+.visual :global(.lf-phone) { top: 10em; left: 52em; font-size: 1.1em; }
+.visual :global(.lf-scene .lf-desk), .visual :global(.lf-scene .lf-phone) { opacity: 1; animation: none; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .contactLink:hover span, .otherProjects a:hover > span:last-child { transform: translate(2px, -2px); }
+}
+
+@media (max-width: 900px) {
+  .heroCopy { gap: 2rem; }
+  .heroCopy h1 { font-size: 2.75rem; }
+  .context { gap: 3rem; }
+  .feature { gap: 2rem; }
+}
+@media (max-width: 760px) {
+  .hero { padding-top: 2rem; }
+  .eyebrow { margin-top: 2.5rem; }
+  .heroCopy { grid-template-columns: 1fr; gap: 1.5rem; }
+  .heroCopy h1 { max-width: 600px; font-size: clamp(2rem, 6.7vw, 2.75rem); }
+  .introduction { max-width: 540px; }
+  .introduction > p { font-size: .9375rem; }
+  .tags { margin-top: 1.25rem; padding-top: 1rem; }
+  .heroFigure { margin-top: 2.25rem; }
+  .heroStage { height: auto; aspect-ratio: 40.8 / 44; }
+  .apc .heroStage { height: auto; }
+  .visual :global(.ss-scene), .visual :global(.apc-scene), .visual :global(.lf-scene) { font-size: calc(100cqw / 40.8); }
+  .visual :global(.ss-laptop) { top: 12.6em; width: 31em; margin-left: -15.5em; }
+  .visual :global(.ss-app) { font-size: .5em; }
+  .visual :global(.ss-float-quote) { top: 2em; right: 1.4em; }
+  .visual :global(.ss-float-request) { top: 24em; left: 1.2em; }
+  .visual :global(.ss-float-activity) { top: auto; bottom: 1.5em; right: 1.4em; }
+  .visual :global(.apc-phone) { top: 1.5em; font-size: .86em; }
+  .visual :global(.apc-route) { top: 37.4em; left: 4.8em; right: 4.8em; }
+  .visual :global(.lf-desk) { top: 5.2em; left: 1.8em; width: 33.6em; font-size: 1em; }
+  .visual :global(.lf-desk-screen) { height: 20.7em; }
+  .visual :global(.lf-web) { font-size: .336em; }
+  .visual :global(.lf-phone) { top: 16.68em; left: 26.16em; font-size: 1.055em; }
+  .context { grid-template-columns: 1fr; gap: 2.5rem; padding-block: 3.5rem; margin-top: .5rem; }
+  .inside { padding-top: 3.5rem; }
+  .feature, .feature.reverse { grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2.5rem; }
+  .feature + .feature { margin-top: 3.5rem; }
+  .reverse .featureCopy, .reverse > figure { grid-column: auto; grid-row: auto; }
+  .featureCopy { max-width: 510px; }
+  .recordingSurface { padding: 2rem; }
+  .wideRecording .recordingSurface { padding: 1rem; }
+  .contact { margin-top: 3.5rem; padding-block: 3.5rem; }
+  .otherProjects > div { gap: 2rem; }
+  .otherProjects a { font-size: 1.15rem; }
+  .rooms { margin-top: 3rem; }
+}
+@media (max-width: 480px) {
+  .eyebrow { font-size: .625rem; }
+  .eyebrow span { padding-inline: .2rem; }
+  .otherProjects > div, .rooms > div { grid-template-columns: 1fr; gap: 1.5rem; }
+  .footer { flex-direction: column; gap: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page *, .page *::before, .page *::after { animation: none !important; transition: none !important; }
+}

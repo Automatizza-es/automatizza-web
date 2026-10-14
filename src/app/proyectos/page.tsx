@@ -15,7 +15,7 @@ export default function ProjectsPage() {
   return (
     <>
       <EditorialMotion />
-      <Header />
+      <Header homeLinks />
       <main className="projects-page">
         <section className="projects-page-intro" aria-labelledby="projects-page-title">
           <Container>

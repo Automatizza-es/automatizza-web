@@ -13,7 +13,8 @@ const navigation = [
   { label: "Contacto", href: "#contacto" },
 ];
 
-export function Header({ redesign = false }: { redesign?: boolean }) {
+export function Header({ redesign = false, homeLinks = false }: { redesign?: boolean; homeLinks?: boolean }) {
+  const hrefFor = (href: string) => homeLinks && href !== "#contacto" ? `/${href}` : href;
   return (
     <header className={`site-header${redesign ? ` ${styles.redesigned}` : ""}`}>
       <Container className="header-inner">
@@ -29,7 +30,7 @@ export function Header({ redesign = false }: { redesign?: boolean }) {
 
         <nav className="desktop-navigation" aria-label="Navegación principal">
           {navigation.map((item) => (
-            <Link key={item.href} href={item.href}>
+            <Link key={item.href} href={hrefFor(item.href)}>
               {item.label}
             </Link>
           ))}
@@ -63,7 +64,7 @@ export function Header({ redesign = false }: { redesign?: boolean }) {
             } : undefined}
           >
             {navigation.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={hrefFor(item.href)}>
                 {item.label}
               </Link>
             ))}

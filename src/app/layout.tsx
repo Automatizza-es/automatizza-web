@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { ProjectRouteScroll } from "@/components/projects/ProjectRouteScroll";
 
 import "./globals.css";
 
@@ -18,7 +19,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body>{children}</body>
+      <body>
+        <ProjectRouteScroll />
+        {children}
+      </body>
     </html>
   );
 }

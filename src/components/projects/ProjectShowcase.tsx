@@ -26,6 +26,7 @@ export function ProjectShowcase() {
             <Link
               className={`showcase-visual showcase-visual-${project.slug}`}
               href={href}
+              scroll={false}
               tabIndex={-1}
               aria-hidden="true"
             >
@@ -34,7 +35,7 @@ export function ProjectShowcase() {
             <div className="showcase-copy">
               <h3>{project.client}.</h3> <p>{project.title}.</p>
             </div>
-            <Link className="showcase-link" href={href}>
+            <Link className="showcase-link" href={href} scroll={false}>
               Ver proyecto <span aria-hidden="true">→</span>
             </Link>
           </li>
