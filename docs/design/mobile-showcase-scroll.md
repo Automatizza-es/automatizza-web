@@ -1,17 +1,17 @@
 # En la práctica — Recorrido móvil
 
-Los tres casos se descubren con el scroll, sin interceptar la rueda ni los gestos táctiles.
+Los casos se sustituyen en una única composición con el scroll, sin interceptar la rueda ni los gestos táctiles. Solo se muestra el número, título, descripción y demo del caso activo.
 
-- Cuando pestañas, descripción y demo caben completas, esa parte de la sección usa `position: sticky` bajo la cabecera. El encabezado de la sección sigue su recorrido normal. Un tramo corto de scroll activa 01 → 02 → 03 y rellena las líneas individuales; al subir, vuelve al estado anterior.
-- El clic y las flechas del teclado desplazan a la etapa correspondiente y mantienen sincronizado el progreso.
-- En pantallas bajas o con `prefers-reduced-motion`, se muestran los tres casos completos en vertical. Las opciones superiores enlazan a cada caso y el scroll continúa con normalidad. Las regiones permanecen accesibles y visibles, sin semántica de pestañas que oculte contenido.
-- La altura disponible se mide con `100svh`, para que la aparición o desaparición de las barras de Safari no cambie el modo de navegación. Las descripciones reservan la altura de la más larga para que las demos no se desplacen al cambiar de caso.
+- La composición usa `position: sticky` bajo la cabecera. El encabezado de la sección sigue su recorrido normal. Un tramo corto de scroll activa 01 → 02 → 03, con una transición breve que sustituye el número y la demo. Al subir, vuelve al estado anterior.
+- Tres indicadores finos permiten seleccionar cada caso con clic o con las flechas del teclado; sus líneas muestran el progreso de cada etapa. Las pestañas y paneles conservan sus nombres accesibles, controles y navegación por teclado.
+- La altura de la demo se adapta entre 320 y 530 px, para mantener una sola escena también en teléfonos de pantalla baja. En el modo compacto se ajustan los espacios de la factura y del flujo de conexiones para que todos los datos permanezcan visibles. Las personas y el mobiliario nunca se estiran.
+- La altura disponible se mide con `100svh`, para que la aparición o desaparición de las barras de Safari no cambie el modo de navegación. Títulos y descripciones reservan la altura del texto más largo para que las demos no se desplacen al cambiar de caso.
+- Con `prefers-reduced-motion`, el cambio de caso y la navegación directa se hacen sin animaciones. Si la pantalla resulta todavía más baja de lo necesario para la demo mínima, se conserva una sola escena y se permite cambiar mediante los indicadores; no se apilan los casos.
 - El comportamiento de escritorio conserva la composición completa fijada y su progresión anterior.
 
 ## Comprobaciones
 
-- 390 × 844: avance y retroceso por scroll; pestañas y demo permanecen a 84 px de la parte superior durante las tres etapas. Al completar la tercera, la sección se libera y aparecen Proyectos.
-- 390 × 664 y 320 × 568: los tres casos se muestran completos en vertical, sin contenido oculto ni desbordamiento horizontal.
+- 390 × 844, 390 × 664 y 320 × 568: una sola demo y número activos, con avance y retroceso por scroll; la composición permanece a 84 px de la parte superior durante las tres etapas. Al completar la tercera, se libera y aparecen Proyectos. Sin desbordamiento horizontal.
 - 1280 × 720: se mantiene el recorrido de escritorio y la navegación directa.
 - ESLint y compilación de producción.
 
