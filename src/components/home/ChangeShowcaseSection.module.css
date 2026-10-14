@@ -2,7 +2,9 @@
 .container { max-width: 1120px; }
 .section .heading h2 { max-width: 900px; font-size: clamp(1.875rem, 2.6vw, 2.25rem); line-height: 1.2; }
 .section .heading > p:last-child { max-width: 390px; color: #6d7580; font-size: 0.9375rem; line-height: 1.7; }
-.stage { display: grid; grid-template-columns: 235px minmax(0, 1fr); gap: clamp(3rem, 7vw, 6rem); align-items: center; margin-top: 3rem; }
+.stageTrack { margin-top: 3rem; }
+.stage { display: grid; grid-template-columns: 235px minmax(0, 1fr); gap: clamp(3rem, 7vw, 6rem); align-items: center; }
+.viewportProbe { position: fixed; top: 0; left: 0; width: 0; height: 100svh; visibility: hidden; pointer-events: none; }
 .section[data-scroll="true"] .track { --scroll-distance: clamp(720px, 90svh, 1080px); height: calc(var(--composition-height, 540px) + var(--scroll-distance)); }
 .section[data-scroll="true"] .track[data-pin="pinned"] .composition { position: fixed; top: var(--pin-top); left: var(--pin-left); width: var(--pin-width); }
 .section[data-scroll="true"] .track[data-pin="after"] .composition { transform: translateY(var(--pin-travel)); }
@@ -15,11 +17,11 @@
 .tab { position: relative; display: block; width: 100%; border: 0; padding: 1.3rem 0; background: transparent; text-align: left; cursor: pointer; font: inherit; }
 .caseNumber { display: block; margin-bottom: 0.5rem; color: #8b9098; font-size: 0.625rem; font-weight: 400; letter-spacing: 0.06em; }
 .tabHeading { display: block; color: #6d7580; font-size: 1rem; font-weight: 450; letter-spacing: -0.02em; line-height: 1.4; transition: color 350ms ease; }
-.tab[aria-selected="true"] .tabHeading { color: var(--color-navy); font-size: 1.125rem; font-weight: 550; }
+.tab:is([aria-selected="true"], [aria-current="step"]) .tabHeading { color: var(--color-navy); font-size: 1.125rem; font-weight: 550; }
 .tabDescription { display: block; max-height: 0; overflow: hidden; margin-top: 0; opacity: 0; color: #6d7580; font-size: 0.875rem; font-weight: 400; line-height: 1.6; transition: max-height 380ms ease, margin-top 380ms ease, opacity 300ms ease; }
 .tab[aria-selected="true"] .tabDescription { max-height: 8em; margin-top: 0.75rem; opacity: 1; }
 .tab:focus-visible, .panel:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 5px; border-radius: 4px; }
-.mobileDescription { display: none; }
+.mobileDescriptions { display: none; }
 
 .demonstration { min-width: 0; overflow: hidden; border: 1px solid #eeece9; border-radius: 16px; background: #f5f4f2; box-shadow: 0 24px 50px -36px rgba(37, 36, 32, 0.17); }
 .panels { display: grid; }
@@ -116,21 +118,33 @@
 
 @media (max-width: 999px) {
   .stage { grid-template-columns: 1fr; gap: 1.6rem; }
+  .section[data-mobile-layout="scroll"] .stageTrack { height: calc(var(--stage-height) + clamp(780px, 110svh, 1100px)); }
+  .section[data-mobile-layout="scroll"] .stage { position: sticky; top: var(--mobile-pin-top, 84px); }
   .tabs { flex-direction: row; align-items: flex-start; gap: 1.5rem; }
   .tab { flex: 1; padding-block: 1rem 0; }
   .tabDescription, .tab[aria-selected="true"] .tabDescription { display: none; }
-  .tabHeading, .tab[aria-selected="true"] .tabHeading { font-size: 1rem; }
-  .mobileDescription { display: block; min-height: 3.2em; margin: 1rem 0 0; color: #6d7580; font-size: 0.875rem; line-height: 1.6; }
+  .tabHeading, .tab:is([aria-selected="true"], [aria-current="step"]) .tabHeading { font-size: 1rem; }
+  .mobileDescriptions { display: grid; margin-top: 1rem; }
+  .mobileDescription { grid-area: 1 / 1; min-height: 3.2em; margin: 0; color: #6d7580; font-size: 0.875rem; line-height: 1.6; opacity: 0; visibility: hidden; transition: opacity 250ms ease; }
+  .mobileDescription[data-active="true"] { opacity: 1; visibility: visible; }
+  .section[data-mobile-layout="stacked"] .demonstration { overflow: visible; border: 0; background: transparent; box-shadow: none; }
+  .section[data-mobile-layout="stacked"] .panels { display: block; }
+  .section[data-mobile-layout="stacked"] .panel { opacity: 1; visibility: visible; transition: none; scroll-margin-top: var(--mobile-pin-top, 84px); }
+  .section[data-mobile-layout="stacked"] .panel + .panel { margin-top: 3rem; }
+  .section[data-mobile-layout="stacked"] .panelScene { overflow: hidden; border: 1px solid #eeece9; border-radius: 12px; background: #f5f4f2; box-shadow: 0 24px 50px -36px rgba(37, 36, 32, 0.17); }
+  .mobileCaseHeader { margin-bottom: 1.25rem; }
+  .mobileCaseHeader h3 { margin: 0 0 0.6rem; color: var(--color-navy); font-size: 1.125rem; font-weight: 550; line-height: 1.4; letter-spacing: -0.02em; }
+  .mobileCaseHeader p { margin: 0; color: #6d7580; font-size: 0.875rem; line-height: 1.6; }
 }
 
 @media (max-width: 600px) {
   .section { padding-block: 4.5rem; }
   .section .heading h2 { font-size: 1.75rem; line-height: 1.25; }
-  .stage { margin-top: 2.5rem; }
+  .stageTrack { margin-top: 2.5rem; }
   .tabs { gap: 1rem; }
   .tab:first-child { flex: 1.7; }
   .tab:nth-child(2) { flex: 1.7; }
-  .tabHeading, .tab[aria-selected="true"] .tabHeading { font-size: 0.9375rem; }
+  .tabHeading, .tab:is([aria-selected="true"], [aria-current="step"]) .tabHeading { font-size: 0.9375rem; }
   .demonstration { border-radius: 12px; }
   .documentScene { min-height: 530px; aspect-ratio: auto; background-position: 23% center; }
   .documentScene::before { position: absolute; inset: 0; background: linear-gradient(rgba(249, 247, 244, 0.3), transparent 80%); content: ''; }
@@ -171,7 +185,7 @@
   .section .coordinationScene[data-active][data-ready] :is(.officeWalker, .officeSeated) { animation: none; }
   .section .officeWalker { transform: none; }
   .section .officeFacing { transform: none; }
-  .section .panel, .section .tabHeading, .section .tabDescription, .section .tab::after { transition: none; }
+  .section .panel, .section .tabHeading, .section .tabDescription, .section .tab::after, .section .mobileDescription { transition: none; }
   .section .panel[data-active] .extractionLoader { animation: none; }
   .section .panel[data-active] .connectionPulse { animation: none; opacity: 0; }
   .section .panel[data-active] .coordinationLabel:last-child .coordinationIcon { animation: none; }

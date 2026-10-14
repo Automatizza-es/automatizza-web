@@ -370,10 +370,22 @@ function useMediaQuery(query: string) {
 export function ChangeShowcaseSection() {
   const [active, setActive] = useState(0);
   const [fitsViewport, setFitsViewport] = useState(true);
+  const [mobileFitsViewport, setMobileFitsViewport] = useState(false);
   const scrollEnabled = useMediaQuery(scrollMedia) && fitsViewport;
   const verticalTabs = useMediaQuery("(min-width: 1000px)");
+  const mobile = useMediaQuery("(max-width: 999px)");
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const mobileScrollEnabled = mobile && mobileFitsViewport && !reducedMotion;
+  const stackedMobile = mobile && !mobileScrollEnabled;
+  const mobileLayout = mobile ? (mobileScrollEnabled ? "scroll" : "stacked") : undefined;
   const trackRef = useRef<HTMLDivElement>(null);
   const compositionRef = useRef<HTMLDivElement>(null);
+  const stageTrackRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLDivElement>(null);
+  const viewportProbeRef = useRef<HTMLDivElement>(null);
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const sceneRefs = useRef<(HTMLDivElement | null)[]>([]);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const activeRef = useRef(0);
 
@@ -381,6 +393,33 @@ export function ChangeShowcaseSection() {
     activeRef.current = index;
     setActive(index);
   }, []);
+
+  useEffect(() => {
+    const track = stageTrackRef.current;
+    const stage = stageRef.current;
+    const navigation = navigationRef.current;
+    const scene = sceneRefs.current[0]?.firstElementChild;
+    const probe = viewportProbeRef.current;
+    const header = document.querySelector<HTMLElement>(".site-header");
+    if (!mobile || !track || !stage || !navigation || !scene || !probe) return;
+    const measure = () => {
+      const top = (header?.offsetHeight ?? 72) + 12;
+      const gap = parseFloat(getComputedStyle(stage).rowGap) || 0;
+      // Measure the normal single-demo layout even while the short-screen
+      // fallback shows all cases. 100svh stays stable as Safari's bars retract.
+      const height = navigation.getBoundingClientRect().height + gap + scene.getBoundingClientRect().height + 2;
+      track.style.setProperty("--mobile-pin-top", `${top}px`);
+      track.style.setProperty("--stage-height", `${height}px`);
+      setMobileFitsViewport(height + top + 16 <= probe.getBoundingClientRect().height);
+    };
+    const observer = new ResizeObserver(measure);
+    [navigation, scene, probe, header].forEach((element) => { if (element) observer.observe(element); });
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [mobile]);
 
   useEffect(() => {
     const composition = compositionRef.current;
@@ -453,6 +492,48 @@ export function ChangeShowcaseSection() {
     };
   }, [scrollEnabled, select]);
 
+  useEffect(() => {
+    if (!mobile) return;
+    const track = stageTrackRef.current;
+    const stage = stageRef.current;
+    const tabs = [...tabRefs.current];
+    if (!track || !stage) return;
+    const update = () => {
+      const top = parseFloat(getComputedStyle(track).getPropertyValue("--mobile-pin-top")) || 84;
+      if (mobileScrollEnabled) {
+        const rect = track.getBoundingClientRect();
+        const travel = rect.height - stage.getBoundingClientRect().height;
+        if (travel <= 0) return;
+        const progress = Math.max(0, Math.min(1, (top - rect.top) / travel));
+        tabs.forEach((tab, index) => {
+          tab?.style.setProperty("--scroll-progress", Math.max(0, Math.min(1, progress * 3 - index)).toFixed(4));
+        });
+        const next = Math.min(2, Math.floor(progress * 3));
+        if (next !== activeRef.current) select(next);
+      } else {
+        // With a short viewport or reduced motion, native scrolling reveals
+        // three complete scenes instead of pinning content that cannot fit.
+        const threshold = top + window.innerHeight * 0.3;
+        let next = 0;
+        panelRefs.current.forEach((panel, index) => {
+          if (panel && panel.getBoundingClientRect().top <= threshold) next = index;
+        });
+        if (next !== activeRef.current) select(next);
+      }
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    const observer = new ResizeObserver(update);
+    observer.observe(track);
+    update();
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      observer.disconnect();
+      tabs.forEach((tab) => tab?.style.removeProperty("--scroll-progress"));
+    };
+  }, [mobile, mobileScrollEnabled, select]);
+
   const choose = (index: number, focus = false) => {
     const track = trackRef.current;
     const composition = compositionRef.current;
@@ -463,10 +544,22 @@ export function ChangeShowcaseSection() {
       const target = window.scrollY + rect.top - top + travel * ((index + 0.5) / 3);
       if (Math.abs(window.scrollY - target) < 1) select(index);
       else window.scrollTo({ top: target, behavior: "smooth" });
+    } else if (mobileScrollEnabled && stageTrackRef.current && stageRef.current) {
+      const mobileTrack = stageTrackRef.current;
+      const rect = mobileTrack.getBoundingClientRect();
+      const top = parseFloat(getComputedStyle(mobileTrack).getPropertyValue("--mobile-pin-top")) || 84;
+      const travel = rect.height - stageRef.current.getBoundingClientRect().height;
+      const target = window.scrollY + rect.top - top + travel * ((index + 0.5) / 3);
+      if (Math.abs(window.scrollY - target) < 1) select(index);
+      else window.scrollTo({ top: target, behavior: "smooth" });
+    } else if (stackedMobile) {
+      select(index);
+      panelRefs.current[index]?.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
+      panelRefs.current[index]?.focus({ preventScroll: true });
     } else {
       select(index);
     }
-    if (focus) tabRefs.current[index]?.focus({ preventScroll: true });
+    if (focus && !stackedMobile) tabRefs.current[index]?.focus({ preventScroll: true });
   };
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -481,7 +574,8 @@ export function ChangeShowcaseSection() {
   };
 
   return (
-    <section className={styles.section} id="automatizacion-en-accion" aria-labelledby="change-title" data-scroll={scrollEnabled}>
+    <section className={styles.section} id="automatizacion-en-accion" aria-labelledby="change-title" data-scroll={scrollEnabled} data-mobile-layout={mobileLayout}>
+      <div className={styles.viewportProbe} ref={viewportProbeRef} aria-hidden="true" />
       <Container className={styles.container}>
         <div className={styles.track} ref={trackRef}>
           <div className={styles.composition} ref={compositionRef}>
@@ -490,51 +584,60 @@ export function ChangeShowcaseSection() {
               <h2 id="change-title">Cuando todo fluye.</h2>
               <p>Menos trabajo manual, equipos mejor coordinados y herramientas que trabajan juntas.</p>
             </header>
-            <div className={styles.stage}>
-              <div className={styles.navigation}>
-                <div className={styles.tabs} role="tablist" aria-label="Demostraciones de automatización" aria-orientation={verticalTabs ? "vertical" : "horizontal"}>
-                  {demonstrations.map((demo, index) => (
-                    <button
-                      className={styles.tab}
-                      style={{ "--tab-progress": index <= active ? 1 : 0 } as CSSProperties}
-                      id={`automation-tab-${demo.id}`}
-                      role="tab"
-                      aria-selected={active === index}
-                      aria-controls={`automation-panel-${demo.id}`}
-                      aria-labelledby={`automation-label-${demo.id}`}
-                      aria-describedby={`automation-description-${demo.id}`}
-                      tabIndex={active === index ? 0 : -1}
-                      type="button"
-                      key={demo.id}
-                      ref={(element) => { tabRefs.current[index] = element; }}
-                      onClick={() => choose(index)}
-                      onKeyDown={(event) => onTabKeyDown(event, index)}
-                    >
-                      <span className={styles.caseNumber} aria-hidden="true">0{index + 1}</span>
-                      <span className={styles.tabHeading} id={`automation-label-${demo.id}`}>{demo.title}</span>
-                      <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{demo.description}</span>
-                    </button>
-                  ))}
+            <div className={styles.stageTrack} ref={stageTrackRef}>
+              <div className={styles.stage} ref={stageRef}>
+                <div className={styles.navigation} ref={navigationRef}>
+                  <div className={styles.tabs} role={stackedMobile ? "navigation" : "tablist"} aria-label="Demostraciones de automatización" aria-orientation={stackedMobile ? undefined : verticalTabs ? "vertical" : "horizontal"}>
+                    {demonstrations.map((demo, index) => (
+                      <button
+                        className={styles.tab}
+                        style={{ "--tab-progress": index <= active ? 1 : 0 } as CSSProperties}
+                        id={`automation-tab-${demo.id}`}
+                        role={stackedMobile ? undefined : "tab"}
+                        aria-selected={stackedMobile ? undefined : active === index}
+                        aria-current={stackedMobile && active === index ? "step" : undefined}
+                        aria-controls={`automation-panel-${demo.id}`}
+                        aria-labelledby={`automation-label-${demo.id}`}
+                        aria-describedby={`automation-description-${demo.id}`}
+                        tabIndex={stackedMobile || active === index ? 0 : -1}
+                        type="button"
+                        key={demo.id}
+                        ref={(element) => { tabRefs.current[index] = element; }}
+                        onClick={() => choose(index)}
+                        onKeyDown={(event) => onTabKeyDown(event, index)}
+                      >
+                        <span className={styles.caseNumber} aria-hidden="true">0{index + 1}</span>
+                        <span className={styles.tabHeading} id={`automation-label-${demo.id}`}>{demo.title}</span>
+                        <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{demo.description}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className={styles.mobileDescriptions} aria-hidden="true">
+                    {demonstrations.map((demo, index) => <p className={styles.mobileDescription} data-active={active === index} key={demo.id}>{demo.description}</p>)}
+                  </div>
                 </div>
-                <p className={styles.mobileDescription} aria-hidden="true">{demonstrations[active].description}</p>
-              </div>
-              <div className={styles.demonstration}>
-                <div className={styles.panels}>
-                  {demonstrations.map((demo, index) => (
-                    <div
-                      className={styles.panel}
-                      id={`automation-panel-${demo.id}`}
-                      role="tabpanel"
-                      aria-labelledby={`automation-tab-${demo.id}`}
-                      aria-hidden={active !== index}
-                      inert={active !== index}
-                      tabIndex={active === index ? 0 : -1}
-                      data-active={active === index}
-                      key={demo.id}
-                    >
-                      {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo active={active === 1} /> : <ConnectedDemo />}
-                    </div>
-                  ))}
+                <div className={styles.demonstration}>
+                  <div className={styles.panels}>
+                    {demonstrations.map((demo, index) => (
+                      <div
+                        className={styles.panel}
+                        id={`automation-panel-${demo.id}`}
+                        role={stackedMobile ? "region" : "tabpanel"}
+                        aria-labelledby={`automation-tab-${demo.id}`}
+                        aria-hidden={!stackedMobile && active !== index}
+                        inert={!stackedMobile && active !== index}
+                        tabIndex={stackedMobile || active === index ? 0 : -1}
+                        data-active={active === index}
+                        key={demo.id}
+                        ref={(element) => { panelRefs.current[index] = element; }}
+                      >
+                        {stackedMobile && index > 0 && <header className={styles.mobileCaseHeader}><h3>{demo.title}</h3><p>{demo.description}</p></header>}
+                        <div className={styles.panelScene} ref={(element) => { sceneRefs.current[index] = element; }}>
+                          {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo active={active === 1} /> : <ConnectedDemo />}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
