@@ -12,6 +12,7 @@ import {
 } from "react";
 
 import { Container } from "@/components/layout/Container";
+import { SectionHeading } from "./SectionHeading";
 import styles from "./ChangeShowcaseSection.module.css";
 
 function DocumentIcon() {
@@ -566,11 +567,12 @@ export function ChangeShowcaseSection() {
       <Container className={styles.container}>
         <div className={styles.track} ref={trackRef}>
           <div className={styles.composition} ref={compositionRef}>
-            <header className={`section-header ${styles.heading}`}>
-              <p className="section-eyebrow">EN LA PRÁCTICA</p>
-              <h2 id="change-title">Cuando todo fluye.</h2>
-              <p>Menos trabajo manual, equipos mejor coordinados y herramientas que trabajan juntas.</p>
-            </header>
+            <SectionHeading
+              id="change-title"
+              eyebrow="EN LA PRÁCTICA"
+              title="Cuando todo fluye."
+              description="Menos trabajo manual, equipos mejor coordinados y herramientas que trabajan juntas."
+            />
             <div className={styles.stageTrack} ref={stageTrackRef}>
               <div className={styles.stage} ref={stageRef}>
                 <div className={styles.navigation} ref={navigationRef}>

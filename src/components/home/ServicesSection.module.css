@@ -1,0 +1,24 @@
+.section:global(.whatwedo-section) { padding-block: clamp(6rem, 8vw, 8rem); background: #fff; }
+.container { max-width: 1120px; }
+.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(3rem, 6vw, 6rem); row-gap: 2.5rem; margin: 3.5rem 0 0; padding: 0; list-style: none; }
+.service { min-width: 0; padding: 1.6rem 0 1.75rem; border-top: 1px solid #e1e4e8; }
+.number { display: block; margin-bottom: 1.4rem; color: #8b9098; font-family: var(--font-sans), sans-serif; font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.service h3 { margin: 0; color: var(--color-navy); font-family: var(--font-display), sans-serif; font-size: clamp(1.75rem, 2.3vw, 2.125rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.service p { max-width: 440px; margin: 1.1rem 0 0; color: #6d7580; font-size: 0.9375rem; line-height: 1.7; }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .service:hover h3 { transform: translateX(3px); }
+}
+
+@media (max-width: 700px) {
+  .section:global(.whatwedo-section) { padding-block: 4.5rem; }
+  .services { grid-template-columns: minmax(0, 1fr); row-gap: 0.75rem; margin-top: 2.5rem; }
+  .service { padding-block: 1.4rem 1.75rem; }
+  .number { margin-bottom: 1rem; }
+  .service h3 { font-size: 1.5rem; }
+  .service p { margin-top: 0.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service h3 { transition: none; }
+}

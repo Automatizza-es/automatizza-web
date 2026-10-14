@@ -1,4 +1,5 @@
 import { Container } from "@/components/layout/Container";
+import { SectionHeading } from "./SectionHeading";
 
 const steps = [
   {
@@ -27,14 +28,13 @@ export function ProcessSection() {
   return (
     <section className="process-section" id="forma-de-trabajar" aria-labelledby="process-title">
       <Container>
-        <header className="section-header" data-reveal>
-          <p className="section-eyebrow">FORMA DE TRABAJAR</p>
-          <h2 id="process-title">
-            Primero entendemos el proceso
-            <br />
-            <span className="section-title-later">Después elegimos la tecnología</span>
-          </h2>
-        </header>
+        <SectionHeading
+          id="process-title"
+          eyebrow="FORMA DE TRABAJAR"
+          title="Primero entendemos el proceso"
+          description={<span className="section-title-later">Después elegimos la tecnología</span>}
+          reveal
+        />
 
         <div className="process-journey" data-reveal>
           <svg viewBox="0 0 1160 430" preserveAspectRatio="none" aria-hidden="true">

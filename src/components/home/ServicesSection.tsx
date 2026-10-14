@@ -1,29 +1,29 @@
 import { Container } from "@/components/layout/Container";
+import { SectionHeading } from "./SectionHeading";
+import styles from "./ServicesSection.module.css";
 
 const services = [
-  { number: "01", title: "Automatización", text: "El trabajo repetitivo, resuelto." },
-  { number: "02", title: "Software a medida", text: "Herramientas hechas para tu empresa." },
-  { number: "03", title: "Inteligencia artificial", text: "IA aplicada donde realmente aporta valor." },
-  { number: "04", title: "Desarrollo web", text: "Webs que combinan diseño, rendimiento y estrategia." },
+  { number: "01", title: "Automatización", text: "Procesos que avanzan solos y menos trabajo manual." },
+  { number: "02", title: "Software a medida", text: "Herramientas diseñadas para la forma real de trabajar de tu empresa." },
+  { number: "03", title: "Inteligencia artificial", text: "IA aplicada donde realmente ahorra tiempo y aporta valor." },
+  { number: "04", title: "Desarrollo web", text: "Webs y experiencias digitales con diseño, rendimiento y estrategia." },
 ];
 
-// Editorial list, deliberately static: no cards, icons or reveal motion.
 export function ServicesSection() {
   return (
-    <section className="whatwedo-section" id="servicios" aria-labelledby="services-title">
-      <Container>
-        <header className="section-header">
-          <p className="section-eyebrow">QUÉ HACEMOS</p>
-          <h2 id="services-title">Ideas que se convierten en soluciones.</h2>
-          <p>
-            Cuatro palabras no bastan para definir lo que hacemos, pero estas cuatro áreas lo resumen:
-          </p>
-        </header>
+    <section className={`whatwedo-section ${styles.section}`} id="servicios" aria-labelledby="services-title">
+      <Container className={styles.container}>
+        <SectionHeading
+          id="services-title"
+          eyebrow="QUÉ HACEMOS"
+          title="De la idea a la solución."
+          description="Desde pequeñas automatizaciones hasta aplicaciones completas. Tecnología diseñada para la forma de trabajar de tu empresa."
+        />
 
-        <ol className="whatwedo-list">
+        <ol className={styles.services}>
           {services.map((service) => (
-            <li className="whatwedo-row" key={service.number}>
-              <span className="whatwedo-number">{service.number}</span>
+            <li className={styles.service} key={service.number}>
+              <span className={styles.number}>{service.number}</span>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
             </li>
