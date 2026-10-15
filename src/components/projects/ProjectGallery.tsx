@@ -64,7 +64,7 @@ export function ProjectGallery({ mode = "home", priority = false }: ProjectGalle
             <p className="project-client">{project.client}</p>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
-            <Link href={`/proyectos/${project.slug}`}>
+            <Link href={`/proyectos/${project.slug}`} scroll={false}>
               Ver proyecto <span aria-hidden="true">→</span>
             </Link>
           </div>

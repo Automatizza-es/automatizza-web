@@ -1,768 +1,662 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import Link from "next/link";
+import Image from "next/image";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
 
 import { Container } from "@/components/layout/Container";
+import { SectionHeading } from "./SectionHeading";
+import styles from "./ChangeShowcaseSection.module.css";
 
-// Delay (ms) for an element's step in its card's entrance sequence.
-const at = (ms: number, extra?: Record<string, string>) =>
-  ({ "--d": `${ms}ms`, ...extra }) as CSSProperties;
-
-type IconName =
-  | "mail"
-  | "users"
-  | "layers"
-  | "chart"
-  | "sparkle"
-  | "user"
-  | "building"
-  | "doc"
-  | "check"
-  | "calendar"
-  | "send"
-  | "folder"
-  | "invoice"
-  | "tasks"
-  | "form"
-  | "plus"
-  | "lead"
-  | "home";
-
-const iconPaths: Record<IconName, ReactNode> = {
-  mail: (
-    <>
-      <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
-      <path d="m4.5 7 7.5 6 7.5-6" />
-    </>
-  ),
-  users: (
-    <>
-      <circle cx="9" cy="8.5" r="3" />
-      <path d="M3.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8" />
-      <path d="M15.5 5.8a3 3 0 0 1 0 5.4M17.5 14.6c1.6.6 2.7 2.1 3 4.4" />
-    </>
-  ),
-  layers: (
-    <>
-      <path d="m12 3.5 8.5 4.5-8.5 4.5L3.5 8 12 3.5Z" />
-      <path d="m3.5 12 8.5 4.5 8.5-4.5M3.5 16l8.5 4.5 8.5-4.5" />
-    </>
-  ),
-  chart: <path d="M5.5 20v-7M10 20V7.5M14.5 20v-4.5M19 20V4.5" />,
-  sparkle: (
-    <path d="M11 3.5c.6 4.2 2.3 5.9 6.5 6.5-4.2.6-5.9 2.3-6.5 6.5-.6-4.2-2.3-5.9-6.5-6.5 4.2-.6 5.9-2.3 6.5-6.5ZM18.5 15c.3 1.6.9 2.2 2.5 2.5-1.6.3-2.2.9-2.5 2.5-.3-1.6-.9-2.2-2.5-2.5 1.6-.3 2.2-.9 2.5-2.5Z" />
-  ),
-  user: (
-    <>
-      <circle cx="12" cy="8.5" r="3.5" />
-      <path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5" />
-    </>
-  ),
-  building: (
-    <>
-      <path d="M5.5 20.5v-16h8.5v16M14 9.5h4.5v11" />
-      <path d="M8.5 8h2.5M8.5 11.5h2.5M8.5 15h2.5M3.5 20.5h17" />
-    </>
-  ),
-  doc: (
-    <>
-      <path d="M6.5 3.5h7.5l4 4v13h-11.5Z" />
-      <path d="M13.5 3.5V8h4.5M9.5 12h5M9.5 15.5h5" />
-    </>
-  ),
-  check: <path d="m5.5 12.5 4 4 9-9" />,
-  calendar: (
-    <>
-      <rect x="4" y="5.5" width="16" height="14.5" rx="2" />
-      <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />
-    </>
-  ),
-  send: <path d="M20.5 3.5 10.5 13.5M20.5 3.5l-6.5 17-3.5-7-7-3.5 17-6.5Z" />,
-  folder: (
-    <path d="M3.5 7A1.5 1.5 0 0 1 5 5.5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18Z" />
-  ),
-  invoice: (
-    <>
-      <path d="M6 3.5h12v17l-3-2-3 2-3-2-3 2Z" />
-      <path d="M9 8.5h6M9 12h6M9 15.5h3" />
-    </>
-  ),
-  tasks: (
-    <>
-      <rect x="4" y="4" width="16" height="16" rx="3" />
-      <path d="m8 12 3 3 5-6" />
-    </>
-  ),
-  form: (
-    <>
-      <rect x="4.5" y="3.5" width="15" height="17" rx="2" />
-      <path d="M8 8h8M8 12h8M8 16h5" />
-    </>
-  ),
-  plus: <path d="M12 6.5v11M6.5 12h11" />,
-  lead: (
-    <>
-      <circle cx="10" cy="8.5" r="3.5" />
-      <path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5.9M17.5 14v6M14.5 17h6" />
-    </>
-  ),
-  home: <path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4Z" />,
-};
-
-function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
+function DocumentIcon() {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      {iconPaths[name]}
+    <svg width="19" height="22" viewBox="0 0 20 24" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 2h8l5 5v15H4zM12 2v6h5M7 12h7M7 15h7M7 18h4" />
     </svg>
   );
 }
 
-// The "Zz" from the Automatizza wordmark.
-function BrandMark({ size = 26 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-      <path d="M7 3h20L15 18.5h3.5L15 23H2L14 8H3Z" />
-      <path d="M19 14.4h10.5L19.5 24.6H30L26.5 29h-16L21 18.3h-4.5Z" />
-    </svg>
-  );
-}
-
-type ChangeCardProps = {
-  wide?: boolean;
-  icon: IconName;
-  title: ReactNode;
-  punchline: string;
-  className: string;
-  children: ReactNode;
-  mini: ReactNode;
-};
-
-function ChangeCard({ wide = false, icon, title, punchline, className, children, mini }: ChangeCardProps) {
-  return (
-    <article
-      className={`change-card ${wide ? "change-card-wide" : "change-card-half"} ${className}`}
-      data-reveal
-    >
-      <div className="change-copy">
-        <span className="change-chip">
-          <Icon name={icon} size={21} />
-        </span>
-        <h3>{title}</h3>
-        <Link className="change-punchline" href="#contacto">
-          {punchline}
-          <span aria-hidden="true">→</span>
-        </Link>
-      </div>
-      <div className="change-visual" aria-hidden="true">
-        {children}
-      </div>
-      {/* Phones only: a compact take on the same process. */}
-      <div className="change-mini" aria-hidden="true">
-        {mini}
-      </div>
-    </article>
-  );
-}
-
-function Connector({ delay }: { delay: number }) {
-  return (
-    <span className="inbox-connector fx-draw" style={at(delay)}>
-      <svg viewBox="0 0 40 20" fill="none">
-        <path d="M2 10h34" />
-        <path d="m31 5 5 5-5 5" />
-      </svg>
-    </span>
-  );
-}
-
-const extracted: { icon: IconName; label: string; value: string }[] = [
-  { icon: "user", label: "Nombre", value: "Marta López" },
-  { icon: "building", label: "Empresa", value: "Control Digital S.L." },
-  { icon: "mail", label: "Email", value: "marta@controldigital.es" },
-  { icon: "doc", label: "Solicitud", value: "50 uds. · Modelo X" },
+const demonstrations = [
+  {
+    id: "captar",
+    title: "Lo repetitivo, resuelto.",
+    description: "Los datos de tus documentos se registran automáticamente, sin copiar ni pegar.",
+  },
+  {
+    id: "seguir",
+    title: "Que nada se quede atrás.",
+    description: "Cada solicitud llega a quien corresponde, con las tareas y el seguimiento organizados.",
+  },
+  {
+    id: "conectar",
+    title: "Todo conectado.",
+    description: "La información entra una vez y aparece donde tiene que estar.",
+  },
 ];
 
-function InboxFlow() {
+const invoiceFields = [
+  ["Proveedor", "Norte Studio S.L."],
+  ["Nº factura", "F-2026-1256"],
+  ["Fecha", "12/10/2026"],
+  ["Importe", "889,35 €"],
+];
+
+const documentPaths = [
+  "M155 175 C155 245 380 235 430 285",
+  "M335 145 C335 210 450 220 450 285",
+  "M515 175 C515 225 485 230 475 285",
+];
+const mobileDocumentPaths = [
+  "M155 0 C155 180 350 170 440 240",
+  "M500 0 V240",
+  "M850 0 C850 180 650 170 560 240",
+];
+
+function ConnectionPulses({ paths }: { paths: string[] }) {
+  return paths.map((d, index) => (
+    <path
+      className={styles.connectionPulse}
+      d={d}
+      pathLength="1"
+      style={{ "--pulse-delay": `${index * -1.4}s` } as CSSProperties}
+      key={d}
+    />
+  ));
+}
+
+function DocumentDemo() {
   return (
-    <div className="inbox-flow">
-      <div className="ui-light mail-panel fx-in" style={at(0)}>
-        <div className="mail-head">
-          <span className="mail-app">
-            <Icon name="mail" size={15} />
-          </span>
-          <strong>Nuevo email</strong>
-          <time>09:41</time>
-        </div>
-        <dl className="mail-meta">
-          <div>
-            <dt>De</dt>
-            <dd>
-              <mark className="fx-mark" style={at(900)}>
-                marta@controldigital.es
-              </mark>
-            </dd>
-          </div>
-          <div>
-            <dt>Asunto</dt>
-            <dd>Solicitud de presupuesto</dd>
-          </div>
-        </dl>
-        <p className="mail-body">
-          Hola, soy{" "}
-          <mark className="fx-mark" style={at(500)}>
-            Marta López
-          </mark>
-          , de{" "}
-          <mark className="fx-mark" style={at(700)}>
-            Control Digital S.L.
-          </mark>{" "}
-          Necesitamos presupuesto para{" "}
-          <mark className="fx-mark" style={at(1100)}>
-            50 unidades del modelo X
-          </mark>
-          .
-        </p>
-      </div>
-
-      <Connector delay={1250} />
-
-      <div className="ui-accent extract-panel">
-        <div className="extract-head fx-in" style={at(1350)}>
-          <Icon name="sparkle" size={15} />
-          Datos extraídos
-        </div>
-        {extracted.map((row, index) => (
-          <div className="extract-row fx-slide" style={at(1450 + index * 150)} key={row.label}>
-            <Icon name={row.icon} size={15} />
-            <div>
-              <small>{row.label}</small>
-              <b>{row.value}</b>
-            </div>
-          </div>
+    <div className={styles.documentScene} role="group" aria-label="De tus documentos a datos registrados automáticamente">
+      <svg className={styles.documentConnections} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M155 175 C155 245 380 235 430 285M335 145 C335 210 450 220 450 285M515 175 C515 225 485 230 475 285M560 285 H660" />
+        <circle cx="660" cy="285" r="2.5" />
+        <ConnectionPulses paths={documentPaths} />
+      </svg>
+      <svg className={`${styles.documentConnections} ${styles.documentConnectionsMobile}`} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M155 0 C155 180 350 170 440 240M500 0 V240M850 0 C850 180 650 170 560 240M500 340 V520" />
+        <ConnectionPulses paths={mobileDocumentPaths} />
+      </svg>
+      <ul className={styles.floatingDocuments} aria-label="Documentos de origen">
+        {["factura.pdf", "pedido.pdf", "solicitud.pdf"].map((name) => (
+          <li className={styles.floatingDocument} key={name}>
+            <DocumentIcon />
+            <span>{name}</span>
+          </li>
         ))}
+      </ul>
+      <div className={styles.extraction}>
+        <span className={styles.extractionLoader} aria-hidden="true" />
+        <span>Extrayendo datos…</span>
       </div>
-
-      <Connector delay={2050} />
-
-      <div className="ui-light record-panel">
-        <div className="record-head">
-          <span>
-            <Icon name="lead" size={15} />
-          </span>
-          <strong>Nuevo lead</strong>
-          <small>CRM</small>
+      <dl className={styles.registeredInvoice} aria-label="Datos registrados">
+        {invoiceFields.map(([label, value]) => (
+          <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+        ))}
+        <div>
+          <dt>Estado</dt>
+          <dd className={styles.registeredStatus}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 8 3 3 7-7" /></svg>
+            Registrada
+          </dd>
         </div>
-        <dl className="record-fields">
-          {extracted.map((row, index) => (
-            <div key={row.label}>
-              <dt>{row.label === "Solicitud" ? "Interés" : row.label}</dt>
-              <dd>
-                <span className="fx-type" style={at(2250 + index * 160)}>
-                  {row.value}
-                </span>
-              </dd>
-            </div>
-          ))}
-        </dl>
-        <span className="record-status fx-pop" style={at(2950)}>
-          <i>
-            <Icon name="check" size={11} />
-          </i>
-          Completado automáticamente
-        </span>
-      </div>
+      </dl>
     </div>
   );
 }
 
-const followSteps = [
-  { title: "Respuesta enviada", time: "09:42", done: true },
-  { title: "Añadido al CRM", time: "09:42", done: true },
-  { title: "Seguimiento programado", time: "Jueves, 10:00", done: false },
-];
+const coordinationSteps = [
+  { label: "Solicitud recibida", icon: "received" },
+  { label: "Responsable asignado", icon: "assigned" },
+  { label: "Seguimiento programado", icon: "scheduled" },
+  { label: "Cliente atendido", icon: "completed" },
+] as const;
 
-function LeadFlow() {
+function CoordinationIcon({ icon }: { icon: typeof coordinationSteps[number]["icon"] }) {
   return (
-    <div className="lead-flow">
-      <div className="ui-light chat-panel">
-        <div className="chat-head fx-in" style={at(0)}>
-          <span className="chat-avatar">JL</span>
-          <div>
-            <strong>Juan López</strong>
-            <small>Formulario web · hace 1 min</small>
-          </div>
-          <span className="chat-new">Nueva consulta</span>
-        </div>
-        <div className="chat-thread">
-          <p className="chat-bubble chat-bubble-in fx-in" style={at(250)}>
-            Hola, me gustaría saber más sobre vuestros servicios.
-          </p>
-          <p className="chat-bubble chat-bubble-out fx-in" style={at(1850)}>
-            ¡Hola, Juan! Gracias por escribir. Te envío toda la información.
-            <small>
-              <Icon name="check" size={11} />
-              Respondido en 30 s
-            </small>
-          </p>
-          <span className="chat-typing">
-            <i />
-            <i />
-            <i />
-          </span>
-        </div>
-      </div>
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {icon === "received" && <path d="M3 10.5V16h14v-5.5h-4l-1.5 2h-3l-1.5-2H3Zm7-8v6m-2.5-2.5L10 8.5 12.5 6" />}
+      {icon === "assigned" && <><circle cx="10" cy="6" r="3" /><path d="M4 17c.5-3.5 2.5-5 6-5s5.5 1.5 6 5" /></>}
+      {icon === "scheduled" && <><rect x="3" y="4.5" width="14" height="12.5" rx="2" /><path d="M6.5 2.5v4M13.5 2.5v4M3 9h14m-9 3h4" /></>}
+      {icon === "completed" && <><circle cx="10" cy="10" r="7" /><path d="m6.5 10 2.5 2.5 4.5-5" /></>}
+    </svg>
+  );
+}
 
-      <div className="ui-accent follow-panel fx-in" style={at(2300)}>
-        <div className="follow-head">
-          <Icon name="calendar" size={15} />
-          Seguimiento activo
+function CoordinationDemo({ active }: { active: boolean }) {
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const walkerRef = useRef<HTMLDivElement>(null);
+  const mobile = useMediaQuery("(max-width: 600px)");
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [plane, setPlane] = useState({ width: 0, height: 0, left: 0, top: 0 });
+  const [cleanLoaded, setCleanLoaded] = useState(false);
+  const [walkingLoaded, setWalkingLoaded] = useState(false);
+  const [seatedLoaded, setSeatedLoaded] = useState(false);
+  const [chairLoaded, setChairLoaded] = useState(false);
+  const [assetFailed, setAssetFailed] = useState(false);
+  const ready = cleanLoaded && walkingLoaded && seatedLoaded && chairLoaded && !assetFailed && plane.width > 0;
+
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      const scale = Math.max(width / 1600, height / 900);
+      const imageWidth = 1600 * scale;
+      const imageHeight = 900 * scale;
+      setPlane({
+        width: imageWidth,
+        height: imageHeight,
+        left: (width - imageWidth) * (mobile ? 0.54 : 0.5),
+        top: (height - imageHeight) / 2,
+      });
+    });
+    observer.observe(scene);
+    return () => observer.disconnect();
+  }, [mobile]);
+
+  const horizontalScale = plane.width / 1672;
+  const verticalScale = plane.height / 941;
+
+  useEffect(() => {
+    const walker = walkerRef.current;
+    const scene = sceneRef.current;
+    if (!walker || !scene || !active || !ready || reducedMotion) return;
+
+    // One clock keeps the footsteps, route and pauses in sync. Only the cutout
+    // moves; the architecture and foreground furniture remain separate layers.
+    const travelTime = 4.5;
+    const turnTime = 3.5;
+    const restTime = 4.5;
+    const cycleTime = travelTime * 2 + turnTime + restTime;
+    let elapsed = 0;
+    let previousTime: number | null = null;
+    let visible = false;
+    let animationFrame = 0;
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    });
+    observer.observe(scene);
+
+    const animate = (time: number) => {
+      if (!visible || document.hidden) {
+        previousTime = time;
+        animationFrame = requestAnimationFrame(animate);
+        return;
+      }
+      if (previousTime !== null) {
+        elapsed += Math.min(time - previousTime, 50);
+      }
+      previousTime = time;
+      const phase = (elapsed / 1000) % cycleTime;
+      const returnStart = travelTime + turnTime;
+      const returnEnd = returnStart + travelTime;
+      const outward = phase < travelTime;
+      const returning = phase >= returnStart && phase < returnEnd;
+      const position = outward ? phase / travelTime
+        : phase < returnStart ? 1
+          : returning ? 1 - (phase - returnStart) / travelTime : 0;
+      const walkTime = outward ? phase : phase - returnStart;
+
+      walker.style.setProperty("--walk-offset", `${-180 * position * horizontalScale}px`);
+      walker.style.setProperty("--walk-facing", phase < returnStart - 0.5 || phase >= cycleTime - 0.5 ? "1" : "-1");
+      // Hold a grounded contact pose from the same sheet during pauses, so the
+      // body never switches to the differently proportioned original cutout.
+      const frame = outward || returning ? Math.floor(Math.max(0, walkTime) / 0.1875) % 8 : 0;
+      walker.style.setProperty("--walk-frame", String(frame));
+      walker.dataset.walking = String(outward || returning);
+      animationFrame = requestAnimationFrame(animate);
+    };
+    animationFrame = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      observer.disconnect();
+      walker.dataset.walking = "false";
+      walker.style.removeProperty("--walk-offset");
+      walker.style.removeProperty("--walk-facing");
+      walker.style.removeProperty("--walk-frame");
+    };
+  }, [active, ready, reducedMotion, horizontalScale]);
+
+  const layerStyle = {
+    ...plane,
+    opacity: ready ? 1 : 0,
+    "--actor-center": `${1005 * horizontalScale}px`,
+  } as CSSProperties;
+
+  return (
+    <div className={styles.coordinationScene} ref={sceneRef} data-active={active} data-ready={ready} role="group" aria-label="Personas y equipos coordinados para atender cada solicitud">
+      <Image
+        className={styles.officePhoto}
+        src="/images/automation/team-office-v1.webp"
+        loading="eager"
+        alt="Equipos trabajando y colaborando en una oficina de dos plantas."
+        fill
+        sizes="(max-width: 600px) 950px, (max-width: 999px) 90vw, 800px"
+      />
+      <Image
+        className={styles.officePhoto}
+        style={{ opacity: ready ? 1 : 0 }}
+        src="/images/automation/team-office-clean-v1.webp"
+        loading="eager"
+        alt=""
+        aria-hidden="true"
+        fill
+        sizes="(max-width: 600px) 950px, (max-width: 999px) 90vw, 800px"
+        onLoad={() => setCleanLoaded(true)}
+        onError={() => setAssetFailed(true)}
+      />
+      <div className={styles.officeActorPlane} style={layerStyle} aria-hidden="true">
+        <div className={styles.officeWalker} ref={walkerRef}>
+          <div className={styles.officeFacing}>
+            <div className={styles.officeWalkingPose} style={{ left: 945.6 * horizontalScale, top: 196.5 * verticalScale, width: 118.8 * horizontalScale, height: 220 * verticalScale }}>
+              <Image className={styles.officeWalkSheet} src="/images/automation/team-office-walk-v1.webp" alt="" width={3072} height={512} unoptimized loading="eager" onLoad={() => setWalkingLoaded(true)} onError={() => setAssetFailed(true)} />
+            </div>
+          </div>
         </div>
-        <ol className="follow-steps">
-          {followSteps.map((step, index) => (
-            <li className="fx-slide" style={at(2550 + index * 260)} key={step.title}>
-              <span className={`follow-dot ${step.done ? "" : "follow-dot-pending"}`}>
-                <Icon name={step.done ? "check" : "calendar"} size={11} />
-              </span>
-              <div>
-                <strong>{step.title}</strong>
-                <small>{step.time}</small>
-              </div>
+        <div className={styles.officeSeated}>
+          <Image className={styles.officeSeatedImage} src="/images/automation/team-office-actors-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setSeatedLoaded(true)} onError={() => setAssetFailed(true)} />
+        </div>
+        <Image className={styles.officeChairForeground} src="/images/automation/team-office-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setChairLoaded(true)} onError={() => setAssetFailed(true)} />
+      </div>
+      <ol className={styles.coordinationSteps} aria-label="Seguimiento de una solicitud">
+        {coordinationSteps.map((step) => (
+          <li className={styles.coordinationLabel} key={step.icon}>
+            <span className={styles.coordinationIcon}><CoordinationIcon icon={step.icon} /></span>
+            <span>{step.label}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+const systemSources = [
+  { label: "Formulario", icon: "form" },
+  { label: "Email", icon: "mail" },
+  { label: "CRM", icon: "clients" },
+  { label: "Archivos", icon: "files" },
+] as const;
+const systemResults = [
+  { label: "Leads", icon: "lead" },
+  { label: "Clientes", icon: "clients" },
+  { label: "Proyectos", icon: "projects" },
+  { label: "Facturación", icon: "invoice" },
+  { label: "Tareas", icon: "tasks" },
+] as const;
+type SystemIconName = typeof systemSources[number]["icon"] | typeof systemResults[number]["icon"];
+
+function SystemIcon({ name }: { name: SystemIconName }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {name === "form" && <><rect x="5" y="3.5" width="14" height="17" rx="2" /><path d="M8.5 8h7M8.5 12h7M8.5 16h4" /></>}
+      {name === "mail" && <><rect x="3.5" y="5.5" width="17" height="13" rx="2" /><path d="m4.5 7 7.5 6 7.5-6" /></>}
+      {name === "clients" && <><circle cx="9" cy="8.5" r="3" /><path d="M3.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8M15.5 5.8a3 3 0 0 1 0 5.4M17.5 14.6c1.6.6 2.7 2.1 3 4.4" /></>}
+      {name === "files" && <><rect x="7" y="3.5" width="13" height="13" rx="2" /><path d="M15.5 20.5h-10a2 2 0 0 1-2-2v-10" /></>}
+      {name === "lead" && <><circle cx="9.5" cy="8" r="3.5" /><path d="M3 20c.8-3.6 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5.9M17.5 13.5v6M14.5 16.5h6" /></>}
+      {name === "projects" && <path d="M3.5 7A1.5 1.5 0 0 1 5 5.5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18Z" />}
+      {name === "invoice" && <><path d="M6 3.5h12v17l-3-2-3 2-3-2-3 2Z" /><path d="M9 8.5h6M9 12h6M9 15.5h3" /></>}
+      {name === "tasks" && <><rect x="4" y="4" width="16" height="16" rx="3" /><path d="m8 12 3 3 5-6" /></>}
+    </svg>
+  );
+}
+
+const systemInPaths = [12.5, 37.5, 62.5, 87.5].map((y) => `M0 ${y} C50 ${y} 50 50 100 50`);
+const systemOutPaths = [10, 30, 50, 70, 90].map((y) => `M0 50 C50 50 55 ${y} 100 ${y}`);
+const systemInMobilePaths = [25, 75].map((x) => `M${x} 0 C${x} 55 50 45 50 100`);
+const systemOutMobilePaths = ["M50 0 V100"];
+
+function SystemWires({ paths, mobilePaths }: { paths: string[]; mobilePaths: string[] }) {
+  return (
+    <>
+      {[paths, mobilePaths].map((routes, orientation) => (
+        <svg className={`${styles.systemWires} ${orientation === 1 ? styles.systemWiresMobile : styles.systemWiresDesktop}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" key={orientation}>
+          {routes.map((d) => <path d={d} key={d} />)}
+          {routes.map((d, index) => <path className={styles.systemPulse} d={d} pathLength="1" style={{ "--route-delay": `${index * -1.15}s` } as CSSProperties} key={`pulse-${d}`} />)}
+        </svg>
+      ))}
+    </>
+  );
+}
+
+function ConnectedDemo() {
+  return (
+    <div className={styles.connectedScene} role="group" aria-label="Automatizza conecta tus fuentes de información y la distribuye donde hace falta">
+      <div className={styles.connectedFlow}>
+        <ul className={styles.systemSources} aria-label="Fuentes de información">
+          {systemSources.map((source) => <li key={source.icon}><SystemIcon name={source.icon} /><span>{source.label}</span></li>)}
+        </ul>
+        <SystemWires paths={systemInPaths} mobilePaths={systemInMobilePaths} />
+        <div className={styles.systemCore} role="img" aria-label="Automatizza, núcleo que conecta y distribuye la información">
+          <span className={styles.systemMark}>
+            <svg width="34" height="34" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M7 3h20L15 18.5h3.5L15 23H2L14 8H3Z" />
+              <path d="M19 14.4h10.5L19.5 24.6H30L26.5 29h-16L21 18.3h-4.5Z" />
+            </svg>
+          </span>
+          <span className={styles.systemName}>Automatizza</span>
+        </div>
+        <SystemWires paths={systemOutPaths} mobilePaths={systemOutMobilePaths} />
+        <ul className={styles.systemResults} aria-label="Información disponible en cada destino">
+          {systemResults.map((result) => (
+            <li key={result.icon}>
+              <SystemIcon name={result.icon} /><span>{result.label}</span>
+              <svg className={styles.systemCheck} width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 8 3 3 7-7" /></svg>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </div>
   );
 }
 
-// The source tools appear together, already in line; then the flow connects them.
-const sources: { icon: IconName; label: string }[] = [
-  { icon: "form", label: "Formulario" },
-  { icon: "mail", label: "Email" },
-  { icon: "users", label: "CRM" },
-  { icon: "doc", label: "Archivos" },
-];
+const scrollMedia = "(min-width: 1000px) and (min-height: 680px) and (prefers-reduced-motion: no-preference)";
 
-const targets: { icon: IconName; label: string }[] = [
-  { icon: "lead", label: "Leads" },
-  { icon: "users", label: "Clientes" },
-  { icon: "folder", label: "Proyectos" },
-  { icon: "invoice", label: "Facturación" },
-  { icon: "tasks", label: "Tareas" },
-];
-
-const inPaths = [12.5, 37.5, 62.5, 87.5].map((y) => `M0 ${y} C55 ${y} 45 50 100 50`);
-const outPaths = [10, 30, 50, 70, 90].map((y) => `M0 50 C55 50 45 ${y} 100 ${y}`);
-const inPathsVertical = [12.5, 37.5, 62.5, 87.5].map((x) => `M${x} 0 C${x} 55 50 45 50 100`);
-
-function Lines({ paths, className, delay }: { paths: string[]; className: string; delay: number }) {
-  return (
-    <svg
-      className={`connect-lines ${className}`}
-      style={at(delay)}
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-    >
-      {paths.map((d) => (
-        <path key={d} d={d} />
-      ))}
-      {paths.map((d) => (
-        <path key={`flow-${d}`} className="connect-flowline" d={d} />
-      ))}
-    </svg>
-  );
-}
-
-function ConnectFlow() {
-  return (
-    <div className="connect-flow">
-      <ul className="connect-sources">
-        {sources.map((source) => (
-          <li className="connect-chip fx-in" style={at(0)} key={source.label}>
-            <Icon name={source.icon} size={16} />
-            <span>{source.label}</span>
-          </li>
-        ))}
-      </ul>
-      <Lines paths={inPaths} className="connect-lines-h fx-draw" delay={550} />
-      <Lines paths={inPathsVertical} className="connect-lines-v fx-draw-down" delay={550} />
-      <span className="connect-hub fx-pop" style={at(950)}>
-        <BrandMark size={28} />
-      </span>
-      <Lines paths={outPaths} className="connect-lines-h fx-draw" delay={1250} />
-      <Lines paths={["M50 0 L50 100"]} className="connect-lines-v fx-draw-down" delay={1250} />
-      <ul className="ui-accent connect-targets">
-        {targets.map((target, index) => (
-          <li className="fx-slide" style={at(1450 + index * 110)} key={target.label}>
-            <Icon name={target.icon} size={15} />
-            {target.label}
-            <span className="connect-target-ok">
-              <Icon name="check" size={12} />
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-const modules: { icon: IconName; label: string }[] = [
-  { icon: "users", label: "Clientes" },
-  { icon: "invoice", label: "Facturación" },
-  { icon: "folder", label: "Proyectos" },
-];
-
-const kpis = [
-  { icon: "users" as IconName, label: "Clientes", value: "248", delta: "+12%" },
-  { icon: "invoice" as IconName, label: "Facturación", value: "24.800 €", delta: "+18%" },
-  { icon: "folder" as IconName, label: "Proyectos", value: "16", delta: "activos" },
-];
-
-const activity = [
-  { icon: "user" as IconName, text: "Nuevo cliente registrado", time: "5 min", tone: "green" },
-  { icon: "invoice" as IconName, text: "Factura F-118 enviada", time: "20 min", tone: "blue" },
-  { icon: "folder" as IconName, text: "Proyecto actualizado", time: "1 h", tone: "violet" },
-];
-
-function BuildFlow() {
-  return (
-    <div className="build-flow">
-      <ul className="build-modules">
-        {modules.map((module) => (
-          <li className="build-module" key={module.label}>
-            <Icon name={module.icon} size={17} />
-            <span>{module.label}</span>
-            <span className="build-status">
-              <span className="build-status-plus">
-                <Icon name="plus" size={13} />
-              </span>
-              <span className="build-status-check">
-                <Icon name="check" size={12} />
-              </span>
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="ui-light dash">
-        <aside className="dash-side">
-          <span className="dash-logo">
-            <BrandMark size={17} />
-          </span>
-          <span className="is-active">
-            <Icon name="home" size={15} />
-          </span>
-          <Icon name="users" size={15} />
-          <Icon name="invoice" size={15} />
-          <Icon name="folder" size={15} />
-          <Icon name="chart" size={15} />
-        </aside>
-        <div className="dash-main">
-          <div className="dash-top">
-            <div>
-              <small>Panel</small>
-              <strong>Tu negocio, en un solo lugar</strong>
-            </div>
-            <span className="dash-pill">Hoy</span>
-          </div>
-
-          <div className="dash-kpis">
-            {kpis.map((kpi) => (
-              <div className="dash-slot" key={kpi.label}>
-                <div className="dash-kpi">
-                  <span className="dash-kpi-label">
-                    <i>
-                      <Icon name={kpi.icon} size={12} />
-                    </i>
-                    {kpi.label}
-                  </span>
-                  <b>
-                    {kpi.value}
-                    <em>{kpi.delta}</em>
-                  </b>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="dash-lower">
-            <div className="dash-card dash-activity">
-              <h4>Actividad reciente</h4>
-              <ul>
-                {activity.map((item, index) => (
-                  <li className="fx-in" style={at(1950 + index * 150)} key={item.text}>
-                    <i className={`tone-${item.tone}`}>
-                      <Icon name={item.icon} size={11} />
-                    </i>
-                    <span>{item.text}</span>
-                    <time>{item.time}</time>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="dash-card dash-chart fx-in" style={at(1950)}>
-              <div className="dash-chart-head">
-                <h4>Facturación</h4>
-                <span className="fx-pop" style={at(3100)}>
-                  +18%
-                </span>
-              </div>
-              <div className="dash-chart-plot">
-                <svg viewBox="0 0 200 80" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="change-chart-fill" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0" stopColor="#02a0fc" stopOpacity=".22" />
-                      <stop offset="1" stopColor="#02a0fc" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    className="dash-chart-area fx-in"
-                    style={at(2700)}
-                    d="M0 66 C18 64 28 52 46 55 S76 44 96 46 S130 30 150 28 S184 12 200 8 L200 80 L0 80Z"
-                  />
-                  <path
-                    className="dash-chart-line fx-draw"
-                    style={at(2200)}
-                    d="M0 66 C18 64 28 52 46 55 S76 44 96 46 S130 30 150 28 S184 12 200 8"
-                  />
-                </svg>
-                <span className="dash-chart-dot fx-pop" style={at(3100)} />
-              </div>
-              <div className="dash-chart-axis">
-                <span>Ene</span>
-                <span>Feb</span>
-                <span>Mar</span>
-                <span>Abr</span>
-                <span>May</span>
-                <span>Jun</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ---- Compact mobile versions: one short sequence each, then still. ----
-
-function MiniArrow({ delay }: { delay: number }) {
-  return (
-    <span className="mini-arrow cm-in" style={at(delay)}>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M5 12h14M13 6l6 6-6 6" />
-      </svg>
-    </span>
-  );
-}
-
-function InboxMini() {
-  return (
-    <div className="mini-panel mini-inbox">
-      <div className="ui-light mini-tile">
-        <Icon name="mail" size={18} />
-        <span>Nuevo email</span>
-      </div>
-      <MiniArrow delay={150} />
-      <div className="ui-accent mini-tile cm-pop" style={at(450)}>
-        <span className="mini-ok">
-          <Icon name="check" size={12} />
-        </span>
-        <span>Lead creado</span>
-      </div>
-    </div>
-  );
-}
-
-function LeadMini() {
-  return (
-    <div className="mini-panel ui-light mini-lead">
-      <div className="mini-lead-head">
-        <Icon name="lead" size={16} />
-        <b>Nueva consulta</b>
-        <span className="mini-ok cm-pop" style={at(900)}>
-          <Icon name="check" size={12} />
-        </span>
-      </div>
-      <p className="mini-reply cm-in" style={at(150)}>
-        ¡Gracias por escribirnos!
-      </p>
-      <span className="mini-status cm-in" style={at(600)}>
-        <Icon name="check" size={13} />
-        Seguimiento programado
-      </span>
-    </div>
-  );
-}
-
-function ConnectMini() {
-  return (
-    <div className="mini-panel mini-connect">
-      <span className="ui-light mini-node">
-        <Icon name="mail" size={17} />
-      </span>
-      <span className="ui-light mini-node">
-        <Icon name="form" size={17} />
-      </span>
-      <MiniArrow delay={100} />
-      <span className="mini-hub cm-pop" style={at(350)}>
-        <BrandMark size={18} />
-      </span>
-      <MiniArrow delay={650} />
-      <span className="mini-done cm-pop" style={at(900)}>
-        <Icon name="check" size={15} />
-      </span>
-    </div>
-  );
-}
-
-function BuildMini() {
-  return (
-    <div className="mini-panel mini-build">
-      <div className="mini-modules">
-        {modules.map((module) => (
-          <span className="ui-accent mini-module" key={module.label}>
-            <Icon name={module.icon} size={17} />
-            {module.label}
-          </span>
-        ))}
-      </div>
-      <div className="ui-light mini-hubbar cm-in" style={at(250)}>
-        <span className="mini-hubbar-logo">
-          <BrandMark size={14} />
-        </span>
-        Tu negocio, en un solo lugar
-      </div>
-    </div>
-  );
+function useMediaQuery(query: string) {
+  const subscribe = useCallback((notify: () => void) => {
+    const media = window.matchMedia(query);
+    media.addEventListener("change", notify);
+    return () => media.removeEventListener("change", notify);
+  }, [query]);
+  const getSnapshot = useCallback(() => window.matchMedia(query).matches, [query]);
+  return useSyncExternalStore(subscribe, getSnapshot, () => false);
 }
 
 export function ChangeShowcaseSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+  const [fitsViewport, setFitsViewport] = useState(true);
+  const [mobileFitsViewport, setMobileFitsViewport] = useState(false);
+  const [mobileSceneHeight, setMobileSceneHeight] = useState(530);
+  const scrollEnabled = useMediaQuery(scrollMedia) && fitsViewport;
+  const verticalTabs = useMediaQuery("(min-width: 1000px)");
+  const mobile = useMediaQuery("(max-width: 999px)");
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const mobileScrollEnabled = mobile && mobileFitsViewport;
+  const mobileLayout = mobile ? (mobileScrollEnabled ? "scroll" : "manual") : undefined;
+  const trackRef = useRef<HTMLDivElement>(null);
+  const compositionRef = useRef<HTMLDivElement>(null);
+  const stageTrackRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLDivElement>(null);
+  const viewportProbeRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const activeRef = useRef(0);
 
-  // Each card's mini-interface plays its sequence once it is well inside the
-  // viewport. Cards entering together (the two half cards on desktop) are
-  // staggered so they never animate at the same time. Without JS or with
-  // reduced motion, nothing is armed and the CSS default is the final state.
+  const select = useCallback((index: number) => {
+    activeRef.current = index;
+    setActive(index);
+  }, []);
+
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const visuals = Array.from(section.querySelectorAll<HTMLElement>(".change-visual, .change-mini"));
-    const timers: number[] = [];
-    let nextSlot = 0;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const inView =
-            entry.intersectionRatio >= 0.4 ||
-            entry.intersectionRect.height >= window.innerHeight * 0.5;
-          if (!entry.isIntersecting || !inView) return;
-          observer.unobserve(entry.target);
-
-          const now = performance.now();
-          const start = Math.max(now, nextSlot);
-          nextSlot = start + 900;
-          timers.push(
-            window.setTimeout(() => entry.target.classList.add("is-playing"), start - now),
-          );
-        });
-      },
-      { threshold: [0, 0.2, 0.4, 0.6] },
-    );
-
-    visuals.forEach((visual) => {
-      visual.classList.add("is-armed");
-      observer.observe(visual);
-    });
-
+    const track = stageTrackRef.current;
+    const stage = stageRef.current;
+    const navigation = navigationRef.current;
+    const probe = viewportProbeRef.current;
+    const header = document.querySelector<HTMLElement>(".site-header");
+    if (!mobile || !track || !stage || !navigation || !probe) return;
+    const measure = () => {
+      const top = (header?.offsetHeight ?? 72) + 12;
+      const gap = parseFloat(getComputedStyle(stage).rowGap) || 0;
+      // Preserve one scene at a time, fitting its frame to the small viewport
+      // without scaling people or fonts along with the entire composition.
+      const navigationHeight = navigation.getBoundingClientRect().height;
+      const available = probe.getBoundingClientRect().height - top - 12 - navigationHeight - gap - 2;
+      const sceneHeight = Math.max(320, Math.min(530, available));
+      const height = navigationHeight + gap + sceneHeight + 2;
+      track.style.setProperty("--mobile-pin-top", `${top}px`);
+      track.style.setProperty("--stage-height", `${height}px`);
+      track.style.setProperty("--mobile-scene-height", `${sceneHeight}px`);
+      setMobileSceneHeight(sceneHeight);
+      setMobileFitsViewport(height + top + 12 <= probe.getBoundingClientRect().height + 1);
+    };
+    const observer = new ResizeObserver(measure);
+    [navigation, probe, header].forEach((element) => { if (element) observer.observe(element); });
+    window.addEventListener("resize", measure);
     return () => {
       observer.disconnect();
-      timers.forEach((timer) => window.clearTimeout(timer));
-      visuals.forEach((visual) => visual.classList.remove("is-armed", "is-playing"));
+      window.removeEventListener("resize", measure);
+    };
+  }, [mobile]);
+
+  useEffect(() => {
+    const composition = compositionRef.current;
+    const track = trackRef.current;
+    if (!composition || !track) return;
+    const header = document.querySelector<HTMLElement>(".site-header");
+    const measure = () => {
+      const headerHeight = header?.offsetHeight ?? 72;
+      const height = composition.getBoundingClientRect().height;
+      // Stabilize the complete composition in the available viewport, before
+      // its heading travels all the way to the site header.
+      const top = Math.max(headerHeight + 24, (window.innerHeight + headerHeight - height) / 2);
+      composition.style.setProperty("--pin-top", `${top}px`);
+      track.style.setProperty("--composition-height", `${height}px`);
+      setFitsViewport(height + top + 24 <= window.innerHeight);
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(composition);
+    if (header) observer.observe(header);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
     };
   }, []);
 
+  useEffect(() => {
+    if (!scrollEnabled) {
+      return;
+    }
+    const pinnedComposition = compositionRef.current;
+    const pinnedTrack = trackRef.current;
+    const tabs = [...tabRefs.current];
+    const update = () => {
+      const track = trackRef.current;
+      const composition = compositionRef.current;
+      if (!track || !composition) return;
+      const rect = track.getBoundingClientRect();
+      const travel = rect.height - composition.getBoundingClientRect().height;
+      if (travel <= 0) return;
+      // Reserve the original layout space while the browser holds the whole
+      // composition fixed. No transform needs to chase the viewport scroll.
+      const top = parseFloat(getComputedStyle(composition).getPropertyValue("--pin-top")) || 96;
+      const distance = top - rect.top;
+      composition.style.setProperty("--pin-left", `${rect.left}px`);
+      composition.style.setProperty("--pin-width", `${rect.width}px`);
+      composition.style.setProperty("--pin-travel", `${travel}px`);
+      track.dataset.pin = distance < 0 ? "before" : distance <= travel ? "pinned" : "after";
+      const progress = Math.max(0, Math.min(1, (top - rect.top) / travel));
+      tabs.forEach((tab, index) => {
+        tab?.style.setProperty("--scroll-progress", Math.max(0, Math.min(1, progress * 3 - index)).toFixed(4));
+      });
+      const next = Math.min(2, Math.floor(progress * 3));
+      if (next !== activeRef.current) select(next);
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    const observer = new ResizeObserver(update);
+    if (pinnedComposition) observer.observe(pinnedComposition);
+    update();
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      observer.disconnect();
+      if (pinnedTrack) delete pinnedTrack.dataset.pin;
+      pinnedComposition?.style.removeProperty("--pin-left");
+      pinnedComposition?.style.removeProperty("--pin-width");
+      pinnedComposition?.style.removeProperty("--pin-travel");
+      tabs.forEach((tab) => tab?.style.removeProperty("--scroll-progress"));
+    };
+  }, [scrollEnabled, select]);
+
+  useEffect(() => {
+    if (!mobileScrollEnabled) return;
+    const track = stageTrackRef.current;
+    const stage = stageRef.current;
+    const tabs = [...tabRefs.current];
+    if (!track || !stage) return;
+    const update = () => {
+      const top = parseFloat(getComputedStyle(track).getPropertyValue("--mobile-pin-top")) || 84;
+      const rect = track.getBoundingClientRect();
+      const travel = rect.height - stage.getBoundingClientRect().height;
+      if (travel <= 0) return;
+      const progress = Math.max(0, Math.min(1, (top - rect.top) / travel));
+      tabs.forEach((tab, index) => {
+        tab?.style.setProperty("--scroll-progress", Math.max(0, Math.min(1, progress * 3 - index)).toFixed(4));
+      });
+      const next = Math.min(2, Math.floor(progress * 3));
+      if (next !== activeRef.current) select(next);
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    const observer = new ResizeObserver(update);
+    observer.observe(track);
+    update();
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      observer.disconnect();
+      tabs.forEach((tab) => tab?.style.removeProperty("--scroll-progress"));
+    };
+  }, [mobileScrollEnabled, select]);
+
+  const choose = (index: number, focus = false) => {
+    const track = trackRef.current;
+    const composition = compositionRef.current;
+    if (scrollEnabled && track && composition) {
+      const top = parseFloat(getComputedStyle(composition).getPropertyValue("--pin-top")) || 96;
+      const rect = track.getBoundingClientRect();
+      const travel = rect.height - composition.getBoundingClientRect().height;
+      const target = window.scrollY + rect.top - top + travel * ((index + 0.5) / 3);
+      if (Math.abs(window.scrollY - target) < 1) select(index);
+      else window.scrollTo({ top: target, behavior: "smooth" });
+    } else if (mobileScrollEnabled && stageTrackRef.current && stageRef.current) {
+      const mobileTrack = stageTrackRef.current;
+      const rect = mobileTrack.getBoundingClientRect();
+      const top = parseFloat(getComputedStyle(mobileTrack).getPropertyValue("--mobile-pin-top")) || 84;
+      const travel = rect.height - stageRef.current.getBoundingClientRect().height;
+      const target = window.scrollY + rect.top - top + travel * ((index + 0.5) / 3);
+      if (Math.abs(window.scrollY - target) < 1) select(index);
+      else window.scrollTo({ top: target, behavior: reducedMotion ? "auto" : "smooth" });
+    } else {
+      select(index);
+    }
+    if (focus) tabRefs.current[index]?.focus({ preventScroll: true });
+  };
+
+  const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let next: number;
+    if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = 2;
+    else if (event.key === (verticalTabs ? "ArrowDown" : "ArrowRight")) next = (index + 1) % 3;
+    else if (event.key === (verticalTabs ? "ArrowUp" : "ArrowLeft")) next = (index + 2) % 3;
+    else return;
+    event.preventDefault();
+    choose(next, true);
+  };
+
   return (
-    <section className="change-section" ref={sectionRef} aria-labelledby="change-title">
-      <Container>
-        <header className="change-header" data-reveal>
-          <p className="change-eyebrow">EL CAMBIO EMPIEZA AQUÍ</p>
-          <h2 id="change-title">
-            Tu empresa podría <span>funcionar mucho mejor.</span>
-          </h2>
-          <p className="change-subtitle">Y probablemente ya sabes por dónde empezar.</p>
-        </header>
-
-        <div className="change-grid">
-          <ChangeCard
-            wide
-            icon="mail"
-            className="change-card-inbox"
-            title="¿Otra vez haciendo lo mismo?"
-            punchline="Que se haga solo."
-            mini={<InboxMini />}
-          >
-            <InboxFlow />
-          </ChangeCard>
-
-          <ChangeCard
-            icon="users"
-            className="change-card-leads"
-            title={
-              <>
-                ¿Y si no se escapara <br />
-                ninguno?
-              </>
-            }
-            punchline="Cada oportunidad cuenta."
-            mini={<LeadMini />}
-          >
-            <LeadFlow />
-          </ChangeCard>
-
-          <ChangeCard
-            icon="layers"
-            className="change-card-connect"
-            title={
-              <>
-                Todo conectado. <br />
-                Por fin.
-              </>
-            }
-            punchline="Adiós al caos."
-            mini={<ConnectMini />}
-          >
-            <ConnectFlow />
-          </ChangeCard>
-
-          <ChangeCard
-            wide
-            icon="chart"
-            className="change-card-build"
-            title={
-              <>
-                <span>Tu empresa ha cambiado.</span> <span>Tu software también debería.</span>
-              </>
-            }
-            punchline="No al revés."
-            mini={<BuildMini />}
-          >
-            <BuildFlow />
-          </ChangeCard>
+    <section className={styles.section} id="automatizacion-en-accion" aria-labelledby="change-title" data-scroll={scrollEnabled} data-mobile-layout={mobileLayout} data-mobile-compact={mobile && mobileSceneHeight < 450}>
+      <div className={styles.viewportProbe} ref={viewportProbeRef} aria-hidden="true" />
+      <Container className="editorial-container">
+        <div className={styles.track} ref={trackRef}>
+          <div className={styles.composition} ref={compositionRef}>
+            <SectionHeading
+              id="change-title"
+              eyebrow="EN LA PRÁCTICA"
+              title="Cuando todo fluye."
+              description="Menos trabajo manual, equipos mejor coordinados y herramientas que trabajan juntas."
+            />
+            <div className={styles.stageTrack} ref={stageTrackRef}>
+              <div className={styles.stage} ref={stageRef}>
+                <div className={styles.navigation} ref={navigationRef}>
+                  {mobile ? (
+                    <div className={styles.mobileCaseNavigation}>
+                      <div className={styles.mobileCaseTitles} aria-hidden="true">
+                        {demonstrations.map((demo, index) => (
+                          <h3 className={styles.mobileCaseTitle} data-active={active === index} key={demo.id}>
+                            <span className={styles.mobileCaseNumber}>0{index + 1}</span>
+                            <span>{demo.title}</span>
+                          </h3>
+                        ))}
+                      </div>
+                      <div className={styles.mobileSteps} role="tablist" aria-label="Demostraciones de automatización" aria-orientation="horizontal">
+                        {demonstrations.map((demo, index) => (
+                          <button
+                            className={styles.mobileStep}
+                            style={{ "--tab-progress": index <= active ? 1 : 0 } as CSSProperties}
+                            type="button"
+                            role="tab"
+                            id={`automation-tab-${demo.id}`}
+                            aria-label={demo.title}
+                            aria-selected={active === index}
+                            aria-controls={`automation-panel-${demo.id}`}
+                            aria-describedby={`automation-description-${demo.id}`}
+                            tabIndex={active === index ? 0 : -1}
+                            key={demo.id}
+                            ref={(element) => { tabRefs.current[index] = element; }}
+                            onClick={() => choose(index)}
+                            onKeyDown={(event) => onTabKeyDown(event, index)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : <div className={styles.tabs} role="tablist" aria-label="Demostraciones de automatización" aria-orientation={verticalTabs ? "vertical" : "horizontal"}>
+                    {demonstrations.map((demo, index) => (
+                      <button
+                        className={styles.tab}
+                        style={{ "--tab-progress": index <= active ? 1 : 0 } as CSSProperties}
+                        id={`automation-tab-${demo.id}`}
+                        role="tab"
+                        aria-selected={active === index}
+                        aria-controls={`automation-panel-${demo.id}`}
+                        aria-labelledby={`automation-label-${demo.id}`}
+                        aria-describedby={`automation-description-${demo.id}`}
+                        tabIndex={active === index ? 0 : -1}
+                        type="button"
+                        key={demo.id}
+                        ref={(element) => { tabRefs.current[index] = element; }}
+                        onClick={() => choose(index)}
+                        onKeyDown={(event) => onTabKeyDown(event, index)}
+                      >
+                        <span className={styles.caseNumber} aria-hidden="true">0{index + 1}</span>
+                        <span className={styles.tabHeading} id={`automation-label-${demo.id}`}>{demo.title}</span>
+                        <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{demo.description}</span>
+                      </button>
+                    ))}
+                  </div>}
+                  <div className={styles.mobileDescriptions} aria-hidden="true">
+                    {demonstrations.map((demo, index) => <p className={styles.mobileDescription} id={mobile ? `automation-description-${demo.id}` : undefined} data-active={active === index} key={demo.id}>{demo.description}</p>)}
+                  </div>
+                </div>
+                <div className={styles.demonstration}>
+                  <div className={styles.panels}>
+                    {demonstrations.map((demo, index) => (
+                      <div
+                        className={styles.panel}
+                        id={`automation-panel-${demo.id}`}
+                        role="tabpanel"
+                        aria-labelledby={`automation-tab-${demo.id}`}
+                        aria-hidden={active !== index}
+                        inert={active !== index}
+                        tabIndex={active === index ? 0 : -1}
+                        data-active={active === index}
+                        key={demo.id}
+                      >
+                        {index === 0 ? <DocumentDemo /> : index === 1 ? <CoordinationDemo active={active === 1} /> : <ConnectedDemo />}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </Container>
     </section>

@@ -77,9 +77,9 @@ const activity: { icon: IconName; title: string; time: string; highlight?: boole
   { icon: "doc", title: "Presupuesto enviado por email", time: "Hoy, 12:05", highlight: true },
 ];
 
-function CrmDashboard() {
+export function CrmDashboard() {
   return (
-    <div className="ss-app">
+    <div className={`ss-app ${catamaran.variable}`}>
       <div className="ss-topbar">
         <Image className="ss-logo" src="/projects/silos-spain/logo.png" alt="" width={360} height={173} />
         <nav className="ss-nav">

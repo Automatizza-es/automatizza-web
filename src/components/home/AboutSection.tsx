@@ -1,34 +1,23 @@
-import Image from "next/image";
-
 import { Container } from "@/components/layout/Container";
+import styles from "./AboutSection.module.css";
 
 export function AboutSection() {
   return (
-    <section className="about-section" id="sobre-automatizza" aria-labelledby="about-title">
-      <Container className="about-layout" data-reveal>
-        <div className="about-statement">
-          <p className="section-eyebrow">SOBRE AUTOMATIZZA</p>
-          <h2 id="about-title">Tecnología con los pies en el negocio</h2>
-        </div>
-
-        <div className="about-copy">
+    <section className={styles.section} id="sobre-automatizza" aria-labelledby="about-title">
+      <Container className="editorial-container" data-reveal>
+        <div className={styles.composition}>
+          <div className={styles.statement}>
+            <p className={`section-eyebrow ${styles.eyebrow}`}>SOBRE AUTOMATIZZA</p>
+            <h2 id="about-title">Tecnología útil para empresas reales.</h2>
+            <p className={styles.principle}>Menos complejidad. Más sentido.</p>
+          </div>
           <p>
-            Nuestra misión es ayudar a las pequeñas y medianas empresas a competir a otro nivel,
-            poniendo a su alcance tecnología que les permita trabajar mejor, ganar competitividad y
-            crecer sin añadir complejidad.
+            Detrás de Automatizza hay personas que combinan visión de negocio y desarrollo digital.
+            Nos gusta entender cómo trabaja cada empresa para crear soluciones que realmente encajen
+            en su día a día.
           </p>
-          <p className="about-principle">La tecnología es el medio. El proceso es el punto de partida.</p>
         </div>
-
-        <figure className="about-photo">
-          <Image
-            src="/about/equipo.jpg"
-            alt="El equipo de Automatizza revisando un proyecto en el portátil"
-            width={800}
-            height={900}
-            sizes="(max-width: 900px) calc(100vw - 2.5rem), 420px"
-          />
-        </figure>
+        <p className={styles.detail}>Negocio, procesos y tecnología, en equilibrio.</p>
       </Container>
     </section>
   );

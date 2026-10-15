@@ -1,0 +1,7 @@
+.withForm:global(.contact-layout) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(3rem, 6vw, 6rem); align-items: start; justify-items: stretch; max-width: 1200px; text-align: left; }
+.withForm .copy h2 { max-width: 560px; font-size: clamp(2.25rem, 3.4vw, 3.25rem); line-height: 1.12; }
+.copy > p:not(:global(.contact-kicker)) { max-width: 430px; margin: 1.75rem 0 0; color: #c4cada; font-size: 1rem; line-height: 1.7; }
+.email { display: inline-block; margin-top: 2.5rem; padding-bottom: .4rem; border-bottom: 1px solid rgba(255, 255, 255, .3); color: #fff; font-size: .9375rem; }
+.email:focus-visible { outline: 2px solid #8cd7ff; outline-offset: 5px; }
+@media (max-width: 900px) { .withForm:global(.contact-layout) { grid-template-columns: minmax(0, 1fr); gap: 3rem; } .withForm .copy h2 { max-width: 650px; } }
+@media (max-width: 600px) { .withForm .copy h2 { font-size: 2.1rem; } .email { margin-top: 1.5rem; } }

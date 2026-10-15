@@ -1,0 +1,87 @@
+.section {
+  padding-block: clamp(3.5rem, 5vw, 4.5rem);
+  background: var(--color-white);
+  color: var(--color-navy);
+}
+
+.composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, .8fr);
+  align-items: end;
+  gap: clamp(3rem, 6vw, 6rem);
+}
+
+.eyebrow:global(.section-eyebrow) {
+  margin: 0 0 1.5rem;
+  font-size: .75rem;
+  letter-spacing: .16em;
+  line-height: 1.4;
+}
+
+.statement h2 {
+  max-width: 660px;
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -.035em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.principle {
+  margin: 1.4rem 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.4;
+}
+
+.composition > p {
+  max-width: 420px;
+  margin: 0;
+  color: #6d7580;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 2.75rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e1e4e8;
+  color: #6d7580;
+  font-size: .625rem;
+  font-weight: 400;
+  letter-spacing: .16em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+
+.detail::before {
+  flex: none;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--color-cyan);
+  content: "";
+}
+
+@media (max-width: 900px) {
+  .composition { grid-template-columns: minmax(0, 1fr) minmax(240px, .85fr); gap: 2.5rem; }
+  .statement h2 { font-size: 2.25rem; }
+  .composition > p { font-size: .9375rem; line-height: 1.8; }
+}
+
+@media (max-width: 650px) {
+  .section { padding-block: 2.75rem; }
+  .composition { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+  .eyebrow:global(.section-eyebrow) { margin-bottom: 1.25rem; font-size: .6875rem; letter-spacing: .13em; }
+  .statement h2 { max-width: 440px; font-size: 2rem; line-height: 1.15; }
+  .principle { margin-top: 1rem; font-size: 1.125rem; }
+  .composition > p { max-width: 480px; }
+  .detail { gap: .875rem; margin-top: 2rem; padding-top: 1.25rem; font-size: .5625rem; letter-spacing: .12em; }
+  .detail::before { width: 1.75rem; }
+}
