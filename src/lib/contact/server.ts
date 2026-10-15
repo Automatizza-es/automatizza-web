@@ -21,7 +21,9 @@ export function getContactConfig(env: Environment = process.env, policyReady = i
     catch { return false; }
   });
   const configured = Boolean(apiKey && verifyKey && isEmail(from) && isEmail(to) && uuid.test(domainId) && validOrigins && (env.NODE_ENV !== "production" || origins.length));
-  return { apiKey, verifyKey, from, to, domainId, origins, configured, ready: configured && policyReady && env.CONTACT_FORM_ENABLED === "true" };
+  // Explicit local testing never approves the draft policy or enables Vercel.
+  const testMode = env.NODE_ENV === "development" && env.VERCEL !== "1" && env.CONTACT_FORM_TEST_MODE === "true";
+  return { apiKey, verifyKey, from, to, domainId, origins, configured, testMode, ready: configured && (testMode || (policyReady && env.CONTACT_FORM_ENABLED === "true")) };
 }
 
 function json(status: number, data: object, extra: Record<string, string> = {}) {
@@ -118,7 +120,7 @@ export function createContactHandler(dependencies: Dependencies = {}) {
     if (!body || typeof body !== "object" || Array.isArray(body)) return json(400, { error: "Revisa los datos del formulario." });
     const data = body as Record<string, unknown>;
     if (typeof data.companyWebsite !== "string" || data.companyWebsite.trim()) return json(400, { error: "No se ha podido validar la solicitud." });
-    const validation = validateContact(data);
+    const validation = validateContact(data, config.testMode);
     if (!validation.value) return json(400, { error: "Revisa los campos indicados.", errors: validation.errors });
     if (typeof data.submissionId !== "string" || !uuid.test(data.submissionId) || data.policyVersion !== privacyPolicy.version) return json(400, { error: "Actualiza la página antes de volver a enviar el mensaje." });
     const emailWait = consume(`email:${hash(validation.value.email.toLowerCase())}`, 3, time);
@@ -138,8 +140,8 @@ export function createContactHandler(dependencies: Dependencies = {}) {
         headers: { Authorization: `Bearer ${config.apiKey}`, "Content-Type": "application/json", "Idempotency-Key": `contact/${data.submissionId}` },
         body: JSON.stringify({
           from: `Automatizza <${config.from}>`, to: [config.to], reply_to: email,
-          subject: `Nueva consulta web · ${service || "Sin área especificada"}`,
-          text: ["Nueva solicitud desde el formulario de Automatizza", "", `Nombre: ${name}`, `Email: ${email}`, `Área: ${service || "No especificada"}`, "", "Mensaje:", message, "", "Privacidad: aceptada expresamente", `Versión de la política: ${privacyPolicy.version}`].join("\n"),
+          subject: `${config.testMode ? "[PRUEBA LOCAL] " : ""}Nueva consulta web · ${service || "Sin área especificada"}`,
+          text: [config.testMode ? "Prueba técnica del formulario de Automatizza · Datos ficticios" : "Nueva solicitud desde el formulario de Automatizza", "", `Nombre: ${name}`, `Email: ${email}`, `Área: ${service || "No especificada"}`, "", "Mensaje:", message, "", config.testMode ? "Prueba con datos ficticios confirmada. La política sigue pendiente; no se registra consentimiento real." : "Privacidad: aceptada expresamente", `Versión de la política: ${privacyPolicy.version}`].join("\n"),
         }),
       });
       if (!response.ok) return json(502, { error: "No se ha podido enviar tu mensaje. Puedes volver a intentarlo o escribirnos por email." });

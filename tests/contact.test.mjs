@@ -48,6 +48,34 @@ test("explicit kill switch and missing configuration fail closed", async () => {
     assert.equal(calls.length, 0);
   }
 });
+test("local test mode enables only explicit development tests, never production or Vercel", () => {
+  const local = { ...env, NODE_ENV: "development", VERCEL: "", CONTACT_FORM_ENABLED: "false", CONTACT_FORM_TEST_MODE: "true" };
+  assert.equal(getContactConfig(local, false).ready, true);
+  for (const override of [{ NODE_ENV: "production" }, { NODE_ENV: "test" }, { VERCEL: "1" }, { CONTACT_FORM_TEST_MODE: "false" }, { RESEND_API_KEY: "" }]) {
+    assert.equal(getContactConfig({ ...local, ...override }, false).ready, false);
+  }
+  assert.equal(isPrivacyPolicyReady(), false);
+});
+test("local tests use the real send path but never claim legal consent", async () => {
+  const { handler, calls } = setup({
+    env: { NODE_ENV: "development", VERCEL: "", CONTACT_FORM_ENABLED: "false", CONTACT_FORM_TEST_MODE: "true" },
+    policyReady: () => false,
+  });
+  assert.equal((await handler(request({ ...base(), privacy: false }))).status, 400);
+  assert.equal(calls.length, 0);
+  assert.equal((await handler(request())).status, 202);
+  const payload = JSON.parse(calls[1].init.body);
+  assert.ok(payload.subject.startsWith("[PRUEBA LOCAL]"));
+  assert.ok(payload.text.includes("Datos ficticios"));
+  assert.ok(payload.text.includes("no se registra consentimiento real"));
+  assert.ok(!payload.text.includes("Privacidad: aceptada expresamente"));
+  assert.deepEqual(payload.to, [env.CONTACT_TO_EMAIL]);
+});
+test("the test-mode flag cannot unlock the production handler with a draft policy", async () => {
+  const { handler, calls } = setup({ env: { CONTACT_FORM_TEST_MODE: "true" }, policyReady: () => false });
+  assert.equal((await handler(request())).status, 503);
+  assert.equal(calls.length, 0);
+});
 test("required fields, consent, service enumeration and header injection are validated", () => {
   for (const data of [null, [], {}, { ...base(), name: "x\nInjected" }, { ...base(), email: "x@example.test\r\nBcc: stranger@example.test" }, { ...base(), privacy: "true" }, { ...base(), message: " " }, { ...base(), service: "Injected subject" }, { ...base(), message: "x".repeat(5001) }]) assert.equal(validateContact(data).value, undefined);
   assert.equal(validateContact({ ...base(), service: "", name: "  Ana  " }).value.name, "Ana");

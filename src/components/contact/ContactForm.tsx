@@ -5,7 +5,7 @@ import { useRef, useState, type FormEvent } from "react";
 import { contactServices, validateContact, type ContactErrors, type ContactField } from "@/lib/contact/validation";
 import styles from "./ContactForm.module.css";
 
-type Props = { enabled: boolean; privacyReady: boolean; policyVersion: string; controller: string; rightsEmail: string };
+type Props = { enabled: boolean; testMode?: boolean; privacyReady: boolean; policyVersion: string; controller: string; rightsEmail: string };
 type Status = "idle" | "sending" | "success" | "error";
 
 // getRandomValues also works in local HTTP previews on the same Wi-Fi.
@@ -17,7 +17,7 @@ function submissionId() {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
-export function ContactForm({ enabled, privacyReady, policyVersion, controller, rightsEmail }: Props) {
+export function ContactForm({ enabled, testMode = false, privacyReady, policyVersion, controller, rightsEmail }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<ContactErrors>({});
   const [feedback, setFeedback] = useState("");
@@ -31,7 +31,7 @@ export function ContactForm({ enabled, privacyReady, policyVersion, controller, 
     const form = event.currentTarget;
     const fields = new FormData(form);
     const data = { name: fields.get("name"), email: fields.get("email"), service: fields.get("service"), message: fields.get("message"), privacy: fields.get("privacy") === "on" };
-    const validation = validateContact(data);
+    const validation = validateContact(data, testMode);
     setErrors(validation.errors);
     setFeedback("");
     if (!validation.value) {
@@ -61,7 +61,7 @@ export function ContactForm({ enabled, privacyReady, policyVersion, controller, 
       form.reset();
       attempt.current = null;
       setStatus("success");
-      setFeedback("Mensaje enviado. Gracias por contarnos tu idea.");
+      setFeedback(testMode ? "Prueba enviada. Revisa el buzón de contacto de Automatizza." : "Mensaje enviado. Gracias por contarnos tu idea.");
     } catch {
       setStatus("error");
       setFeedback("No se ha podido confirmar el envío. El texto sigue aquí para que puedas volver a intentarlo.");
@@ -73,7 +73,8 @@ export function ContactForm({ enabled, privacyReady, policyVersion, controller, 
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate aria-label="Formulario de contacto" aria-busy={isSending} aria-describedby={!enabled ? "contact-availability" : undefined}>
+    <form className={styles.form} onSubmit={handleSubmit} noValidate aria-label="Formulario de contacto" aria-busy={isSending} aria-describedby={testMode ? "contact-test-mode" : !enabled ? "contact-availability" : undefined}>
+      {testMode && <p className={styles.availability} id="contact-test-mode">Modo de prueba local: el email se envía de verdad. Usa solo datos ficticios. El formulario publicado sigue desactivado y la política está pendiente de revisión.</p>}
       <div className={styles.row}>
         <div className={styles.field}>
           <label htmlFor="contact-name">Nombre <span aria-hidden="true">*</span></label>
@@ -105,13 +106,13 @@ export function ContactForm({ enabled, privacyReady, policyVersion, controller, 
       </div>
       <div className={styles.privacy}>
         <input id="contact-privacy" name="privacy" type="checkbox" required disabled={isSending || !enabled} aria-invalid={Boolean(errors.privacy)} aria-describedby={errors.privacy ? "contact-privacy-error" : undefined} />
-        <label htmlFor="contact-privacy">He leído y acepto la <Link href="/politica-de-privacidad">política de privacidad</Link> y consiento el tratamiento de mis datos para responder a mi consulta. <span aria-hidden="true">*</span></label>
+        <label htmlFor="contact-privacy">{testMode ? "Confirmo que uso solo datos ficticios y quiero enviar una prueba técnica." : <>He leído y acepto la <Link href="/politica-de-privacidad">política de privacidad</Link> y consiento el tratamiento de mis datos para responder a mi consulta.</>} <span aria-hidden="true">*</span></label>
       </div>
       {errorFor("privacy")}
-      <div className={styles.privacySummary}>
+      {testMode ? <p className={styles.privacySummary}>Esta prueba no registra consentimiento real. <Link href="/politica-de-privacidad">Consultar el borrador de privacidad</Link>.</p> : <div className={styles.privacySummary}>
         <p><strong>Responsable:</strong> {controller || "pendiente de identificar en el borrador"}. <strong>Finalidad:</strong> atender tu consulta. <strong>Base:</strong> consentimiento o medidas precontractuales solicitadas por ti.</p>
         <p><strong>Destinatarios:</strong> proveedores de alojamiento y correo {privacyReady ? "detallados en la política" : "pendientes de validar en la política"}. <strong>Derechos:</strong> acceso, rectificación y supresión, entre otros, en <a href={`mailto:${rightsEmail}`}>{rightsEmail}</a>. No te añadiremos a listas comerciales.</p>
-      </div>
+      </div>}
       {!enabled && <p className={styles.availability} id="contact-availability">{privacyReady ? "El formulario no está disponible temporalmente. Puedes escribirnos por email." : "El envío está desactivado mientras revisamos y completamos la política de privacidad. Puedes escribirnos por email."}</p>}
       <button className={styles.submit} type="submit" disabled={!enabled || isSending}>{isSending ? "Enviando…" : "Enviar mensaje"} <span aria-hidden="true">→</span></button>
       <p className={styles.feedback} role={status === "error" ? "alert" : "status"} aria-live={status === "error" ? "assertive" : "polite"}>{feedback}</p>

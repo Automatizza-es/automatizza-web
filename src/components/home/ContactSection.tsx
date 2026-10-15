@@ -8,6 +8,7 @@ import { isPrivacyPolicyReady, privacyPolicy } from "@/content/privacy";
 import styles from "./ContactSection.module.css";
 
 export function ContactSection({ withForm = false }: { withForm?: boolean }) {
+  const contactConfig = withForm ? getContactConfig() : null;
   return (
     <div className="closing-block">
       <section className="contact-section" id="contacto" aria-labelledby="contact-title">
@@ -19,7 +20,7 @@ export function ContactSection({ withForm = false }: { withForm?: boolean }) {
               <p>No necesitas tenerlo todo definido. Cuéntanos tu idea y vemos cómo podemos ayudarte.</p>
               <Link className={styles.email} href="mailto:info@automatizza.es">info@automatizza.es</Link>
             </div>
-            <ContactForm enabled={getContactConfig().ready} privacyReady={isPrivacyPolicyReady()} policyVersion={privacyPolicy.version} controller={privacyPolicy.legalName} rightsEmail={privacyPolicy.rightsEmail} />
+            <ContactForm enabled={contactConfig?.ready ?? false} testMode={contactConfig?.testMode ?? false} privacyReady={isPrivacyPolicyReady()} policyVersion={privacyPolicy.version} controller={privacyPolicy.legalName} rightsEmail={privacyPolicy.rightsEmail} />
           </> : <>
           <p className="contact-kicker">HABLEMOS</p>
           <h2 id="contact-title">
