@@ -19,8 +19,8 @@ sus proporciones y animaciones originales.
   ilustración inicial debajo del vídeo.
 - **La Factory:** `LaFactoryVisual` y `WebHome`. La nueva grabación facilitada
   el 15/10/2026 se sirve como `videos/details/factory-app-recorrido.mp4`:
-  H.264/AAC, 804 × 1748, 30 fps y unos 13,8 segundos, con encuadre y audio
-  completos. Se elimina la galería final de las dos salas; sus archivos se
+  H.264/AAC, 804 × 1748, 30 fps y unos 11,8 segundos, tras retirar los últimos
+  2 segundos. Conserva el encuadre completo y el audio. Se elimina la galería final de las dos salas; sus archivos se
   conservan porque se utilizan en las interfaces y los metadatos existentes.
   El vídeo anterior se conserva para la tarjeta de la galería de proyectos.
 - Los posters de `projects/details` son fotogramas de estas grabaciones.
