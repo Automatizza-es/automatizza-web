@@ -31,21 +31,17 @@
 .recordingSurface { display: flex; justify-content: center; align-items: center; padding: 2.75rem; background: var(--project-surface); border-radius: 6px; }
 .recording video { display: block; max-width: 100%; background: #fff; border-radius: 6px; box-shadow: 0 18px 40px -25px rgba(20, 25, 40, .28); }
 .wideRecording video { width: 100%; aspect-ratio: 1280 / 758; }
-.phoneRecording video { width: 230px; max-height: 490px; }
+.phoneRecording video { width: min(100%, 300px); height: auto; max-height: none; aspect-ratio: auto 201 / 437; object-fit: contain; }
 .operationStory { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); grid-template-rows: 1fr 1fr; gap: 2.5rem 4rem; margin-top: 3.5rem; }
 .operationStory > article { grid-column: 1; }
 .operationStory > article:first-child { align-self: end; }
 .operationStory > .recording { grid-column: 2; grid-row: 1 / span 2; }
 .apcRecording .recordingSurface { padding: 2rem; }
-.apcRecording video { width: min(100%, 300px); height: auto; max-height: none; aspect-ratio: 201 / 437; object-fit: contain; }
 .dashboard { position: relative; container-type: inline-size; aspect-ratio: 16 / 12; border: 1px solid #e5e7e9; border-radius: 6px; overflow: hidden; background: #f5f5f5; }
 .dashboard :global(.ss-app) { font-size: calc(100cqw / 62); font-family: var(--font-catamaran), sans-serif; }
 .dashboard :global(.ss-nav), .dashboard :global(.ss-user) { font-size: 1.15em; }
 .factoryWeb { position: relative; container-type: inline-size; overflow: hidden; aspect-ratio: 100 / 61.6; border: 1px solid #e8e2d8; border-radius: 6px; background: #f5f1e9; }
 .factoryWeb :global(.lf-web) { font-size: calc(100cqw / 100); }
-.rooms { margin: 4rem 0 0; }
-.rooms > div { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-.rooms img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; }
 .contact { margin-top: 5.5rem; padding-block: 4.5rem; border-top: 1px solid #e4e6e9; scroll-margin-top: 90px; }
 .contact .eyebrow { margin-top: 0; }
 .contact h2 { max-width: 670px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.15; text-wrap: balance; }
@@ -143,12 +139,11 @@
   .contact { margin-top: 3.5rem; padding-block: 3.5rem; }
   .otherProjects > div { gap: 2rem; }
   .otherProjects a { font-size: 1.15rem; }
-  .rooms { margin-top: 3rem; }
 }
 @media (max-width: 480px) {
   .eyebrow { font-size: .625rem; }
   .eyebrow span { padding-inline: .2rem; }
-  .otherProjects > div, .rooms > div { grid-template-columns: 1fr; gap: 1.5rem; }
+  .otherProjects > div { grid-template-columns: 1fr; gap: 1.5rem; }
   .footer { flex-direction: column; gap: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) {

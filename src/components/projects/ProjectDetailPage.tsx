@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 
@@ -112,15 +111,6 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
                 <FeatureVisual project={project} index={index} />
               </article>
             ))}
-            {project.slug === "la-factory-coworking" && (
-              <figure className={styles.rooms}>
-                <div>
-                  <Image src="/projects/la-factory/meeting-room.jpg" alt="La Meeting Room de La Factory Coworking" width={800} height={600} sizes="(max-width: 600px) 90vw, 45vw" />
-                  <Image src="/projects/la-factory/territori-creatiu.jpg" alt="Sala Territori Creatiu de La Factory Coworking" width={800} height={600} sizes="(max-width: 600px) 90vw, 45vw" />
-                </div>
-                <figcaption>La Meeting Room y Territori Creatiu. Espacios reales, una experiencia digital común.</figcaption>
-              </figure>
-            )}
           </section>
 
           <section className={styles.contact} id="contacto" aria-labelledby="detail-contact-title">

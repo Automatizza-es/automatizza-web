@@ -17,8 +17,12 @@ sus proporciones y animaciones originales.
   El poster procede de esa misma grabación. Los dos textos acompañan a una única
   demo en escritorio; en móvil, el vídeo va entre ambos textos. No se repite la
   ilustración inicial debajo del vídeo.
-- **La Factory:** `LaFactoryVisual`, `WebHome`, la grabación original y las
-  fotografías existentes de La Meeting Room y Territori Creatiu.
+- **La Factory:** `LaFactoryVisual` y `WebHome`. La nueva grabación facilitada
+  el 15/10/2026 se sirve como `videos/details/factory-app-recorrido.mp4`:
+  H.264/AAC, 804 × 1748, 30 fps y unos 13,8 segundos, con encuadre y audio
+  completos. Se elimina la galería final de las dos salas; sus archivos se
+  conservan porque se utilizan en las interfaces y los metadatos existentes.
+  El vídeo anterior se conserva para la tarjeta de la galería de proyectos.
 - Los posters de `projects/details` son fotogramas de estas grabaciones.
 
 Los vídeos se reproducen bajo demanda con controles nativos. Los visuales
