@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 
 // Extract the original logo's zz; do not recreate it from text or new paths.
@@ -13,12 +13,11 @@ for (let index = 0; index < data.length; index += 4) {
   data[index + 2] = 252;
 }
 const symbol = await sharp(data, { raw: info }).png().toBuffer();
-const navy = "#02135F";
 
 async function icon(size, padding) {
   const mark = await sharp(symbol).resize({ width: size - padding * 2 }).png().toBuffer();
   const { width, height } = await sharp(mark).metadata();
-  return sharp({ create: { width: size, height: size, channels: 4, background: navy } })
+  return sharp({ create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
     .composite([{ input: mark, left: Math.floor((size - width) / 2), top: Math.floor((size - height) / 2) }])
     .png().toBuffer();
 }
@@ -47,6 +46,6 @@ await writeFile("src/app/icon2.png", faviconFrames[1]);
 await writeFile("src/app/apple-icon.png", await icon(180, 24));
 await writeFile("public/icons/icon-192.png", await icon(192, 25));
 await writeFile("public/icons/icon-512.png", await icon(512, 66));
-// Keep the entire mark inside the central 80% diameter safe circle.
-await writeFile("public/icons/icon-maskable-512.png", await icon(512, 104));
+// A maskable icon needs an opaque background; keep only transparent any icons.
+await rm("public/icons/icon-maskable-512.png", { force: true });
 console.log("Brand icons generated from the original logo.");
