@@ -15,16 +15,16 @@ export function ServicesSection() {
       <Container className="editorial-container">
         <SectionHeading
           id="services-title"
-          eyebrow="QUÉ HACEMOS"
+          eyebrow="QUÉ PODEMOS HACER POR TI"
           title="De la idea a la solución."
-          description="Desde pequeñas automatizaciones hasta aplicaciones completas. Tecnología diseñada para la forma de trabajar de tu empresa."
+          description="Automatización, software a medida, IA y desarrollo web para acompañar la forma real de trabajar de tu empresa."
         />
 
         <ol className={styles.services}>
           {services.map((service) => (
-            <li className={styles.service} key={service.number}>
+            <li className={styles.service} key={service.number} data-reveal>
               <span className={styles.number}>{service.number}</span>
-              <h3>{service.title}</h3>
+              <h3><span>{service.title}</span><span className={styles.arrow} aria-hidden="true">→</span></h3>
               <p>{service.text}</p>
             </li>
           ))}
