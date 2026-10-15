@@ -12,13 +12,11 @@ const visuals: Partial<Record<string, ReactNode>> = {
   "la-factory-coworking": <LaFactoryVisual />,
 };
 
-// Home-only project cards: three equal cards, a large visual on top and the
-// name + a short line underneath. Each .showcase-stage holds that project's
-// visual from `visuals` (scoped per project as .showcase-visual-<slug>);
-// projects without one yet keep an empty slot.
+// Native horizontal scrolling keeps the same card proportions as the project
+// collection grows. The focusable list also supports keyboard scrolling.
 export function ProjectShowcase() {
   return (
-    <ul className="showcase-grid" aria-label="Proyectos destacados">
+    <ul className="showcase-grid" aria-label="Proyectos destacados" tabIndex={0}>
       {projects.map((project) => {
         const href = `/proyectos/${project.slug}`;
         return (

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { Container } from "@/components/layout/Container";
 import { ProjectShowcase } from "@/components/projects/ProjectShowcase";
 import { SectionHeading } from "./SectionHeading";
@@ -17,12 +15,6 @@ export function ProjectsSection() {
         />
 
         <ProjectShowcase />
-
-        <div className="projects-all-link" data-reveal>
-          <Link href="/proyectos">
-            Ver todos los proyectos <span aria-hidden="true">→</span>
-          </Link>
-        </div>
       </Container>
     </section>
   );
