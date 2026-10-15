@@ -12,8 +12,13 @@
   información legal del formulario, sin modificar la identidad comercial.
   Su procedencia es la confirmación de la titular; no una consulta independiente
   del Registro Mercantil. El resto de la política continúa pendiente de revisión.
-- No hay credenciales de Resend ni un dominio verificado comprobable en este
-  entorno. No se han realizado envíos reales ni cambios de DNS o producción.
+- Credenciales configuradas en `.env.local`, excluido de Git. Consulta real a
+  Resend el 15/10/2026: `automatizza.es` está `verified`, con envío `enabled`,
+  DKIM/SPF verificados y región `eu-west-1`. Seguimiento de aperturas y clics
+  desactivado. El dominio coincide con el remitente configurado.
+  Remitente y destinatario: info@automatizza.es. No se han realizado envíos
+  reales ni cambios de DNS o producción. La API local sigue devolviendo 503
+  mientras la política esté pendiente.
 - **El envío permanece desactivado en el cliente y en la API.** Poner una API key
   o cambiar solo una variable de entorno no elude la revisión de la política.
 
