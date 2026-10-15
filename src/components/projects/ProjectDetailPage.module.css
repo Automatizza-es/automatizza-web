@@ -75,7 +75,8 @@
 .visual :global(.ss-scene.is-armed:not(.is-playing) .ss-float), .visual :global(.ss-scene.is-armed:not(.is-playing) .fx-in) { opacity: 1; translate: none; scale: 1; filter: none; }
 .visual :global(.ss-scene.is-armed:not(.is-playing) .fx-grow) { transform: none; }
 .visual :global(.ss-scene .ss-laptop), .visual :global(.ss-scene .ss-float), .visual :global(.ss-scene .fx-in), .visual :global(.ss-scene .fx-grow) { transition: none; }
-.apc .heroStage { height: clamp(500px, 50vw, 640px); }
+/* Match the frame to the scene's scale so the complete route stays inside it. */
+.apc .heroStage { height: auto; aspect-ratio: 72 / 44; }
 .visual :global(.apc-phone) { top: 1.4em; font-size: .86em; }
 .visual :global(.apc-route) { top: 37.4em; left: 13em; right: 13em; }
 .visual :global(.apc-scene.is-armed:not(.is-playing) .apc-phone) { opacity: 1; transform: none; }
@@ -112,7 +113,7 @@
   .tags { margin-top: 1.25rem; padding-top: 1rem; }
   .heroFigure { margin-top: 2.25rem; }
   .heroStage { height: auto; aspect-ratio: 40.8 / 44; }
-  .apc .heroStage { height: auto; }
+  .apc .heroStage { height: auto; aspect-ratio: 40.8 / 44; }
   .visual :global(.ss-scene), .visual :global(.apc-scene), .visual :global(.lf-scene) { font-size: calc(100cqw / 40.8); }
   .visual :global(.ss-laptop) { top: 12.6em; width: 31em; margin-left: -15.5em; }
   .visual :global(.ss-app) { font-size: .5em; }
