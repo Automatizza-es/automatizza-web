@@ -1,5 +1,4 @@
 .section { padding-block: clamp(6rem, 8vw, 8rem); background: #fff; }
-.container { max-width: 1120px; }
 .stageTrack { margin-top: 3rem; }
 .stage { display: grid; grid-template-columns: 235px minmax(0, 1fr); gap: clamp(3rem, 7vw, 6rem); align-items: center; }
 .viewportProbe { position: fixed; top: 0; left: 0; width: 0; height: 100svh; visibility: hidden; pointer-events: none; }

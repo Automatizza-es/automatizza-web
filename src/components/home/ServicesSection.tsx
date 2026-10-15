@@ -12,7 +12,7 @@ const services = [
 export function ServicesSection() {
   return (
     <section className={`whatwedo-section ${styles.section}`} id="servicios" aria-labelledby="services-title">
-      <Container className={styles.container}>
+      <Container className="editorial-container">
         <SectionHeading
           id="services-title"
           eyebrow="QUÉ HACEMOS"

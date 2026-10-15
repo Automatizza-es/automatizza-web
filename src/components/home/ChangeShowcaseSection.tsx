@@ -564,7 +564,7 @@ export function ChangeShowcaseSection() {
   return (
     <section className={styles.section} id="automatizacion-en-accion" aria-labelledby="change-title" data-scroll={scrollEnabled} data-mobile-layout={mobileLayout} data-mobile-compact={mobile && mobileSceneHeight < 450}>
       <div className={styles.viewportProbe} ref={viewportProbeRef} aria-hidden="true" />
-      <Container className={styles.container}>
+      <Container className="editorial-container">
         <div className={styles.track} ref={trackRef}>
           <div className={styles.composition} ref={compositionRef}>
             <SectionHeading

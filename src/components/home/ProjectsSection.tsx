@@ -5,7 +5,7 @@ import { SectionHeading } from "./SectionHeading";
 export function ProjectsSection() {
   return (
     <section className="projects-section projects-home" id="proyectos" aria-labelledby="projects-title">
-      <Container>
+      <Container className="editorial-container">
         <SectionHeading
           id="projects-title"
           eyebrow="PROYECTOS REALES"

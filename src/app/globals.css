@@ -11,6 +11,8 @@
   --font-display: var(--font-space-grotesk);
   --container-width: 1280px;
   --page-gutter: clamp(1.25rem, 3.5vw, 2.5rem);
+  --editorial-width: 1200px;
+  --editorial-gutter: calc(var(--page-gutter) - .25rem);
 }
 
 * { box-sizing: border-box; }
@@ -20,6 +22,7 @@ body { overflow-x: hidden; background: var(--color-white); color: var(--color-da
 a { color: inherit; text-decoration: none; }
 
 .container { width: min(100% - (2 * var(--page-gutter)), var(--container-width)); margin-inline: auto; }
+.container.editorial-container { width: min(100% - (2 * var(--editorial-gutter)), var(--editorial-width)); }
 .site-header { position: sticky; z-index: 20; top: 0; height: 72px; border-bottom: 1px solid #e8eaf0; background: rgba(255, 255, 255, 0.96); }
 .header-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; height: 100%; }
 .brand { display: flex; width: 166px; }
@@ -868,8 +871,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Projects (home) — a horizontal collection with equal visual proportions. */
-.projects-home > .container { max-width: 1120px; }
-.showcase-grid { display: grid; grid-auto-columns: clamp(320px, 36vw, 408px); grid-auto-flow: column; gap: clamp(1.25rem, 2vw, 1.75rem); margin: 3.5rem 0 0; padding: 0 0 .875rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: #bfc5cc #f1f3f5; list-style: none; }
+.showcase-grid { --showcase-gap: clamp(1.25rem, 2vw, 1.75rem); --showcase-peek: clamp(20px, 2vw, 28px); display: grid; grid-auto-columns: calc((100% - 2 * var(--showcase-gap) + var(--showcase-peek)) / 3); grid-auto-flow: column; gap: var(--showcase-gap); margin: 3.5rem 0 0; padding: 0 0 .875rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: #bfc5cc #f1f3f5; list-style: none; }
 .showcase-grid::-webkit-scrollbar { height: 5px; }
 .showcase-grid::-webkit-scrollbar-track { background: #f1f3f5; }
 .showcase-grid::-webkit-scrollbar-thumb { border-radius: 999px; background: #bfc5cc; }

@@ -27,7 +27,7 @@ const steps = [
 export function ProcessSection() {
   return (
     <section className="process-section" id="forma-de-trabajar" aria-labelledby="process-title">
-      <Container>
+      <Container className="editorial-container">
         <SectionHeading
           id="process-title"
           eyebrow="FORMA DE TRABAJAR"

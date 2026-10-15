@@ -1,5 +1,4 @@
 .section:global(.whatwedo-section) { padding-block: clamp(6rem, 8vw, 8rem); background: #fff; }
-.container { max-width: 1120px; }
 .services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(3rem, 6vw, 6rem); row-gap: 2.5rem; margin: 3.5rem 0 0; padding: 0; list-style: none; }
 .service { min-width: 0; padding: 1.6rem 0 1.75rem; border-top: 1px solid #e1e4e8; }
 .number { display: block; margin-bottom: 1.4rem; color: #8b9098; font-family: var(--font-sans), sans-serif; font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
