@@ -49,7 +49,7 @@ export function SavingsCalculator() {
     employees: 3,
     hours: 2,
     days: 22,
-    automation: 80,
+    automation: 30,
   });
   const [rate, setRate] = useState("25");
 
