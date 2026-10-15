@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 
 import { Header } from "@/components/layout/Header";
 import { Container } from "@/components/layout/Container";
@@ -17,7 +18,7 @@ function ProjectVisual({ slug }: { slug: ProjectDetail["slug"] }) {
 
 function Recording({ project }: { project: ProjectDetail }) {
   return (
-    <figure className={`${styles.recording} ${project.slug === "silos-spain" ? styles.wideRecording : styles.phoneRecording}`}>
+    <figure className={`${styles.recording} ${project.slug === "silos-spain" ? styles.wideRecording : styles.phoneRecording}${project.slug === "apc" ? ` ${styles.apcRecording}` : ""}`}>
       <div className={styles.recordingSurface}>
         <video controls playsInline preload="none" poster={project.poster} aria-label={`Ver el recorrido de ${project.client}`}>
           <source src={project.video} type="video/mp4" />
@@ -40,16 +41,7 @@ function FeatureVisual({ project, index }: { project: ProjectDetail; index: numb
       </figure>
     ) : <Recording project={project} />;
   }
-  if (project.slug === "apc") {
-    return index === 0 ? <Recording project={project} /> : (
-      <figure className={styles.operationFigure}>
-        <div className={`${styles.operationStage} ${styles.visual}`} role="img" aria-label="Vista del conductor y recorrido de una recogida hacia APC Europe, con datos ficticios">
-          <ApcVisual />
-        </div>
-        <figcaption>La ruta y su recogida · Representación con datos ficticios</figcaption>
-      </figure>
-    );
-  }
+  if (project.slug === "apc") return null;
   return index === 0 ? <Recording project={project} /> : (
     <figure className={styles.factoryWebFigure}>
       <div className={styles.factoryWeb} role="img" aria-label="Espacio personal de La Factory: salas, próximas reservas y tarifa">
@@ -97,7 +89,20 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
               <p className={styles.eyebrow}>El proyecto por dentro</p>
               <h2 id="inside-title">La tecnología, en su contexto.</h2>
             </div>
-            {project.features.map((feature, index) => (
+            {project.slug === "apc" ? (
+              <div className={styles.operationStory}>
+                {project.features.map((feature, index) => (
+                  <Fragment key={feature.label}>
+                    <article className={styles.featureCopy}>
+                      <p className={styles.sectionLabel}>{feature.label}</p>
+                      <h3>{feature.title}</h3>
+                      <p>{feature.text}</p>
+                    </article>
+                    {index === 0 && <Recording project={project} />}
+                  </Fragment>
+                ))}
+              </div>
+            ) : project.features.map((feature, index) => (
               <article className={`${styles.feature} ${index % 2 ? styles.reverse : ""}`} key={feature.label}>
                 <div className={styles.featureCopy}>
                   <p className={styles.sectionLabel}>{feature.label}</p>

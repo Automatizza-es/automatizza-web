@@ -9,10 +9,14 @@ sus proporciones y animaciones originales.
 - **Silos Spain:** `SilosSpainVisual`, `CrmDashboard` y el logo existente.
   `videos/details/silos-crm.mp4` es la grabación original recortada 56 px por arriba
   para excluir la identidad de la sesión. No se ha recreado la interfaz.
-- **APC:** `ApcVisual` y la imagen `projects/apc/hero.jpg`.
-  `videos/details/apc-recogida.mp4` es el fragmento de 4,2 a 5,5 segundos de la
-  grabación original, recortado a la zona del formulario (384 × 532, y = 230).
-  Excluye el nombre del conductor, la matrícula y la lista de proveedores.
+- **APC:** `ApcVisual` se utiliza una sola vez, en la cabecera, y la imagen
+  `projects/apc/hero.jpg` se conserva para Open Graph. El vídeo nuevo facilitado
+  por la titular el 15/10/2026 sustituye al fragmento anterior:
+  `videos/details/apc-app-recorrido.mp4`, H.264/AAC, 804 × 1748, 30 fps y unos
+  16,4 segundos. Mantiene el encuadre y la duración completos, incluido el audio.
+  El poster procede de esa misma grabación. Los dos textos acompañan a una única
+  demo en escritorio; en móvil, el vídeo va entre ambos textos. No se repite la
+  ilustración inicial debajo del vídeo.
 - **La Factory:** `LaFactoryVisual`, `WebHome`, la grabación original y las
   fotografías existentes de La Meeting Room y Territori Creatiu.
 - Los posters de `projects/details` son fotogramas de estas grabaciones.
@@ -25,7 +29,7 @@ en las páginas de detalle. Se respeta `prefers-reduced-motion`.
 
 Las representaciones de interfaces usan datos ficticios y se identifican como
 demostraciones. Las cifras de las grabaciones no se presentan como resultados.
-APC distingue la versión Glide de la nueva aplicación propia en desarrollo.
+La grabación de APC se identifica como recorrido del registro de una recogida.
 Silos describe una integración modular progresiva. La Factory diferencia las
 reservas de partida de las futuras integraciones y de las propuestas de interfaz
 para eventos, paquetes e incidencias.

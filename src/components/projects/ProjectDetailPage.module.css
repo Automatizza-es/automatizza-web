@@ -16,7 +16,7 @@
 .page figcaption { margin-top: 1rem; color: #8a8f98; font-size: .6875rem; line-height: 1.6; }
 .context { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 6rem; padding-block: 5.5rem; margin-top: 2rem; border-bottom: 1px solid #e4e6e9; }
 .sectionLabel { margin: 0 0 1.25rem; color: #6d7580; font-size: .875rem; font-weight: 500; line-height: 1.5; }
-.context h2, .feature h3 { margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; text-wrap: balance; }
+.context h2, .feature h3, .operationStory h3 { margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; text-wrap: balance; }
 .context div > p:last-child, .featureCopy > p:last-child { margin: 1.3rem 0 0; color: #6d7580; font-size: .9375rem; line-height: 1.75; }
 .context .status { grid-column: 1 / -1; max-width: 830px; margin: .5rem 0 0; color: #8a8f98; font-size: .75rem; line-height: 1.75; }
 .inside { padding-block: 4.5rem 0; }
@@ -27,18 +27,20 @@
 .feature.reverse { grid-template-columns: 1.5fr .75fr; }
 .reverse .featureCopy { grid-column: 2; grid-row: 1; }
 .reverse > figure { grid-column: 1; grid-row: 1; }
-.recording, .dashboardFigure, .operationFigure, .factoryWebFigure { min-width: 0; margin: 0; }
+.recording, .dashboardFigure, .factoryWebFigure { min-width: 0; margin: 0; }
 .recordingSurface { display: flex; justify-content: center; align-items: center; padding: 2.75rem; background: var(--project-surface); border-radius: 6px; }
 .recording video { display: block; max-width: 100%; background: #fff; border-radius: 6px; box-shadow: 0 18px 40px -25px rgba(20, 25, 40, .28); }
 .wideRecording video { width: 100%; aspect-ratio: 1280 / 758; }
 .phoneRecording video { width: 230px; max-height: 490px; }
+.operationStory { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); grid-template-rows: 1fr 1fr; gap: 2.5rem 4rem; margin-top: 3.5rem; }
+.operationStory > article { grid-column: 1; }
+.operationStory > article:first-child { align-self: end; }
+.operationStory > .recording { grid-column: 2; grid-row: 1 / span 2; }
+.apcRecording .recordingSurface { padding: 2rem; }
+.apcRecording video { width: min(100%, 300px); height: auto; max-height: none; aspect-ratio: 201 / 437; object-fit: contain; }
 .dashboard { position: relative; container-type: inline-size; aspect-ratio: 16 / 12; border: 1px solid #e5e7e9; border-radius: 6px; overflow: hidden; background: #f5f5f5; }
 .dashboard :global(.ss-app) { font-size: calc(100cqw / 62); font-family: var(--font-catamaran), sans-serif; }
 .dashboard :global(.ss-nav), .dashboard :global(.ss-user) { font-size: 1.15em; }
-.operationStage { position: relative; container-type: inline-size; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 6px; }
-.operationStage.visual :global(.apc-scene) { font-size: calc(100cqw / 48); }
-.operationStage.visual :global(.apc-phone) { top: 1.4em; font-size: .72em; }
-.operationStage.visual :global(.apc-route) { top: 30em; left: 3.2em; right: 3.2em; }
 .factoryWeb { position: relative; container-type: inline-size; overflow: hidden; aspect-ratio: 100 / 61.6; border: 1px solid #e8e2d8; border-radius: 6px; background: #f5f1e9; }
 .factoryWeb :global(.lf-web) { font-size: calc(100cqw / 100); }
 .rooms { margin: 4rem 0 0; }
@@ -102,6 +104,7 @@
   .heroCopy h1 { font-size: 2.75rem; }
   .context { gap: 3rem; }
   .feature { gap: 2rem; }
+  .operationStory { column-gap: 2rem; }
 }
 @media (max-width: 760px) {
   .hero { padding-top: 2rem; }
@@ -132,6 +135,9 @@
   .feature + .feature { margin-top: 3.5rem; }
   .reverse .featureCopy, .reverse > figure { grid-column: auto; grid-row: auto; }
   .featureCopy { max-width: 510px; }
+  .operationStory { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; gap: 2rem; margin-top: 2.5rem; }
+  .operationStory > article, .operationStory > .recording { grid-column: auto; grid-row: auto; }
+  .apcRecording .recordingSurface { padding: 1rem; }
   .recordingSurface { padding: 2rem; }
   .wideRecording .recordingSurface { padding: 1rem; }
   .contact { margin-top: 3.5rem; padding-block: 3.5rem; }
