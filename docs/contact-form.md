@@ -6,9 +6,12 @@
   fondo azul marino, texto y footer. El listado de proyectos conserva su contacto.
 - `/politica-de-privacidad` existe y está enlazada desde la casilla y el footer.
   Es un **borrador sin indexación**, no una política definitiva.
-- No se han podido verificar razón social, NIF o domicilio en el repositorio o
-  su historial legal. No se han identificado por asociación con otras empresas
-  de nombre similar. Los datos quedan explícitamente pendientes.
+- La titular ha facilitado directamente el 15/10/2026 los datos de Grain Store
+  Technology, S.L. (NIF B56885676), Calle Párroco Bartolomé Blanco, 46, 14014
+  Córdoba, España, e info@automatizza.es. Se incorporan a la política y a la
+  información legal del formulario, sin modificar la identidad comercial.
+  Su procedencia es la confirmación de la titular; no una consulta independiente
+  del Registro Mercantil. El resto de la política continúa pendiente de revisión.
 - No hay credenciales de Resend ni un dominio verificado comprobable en este
   entorno. No se han realizado envíos reales ni cambios de DNS o producción.
 - **El envío permanece desactivado en el cliente y en la API.** Poner una API key
@@ -64,11 +67,14 @@ Fuentes: [dominios verificados](https://resend.com/docs/dashboard/domains/introd
 
 ## Revisión legal necesaria para activar
 
+Inventario de datos y decisiones pendientes, incluido aviso legal y cookies:
+[legal-readiness.md](legal-readiness.md).
+
 El borrador se basa en el RGPD, la LOPDGDD y la LSSI, y distingue consentimiento,
 medidas precontractuales y seguridad. No asegura cumplimiento definitivo.
 
-Completar y validar `src/content/privacy.ts`: sociedad, NIF, domicilio, canal de
-derechos, necesidad/contacto de DPD, conservación, entidades proveedoras,
+Completar y validar `src/content/privacy.ts`: canal de derechos,
+necesidad/contacto de DPD, conservación, entidades proveedoras,
 contratos, países y garantías de transferencias. Revisar también la ponderación
 antispam, registros, cookies y analítica de la web y del alojamiento definitivos.
 Actualizar el texto de la página, su versión y la primera capa del formulario

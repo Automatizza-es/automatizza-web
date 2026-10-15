@@ -1,5 +1,6 @@
 // Complete and review these facts before enabling contact submissions.
-// No company identity has been verified in the repository or its legal history.
+// Company identity supplied directly by the owner on 2026-10-15.
+// This records its provenance, not an independent registry verification.
 export const privacyPolicy: {
   reviewed: boolean;
   version: string;
@@ -13,10 +14,10 @@ export const privacyPolicy: {
   dpo: string;
 } = {
   reviewed: false,
-  version: "2026-10-15-borrador",
-  legalName: "",
-  taxId: "",
-  address: "",
+  version: "2026-10-15-borrador-2",
+  legalName: "Grain Store Technology, S.L.",
+  taxId: "B56885676",
+  address: "Calle Párroco Bartolomé Blanco, 46, 14014 Córdoba, España.",
   rightsEmail: "info@automatizza.es",
   retention: "",
   processors: "",

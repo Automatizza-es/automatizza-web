@@ -26,13 +26,13 @@ export default function PrivacyPage() {
           <Link className={styles.back} href="/#contacto">← Volver al contacto</Link>
           <p className={styles.eyebrow}>INFORMACIÓN LEGAL</p>
           <h1>Política de privacidad</h1>
-          {!ready && <div className={styles.draft} role="note"><strong>Borrador pendiente de revisión</strong><p>El formulario permanece desactivado. Esta versión no es una política definitiva: faltan los datos de la sociedad responsable y las validaciones señaladas.</p></div>}
+          {!ready && <div className={styles.draft} role="note"><strong>Borrador pendiente de revisión</strong><p>El formulario permanece desactivado. Los datos de la sociedad ya están incorporados; quedan pendientes las validaciones sobre conservación, proveedores y las demás cuestiones señaladas.</p></div>}
           <p className={styles.intro}>Información sobre el tratamiento previsto de los datos que nos facilites para hablar sobre automatización, software a medida, inteligencia artificial o desarrollo web.</p>
           <p className={styles.version}>Versión del borrador: 15 de octubre de 2026 · {privacyPolicy.version}</p>
 
           <section aria-labelledby="privacy-controller">
             <h2 id="privacy-controller">01. Quién es responsable de tus datos</h2>
-            <p>Automatizza es la marca comercial. La sociedad responsable debe identificarse con sus datos verificados antes de activar el formulario.</p>
+            <p>Automatizza es la marca comercial de <strong>{privacyPolicy.legalName}</strong>, sociedad titular de este sitio web y responsable del tratamiento de los datos personales.</p>
             <dl className={styles.facts}>
               <div><dt>Razón social</dt><dd><Pending value={privacyPolicy.legalName} label="denominación de la sociedad responsable" /></dd></div>
               <div><dt>NIF</dt><dd><Pending value={privacyPolicy.taxId} label="NIF de la sociedad" /></dd></div>
