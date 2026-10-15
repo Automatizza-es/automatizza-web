@@ -33,7 +33,6 @@ export const projectDetails = [
       { label: "01 / Desde el móvil", title: "Registrar una recogida, desde donde sucede.", text: "Compartimentos, kilos y datos de calidad se reúnen en un registro pensado para el conductor. Una interfaz centrada en la tarea, en el lugar de trabajo." },
       { label: "02 / Visión operativa", title: "Del registro al conjunto del viaje.", text: "Recogidas, descargas y documentación forman parte de una misma operación. La nueva aplicación propia busca reunir esa información para facilitar su consulta y seguimiento." },
     ],
-    status: "El proyecto parte de una versión anterior en Glide. La nueva aplicación propia está en desarrollo; todavía no se presenta como operativa ni publicada.",
     video: "/videos/details/apc-recogida.mp4",
     poster: "/projects/details/apc-recogida.jpg",
     videoCaption: "Detalle del registro de recogida en la versión anterior de Glide.",
