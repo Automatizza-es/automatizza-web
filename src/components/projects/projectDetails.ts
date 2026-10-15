@@ -25,7 +25,7 @@ export const projectDetails = [
     category: "Aplicación de operaciones",
     title: "Cada recogida registrada. Cada viaje bajo control.",
     introduction: "Una aplicación web diseñada para simplificar el trabajo de los conductores y centralizar la información de las operaciones de transporte y recogida de materia prima.",
-    tags: ["Aplicación web", "Logística", "Experiencia móvil", "En desarrollo"],
+    tags: ["Aplicación web", "Logística", "Experiencia móvil"],
     challenge: "Organizar los datos generados durante los viajes, las recogidas y las descargas, facilitando su registro y consulta.",
     solution: "Digitalización de viajes, recogidas, descargas, documentación y controles operativos desde una aplicación adaptada al móvil.",
     focus: "Diseñada para quien está en ruta.",
