@@ -1,0 +1,27 @@
+.form { display: grid; gap: 1.5rem; width: 100%; min-width: 0; color: #fff; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.field { display: grid; align-content: start; gap: .6rem; min-width: 0; }
+.field label { font-size: .8125rem; font-weight: 450; line-height: 1.5; }
+.field label > span { color: #adb7d1; }
+.field input, .field select, .field textarea { display: block; width: 100%; min-width: 0; min-height: 48px; margin: 0; border: 1px solid rgba(255, 255, 255, .25); border-radius: 4px; padding: .8rem .9rem; background: rgba(255, 255, 255, .035); color: #fff; font: inherit; font-size: 1rem; line-height: 1.5; }
+.field select { color-scheme: dark; }
+.field option { background: #010d46; color: #fff; }
+.field textarea { resize: vertical; min-height: 132px; }
+.field :is(input, select, textarea):focus-visible, .privacy input:focus-visible, .form a:focus-visible, .submit:focus-visible { outline: 2px solid #8cd7ff; outline-offset: 4px; }
+.field [aria-invalid="true"] { border-color: #f0c9b9; }
+.fieldError { color: #f0c9b9; font-size: .75rem; line-height: 1.5; }
+.honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; pointer-events: none; }
+.privacy { display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: start; gap: .75rem; }
+.privacy input { width: 18px; height: 18px; margin: .15rem 0 0; accent-color: #a5d8f4; }
+.privacy label { color: #d9deea; font-size: .75rem; line-height: 1.65; }
+.privacy a, .privacySummary a { text-decoration: underline; text-underline-offset: 3px; }
+.privacySummary { color: #b6bfd4; font-size: .6875rem; line-height: 1.7; }
+.privacySummary p { margin: 0; }
+.privacySummary p + p { margin-top: .5rem; }
+.privacySummary strong { font-weight: 550; }
+.availability { margin: 0; border-left: 1px solid #66759d; padding-left: .85rem; color: #c4cada; font-size: .75rem; line-height: 1.65; }
+.submit { display: inline-flex; justify-content: space-between; align-items: center; gap: 2rem; justify-self: start; min-height: 50px; border: 1px solid transparent; border-radius: 3px; padding: .85rem 1.25rem; background: #fff; color: #02135f; font: inherit; font-size: .875rem; font-weight: 600; cursor: pointer; }
+.submit:disabled { background: #d6dbea; color: #4a5573; cursor: not-allowed; }
+.feedback { min-height: 1.5em; margin: -.5rem 0 0; color: #d9deea; font-size: .8125rem; line-height: 1.6; }
+.feedback[role="alert"] { color: #f0c9b9; }
+@media (max-width: 480px) { .row { grid-template-columns: 1fr; } .submit { justify-self: stretch; } }

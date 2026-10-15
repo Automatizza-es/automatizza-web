@@ -23,7 +23,7 @@ export default function Home() {
         <CalculatorSection />
         <AboutSection />
       </main>
-      <ContactSection />
+      <ContactSection withForm />
     </>
   );
 }

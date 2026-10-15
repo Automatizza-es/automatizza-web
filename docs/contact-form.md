@@ -1,0 +1,127 @@
+# Formulario de contacto y borrador de privacidad
+
+## Estado actual
+
+- Formulario integrado únicamente en el contacto de la home, conservando su
+  fondo azul marino, texto y footer. El listado de proyectos conserva su contacto.
+- `/politica-de-privacidad` existe y está enlazada desde la casilla y el footer.
+  Es un **borrador sin indexación**, no una política definitiva.
+- No se han podido verificar razón social, NIF o domicilio en el repositorio o
+  su historial legal. No se han identificado por asociación con otras empresas
+  de nombre similar. Los datos quedan explícitamente pendientes.
+- No hay credenciales de Resend ni un dominio verificado comprobable en este
+  entorno. No se han realizado envíos reales ni cambios de DNS o producción.
+- **El envío permanece desactivado en el cliente y en la API.** Poner una API key
+  o cambiar solo una variable de entorno no elude la revisión de la política.
+
+## Variables privadas del servidor
+
+Crear `.env.local` a partir de `.env.example` cuando se disponga de la configuración;
+en un despliegue futuro, configurar los mismos valores en su entorno privado.
+No usar prefijos `NEXT_PUBLIC_`, no subir credenciales al repositorio y no
+introducirlas en el formulario o en mensajes de revisión.
+
+| Variable | Uso |
+| --- | --- |
+| `CONTACT_FORM_ENABLED` | Interruptor explícito. Actualmente `false`. |
+| `RESEND_API_KEY` | Credencial para enviar email mediante Resend. |
+| `RESEND_VERIFY_API_KEY` | Opcional: credencial separada con permiso de lectura del dominio. Si falta, se usa la anterior y debe tener ese permiso. |
+| `RESEND_DOMAIN_ID` | UUID del dominio/subdominio realmente verificado en la cuenta. |
+| `RESEND_FROM_EMAIL` | Remitente, solo dirección sin nombre visible, perteneciente exactamente a ese dominio. No hay remitente de pruebas de respaldo. |
+| `CONTACT_TO_EMAIL` | Buzón receptor: `info@automatizza.es`. Solo se utiliza en servidor. |
+| `CONTACT_ALLOWED_ORIGINS` | Orígenes exactos separados por comas, sin rutas ni comodines. Obligatorio en producción. Incluir únicamente el dominio y las previews propias que vayan a utilizar el formulario. |
+| `CONTACT_TRUST_PROXY` | Mantener `false` salvo que un proxy de confianza reescriba `X-Forwarded-For` y bloquee el acceso directo al backend. Vercel se detecta automáticamente. |
+
+En desarrollo, sin lista de orígenes, se admite el origen de la propia petición
+o de su cabecera Host local (Next puede normalizar la URL a 0.0.0.0).
+Con la lista de ejemplo se admiten localhost y 127.0.0.1. Para probar por Wi-Fi,
+añadir explícitamente el origen local del ordenador a esa lista.
+
+## Dominio y DNS pendientes
+
+1. Añadir en Resend el dominio o subdominio de envío elegido. No asumir que
+   `automatizza.es` ya esté verificado. Un subdominio de envío puede mantener
+   separada su reputación del correo habitual.
+2. Copiar **los registros exactos que genere esa cuenta**: DKIM y los de
+   SPF/Return-Path correspondientes, incluidos los MX específicos que indique
+   su panel. No se pueden anticipar claves, nombres o valores sin esa cuenta.
+   No sustituir los MX del buzón corporativo para añadir el envío transaccional.
+3. Revisar el DMARC existente y su alineación con el remitente elegido. Confirmar
+   región, tracking, contratos de tratamiento y posibles transferencias antes
+   de aprobar la política.
+4. Esperar a que Resend indique `verified` y tenga envío habilitado. Introducir
+   el UUID y la dirección del dominio correcto en las variables.
+
+Antes de **cada** envío la API consulta `GET /domains/:id`, comprueba el estado,
+la capacidad de envío y la coincidencia exacta con el dominio del remitente.
+Un permiso insuficiente, una respuesta incorrecta o un dominio pendiente
+bloquean el envío. La consulta usa una clave autorizada para leer dominios;
+una clave limitada a enviar correo puede requerir la credencial separada.
+
+Fuentes: [dominios verificados](https://resend.com/docs/dashboard/domains/introduction),
+[consulta del dominio](https://resend.com/docs/api-reference/domains/get-domain),
+[gestión de claves](https://resend.com/docs/dashboard/api-keys/introduction).
+
+## Revisión legal necesaria para activar
+
+El borrador se basa en el RGPD, la LOPDGDD y la LSSI, y distingue consentimiento,
+medidas precontractuales y seguridad. No asegura cumplimiento definitivo.
+
+Completar y validar `src/content/privacy.ts`: sociedad, NIF, domicilio, canal de
+derechos, necesidad/contacto de DPD, conservación, entidades proveedoras,
+contratos, países y garantías de transferencias. Revisar también la ponderación
+antispam, registros, cookies y analítica de la web y del alojamiento definitivos.
+Actualizar el texto de la página, su versión y la primera capa del formulario
+para que describan exactamente el tratamiento aprobado.
+
+Solo tras esa revisión, marcar `reviewed: true`, completar todos los campos,
+configurar Resend/orígenes y establecer `CONTACT_FORM_ENABLED=true`. Reconstruir
+y reiniciar la aplicación: la disponibilidad inicial se renderiza en servidor.
+La API vuelve a comprobar ambos bloqueos en cada petición. Revisar entonces los
+metadatos de borrador de la página legal antes de permitir su indexación.
+
+Referencias: [RGPD](https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807),
+[LOPDGDD](https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673),
+[LSSI](https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758),
+[información por capas, AEPD](https://www.aepd.es/derechos-y-deberes/conoce-tus-derechos/derecho-de-informacion),
+[transferencias, AEPD](https://www.aepd.es/derechos-y-deberes/cumple-tus-deberes/medidas-de-cumplimiento/garantias-transferencias-datos-personales).
+
+## Comportamiento y límites
+
+`POST /api/contacto` usa la API REST de Resend con `fetch`, sin instalar SDKs.
+El destinatario y el remitente se toman exclusivamente del servidor; el email
+del usuario se usa como `Reply-To`. El cuerpo es texto plano para evitar HTML
+inyectado, e incluye todos los campos, la aceptación y su versión. No se crean
+contactos comerciales ni registros en bases de datos.
+
+Hay validación compartida cliente/servidor, JSON limitado a 32 KiB, comprobación
+de origen, honeypot y límites por instancia: 5 peticiones por IP/15 min, 3 por
+email/15 min y 30 globales/15 min. Solo se conservan contadores y claves HMAC en
+memoria, con caducidad lógica y limpieza al recibir peticiones. No se registran
+mensajes, direcciones o errores completos del proveedor en logs propios.
+
+**La limitación en memoria no es distribuida:** se reinicia con cada proceso y
+no se comparte entre instancias serverless. En el alojamiento definitivo habrá
+que aplicar además una regla de rate limiting en su proxy/WAF si se necesitan
+garantías globales. No se ha añadido una base de datos para resolverlo.
+Fuera de Vercel o de un proxy explícitamente confiable se usa un bucket compartido
+en lugar de confiar en cabeceras IP manipulables.
+
+Solo una respuesta aceptada por Resend con un ID válido muestra éxito. Los
+fallos conservan el texto. Los reintentos del mismo contenido usan el mismo
+identificador de idempotencia; editar el contenido genera uno nuevo. Esto evita
+duplicar una solicitud aceptada cuya respuesta se perdió, de acuerdo con la
+[API de envío e idempotencia de Resend](https://resend.com/docs/api-reference/emails/send-email).
+
+## Comprobaciones
+
+`npm run test:contact` compila temporalmente la lógica y ejecuta pruebas con
+`node:test`, usando únicamente mocks del proveedor. Cubren validación,
+consentimiento, bloqueo legal/configuración, origen, honeypot, tamaño real del
+cuerpo, verificación del dominio, Reply-To, destinatario fijo, idempotencia,
+fallos del proveedor y límites de envío. **Esas pruebas no envían correos y no
+habilitan un modo de éxito simulado en la aplicación.**
+
+Ejecutar además `npm run lint` y `npm run build`. Tras aprobar la política y
+configurar las credenciales, queda pendiente una prueba real hasta la recepción
+en el buzón y la comprobación de responder al email del solicitante.
