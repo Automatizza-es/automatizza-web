@@ -9,6 +9,9 @@ import { ProjectsSection } from "@/components/home/ProjectsSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { Header } from "@/components/layout/Header";
 
+// Cambiar a true para recuperar la sección, conservada con sus estilos y animaciones.
+const showProcessSection = false;
+
 export default function Home() {
   return (
     <>
@@ -19,7 +22,7 @@ export default function Home() {
         <ChangeShowcaseSection />
         <ProjectsSection />
         <ServicesSection />
-        <ProcessSection />
+        {showProcessSection && <ProcessSection />}
         <CalculatorSection />
         <AboutSection />
       </main>
