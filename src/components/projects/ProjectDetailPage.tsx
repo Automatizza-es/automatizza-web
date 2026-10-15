@@ -25,7 +25,7 @@ function Recording({ project }: { project: ProjectDetail }) {
           Tu navegador no puede reproducir este vídeo. <a href={project.video}>Ver la grabación</a>.
         </video>
       </div>
-      <figcaption>{project.videoCaption}</figcaption>
+      {project.videoCaption && <figcaption>{project.videoCaption}</figcaption>}
     </figure>
   );
 }

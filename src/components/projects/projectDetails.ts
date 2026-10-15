@@ -31,11 +31,11 @@ export const projectDetails = [
     focus: "Diseñada para quien está en ruta.",
     features: [
       { label: "01 / Desde el móvil", title: "Registrar una recogida, desde donde sucede.", text: "Compartimentos, kilos y datos de calidad se reúnen en un registro pensado para el conductor. Una interfaz centrada en la tarea, en el lugar de trabajo." },
-      { label: "02 / Visión operativa", title: "Del registro al conjunto del viaje.", text: "Recogidas, descargas y documentación forman parte de una misma operación. La nueva aplicación propia busca reunir esa información para facilitar su consulta y seguimiento." },
+      { label: "02 / Visión operativa", title: "Del registro al conjunto del viaje.", text: "Recogidas, descargas y documentación forman parte de una misma operación. Toda la información, organizada para facilitar su consulta y seguimiento." },
     ],
     video: "/videos/details/apc-app-recorrido.mp4",
     poster: "/projects/details/apc-app-recorrido.jpg",
-    videoCaption: "Recorrido por el registro de una recogida en APC Europe.",
+    videoCaption: "",
     visualNote: "Representación de la interfaz móvil con datos ficticios de demostración.",
     seoImage: "/projects/apc/hero.jpg",
   },
