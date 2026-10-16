@@ -78,7 +78,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
           </section>
 
           <section className={styles.context} aria-label="El reto y la solución">
-            <div><p className={styles.sectionLabel}>El reto</p><h2>Un punto de partida claro.</h2><p>{project.challenge}</p></div>
+            <div><p className={styles.sectionLabel}>El reto</p><h2>{project.challengeTitle}</h2><p>{project.challenge}</p></div>
             <div><p className={styles.sectionLabel}>La solución</p><h2>{project.focus}</h2><p>{project.solution}</p></div>
           </section>
 
