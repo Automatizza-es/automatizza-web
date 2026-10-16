@@ -18,8 +18,10 @@ Datos facilitados directamente por la titular:
   conduce a una ficha de Google titulada «ABBAS Servicios de Informática y
   Telecomunicaciones, S.L.». La ficha no acredita la entidad contratada ni
   dónde se aloja el buzón; confirmar estos extremos con su documentación.
-- Intención de incorporar Analytics, aún sin herramienta/configuración
-  confirmada ni identificador de medición. No se ha instalado analítica.
+- Google Analytics 4 confirmado por la titular mediante el ID `G-1Y94M3HZRB`.
+  Integración y panel preparados, con medición real desactivada. La vista local
+  permite probar preferencias sin cargar Google. Los detalles de Abbas siguen
+  pendientes: la titular aún no dispone de esa información.
 
 Los datos societarios y registrales figuran en los borradores de privacidad y
 aviso legal; este último está disponible en `/aviso-legal` y enlazado en el footer.
@@ -36,7 +38,7 @@ No se atribuye a estos datos una comprobación independiente en registros oficia
 | Resend | Confirmar entidad contratada, acuerdos, retención y subencargados. Región técnica `eu-west-1` y seguimiento de aperturas/clics desactivado, comprobados por API el 15/10/2026. | Completar los proveedores y garantías; las credenciales ya están configuradas de forma privada. La región de envío no cierra por sí sola la revisión de transferencias. |
 | Conservación de consultas | Propuesta: máximo 12 meses desde el último contacto para consultas sin contratación, con supresión o bloqueo cuando corresponda. Aprobar el plazo y acordar su aplicación al buzón y las copias. | Aplicar un criterio real; los expedientes de clientes se valoran por separado. Véase [propuesta de conservación](legal-retention-proposal.md). |
 | Atención de derechos y DPD | Mantener info@automatizza.es como canal y organizar quién lo atiende. Valorar por separado si procede designar DPD; no se presume que lo sea. | El ejercicio de derechos debe informarse y atenderse aunque todavía no haya solicitudes; no exige un buzón nuevo. |
-| Medición | Confirmar si se trata de Google Analytics 4 y facilitar el ID G-… de la propiedad, si ya existe. Acordar configuración y textos antes de activarlo. | Preparar bloqueo previo, aceptar/rechazar con la misma visibilidad, preferencias y retirada del consentimiento. No confundir el consentimiento de cookies con el del formulario. |
+| Medición | ID GA4 recibido. Revisar los ajustes de la propiedad, conservación, términos y transferencias antes de aprobar la política de cookies y activar el interruptor. | El bloqueo previo y el panel están preparados; véase [analytics.md](analytics.md). No se usa el consentimiento del formulario para medición. |
 
 Con el proveedor y la configuración definitivos se revisarán los acuerdos de
 encargo, países, subencargados y garantías de transferencias. No basta con que
@@ -44,10 +46,12 @@ una región se denomine europea para concluir que no hay accesos internacionales
 
 ## Resultado de la revisión del código sobre cookies
 
-- No se han encontrado escrituras de cookies, `localStorage`, `sessionStorage`
-  ni IndexedDB en el código de la aplicación.
-- No se han encontrado scripts de analítica/publicidad, gestores de etiquetas,
-  iframes de mapas o vídeos externos ni un chat de terceros.
+- El panel de cookies preparado utiliza `localStorage` para recordar la
+  elección durante 180 días. Su vista de prueba usa una clave independiente
+  que nunca habilita la medición real. No hay almacenamiento de consultas allí.
+- Se ha preparado la carga condicional de GA4 tras aceptar. Está bloqueada por
+  revisión legal e interruptor; la vista local no carga la etiqueta de Google.
+- No se han añadido publicidad, iframes de mapas o vídeos externos ni chat.
 - Las demos de proyectos son componentes propios. El formulario solo llama a
   `/api/contacto`; la comunicación con Resend está en el servidor. El formulario
   público sigue bloqueado; hay un modo de prueba local con datos ficticios que
@@ -72,8 +76,8 @@ bloqueo previo y permitir aceptar, rechazar, configurar y retirar el consentimie
 
 1. Completar y revisar el borrador de privacidad con la información anterior.
 2. Revisar el borrador de `/aviso-legal`, ya preparado con los datos registrales.
-3. Redactar la información de cookies según el inventario efectivo; determinar
-   entonces si es necesario un panel de consentimiento.
+3. Revisar `/politica-de-cookies` y el panel ya preparados. Contrastar el
+   inventario previsto con la propiedad y las cookies efectivas al activarla.
 4. Revisar el tratamiento de consultas, seguridad y gestión de derechos con la
    empresa; aprobar expresamente la versión definitiva.
 5. El dominio de Resend ya está verificado y se ha comprobado un envío real

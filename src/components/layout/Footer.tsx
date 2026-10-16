@@ -18,6 +18,7 @@ export function Footer({ homeLinks = false }: { homeLinks?: boolean }) {
           <span>© 2026 Automatizza</span>
           <Link href="/aviso-legal">Aviso legal</Link>
           <Link href="/politica-de-privacidad">Política de privacidad</Link>
+          <Link href="/politica-de-cookies">Política de cookies</Link>
           <span>Soluciones digitales para procesos reales</span>
         </div>
       </Container>

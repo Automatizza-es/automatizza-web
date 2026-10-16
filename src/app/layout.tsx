@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { ProjectRouteScroll } from "@/components/projects/ProjectRouteScroll";
+import { CookieConsent } from "@/components/privacy/CookieConsent";
+import { getAnalyticsConfig } from "@/lib/analytics/config";
 
 import "./globals.css";
 
@@ -17,11 +19,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const analytics = getAnalyticsConfig();
   return (
     <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body>
         <ProjectRouteScroll />
         {children}
+        <CookieConsent {...analytics} />
       </body>
     </html>
   );

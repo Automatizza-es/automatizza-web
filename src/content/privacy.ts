@@ -15,7 +15,7 @@ export const privacyPolicy: {
   dpo: string;
 } = {
   reviewed: false,
-  version: "2026-10-16-borrador-3",
+  version: "2026-10-16-borrador-4",
   legalName: "Grain Store Technology, S.L.",
   taxId: "B56885676",
   address: "Calle Párroco Bartolomé Blanco, 46, 14014 Córdoba, España.",

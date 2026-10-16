@@ -23,7 +23,7 @@ indefinidamente en el buzón activo.
 
 ## Configuración de medición propuesta
 
-- Confirmar que «Analytics» significa Google Analytics 4 y la propiedad G-….
+- Confirmado Google Analytics 4: `G-1Y94M3HZRB`.
 - Medición de uso del sitio, sin publicidad, remarketing ni Google Signals.
 - No cargar la etiqueta ni enviar pings de medición antes de aceptar. Preferir
   la carga bloqueada hasta consentimiento frente a medición previa sin cookies.
@@ -33,7 +33,8 @@ indefinidamente en el buzón activo.
 - Publicar el inventario real de cookies y la información de proveedores y
   transferencias tras comprobarlos. No presentar GA4 como exento por defecto.
 
-No se ha instalado Analytics ni un banner de consentimiento con este cambio.
+Integración y panel preparados; no se ha activado la medición real. La vista
+local permite probar preferencias sin cargar Google ni enviar datos.
 La captura registral y la ficha pública de Abbas no prueban contratos, ubicación
 de datos ni garantías de transferencias internacionales.
 

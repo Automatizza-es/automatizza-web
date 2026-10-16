@@ -82,8 +82,8 @@ export default function PrivacyPage() {
           </section>
           <section aria-labelledby="privacy-analytics">
             <h2 id="privacy-analytics">09. Medición de visitas y cookies</h2>
-            <p>Se prevé incorporar medición de visitas para conocer el uso del sitio y mejorar sus contenidos. En esta versión no se ha instalado ni activado una herramienta de analítica.</p>
-            <p>Antes de activarla se concretarán el proveedor, los datos recogidos, los plazos de conservación, las transferencias y la política de cookies. La configuración prevista bloqueará la analítica hasta que la aceptes y permitirá rechazarla o retirar el consentimiento. La aceptación del formulario de contacto será independiente de la elección sobre cookies.</p>
+            <p>Se ha preparado la integración de Google Analytics 4 para conocer el uso del sitio y mejorar sus contenidos. La medición real permanece desactivada mientras se revisan la configuración y la información legal.</p>
+            <p>La <Link href="/politica-de-cookies">política de cookies</Link> detalla el panel, los datos y los plazos previstos. La integración bloquea la carga de Google hasta aceptar y permite rechazar o retirar el consentimiento. La aceptación del formulario de contacto es independiente de la elección sobre cookies.</p>
             {!ready && <p className={styles.pending}>Pendiente de confirmar la herramienta, configurar y comprobar el panel de consentimiento y revisar los textos antes de activar la medición.</p>}
           </section>
           <section id="contacto" className={styles.contact} aria-labelledby="privacy-contact">
