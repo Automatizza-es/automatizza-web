@@ -33,7 +33,7 @@ const sliders: {
   {
     id: "automation",
     label: "Tiempo que podrías liberar",
-    hint: "Parte de esas horas que dejaría de ir a tareas repetitivas y podría dedicarse a lo que de verdad aporta valor.",
+    hint: "Parte de esas horas que podrías recuperar para dedicar a lo que siempre acabas dejando para después.",
     min: 0,
     max: 100,
     step: 5,
