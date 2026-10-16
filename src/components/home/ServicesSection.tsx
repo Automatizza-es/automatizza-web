@@ -5,7 +5,7 @@ import styles from "./ServicesSection.module.css";
 const services = [
   { number: "01", title: "Automatización", text: "Procesos que avanzan solos y menos trabajo manual." },
   { number: "02", title: "Software a medida", text: "Herramientas diseñadas para la forma real de trabajar de tu empresa." },
-  { number: "03", title: "Inteligencia artificial", text: "IA aplicada donde realmente ahorra tiempo y aporta valor." },
+  { number: "03", title: "Inteligencia artificial", text: "Extraer información de documentos, clasificar solicitudes y facilitar consultas" },
   { number: "04", title: "Desarrollo web", text: "Webs y experiencias digitales con diseño, rendimiento y estrategia." },
 ];
 
@@ -24,7 +24,7 @@ export function ServicesSection() {
           {services.map((service) => (
             <li className={styles.service} key={service.number} data-reveal>
               <span className={styles.number}>{service.number}</span>
-              <h3><span>{service.title}</span><span className={styles.arrow} aria-hidden="true">→</span></h3>
+              <h3><span>{service.title}</span></h3>
               <p>{service.text}</p>
             </li>
           ))}
