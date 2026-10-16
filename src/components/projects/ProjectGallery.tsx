@@ -6,7 +6,7 @@ export const projects = [
   {
     slug: "silos-spain",
     client: "Silos Spain",
-    title: "Gestión comercial y procesos conectados",
+    title: "Solicitudes, oportunidades y presupuestos en un mismo entorno",
     description:
       "Plataforma empresarial para centralizar CRM, gestión comercial, presupuestos, facturas y automatizaciones en un mismo entorno.",
     image: "/images/hero-crm-dashboard.png",
@@ -17,12 +17,12 @@ export const projects = [
   },
   {
     slug: "apc",
-    client: "APC",
-    title: "Gestión logística digital desde el terreno",
+    client: "APC Europe",
+    title: "Recogidas y viajes registrados desde el móvil",
     description:
       "Aplicación para digitalizar recogidas y descargas de transportistas, facilitando el trabajo de conductores y la gestión operativa.",
     image: "/reference/apc.png",
-    alt: "Aplicación APC para la gestión operativa de transportistas",
+    alt: "Aplicación APC Europe para la gestión operativa de transportistas",
     position: "center top",
     video: "/videos/apc.mp4",
     videoType: "video/mp4" as const,
@@ -30,7 +30,7 @@ export const projects = [
   {
     slug: "la-factory-coworking",
     client: "La Factory Coworking",
-    title: "Un hub digital para gestionar el coworking",
+    title: "Reservas de salas y gestión diaria del coworking",
     description:
       "Webapp que comienza con la reserva de salas y está concebida para centralizar progresivamente onboarding, Holded, acceso a instalaciones, campañas de email y otros servicios actualmente dispersos.",
     image: "/reference/la-factory.png",
