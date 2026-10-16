@@ -37,7 +37,7 @@ const demonstrations = [
   {
     id: "conectar",
     title: "Todo conectado.",
-    description: "La información entra una vez y aparece donde tiene que estar.",
+    description: "Conectamos las herramientas que ya utilizas.",
   },
 ];
 
