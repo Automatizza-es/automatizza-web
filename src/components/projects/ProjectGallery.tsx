@@ -32,7 +32,7 @@ export const projects = [
     client: "La Factory Coworking",
     title: "Reservas de salas y gestión diaria del coworking",
     description:
-      "Webapp que comienza con la reserva de salas y está concebida para centralizar progresivamente onboarding, Holded, acceso a instalaciones, campañas de email y otros servicios actualmente dispersos.",
+      "Una aplicación web para consultar la disponibilidad de las salas, gestionar reservas y organizar el día a día del coworking.",
     image: "/reference/la-factory.png",
     alt: "Webapp de La Factory Coworking para la reserva de salas y servicios",
     position: "center top",

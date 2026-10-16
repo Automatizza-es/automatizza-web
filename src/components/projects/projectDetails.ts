@@ -50,14 +50,13 @@ export const projectDetails = [
     solution: "Un entorno propio para gestionar reservas, miembros, calendarios y distintos servicios del espacio.",
     focus: "La experiencia del espacio, también en digital.",
     features: [
-      { label: "01 / Calendario y reservas", title: "Encontrar una sala. Reservar un momento.", text: "Consultar el calendario, elegir una sala y confirmar una reserva desde el móvil. La reserva de salas es el punto de partida de la aplicación." },
-      { label: "02 / El espacio personal", title: "Una experiencia común, en cualquier pantalla.", text: "El inicio reúne la información del coworker y sus reservas. La gestión de miembros y servicios orienta la evolución del producto; las futuras integraciones se incorporarán por etapas." },
+      { label: "01 / Calendario y reservas", title: "Encontrar una sala. Reservar un momento.", text: "Consultar el calendario, elegir una sala y confirmar una reserva desde el móvil." },
+      { label: "02 / El espacio personal", title: "Una experiencia común, en cualquier pantalla.", text: "La información del coworker y sus reservas, reunidas en un espacio personal accesible desde el ordenador y el móvil." },
     ],
-    status: "Reservas de salas como funcionalidad de partida. El onboarding, la conexión con Holded, los accesos y las campañas de email se plantean como futuras integraciones. Eventos, paquetes e incidencias se muestran como parte de la propuesta de interfaz, sin afirmar que todos estén operativos.",
     video: "/videos/details/factory-app-recorrido.mp4",
     poster: "/projects/details/factory-app-recorrido.jpg",
-    videoCaption: "Recorrido por el calendario y la reserva de una sala. Las cifras mostradas no representan resultados del proyecto.",
-    visualNote: "Representación de las interfaces web y móvil con datos ficticios de demostración.",
+    videoCaption: "Calendario y reserva de salas desde el móvil.",
+    visualNote: "Interfaces web y móvil · Datos de ejemplo.",
     seoImage: "/projects/la-factory/meeting-room.jpg",
   },
 ] as const;

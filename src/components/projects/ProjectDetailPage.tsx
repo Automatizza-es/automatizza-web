@@ -46,7 +46,7 @@ function FeatureVisual({ project, index }: { project: ProjectDetail; index: numb
       <div className={styles.factoryWeb} role="img" aria-label="Espacio personal de La Factory: salas, próximas reservas y tarifa">
         <WebHome />
       </div>
-      <figcaption>Propuesta de interfaz web · Reservas y uso de ejemplo</figcaption>
+      <figcaption>Espacio personal del coworker · Datos de ejemplo</figcaption>
     </figure>
   );
 }
@@ -80,7 +80,6 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
           <section className={styles.context} aria-label="El reto y la solución">
             <div><p className={styles.sectionLabel}>El reto</p><h2>Un punto de partida claro.</h2><p>{project.challenge}</p></div>
             <div><p className={styles.sectionLabel}>La solución</p><h2>{project.focus}</h2><p>{project.solution}</p></div>
-            {"status" in project && <p className={styles.status}>{project.status}</p>}
           </section>
 
           <section className={styles.inside} aria-labelledby="inside-title">
