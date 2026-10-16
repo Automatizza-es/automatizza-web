@@ -26,9 +26,9 @@ export default function PrivacyPage() {
           <Link className={styles.back} href="/#contacto">← Volver al contacto</Link>
           <p className={styles.eyebrow}>INFORMACIÓN LEGAL</p>
           <h1>Política de privacidad</h1>
-          {!ready && <div className={styles.draft} role="note"><strong>Borrador pendiente de revisión</strong><p>El formulario permanece desactivado. Los datos de la sociedad ya están incorporados; quedan pendientes las validaciones sobre conservación, proveedores y las demás cuestiones señaladas.</p></div>}
+          {!ready && <div className={styles.draft} role="note"><strong>Borrador pendiente de revisión</strong><p>El formulario público permanece desactivado. Los datos de la sociedad y su inscripción registral están incorporados. La conservación propuesta, los proveedores y la futura medición de visitas siguen pendientes de validación.</p></div>}
           <p className={styles.intro}>Información sobre el tratamiento previsto de los datos que nos facilites para hablar sobre automatización, software a medida, inteligencia artificial o desarrollo web.</p>
-          <p className={styles.version}>Versión del borrador: 15 de octubre de 2026 · {privacyPolicy.version}</p>
+          <p className={styles.version}>Versión del borrador: 16 de octubre de 2026 · {privacyPolicy.version}</p>
 
           <section aria-labelledby="privacy-controller">
             <h2 id="privacy-controller">01. Quién es responsable de tus datos</h2>
@@ -37,7 +37,8 @@ export default function PrivacyPage() {
               <div><dt>Razón social</dt><dd><Pending value={privacyPolicy.legalName} label="denominación de la sociedad responsable" /></dd></div>
               <div><dt>NIF</dt><dd><Pending value={privacyPolicy.taxId} label="NIF de la sociedad" /></dd></div>
               <div><dt>Domicilio</dt><dd><Pending value={privacyPolicy.address} label="domicilio y dirección para ejercer derechos" /></dd></div>
-              <div><dt>Correo de contacto</dt><dd><a href={`mailto:${privacyPolicy.rightsEmail}`}>{privacyPolicy.rightsEmail}</a>{!ready && " · confirmar su uso para protección de datos"}</dd></div>
+              <div><dt>Inscripción registral</dt><dd><Pending value={privacyPolicy.registry} label="datos de inscripción de la sociedad" /></dd></div>
+              <div><dt>Contacto y ejercicio de derechos</dt><dd><a href={`mailto:${privacyPolicy.rightsEmail}`}>{privacyPolicy.rightsEmail}</a></dd></div>
               <div><dt>Delegado de protección de datos</dt><dd><Pending value={privacyPolicy.dpo} label="si procede designarlo y, en su caso, sus datos de contacto" /></dd></div>
             </dl>
           </section>
@@ -72,12 +73,18 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-rights">
             <h2 id="privacy-rights">07. Cómo ejercer tus derechos</h2>
             <p>Puedes solicitar acceso, rectificación, supresión, oposición, limitación y portabilidad, cuando procedan, escribiendo al correo de contacto indicado. Si el tratamiento se basa en el consentimiento, puedes retirarlo sin afectar a su licitud anterior. Podremos solicitar información proporcionada para verificar tu identidad si existen dudas razonables.</p>
-            <p>También puedes presentar una reclamación ante la <a href="https://www.aepd.es/">Agencia Española de Protección de Datos</a>. {!ready && <span className={styles.pending}>Debe confirmarse el canal definitivo de ejercicio de derechos antes de publicar la versión aprobada.</span>}</p>
+            <p>También puedes presentar una reclamación ante la <a href="https://www.aepd.es/">Agencia Española de Protección de Datos</a>.</p>
           </section>
           <section aria-labelledby="privacy-security">
             <h2 id="privacy-security">08. Seguridad y alcance</h2>
             <p>El formulario contempla validación en cliente y servidor, controles antispam y envío desde el servidor sin exponer sus credenciales. No realiza altas comerciales ni añade cookies publicitarias. {!ready && <span className={styles.pending}>Antes de aprobar este borrador deben revisarse los registros, las cookies y la analítica del alojamiento y de la web efectiva, así como sus medidas de seguridad y plazos de conservación.</span>}</p>
             <p>El marco de referencia es el <a href="https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807">Reglamento (UE) 2016/679</a>, la <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673">Ley Orgánica 3/2018</a> y la <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758">Ley 34/2002</a>, en lo que resulte aplicable. Esta información se organiza siguiendo el criterio de <a href="https://www.aepd.es/derechos-y-deberes/conoce-tus-derechos/derecho-de-informacion">información por capas de la AEPD</a>.</p>
+          </section>
+          <section aria-labelledby="privacy-analytics">
+            <h2 id="privacy-analytics">09. Medición de visitas y cookies</h2>
+            <p>Se prevé incorporar medición de visitas para conocer el uso del sitio y mejorar sus contenidos. En esta versión no se ha instalado ni activado una herramienta de analítica.</p>
+            <p>Antes de activarla se concretarán el proveedor, los datos recogidos, los plazos de conservación, las transferencias y la política de cookies. La configuración prevista bloqueará la analítica hasta que la aceptes y permitirá rechazarla o retirar el consentimiento. La aceptación del formulario de contacto será independiente de la elección sobre cookies.</p>
+            {!ready && <p className={styles.pending}>Pendiente de confirmar la herramienta, configurar y comprobar el panel de consentimiento y revisar los textos antes de activar la medición.</p>}
           </section>
           <section id="contacto" className={styles.contact} aria-labelledby="privacy-contact">
             <h2 id="privacy-contact">Una consulta sobre tus datos</h2>
