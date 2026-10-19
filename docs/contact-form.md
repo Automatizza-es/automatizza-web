@@ -155,3 +155,16 @@ habilitan un modo de éxito simulado en la aplicación.**
 Ejecutar además `npm run lint` y `npm run build`. Tras aprobar la política y
 configurar las credenciales, queda pendiente una prueba real hasta la recepción
 en el buzón y la comprobación de responder al email del solicitante.
+
+## Medición opcional de envíos confirmados
+
+La integración GTM emite `automatizza_contact_success` únicamente después de
+HTTP correcto y `ok: true` del servidor, y solo si existe consentimiento de
+estadísticas vigente y la medición está habilitada. No transmite campos del
+formulario ni el ID de reintento. En GTM se transforma en `generate_lead`;
+no usar clics ni eventos automáticos de formularios como conversión.
+
+Los envíos con `testMode` no cuentan como conversiones. Una confirmación significa
+aceptación por Resend, no acreditación de entrega ni venta. El bloqueo legal y
+operativo del formulario no se ha cambiado con esta integración. Detalles y
+pendientes de cuenta en [analytics.md](analytics.md).

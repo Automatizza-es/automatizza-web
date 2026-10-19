@@ -1,78 +1,118 @@
-# Google Analytics 4 y consentimiento
+# GA4 mediante Google Tag Manager y consentimiento básico v2
 
-ID facilitado por la titular el 16/10/2026: `G-1Y94M3HZRB`. Es un identificador
-público de medición, no una credencial privada. Se puede sustituir mediante
-`GOOGLE_ANALYTICS_ID` en el entorno del servidor.
+## Estado en rediseño
 
-## Estado
+- GA4: `G-1Y94M3HZRB`; contenedor: `GTM-59RBDRPH`; sitio: `https://automatizza.es`.
+  IDs públicos, sustituibles con `GOOGLE_ANALYTICS_ID` y `GOOGLE_TAG_MANAGER_ID`.
+- Se ha retirado la instalación directa de `gtag.js`. Solo GTM configura GA4.
+- La titular confirma configurados conservación, Signals, personalización,
+  ocultación de datos y medición mejorada en GA4. No se ha accedido a su cuenta
+  para comprobar los valores concretos o sus opciones de automatización.
+- Consulta del recurso público `gtm.js?id=GTM-59RBDRPH` el 19/10/2026: versión 1,
+  `tags: []`, `rules: []`. La etiqueta indicada por la titular puede estar en un
+  espacio de trabajo sin publicar. No se ha modificado ni publicado el contenedor.
+- No se ha modificado main ni desplegado este trabajo. La medición permanece
+  cerrada: `cookiePolicy.reviewed=false` y `ANALYTICS_ENABLED=false`.
+- `ANALYTICS_PREVIEW=true` solo permite revisar el panel con `next dev` fuera de
+  Vercel, sin cargar Google ni generar conversiones. La elección sintética usa
+  `automatizza-cookie-consent-preview` y nunca se convierte en consentimiento real.
 
-- Código preparado en `rediseño`, sin publicar este cambio.
-- `cookiePolicy.reviewed=false` y `ANALYTICS_ENABLED=false`: medición real apagada.
-- `.env.local`: `ANALYTICS_PREVIEW=true` permite revisar el panel con `next dev`.
-  Solo funciona en desarrollo y fuera de Vercel. No carga Google ni envía datos,
-  ni siquiera al aceptar. No demuestra recepción de eventos en la propiedad.
-- La elección de prueba utiliza `automatizza-cookie-consent-preview`; no se
-  reutiliza como consentimiento real al desactivar la vista de prueba.
-- `/politica-de-cookies` y la sección de medición de privacidad son borradores.
-  La falta de detalles de Abbas no se resuelve suponiendo un país o proveedor.
+## Contrato entre web y GTM
 
-## Comportamiento preparado
+La web obtiene consentimiento y emite únicamente dos eventos de dataLayer:
 
-El panel se incorpora al layout de todas las rutas. Usa las mismas opciones
-visuales para aceptar/rechazar y un diálogo nativo con controles de teclado,
-sin librerías nuevas. «Configurar cookies» permanece disponible tras elegir.
+| Evento de la web | Evento GA4 configurado en GTM | Datos permitidos |
+| --- | --- | --- |
+| `automatizza_page_view` | `page_view` | `page_location`, `page_title`, `page_referrer` |
+| `automatizza_contact_success` | `generate_lead` | Los anteriores y `form_id=contact` |
 
-En modo real, la biblioteca de Google se solicita solo después de aceptar
-(consent mode básico). Sin decisión, con rechazo o con preferencia caducada no
-se carga. Publicidad, datos publicitarios y personalización siguen denegados;
-se desactivan Google Signals y señales de personalización en la etiqueta.
+Ambos incluyen `analytics_consent=granted` para el filtro del activador. Las URL
+se construyen con el dominio canónico y una lista cerrada de rutas; nunca incluyen
+query, hash, rutas arbitrarias o referrer externo. No se transmiten nombre, email,
+mensaje, servicio elegido, respuestas de error, identificadores de envío, user_id
+ni propiedades de usuario. Los IDs de reintento solo se usan en memoria para
+no duplicar la conversión.
 
-Las preferencias se guardan 180 días sin renovarlas por visita. Se sincronizan
-entre pestañas, caducan durante la navegación y se vuelven a solicitar si cambia
-la versión de consentimiento. Si falla el almacenamiento, solo duran en memoria
-de la página. El consentimiento de contacto es independiente.
+El evento de contacto ocurre después de una respuesta HTTP correcta con
+`ok === true`: el servidor ya ha validado y recibido confirmación de aceptación
+por Resend. Eso no acredita la entrega en el buzón ni una venta. No se emite por
+clic, validación, honeypot, rechazo del proveedor, timeout, error o envío local
+con `testMode`. Sin consentimiento al completarse, no se guarda para enviarlo
+más tarde. La aceptación de privacidad del formulario no concede estadísticas.
 
-Los page views son manuales en una lista cerrada de rutas públicas: sin query,
-hash, referrer, nombres, emails ni campos del formulario. No se añaden eventos
-de envío del formulario. Para evitar eventos automáticos o duplicados, hay que
-desactivar la medición mejorada en la propiedad antes de la activación real.
+## Configuración pendiente dentro de GTM/GA4
 
-Las cookies `_ga` y `_ga_1Y94M3HZRB` se configuran a 180 días sin renovar el plazo
-por visita. Retirar el consentimiento activa la exclusión de GA, vacía la cola,
-retira la etiqueta y elimina estas cookies en los dominios accesibles. No promete
-borrar datos ya enviados a Google. El inventario debe verificarse en el navegador
-contra la configuración real antes de aprobar el texto definitivo.
+Aplicar [gtm-configuration.md](gtm-configuration.md) en el espacio de trabajo,
+**sin publicar todavía**. Hay que adaptar la etiqueta principal existente,
+no instalar otra. Incluye las dos etiquetas de evento y el filtro de consentimiento.
 
-## Antes de activar en Vercel
+Es imprescindible desactivar el page view automático de la etiqueta y comprobar
+las opciones de medición mejorada en GA4. Los eventos de historial siguen pudiendo
+emitirse aunque `send_page_view=false`; los eventos automáticos de formulario
+pueden ocurrir sin que Resend confirme el envío. Para esta integración se recomienda
+desactivar toda la medición mejorada y conservar solo los eventos controlados.
+La ocultación de datos en GA4 no sustituye estas restricciones en origen.
 
-1. Comprobar la propiedad y el flujo correctos. Desactivar por completo Medición
-   mejorada (especialmente navegación por historial y formularios), Google
-   Signals y funciones publicitarias; revisar que no haya conexiones con Ads.
-2. Configurar conservación de usuario/eventos a 2 meses y sin reinicio por
-   nueva actividad. No afecta a informes agregados estándar; es un ajuste en
-   Google que no se puede aplicar con el identificador de medición.
-3. Revisar condiciones, entidad contratada, subencargados y garantías de
-   transferencias. Completar y aprobar la información de cookies correspondiente.
-4. Marcar `cookiePolicy.reviewed=true`, versionar el consentimiento si cambian
-   sus condiciones y establecer `ANALYTICS_ENABLED=true` en el servidor.
-5. Reconstruir y desplegar: la configuración se renderiza en servidor. Revisar
-   en sesión limpia que no haya solicitudes a Google antes de aceptar o tras
-   rechazar, verificar cookies, retirada, navegación y recepción en GA4.
+Los parámetros globales conservadores se preparan antes de cargar GTM, pero una
+configuración explícita de la etiqueta tiene precedencia: deben repetirse dentro
+del contenedor. El código de la web no puede cambiar remotamente la propiedad
+ni garantizar lo que publique alguien posteriormente en GTM.
 
-Esto no activa el formulario público ni aprueba sus pendientes de privacidad.
+## Consentimiento y ciclo de vida
 
-## Comprobación
+1. Sin elección o con rechazo: no se incluye ningún script, iframe noscript,
+   preload ni petición de GTM/GA. Las cookies de esta integración se limpian al
+   resolver el rechazo; un estado de hidratación aún desconocido no borra las
+   cookies de una aceptación previamente guardada.
+2. Tras aceptar: se encolan los cuatro consentimientos denegados por defecto;
+   se concede solo `analytics_storage` y se mantienen `ad_storage`, `ad_user_data`
+   y `ad_personalization` denegados. Después se carga una única vez `gtm.js`.
+3. Cada cambio de ruta pública en Next.js emite una visita, incluida la inicial
+   y la carga con consentimiento recordado. Repetir el mismo efecto/ruta no
+   duplica la visita. Los cambios de ancla no son visitas nuevas.
+4. Retirada: se guarda primero el rechazo, se activa `ga-disable-G-1Y94M3HZRB`,
+   se actualiza consentimiento denegado, se elimina el script propio y se borran
+   `_ga` y `_ga_1Y94M3HZRB` en dominios y rutas accesibles. Se recarga la página
+   para descargar los listeners y temporizadores ya ejecutados por Google.
+   Quitar solo el elemento script no los detendría. No se sustituye dataLayer
+   mientras GTM está vivo ni se promete borrar datos ya enviados o cancelar
+   peticiones que hubieran salido antes de retirar el consentimiento.
+5. La elección dura 180 días sin renovación por visita. Se sincroniza entre
+   pestañas, se revisa la caducidad durante la navegación y antes de emitir,
+   y se solicita de nuevo si cambia la versión del consentimiento. Si el
+   almacenamiento no está disponible, la elección dura solo en este documento.
 
-`npm run test:analytics` usa un navegador simulado sin red para comprobar el
-bloqueo, caducidad, configuración, retirada y exclusión de URLs arbitrarias.
-Se comprueba también el panel real en escritorio/móvil: rechazo, aceptación,
-recarga y cambio de preferencias en la vista sin medición. Lint/build y las
-pruebas del formulario deben seguir pasando.
+Los plazos analíticos de cookies deben fijarse en GTM a 180 días con
+`cookie_update=false`; aún deben verificarse las cookies efectivas. El panel,
+la aprobación de cookies y la activación del formulario siguen siendo independientes.
+Los borradores legales no se han aprobado automáticamente por recibir los IDs.
 
-Fuentes oficiales:
+## Comprobaciones y límites
+
+- `npm run test:analytics`: carga inicial, navegación, orden del consentimiento,
+  una sola carga de GTM, exclusión de datos personales, caducidad, retirada,
+  rechazo entre pestañas, recarga y conversión solo tras éxito confirmado.
+- Una prueba integra el manejador real de contacto con un proveedor simulado:
+  validación, honeypot, servicio desactivado, dominio sin verificar, fallo de
+  red/proveedor, respuesta sin ID y aceptación. No envía correos reales.
+- `npm run test:contact`, `npm run lint` y `npm run build`.
+- Panel local sin red: aceptar, rechazar, preferencias, navegación y móvil.
+  Esa vista no demuestra recepción en la propiedad ni ejecuta el contenedor.
+- Consulta del contenedor público, sin ejecutar su código ni acceder a cuentas.
+
+Antes de producción: terminar/revisar contenedor y textos, publicar los ajustes
+remotos cuando se autorice, establecer `cookiePolicy.reviewed=true` y
+`ANALYTICS_ENABLED=true`, reconstruir/desplegar y comprobar con Tag Assistant y
+la pestaña Network: cero Google antes de aceptar y tras rechazar, GA inicial y
+SPA sin duplicados, cookies reales, retirada/recarga y `generate_lead` solo tras
+éxito. Validar recepción en DebugView/tiempo real y marcar `generate_lead` como
+evento clave. No hay API secret ni Measurement Protocol ni bypass por servidor.
+
+## Fuentes oficiales
 
 - [Consent mode básico](https://developers.google.com/tag-platform/security/guides/consent?consentmode=basic).
-- [Configuración GA4](https://developers.google.com/analytics/devguides/collection/ga4/reference/config).
-- [Cookies GA4](https://support.google.com/analytics/answer/11397207?hl=es).
-- [Conservación](https://support.google.com/analytics/answer/7667196?hl=es).
-- [AEPD: guía de cookies](https://www.aepd.es/guias/guia-cookies.pdf).
+- [dataLayer: conservar su identidad](https://developers.google.com/tag-platform/tag-manager/datalayer).
+- [Page views manuales y medición mejorada](https://developers.google.com/analytics/devguides/collection/ga4/views).
+- [Medición de aplicaciones SPA](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications).
+- [Eventos de medición mejorada](https://support.google.com/analytics/answer/9216061?hl=es).
+- [Precedencia de parámetros](https://developers.google.com/tag-platform/gtagjs/reference).

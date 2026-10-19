@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
 import { contactServices, validateContact, type ContactErrors, type ContactField } from "@/lib/contact/validation";
+import { trackContactResult } from "@/lib/analytics/browser";
 import styles from "./ContactForm.module.css";
 
 type Props = { enabled: boolean; testMode?: boolean; privacyReady: boolean; policyVersion: string; controller: string; rightsEmail: string };
@@ -58,6 +59,7 @@ export function ContactForm({ enabled, testMode = false, privacyReady, policyVer
         setFeedback(typeof result.error === "string" ? result.error : "No se ha podido confirmar el envío. Inténtalo de nuevo más tarde.");
         return;
       }
+      trackContactResult({ responseOk: response.ok, result, submissionId: attempt.current.id, testMode });
       form.reset();
       attempt.current = null;
       setStatus("success");

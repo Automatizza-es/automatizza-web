@@ -26,7 +26,7 @@ function subscribe(notify: () => void) {
   };
 }
 
-export function CookieConsent({ measurementId, enabled, preview }: { measurementId: string; enabled: boolean; preview: boolean }) {
+export function CookieConsent({ measurementId, containerId, enabled, preview }: { measurementId: string; containerId: string; enabled: boolean; preview: boolean }) {
   // A synthetic preview choice must never become consent for live measurement.
   const storageKey = preview ? `${consentKey}-preview` : consentKey;
   const raw = useSyncExternalStore(subscribe, () => snapshot(storageKey), serverSnapshot);
@@ -41,6 +41,9 @@ export function CookieConsent({ measurementId, enabled, preview }: { measurement
   const available = enabled || preview;
 
   useEffect(() => {
+    // Hydration has not read the saved choice yet; do not erase cookies from a
+    // visitor who already consented before their next snapshot is available.
+    if (raw === "server") return;
     if (!available || preview) {
       if (lastPage.current) stopAnalytics(measurementId);
       lastPage.current = "";
@@ -52,10 +55,10 @@ export function CookieConsent({ measurementId, enabled, preview }: { measurement
       return;
     }
     if (lastPage.current !== path) {
-      trackPage(measurementId, path, decision);
+      trackPage({ measurementId, containerId }, path, decision);
       lastPage.current = path;
     }
-  }, [available, decision, measurementId, path, preview]);
+  }, [available, containerId, decision, measurementId, path, preview, raw]);
 
   useEffect(() => {
     if (!expiresAt || !available) return;
@@ -63,8 +66,8 @@ export function CookieConsent({ measurementId, enabled, preview }: { measurement
     let timer: number;
     function checkExpiry() {
       if (expiresAt! > Date.now()) { schedule(); return; }
-      if (!preview) stopAnalytics(measurementId);
       try { localStorage.removeItem(storageKey); } catch { memoryChoices.delete(storageKey); }
+      if (!preview) stopAnalytics(measurementId);
       window.dispatchEvent(new Event(changeEvent));
     }
     function schedule() { timer = window.setTimeout(checkExpiry, Math.min(Math.max(0, expiresAt! - Date.now()), 2_000_000_000)); }
@@ -78,10 +81,10 @@ export function CookieConsent({ measurementId, enabled, preview }: { measurement
   }, [settings]);
 
   function save(value: AnalyticsChoice) {
-    // Disable synchronously, before React updates or any subsequent page event.
-    if (value === "denied" && !preview) stopAnalytics(measurementId);
     const stored = encodeConsent(value);
     try { localStorage.setItem(storageKey, stored); } catch { memoryChoices.set(storageKey, stored); }
+    // Persist before unloading GTM on withdrawal; disable before React updates.
+    if (value === "denied" && !preview) stopAnalytics(measurementId);
     window.dispatchEvent(new Event(changeEvent));
     setSettings(false);
   }

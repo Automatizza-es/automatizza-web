@@ -8,7 +8,7 @@ try {
   const result = spawnSync(process.execPath, [
     "node_modules/typescript/bin/tsc", "--ignoreConfig", "--skipLibCheck", "--strict", "--types", "node",
     "--target", "ES2022", "--module", "Node16", "--moduleResolution", "Node16", "--rootDir", "src",
-    "--outDir", build, "src/lib/analytics/browser.ts", "src/lib/analytics/config.ts",
+    "--outDir", build, "src/lib/analytics/browser.ts", "src/lib/analytics/config.ts", "src/lib/contact/server.ts",
   ], { stdio: "inherit" });
   if (result.status !== 0) process.exitCode = result.status ?? 1;
   else process.exitCode = spawnSync(process.execPath, ["--test", "tests/analytics.test.mjs"], {

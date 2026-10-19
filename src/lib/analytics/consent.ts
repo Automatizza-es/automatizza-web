@@ -1,5 +1,5 @@
 export const consentKey = "automatizza-cookie-consent";
-export const consentVersion = "2026-10-16-v1";
+export const consentVersion = "2026-10-19-v2";
 export const consentLifetime = 180 * 24 * 60 * 60 * 1000;
 export type AnalyticsChoice = "granted" | "denied";
 
