@@ -14,13 +14,15 @@ export function AboutSection() {
                 De necesidades reales <br />a soluciones que funcionan.
               </p>
             </div>
-            <p className={styles.description}>
-              En Automatizza ayudamos a las pequeñas y medianas empresas a crecer con más
-              capacidad y menos complejidad, poniendo a su alcance tecnología que les permita
-              trabajar mejor, ser más competitivas y aprovechar mejor su tiempo.
-            </p>
+            <div className={styles.copy}>
+              <p className={styles.description}>
+                En Automatizza ayudamos a las pequeñas y medianas empresas a crecer con más
+                capacidad y menos complejidad, poniendo a su alcance tecnología que les permita
+                trabajar mejor, ser más competitivas y aprovechar mejor su tiempo.
+              </p>
+              <p className={styles.detail}>Trabajar mejor. Vivir mejor.</p>
+            </div>
           </div>
-          <p className={styles.detail}>Trabajar mejor. Vivir mejor.</p>
         </div>
       </Container>
     </section>
