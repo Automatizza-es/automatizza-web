@@ -36,7 +36,6 @@ function FeatureVisual({ project, index }: { project: ProjectDetail; index: numb
         <div className={styles.dashboard} role="img" aria-label="Dashboard del CRM: solicitudes, contactos, oportunidades y presupuestos">
           <CrmDashboard />
         </div>
-        <figcaption>Interfaz representativa del CRM · Datos ficticios</figcaption>
       </figure>
     ) : <Recording project={project} />;
   }
@@ -46,7 +45,6 @@ function FeatureVisual({ project, index }: { project: ProjectDetail; index: numb
       <div className={styles.factoryWeb} role="img" aria-label="Espacio personal de La Factory: salas, próximas reservas y tarifa">
         <WebHome />
       </div>
-      <figcaption>Espacio personal del coworker · Datos de ejemplo</figcaption>
     </figure>
   );
 }
@@ -73,7 +71,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
               <div className={`${styles.heroStage} ${styles.visual}`} role="img" aria-label={`${project.client}: ${project.visualNote}`}>
                 <ProjectVisual slug={project.slug} />
               </div>
-              <figcaption>{project.visualNote}</figcaption>
+              <figcaption>Datos de demostración</figcaption>
             </figure>
           </section>
 
