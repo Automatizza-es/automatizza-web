@@ -5,12 +5,14 @@
   color: var(--color-navy);
 }
 
-.introduction {
+.layout {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: end;
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
 }
+
+.introduction { min-width: 0; }
 
 .eyebrow:global(.section-eyebrow) {
   margin: 0 0 1.25rem;
@@ -36,24 +38,48 @@
   line-height: 1.75;
 }
 
-.story { margin: 0; }
+.story { max-width: 460px; margin: 1.25rem 0 0; }
 
 .profiles {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(2rem, 5vw, 5rem);
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e1e4e8;
+  gap: 1.5rem;
+  min-width: 0;
+  padding: clamp(1.5rem, 2.25vw, 2rem);
+  border-radius: 16px;
+  background: #f0f8fd;
 }
 
 .profile {
   display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
-  justify-items: start;
+  column-gap: clamp(1.125rem, 2vw, 1.75rem);
+  min-width: 0;
+  align-items: start;
 }
 
+.profile + .profile {
+  padding-top: 1.5rem;
+  border-top: 1px solid #dbe6ed;
+}
+
+.portrait {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  display: block;
+  width: 120px;
+  height: 145px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Crops are independent; neither original is retouched or enlarged in-file.
+   Eva's square original fills the frame vertically, retaining shoulders/torso. */
+.mariaJosePortrait { object-position: 75% 50%; }
+.evaPortrait { object-position: 50% 50%; }
+
 .profile h3 {
+  grid-column: 2;
   margin: 0;
   font-family: var(--font-display), sans-serif;
   font-size: 1.25rem;
@@ -62,9 +88,11 @@
   line-height: 1.35;
 }
 
-.profile p { max-width: 540px; margin: .75rem 0 1rem; }
+.profile p { grid-column: 2; margin: .5rem 0 .75rem; }
 
 .profile a {
+  grid-column: 2;
+  justify-self: start;
   padding-block: .25rem;
   color: var(--color-navy);
   font-size: .8125rem;
@@ -80,16 +108,20 @@
 
 @media (max-width: 900px) {
   .section { scroll-margin-top: 72px; }
-  .introduction { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 1.25rem; }
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
   .story { max-width: 680px; }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 600px) {
   .section { padding-block: 2.25rem; }
   .eyebrow:global(.section-eyebrow) { font-size: .6875rem; letter-spacing: .13em; }
   .statement h2 { font-size: 1.875rem; }
-  .profiles { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.25rem; }
-  .profile h3 { font-size: 1.1875rem; }
+  .profiles { padding: 1.25rem; border-radius: 14px; }
+  .profile { grid-template-columns: 88px minmax(0, 1fr); grid-template-rows: auto auto auto; column-gap: 1rem; }
+  .portrait { grid-row: 1; width: 88px; height: 106px; }
+  .profile h3 { align-self: center; font-size: 1.1875rem; }
+  .profile p { grid-column: 1 / -1; grid-row: 2; margin: .875rem 0 .5rem; }
+  .profile a { grid-column: 1 / -1; grid-row: 3; }
 }
 
 @media (prefers-reduced-motion: reduce) {
