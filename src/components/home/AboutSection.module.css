@@ -1,5 +1,5 @@
 .section {
-  padding-block: clamp(3rem, 4.5vw, 4rem);
+  padding-block: clamp(2.5rem, 4vw, 3.25rem);
   scroll-margin-top: 80px;
   background: var(--color-white);
   color: var(--color-navy);
@@ -29,13 +29,6 @@
   text-wrap: balance;
 }
 
-.lead {
-  max-width: 440px;
-  margin: 1.25rem 0 0;
-  font-size: 1.0625rem;
-  line-height: 1.65;
-}
-
 .story,
 .profile p {
   color: #6d7580;
@@ -43,22 +36,21 @@
   line-height: 1.75;
 }
 
-.story p { margin: 0; }
-.story p + p { margin-top: 1rem; }
+.story { margin: 0; }
 
 .profiles {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2rem, 5vw, 5rem);
-  margin-top: 2.5rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e1e4e8;
 }
 
 .profile {
   display: grid;
   grid-template-rows: auto 1fr auto;
   justify-items: start;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e1e4e8;
 }
 
 .profile h3 {
@@ -88,18 +80,15 @@
 
 @media (max-width: 900px) {
   .section { scroll-margin-top: 72px; }
-  .introduction { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 1.5rem; }
-  .lead { max-width: 600px; }
+  .introduction { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 1.25rem; }
   .story { max-width: 680px; }
 }
 
 @media (max-width: 650px) {
-  .section { padding-block: 2.75rem; }
+  .section { padding-block: 2.25rem; }
   .eyebrow:global(.section-eyebrow) { font-size: .6875rem; letter-spacing: .13em; }
   .statement h2 { font-size: 1.875rem; }
-  .lead { margin-top: 1rem; font-size: 1rem; }
-  .profiles { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; margin-top: 2rem; }
-  .profile { padding-top: 1.25rem; }
+  .profiles { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.25rem; }
   .profile h3 { font-size: 1.1875rem; }
 }
 
