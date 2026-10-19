@@ -10,13 +10,14 @@ export function AboutSection() {
           <div className={styles.introduction}>
             <div className={styles.statement}>
               <h2 id="about-title">Tecnología con los pies en el negocio.</h2>
-              <p className={styles.highlight}>De necesidades reales a soluciones que funcionan.</p>
+              <p className={styles.highlight}>
+                De necesidades reales <br />a soluciones que funcionan.
+              </p>
             </div>
             <p className={styles.description}>
-              Ayudamos a pequeñas y medianas empresas a aprovechar la tecnología de una forma
-              práctica: simplificar tareas, conectar procesos y dedicar más tiempo a lo que
-              realmente importa. Todo con soluciones adaptadas a su forma de trabajar, sin
-              añadir complejidad.
+              En Automatizza ayudamos a las pequeñas y medianas empresas a crecer con más
+              capacidad y menos complejidad, poniendo a su alcance tecnología que les permita
+              trabajar mejor, ser más competitivas y aprovechar mejor su tiempo.
             </p>
           </div>
           <p className={styles.detail}>Trabajar mejor. Vivir mejor.</p>

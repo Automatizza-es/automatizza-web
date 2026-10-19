@@ -22,7 +22,7 @@
 }
 
 .statement h2 {
-  max-width: 580px;
+  max-width: none;
   margin: 0;
   font-family: var(--font-display), sans-serif;
   font-size: clamp(1.875rem, 2.6vw, 2.25rem);
