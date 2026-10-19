@@ -44,15 +44,6 @@
 }
 
 .service h3 > span:first-child { transition: transform 240ms ease; }
-.arrow {
-  flex: none;
-  color: var(--color-cyan);
-  font-family: var(--font-sans), sans-serif;
-  font-size: 1.125rem;
-  font-weight: 400;
-  opacity: .75;
-  transition: transform 240ms ease, opacity 240ms ease;
-}
 
 .service p {
   max-width: 290px;
@@ -64,7 +55,6 @@
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .service:hover h3 > span:first-child { transform: translateX(2px); }
-  .service:hover .arrow { transform: translateX(3px); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -102,5 +92,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service, .service h3 > span:first-child, .arrow { transition: none; }
+  .service, .service h3 > span:first-child { transition: none; }
 }

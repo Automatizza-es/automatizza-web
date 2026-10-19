@@ -16,11 +16,29 @@
   Resend el 15/10/2026: `automatizza.es` está `verified`, con envío `enabled`,
   DKIM/SPF verificados y región `eu-west-1`. Seguimiento de aperturas y clics
   desactivado. El dominio coincide con el remitente configurado.
-  Remitente y destinatario: info@automatizza.es. No se han realizado envíos
-  reales ni cambios de DNS o producción. La API local sigue devolviendo 503
-  mientras la política esté pendiente.
-- **El envío permanece desactivado en el cliente y en la API.** Poner una API key
+  Remitente y destinatario: info@automatizza.es. El 15/10/2026 se realiza una
+  prueba real desde el formulario local con datos ficticios: Resend confirma
+  `delivered`, campos completos y `Reply-To` correcto. Sin cambios de DNS ni
+  activación del formulario de producción.
+- **El envío público permanece desactivado en el cliente y en la API.** Poner una API key
   o cambiar solo una variable de entorno no elude la revisión de la política.
+
+## Pruebas locales con envío real
+
+`CONTACT_FORM_TEST_MODE=true` en `.env.local` permite probar el formulario de
+`http://127.0.0.1:3000/#contacto` con `next dev`. La excepción solo funciona con
+`NODE_ENV=development` y fuera de Vercel; las compilaciones y despliegues de
+producción continúan exigiendo la política revisada y el interruptor público.
+`CONTACT_FORM_ENABLED` sigue en `false`; la política permanece como borrador.
+
+El formulario avisa de que el envío es real y exige confirmar el uso de datos
+ficticios. El asunto lleva `[PRUEBA LOCAL]` y el correo no registra consentimiento
+legal. Se mantienen la validación, el honeypot, los límites, la idempotencia y
+la consulta real del dominio antes de enviar. No se permiten destinatarios
+arbitrarios: se utiliza el buzón configurado en el servidor.
+
+Para desactivarlo, establecer `CONTACT_FORM_TEST_MODE=false` y reiniciar el
+servidor de desarrollo si no ha recargado las variables de entorno.
 
 ## Variables privadas del servidor
 
@@ -32,6 +50,7 @@ introducirlas en el formulario o en mensajes de revisión.
 | Variable | Uso |
 | --- | --- |
 | `CONTACT_FORM_ENABLED` | Interruptor explícito. Actualmente `false`. |
+| `CONTACT_FORM_TEST_MODE` | Pruebas reales con datos ficticios solo con `NODE_ENV=development` y fuera de Vercel. Ignorado en producción. No aprueba la política. |
 | `RESEND_API_KEY` | Credencial para enviar email mediante Resend. |
 | `RESEND_VERIFY_API_KEY` | Opcional: credencial separada con permiso de lectura del dominio. Si falta, se usa la anterior y debe tener ese permiso. |
 | `RESEND_DOMAIN_ID` | UUID del dominio/subdominio realmente verificado en la cuenta. |
@@ -136,3 +155,16 @@ habilitan un modo de éxito simulado en la aplicación.**
 Ejecutar además `npm run lint` y `npm run build`. Tras aprobar la política y
 configurar las credenciales, queda pendiente una prueba real hasta la recepción
 en el buzón y la comprobación de responder al email del solicitante.
+
+## Medición opcional de envíos confirmados
+
+La integración GTM emite `automatizza_contact_success` únicamente después de
+HTTP correcto y `ok: true` del servidor, y solo si existe consentimiento de
+estadísticas vigente y la medición está habilitada. No transmite campos del
+formulario ni el ID de reintento. En GTM se transforma en `generate_lead`;
+no usar clics ni eventos automáticos de formularios como conversión.
+
+Los envíos con `testMode` no cuentan como conversiones. Una confirmación significa
+aceptación por Resend, no acreditación de entrega ni venta. El bloqueo legal y
+operativo del formulario no se ha cambiado con esta integración. Detalles y
+pendientes de cuenta en [analytics.md](analytics.md).

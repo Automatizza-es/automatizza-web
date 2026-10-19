@@ -33,7 +33,7 @@ const sliders: {
   {
     id: "automation",
     label: "Tiempo que podrías liberar",
-    hint: "Parte de esas horas que dejaría de ir a tareas repetitivas y podría dedicarse a lo que de verdad aporta valor.",
+    hint: "Parte de esas horas que podrías recuperar para dedicar a lo que siempre acabas dejando para después.",
     min: 0,
     max: 100,
     step: 5,
@@ -145,15 +145,15 @@ export function SavingsCalculator() {
 
       <p className="calc-insight">
         Con esta hipótesis, tu equipo podría recuperar <strong>{numberFormat(annualHours)} horas al año</strong>,
-        con un valor económico potencial de <strong>{moneyFormat(annualValue)} anuales</strong>. Ese tiempo podría
-        dedicarse a otras tareas de valor para la empresa. El ahorro económico efectivo dependerá de cómo se
-        reorganice el trabajo y de los costes de la solución.
+        con un valor potencial de <strong>{moneyFormat(annualValue)}</strong>. El cálculo anual supone
+        <strong> 12 meses con la misma carga de trabajo</strong>.
       </p>
 
       <p className="calc-disclaimer">
-        <strong>Estimación orientativa, no ahorro garantizado.</strong> Representa el valor potencial del
-        tiempo recuperado, no necesariamente una reducción directa de gastos. No incluye costes de
-        implantación, mantenimiento ni licencias; el resultado real requiere analizar cada proceso.
+        <strong>Estimación orientativa, no ahorro garantizado.</strong> El valor del tiempo recuperado
+        no equivale necesariamente a una reducción de gastos. El ahorro efectivo dependerá de cómo se
+        reorganice el trabajo y de los costes de implantación, mantenimiento y licencias, no incluidos
+        en el cálculo.
       </p>
     </div>
   );

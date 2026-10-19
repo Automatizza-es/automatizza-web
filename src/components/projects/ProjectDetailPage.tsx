@@ -36,7 +36,6 @@ function FeatureVisual({ project, index }: { project: ProjectDetail; index: numb
         <div className={styles.dashboard} role="img" aria-label="Dashboard del CRM: solicitudes, contactos, oportunidades y presupuestos">
           <CrmDashboard />
         </div>
-        <figcaption>Interfaz representativa del CRM · Datos ficticios</figcaption>
       </figure>
     ) : <Recording project={project} />;
   }
@@ -46,7 +45,6 @@ function FeatureVisual({ project, index }: { project: ProjectDetail; index: numb
       <div className={styles.factoryWeb} role="img" aria-label="Espacio personal de La Factory: salas, próximas reservas y tarifa">
         <WebHome />
       </div>
-      <figcaption>Propuesta de interfaz web · Reservas y uso de ejemplo</figcaption>
     </figure>
   );
 }
@@ -73,14 +71,13 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
               <div className={`${styles.heroStage} ${styles.visual}`} role="img" aria-label={`${project.client}: ${project.visualNote}`}>
                 <ProjectVisual slug={project.slug} />
               </div>
-              <figcaption>{project.visualNote}</figcaption>
+              <figcaption>Datos de demostración</figcaption>
             </figure>
           </section>
 
           <section className={styles.context} aria-label="El reto y la solución">
-            <div><p className={styles.sectionLabel}>El reto</p><h2>Un punto de partida claro.</h2><p>{project.challenge}</p></div>
+            <div><p className={styles.sectionLabel}>El reto</p><h2>{project.challengeTitle}</h2><p>{project.challenge}</p></div>
             <div><p className={styles.sectionLabel}>La solución</p><h2>{project.focus}</h2><p>{project.solution}</p></div>
-            {"status" in project && <p className={styles.status}>{project.status}</p>}
           </section>
 
           <section className={styles.inside} aria-labelledby="inside-title">

@@ -13,12 +13,11 @@
 .tags { display: flex; flex-wrap: wrap; gap: .5rem 1rem; padding: 1.3rem 0 0; margin: 1.5rem 0 0; border-top: 1px solid #e4e6e9; list-style: none; color: #787e88; font-size: .6875rem; }
 .heroFigure { margin: 3.5rem 0 0; }
 .heroStage { position: relative; height: clamp(440px, 44vw, 560px); overflow: hidden; border-radius: 8px; background: var(--project-surface); container-type: inline-size; }
-.page figcaption { margin-top: 1rem; color: #8a8f98; font-size: .6875rem; line-height: 1.6; }
+.page figcaption { margin-top: .75rem; color: #6d7580; font-size: .8125rem; line-height: 1.6; }
 .context { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 6rem; padding-block: 5.5rem; margin-top: 2rem; border-bottom: 1px solid #e4e6e9; }
 .sectionLabel { margin: 0 0 1.25rem; color: #6d7580; font-size: .875rem; font-weight: 500; line-height: 1.5; }
 .context h2, .feature h3, .operationStory h3 { margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; text-wrap: balance; }
 .context div > p:last-child, .featureCopy > p:last-child { margin: 1.3rem 0 0; color: #6d7580; font-size: .9375rem; line-height: 1.75; }
-.context .status { grid-column: 1 / -1; max-width: 830px; margin: .5rem 0 0; color: #8a8f98; font-size: .75rem; line-height: 1.75; }
 .inside { padding-block: 4.5rem 0; }
 .insideHeading .eyebrow { margin-top: 0; }
 .insideHeading h2 { max-width: 800px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.9rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.2; }

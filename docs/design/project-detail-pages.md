@@ -35,9 +35,14 @@ en las páginas de detalle. Se respeta `prefers-reduced-motion`.
 Las representaciones de interfaces usan datos ficticios y se identifican como
 demostraciones. Las cifras de las grabaciones no se presentan como resultados.
 La grabación de APC se identifica como recorrido del registro de una recogida.
-Silos describe una integración modular progresiva. La Factory diferencia las
-reservas de partida de las futuras integraciones y de las propuestas de interfaz
-para eventos, paquetes e incidencias.
+Silos describe una integración modular progresiva. El texto público de La Factory
+se centra en calendario, reservas y espacio personal del coworker. Las notas de
+alcance y de revisión editorial no se muestran en la página.
+
+Nota interna de La Factory: onboarding, Holded, accesos y campañas de email se
+plantean como futuras integraciones. Eventos, paquetes e incidencias forman
+parte de la propuesta de interfaz; su estado operativo no está confirmado.
+Esta información es contexto de edición, no contenido comercial para publicar.
 
 ## SEO y navegación
 

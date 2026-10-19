@@ -1,0 +1,27 @@
+.banner { position: fixed; z-index: 100; inset: auto 1.5rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; max-width: 1160px; margin-inline: auto; padding: 1.5rem; border: 1px solid #e1e5eb; border-radius: 12px; background: #fff; color: #626977; box-shadow: 0 12px 40px #02135f14; }
+.banner h2, .dialog h2 { margin: 0 0 .65rem; color: #02135f; font-family: var(--font-display), sans-serif; font-size: 1.125rem; font-weight: 550; }
+.banner p, .dialog p { max-width: 660px; margin: 0; font-size: .8125rem; line-height: 1.65; }
+.banner a, .dialog a { color: #02135f; text-decoration: underline; text-underline-offset: 3px; }
+.actions { display: flex; flex-wrap: wrap; gap: .65rem; flex-shrink: 0; }
+.actions button, .reopen { border: 1px solid #02135f; border-radius: 999px; background: #fff; color: #02135f; padding: .7rem 1rem; font: inherit; font-size: .8125rem; font-weight: 550; cursor: pointer; }
+.actions button:hover { background: #f0f3f7; }
+.actions .settings { border-color: transparent; padding-inline: .5rem; text-decoration: underline; text-underline-offset: 3px; }
+.reopen { position: fixed; z-index: 90; right: 1rem; bottom: 1rem; border-color: #dce1e9; box-shadow: 0 2px 8px #02135f0a; font-size: .6875rem; padding: .55rem .8rem; }
+.dialog { width: min(520px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: 1.75rem; border: 1px solid #e1e5eb; border-radius: 12px; background: #fff; color: #626977; }
+.dialog::backdrop { background: #02135f40; }
+.dialog h2 { font-size: 1.4rem; }
+.dialog .actions { margin-top: 1.5rem; }
+.option { display: flex; align-items: center; gap: .65rem; padding-block: 1rem; border-bottom: 1px solid #e1e5eb; color: #02135f; font-size: .875rem; }
+.option input { width: 18px; height: 18px; accent-color: #02135f; }
+.option span { margin-left: auto; color: #7c8594; font-size: .6875rem; }
+.dialog .option + p { margin-top: 1rem; }
+.banner .preview, .dialog .preview { margin-top: .65rem; color: #7c8594; font-size: .75rem; }
+.banner :focus-visible, .dialog :focus-visible, .reopen:focus-visible { outline: 2px solid #02135f; outline-offset: 4px; }
+@media (max-width: 1000px) { .banner { align-items: stretch; flex-direction: column; gap: 1rem; } }
+@media (max-width: 600px) {
+  .banner { inset-inline: .75rem; bottom: .75rem; padding: 1.15rem; max-height: calc(100dvh - 1.5rem); overflow: auto; }
+  .banner .actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .banner .settings { grid-column: 1 / -1; }
+  .dialog { padding: 1.25rem; }
+  .dialog .actions { flex-direction: column; }
+}
