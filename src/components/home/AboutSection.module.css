@@ -22,14 +22,25 @@
   text-wrap: balance;
 }
 
-.introduction > p,
+.introduction > .eyebrow {
+  grid-column: 1 / -1;
+  max-width: none;
+  margin: 0 0 -.75rem;
+  color: var(--color-cyan);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  line-height: 1.4;
+}
+
+.introduction > p:not(.eyebrow),
 .profile p {
   color: #6d7580;
   font-size: .9375rem;
   line-height: 1.7;
 }
 
-.introduction > p { max-width: 390px; margin: 0; }
+.introduction > p:not(.eyebrow) { max-width: 390px; margin: 0; }
 
 .profiles {
   display: grid;
@@ -104,13 +115,14 @@
 @media (max-width: 900px) {
   .section { scroll-margin-top: 72px; }
   .introduction { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
-  .introduction > p { max-width: 600px; }
+  .introduction > p:not(.eyebrow) { max-width: 600px; }
   .profiles { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
 }
 
 @media (max-width: 600px) {
   .section { padding-block: 2.25rem; }
   .introduction h2 { font-size: 1.75rem; line-height: 1.25; }
+  .introduction > .eyebrow { margin-bottom: 0; font-size: .6875rem; letter-spacing: .13em; }
   .profiles { margin-top: 1.5rem; padding-top: 1.5rem; }
   .profile { grid-template-columns: 88px minmax(0, 1fr); gap: 1rem; }
   .portraitFrame { width: 88px; height: 106px; }

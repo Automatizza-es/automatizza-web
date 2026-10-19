@@ -11,6 +11,7 @@ export function AboutSection() {
     <section className={styles.section} id="sobre-automatizza" aria-labelledby="about-title">
       <Container className="editorial-container">
         <div className={styles.introduction} data-reveal>
+          <p className={`section-eyebrow ${styles.eyebrow}`}>SOBRE AUTOMATIZZA</p>
           <h2 id="about-title">Quienes estamos detrás</h2>
           <p>
             Unimos experiencia en negocio, desarrollo y datos para crear aplicaciones y
