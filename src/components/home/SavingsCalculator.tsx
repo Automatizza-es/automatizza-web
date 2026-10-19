@@ -57,7 +57,8 @@ export function SavingsCalculator() {
   const validRate = rate.trim() !== "" && Number.isFinite(hourly) && hourly > 0 && hourly <= 500;
   const monthlyCost = validRate ? values.employees * values.hours * hourly * values.days : 0;
   const share = values.automation / 100;
-  const annualValue = monthlyCost * 12 * share;
+  const monthlyValue = monthlyCost * share;
+  const annualValue = monthlyValue * 12;
   const annualHours = values.employees * values.hours * values.days * 12 * share;
 
   return (
@@ -135,11 +136,25 @@ export function SavingsCalculator() {
               <i aria-hidden="true" />
               <span>Horas recuperables al año</span>
               <b>{numberFormat(annualHours)} h</b>
-              <i aria-hidden="true" />
-              <span>Coste mensual de estas tareas</span>
-              <b>{moneyFormat(monthlyCost)}</b>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="calc-comparison" role="group" aria-label="Comparación mensual">
+        <div className="calc-comparison-row">
+          <span>Coste mensual de las tareas</span>
+          <div className="calc-comparison-track" aria-hidden="true">
+            <span style={{ width: monthlyCost > 0 ? "100%" : "0%" }} />
+          </div>
+          <strong>{moneyFormat(monthlyCost)}</strong>
+        </div>
+        <div className="calc-comparison-row">
+          <span>Valor mensual recuperable</span>
+          <div className="calc-comparison-track is-recoverable" aria-hidden="true">
+            <span style={{ width: monthlyCost > 0 ? `${values.automation}%` : "0%" }} />
+          </div>
+          <strong>{moneyFormat(monthlyValue)}</strong>
         </div>
       </div>
 

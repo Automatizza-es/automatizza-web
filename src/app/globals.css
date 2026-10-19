@@ -1523,6 +1523,13 @@ html::-webkit-scrollbar-thumb:hover, .showcase-grid::-webkit-scrollbar-thumb:hov
 .calc-result-detail span { color: #c9d2e4; font-size: .85rem; }
 .calc-result-detail b { margin-bottom: .8rem; font-family: var(--font-display), sans-serif; font-size: 1.35rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .calc-result-detail b:last-child { margin-bottom: 0; }
+.calc-comparison { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.calc-comparison-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.8fr) 6.5rem; align-items: center; gap: 1rem; font-size: .8125rem; }
+.calc-comparison-row > span { font-weight: 500; line-height: 1.5; }
+.calc-comparison-row > strong { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.calc-comparison-track { height: 10px; overflow: hidden; border-radius: 999px; background: #dfe4ee; }
+.calc-comparison-track > span { display: block; height: 100%; border-radius: inherit; background: var(--color-navy); transition: width 240ms ease; }
+.calc-comparison-track.is-recoverable > span { background: var(--color-cyan); }
 .calc-insight { margin: 1.1rem 0 0; color: var(--color-dark-gray); font-size: .9rem; line-height: 1.6; }
 .calc-insight strong { color: var(--color-navy); }
 .calc-disclaimer { margin: .6rem 0 0; color: var(--color-medium-gray); font-size: .75rem; line-height: 1.6; }
@@ -1534,6 +1541,12 @@ html::-webkit-scrollbar-thumb:hover, .showcase-grid::-webkit-scrollbar-thumb:hov
   .calc-body { grid-template-columns: 1fr; }
   .calc-controls { padding: 1.4rem 1.25rem; }
   .calc-result { padding: 1.6rem 1.25rem; }
+  .calc-comparison-row { grid-template-columns: minmax(0, 1fr) auto; gap: .5rem 1rem; }
+  .calc-comparison-track { grid-column: 1 / -1; grid-row: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calc-comparison-track > span { transition: none; }
 }
 
 /* Phones: the four cards stay, each with a compact version of its
