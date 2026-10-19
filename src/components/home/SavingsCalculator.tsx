@@ -69,7 +69,6 @@ export function SavingsCalculator() {
             <span className="calc-eyebrow">Estimación</span>
             <h3>Coste de tareas repetitivas</h3>
           </div>
-          <span className="calc-pill">Orientativa</span>
         </div>
 
         <div className="calc-body">
