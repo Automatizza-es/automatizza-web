@@ -1,18 +1,28 @@
 .section {
-  padding-block: clamp(2.5rem, 4vw, 3.25rem);
+  padding-block: clamp(3rem, 5vw, 4rem);
   scroll-margin-top: 80px;
   background: var(--color-white);
   color: var(--color-navy);
 }
 
+.eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--color-cyan);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  line-height: 1.4;
+}
+
 .introduction {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
-  align-items: start;
+  align-items: end;
   gap: 2rem 5rem;
 }
 
-.introduction h2 {
+.statement h2 {
+  max-width: 580px;
   margin: 0;
   font-family: var(--font-display), sans-serif;
   font-size: clamp(1.875rem, 2.6vw, 2.25rem);
@@ -22,118 +32,55 @@
   text-wrap: balance;
 }
 
-.introduction > .eyebrow {
-  grid-column: 1 / -1;
-  max-width: none;
-  margin: 0 0 -.75rem;
-  color: var(--color-cyan);
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .16em;
-  line-height: 1.4;
+.highlight {
+  max-width: 580px;
+  margin: 1.25rem 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  letter-spacing: -.02em;
+  line-height: 1.45;
+  text-wrap: pretty;
 }
 
-.introduction > p:not(.eyebrow),
-.profile p {
+.description {
+  max-width: 420px;
+  margin: 0;
   color: #6d7580;
   font-size: .9375rem;
   line-height: 1.7;
 }
 
-.introduction > p:not(.eyebrow) { max-width: 390px; margin: 0; }
-
-.profiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  gap: clamp(2rem, 5vw, 4rem);
-  margin-top: 2rem;
-  padding-top: 1.75rem;
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 2.5rem 0 0;
+  padding-top: 1.5rem;
   border-top: 1px solid #e1e4e8;
+  color: #6d7580;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  line-height: 1.6;
 }
 
-.profile {
-  display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  align-items: start;
-  gap: 1.5rem;
-  min-width: 0;
+.detail::before {
+  flex: 0 0 2.5rem;
+  height: 2px;
+  background: var(--color-cyan);
+  content: "";
 }
-
-.portraitFrame {
-  width: 120px;
-  height: 145px;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.portrait {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Independent CSS-only crops; the original image files remain unchanged. */
-.mariaJosePortrait { object-position: 75% 50%; }
-.evaPortrait {
-  object-position: 50% 0;
-  transform: scale(1.45);
-  transform-origin: 50% 0;
-}
-
-.profileCopy { min-width: 0; }
-
-.profile h3 {
-  margin: 0;
-  font-family: var(--font-display), sans-serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.35;
-}
-
-.profile p { margin: .5rem 0 .625rem; }
-
-.profile a {
-  display: inline-flex;
-  align-items: baseline;
-  gap: .3em;
-  padding-block: .25rem;
-  color: var(--color-navy);
-  font-size: .8125rem;
-  font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: #c7ccd8;
-  text-underline-offset: .3em;
-  transition: color 180ms ease, text-decoration-color 180ms ease;
-}
-
-.profile a:hover { color: var(--color-cyan); text-decoration-color: currentColor; }
-.profile a:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 5px; border-radius: 2px; }
 
 @media (max-width: 900px) {
   .section { scroll-margin-top: 72px; }
-  .introduction { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
-  .introduction > p:not(.eyebrow) { max-width: 600px; }
-  .profiles { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+  .introduction { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .description { max-width: 600px; }
 }
 
 @media (max-width: 600px) {
-  .section { padding-block: 2.25rem; }
-  .introduction h2 { font-size: 1.75rem; line-height: 1.25; }
-  .introduction > .eyebrow { margin-bottom: 0; font-size: .6875rem; letter-spacing: .13em; }
-  .profiles { margin-top: 1.5rem; padding-top: 1.5rem; }
-  .profile { grid-template-columns: 88px minmax(0, 1fr); gap: 1rem; }
-  .portraitFrame { width: 88px; height: 106px; }
-  .profile h3 { font-size: 1.1875rem; }
-}
-
-@media (max-width: 360px) {
-  .profile { grid-template-columns: 72px minmax(0, 1fr); gap: .875rem; }
-  .portraitFrame { width: 72px; height: 87px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .profile a { transition: none; }
+  .section { padding-block: 2.5rem; }
+  .eyebrow { margin-bottom: 1.25rem; font-size: .6875rem; letter-spacing: .13em; }
+  .statement h2 { font-size: 1.75rem; line-height: 1.25; }
+  .highlight { margin-top: 1rem; }
+  .detail { gap: 1rem; margin-top: 1.75rem; padding-top: 1.25rem; letter-spacing: .06em; }
+  .detail::before { flex-basis: 2rem; }
 }
