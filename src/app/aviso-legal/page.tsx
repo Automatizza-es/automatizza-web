@@ -8,7 +8,7 @@ import styles from "../politica-de-privacidad/privacy.module.css";
 
 export const metadata: Metadata = {
   title: "Aviso legal | Automatizza",
-  description: "Identificación de la sociedad titular de Automatizza. Borrador pendiente de revisión.",
+  description: "Identificación de Grain Store Technology, S.L., titular de Automatizza, y condiciones de uso del sitio web.",
   robots: { index: false, follow: false },
 };
 
@@ -21,11 +21,11 @@ export default function LegalNoticePage() {
           <Link className={styles.back} href="/">← Volver al inicio</Link>
           <p className={styles.eyebrow}>INFORMACIÓN LEGAL</p>
           <h1>Aviso legal</h1>
-          <div className={styles.draft} role="note">
-            <strong>Borrador pendiente de revisión</strong>
-            <p>Los datos de identificación han sido facilitados por la titular. Este texto se revisará junto con la política de privacidad y la configuración de cookies antes de su aprobación definitiva.</p>
-          </div>
-          <p className={styles.version}>Última actualización del borrador: 16 de octubre de 2026.</p>
+          {!privacyPolicy.reviewed && <div className={styles.draft} role="note">
+            <strong>Versión preparada para revisión final</strong>
+            <p>Los datos de identificación han sido facilitados por la titular. Esta versión se presenta para su aprobación antes del lanzamiento.</p>
+          </div>}
+          <p className={styles.version}>Última actualización: 20 de octubre de 2026.</p>
           <section aria-labelledby="legal-owner">
             <h2 id="legal-owner">01. Titular del sitio web</h2>
             <p>Automatizza es la marca comercial de <strong>{privacyPolicy.legalName}</strong>, titular de este sitio web.</p>

@@ -1,6 +1,8 @@
-// Complete and review these facts before enabling contact submissions.
+// Launch copy prepared from owner confirmations and official provider terms.
+// Owner approved this concrete version on 2026-10-20. Deployment flags remain separate.
 // Company identity supplied by the owner on 2026-10-15; registry on 2026-10-16.
 // This records its provenance, not an independent registry verification.
+// Abbas infrastructure location confirmed by the provider via the owner on 2026-10-20.
 export const privacyPolicy: {
   reviewed: boolean;
   version: string;
@@ -14,23 +16,24 @@ export const privacyPolicy: {
   transfers: string;
   dpo: string;
 } = {
-  reviewed: false,
-  version: "2026-10-16-borrador-4",
+  reviewed: true,
+  version: "2026-10-20-prelanzamiento-1",
   legalName: "Grain Store Technology, S.L.",
   taxId: "B56885676",
   address: "Calle Párroco Bartolomé Blanco, 46, 14014 Córdoba, España.",
   registry: "Registro Mercantil de Córdoba, hoja CO-45659, tomo 2946, folio 21.",
   rightsEmail: "info@automatizza.es",
-  retention: "Propuesta pendiente de aprobación: gestionar las consultas durante el tiempo necesario para responderlas y conservar las que no den lugar a contratación durante un máximo de 12 meses desde el último contacto. Al finalizar, suprimirlas o bloquear únicamente los datos necesarios para atender responsabilidades durante los plazos legales que correspondan. Los expedientes de clientes se rigen por sus obligaciones contractuales, fiscales y contables. Quedan pendientes de confirmar el procedimiento de borrado del buzón y los plazos de copias y registros de los proveedores.",
-  processors: "Vercel interviene en el alojamiento web y Resend en el envío transaccional. La titular identifica a Abbas como proveedor del correo de info@automatizza.es. Quedan pendientes de validar las entidades y contratos aplicables, el alojamiento efectivo del buzón, los subencargados, los países de tratamiento y los plazos de conservación.",
-  transfers: "",
+  retention: "Conservamos las consultas durante su gestión. Si no dan lugar a una contratación, las eliminamos como máximo a los 12 meses desde el último contacto, o antes si dejan de ser necesarias. Cuando existe una relación contractual, conservamos la documentación durante los plazos exigidos por las obligaciones contractuales, fiscales y contables aplicables. Cuando proceda, los datos necesarios para atender responsabilidades quedan bloqueados durante sus plazos de prescripción, sin utilizarlos para otros fines.",
+  processors: "Para alojar la web utilizamos Vercel Inc. Para enviar los mensajes del formulario utilizamos Resend, servicio de Plus Five Five, Inc. Abbas presta el servicio del buzón info@automatizza.es y ha confirmado que sus instalaciones de tratamiento y copias de seguridad están en Córdoba, España. Estos proveedores acceden a los datos necesarios para prestar sus servicios. No vendemos los datos ni los incorporamos a listas comerciales. También podremos comunicarlos cuando lo exija una obligación legal.",
+  transfers: "El alojamiento con Vercel y el envío con Resend pueden implicar tratamiento en Estados Unidos u otros países donde operen sus subencargados. Sus condiciones de tratamiento contemplan garantías para las transferencias internacionales, incluidas las cláusulas contractuales tipo de la Comisión Europea cuando resulten aplicables. La ubicación del buzón de Abbas en Córdoba no implica que los demás servicios traten los datos exclusivamente en España. Puedes consultar las garantías y los subencargados en los enlaces de esta política o solicitar información adicional en info@automatizza.es.",
   dpo: "",
 };
 
-export function isPrivacyPolicyReady() {
-  return privacyPolicy.reviewed && [
-    privacyPolicy.legalName, privacyPolicy.taxId, privacyPolicy.address, privacyPolicy.registry,
-    privacyPolicy.rightsEmail, privacyPolicy.retention, privacyPolicy.processors,
-    privacyPolicy.transfers, privacyPolicy.dpo,
+export function isPrivacyPolicyReady(policy = privacyPolicy) {
+  // A DPO contact is published if one is supplied; an optional designation is
+  // not a mandatory text field or a substitute for the owner's final review.
+  return policy.reviewed && [
+    policy.legalName, policy.taxId, policy.address, policy.registry,
+    policy.rightsEmail, policy.retention, policy.processors, policy.transfers,
   ].every((value) => value.trim().length > 0);
 }

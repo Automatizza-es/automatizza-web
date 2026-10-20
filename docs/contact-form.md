@@ -2,6 +2,12 @@
 
 ## Estado actual
 
+- Actualización de lanzamiento 20/10/2026: la titular ha aprobado la versión
+  `2026-10-20-prelanzamiento-1` de privacidad y aviso legal. En `rediseño`,
+  `privacyPolicy.reviewed=true`; la activación sigue requiriendo la variable
+  `CONTACT_FORM_ENABLED=true` y configuración válida de Resend en el entorno.
+  El despliegue público anterior no se ha actualizado con esta preparación.
+  Estado de dominio y pasos restantes: [launch.md](launch.md).
 - Formulario único en `/contacto`, conservando campos, diseño, validación,
   estados, consentimiento y protección antispam. La home muestra un cierre
   compacto que enlaza a esa página; `/#contacto` sigue funcionando mediante
@@ -16,13 +22,14 @@
   obligatorios. La API admite el área opcional de versiones anteriores; las
   consultas actuales se envían sin área ni categorías en el asunto.
 - `/politica-de-privacidad` existe y está enlazada desde la casilla y el footer.
-  Es un **borrador sin indexación**, no una política definitiva.
+  La versión de lanzamiento ha sido aprobada por la titular; la página conserva
+  la exclusión de indexación de los textos legales.
 - La titular ha facilitado directamente el 15/10/2026 los datos de Grain Store
   Technology, S.L. (NIF B56885676), Calle Párroco Bartolomé Blanco, 46, 14014
   Córdoba, España, e info@automatizza.es. Se incorporan a la política y a la
   información legal del formulario, sin modificar la identidad comercial.
   Su procedencia es la confirmación de la titular; no una consulta independiente
-  del Registro Mercantil. El resto de la política continúa pendiente de revisión.
+  del Registro Mercantil. Los textos de lanzamiento se aprobaron el 20/10/2026.
 - Credenciales configuradas en `.env.local`, excluido de Git. Consulta real a
   Resend el 15/10/2026: `automatizza.es` está `verified`, con envío `enabled`,
   DKIM/SPF verificados y región `eu-west-1`. Seguimiento de aperturas y clics
@@ -53,11 +60,12 @@ página o renderizarla de nuevo no recupera ni repite la conversión.
 `http://127.0.0.1:3000/contacto` con `next dev`. La excepción solo funciona con
 `NODE_ENV=development` y fuera de Vercel; las compilaciones y despliegues de
 producción continúan exigiendo la política revisada y el interruptor público.
-`CONTACT_FORM_ENABLED` sigue en `false`; la política permanece como borrador.
+`CONTACT_FORM_ENABLED` local sigue en `false`; la política de lanzamiento ya
+está aprobada, pero esa aprobación no activa por sí sola el interruptor.
 
-El formulario avisa de que el envío es real y exige confirmar el uso de datos
+El modo de prueba avisa de que el envío es real y exige confirmar el uso de datos
 ficticios. El asunto lleva `[PRUEBA LOCAL]` y el correo no registra consentimiento
-legal. Se mantienen la validación, el honeypot, los límites, la idempotencia y
+legal, con independencia de la aprobación del texto. Se mantienen la validación, el honeypot, los límites, la idempotencia y
 la consulta real del dominio antes de enviar. No se permiten destinatarios
 arbitrarios: se utiliza el buzón configurado en el servidor.
 
@@ -114,6 +122,12 @@ Fuentes: [dominios verificados](https://resend.com/docs/dashboard/domains/introd
 [gestión de claves](https://resend.com/docs/dashboard/api-keys/introduction).
 
 ## Revisión legal necesaria para activar
+
+La versión concreta de lanzamiento de privacidad y aviso legal ha sido aprobada
+por la titular el 20/10/2026 y está registrada en el código. Las instrucciones
+siguientes explican los controles que deben preservarse si cambia la política;
+no requieren volver a pedir los datos ya confirmados. La revisión/activación
+de cookies y GTM permanece separada. Véase [launch.md](launch.md).
 
 Inventario de datos y decisiones pendientes, incluido aviso legal y cookies:
 [legal-readiness.md](legal-readiness.md).

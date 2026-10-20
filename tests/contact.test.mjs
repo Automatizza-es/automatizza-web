@@ -34,12 +34,20 @@ function setup(options = {}) {
   return { handler, calls };
 }
 
-test("the real policy remains draft; even complete email configuration cannot enable it", async () => {
-  assert.equal(isPrivacyPolicyReady(), false);
-  assert.equal(getContactConfig(env).ready, false);
+test("the approved launch policy is complete; an unapproved policy still blocks sending", async () => {
+  assert.equal(isPrivacyPolicyReady(), true);
+  assert.equal(getContactConfig(env).ready, true);
+  assert.equal(getContactConfig(env, false).ready, false);
   const { handler, calls } = setup({ policyReady: () => false });
   assert.equal((await handler(request())).status, 503);
   assert.equal(calls.length, 0);
+});
+test("launch copy needs explicit approval and complete information, while a DPO contact is optional", () => {
+  assert.equal(isPrivacyPolicyReady({ ...privacyPolicy, reviewed: true, dpo: "" }), true);
+  assert.equal(isPrivacyPolicyReady({ ...privacyPolicy, reviewed: false }), false);
+  for (const field of ["legalName", "taxId", "address", "registry", "rightsEmail", "retention", "processors", "transfers"]) {
+    assert.equal(isPrivacyPolicyReady({ ...privacyPolicy, reviewed: true, [field]: " " }), false, field);
+  }
 });
 test("explicit kill switch and missing configuration fail closed", async () => {
   for (const override of [{ CONTACT_FORM_ENABLED: "false" }, { RESEND_API_KEY: "" }, { RESEND_DOMAIN_ID: "" }, { CONTACT_TO_EMAIL: "" }, { CONTACT_ALLOWED_ORIGINS: "" }, { RESEND_FROM_EMAIL: "Unverified <contact@example.test>" }]) {
@@ -54,7 +62,7 @@ test("local test mode enables only explicit development tests, never production 
   for (const override of [{ NODE_ENV: "production" }, { NODE_ENV: "test" }, { VERCEL: "1" }, { CONTACT_FORM_TEST_MODE: "false" }, { RESEND_API_KEY: "" }]) {
     assert.equal(getContactConfig({ ...local, ...override }, false).ready, false);
   }
-  assert.equal(isPrivacyPolicyReady(), false);
+  assert.equal(isPrivacyPolicyReady(), true);
 });
 test("local tests use the real send path but never claim legal consent", async () => {
   const { handler, calls } = setup({

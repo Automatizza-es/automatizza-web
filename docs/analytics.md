@@ -1,6 +1,6 @@
 # GA4 mediante Google Tag Manager y consentimiento básico v2
 
-## Estado en rediseño
+## Estado comprobado el 20/10/2026
 
 - El formulario se encuentra en `/contacto`; conserva `form_id=contact` y el
   mismo evento de éxito confirmado. La ruta está en la lista de páginas
@@ -11,16 +11,28 @@
   IDs públicos, sustituibles con `GOOGLE_ANALYTICS_ID` y `GOOGLE_TAG_MANAGER_ID`.
 - Se ha retirado la instalación directa de `gtag.js`. Solo GTM configura GA4.
 - La titular confirma configurados conservación, Signals, personalización,
-  ocultación de datos y medición mejorada en GA4. No se ha accedido a su cuenta
-  para comprobar los valores concretos o sus opciones de automatización.
-- Consulta del recurso público `gtm.js?id=GTM-59RBDRPH` el 19/10/2026: versión 1,
-  `tags: []`, `rules: []`. La etiqueta indicada por la titular puede estar en un
-  espacio de trabajo sin publicar. No se ha modificado ni publicado el contenedor.
-- No se ha modificado main ni desplegado este trabajo. La medición permanece
-  cerrada: `cookiePolicy.reviewed=false` y `ANALYTICS_ENABLED=false`.
+  ocultación de datos y medición mejorada en GA4. Además comunica la validación
+  manual del workspace con Tag Assistant y DebugView, detallada abajo. No se
+  ha accedido a su cuenta para inspeccionarla de forma independiente.
+- Última consulta pública realizada del recurso `gtm.js?id=GTM-59RBDRPH`
+  el 20/10/2026, anterior al informe manual: versión 1, `tags: []`, `rules: []`.
+  Este dato histórico no describe el workspace ya probado ni demuestra su
+  estado de publicación posterior. No se ha publicado el contenedor desde aquí.
+- La integración está en main (`ba619e6`) y su despliegue Vercel figura correcto.
+  `/contacto` sirve el formulario desactivado y no carga scripts de Google.
+  La medición pública permanece cerrada: `cookiePolicy.reviewed=false` y
+  `ANALYTICS_ENABLED=false`. No se ha accedido a variables privadas de Vercel;
+  el bloqueo legal del código basta para impedir la carga aunque cambiase el flag.
 - `ANALYTICS_PREVIEW=true` solo permite revisar el panel con `next dev` fuera de
   Vercel, sin cargar Google ni generar conversiones. La elección sintética usa
   `automatizza-cookie-consent-preview` y nunca se convierte en consentimiento real.
+- `npm run dev:tag-assistant` permite una prueba real local en
+  `http://127.0.0.1:3003/contacto`, en rediseño sin desplegar. Activa únicamente
+  para ese proceso `ANALYTICS_TAG_ASSISTANT=true` con la vista sin red desactivada;
+  el permiso solo funciona en desarrollo fuera de Vercel y sobre loopback.
+  Conserva consentimiento explícito y publicidad denegada. No cambia la revisión
+  legal ni habilita envíos. Instrucciones y límites en
+  [gtm-configuration.md](gtm-configuration.md#prueba-del-workspace-sin-publicar-ni-desplegar).
 
 ## Contrato entre web y GTM
 
@@ -45,11 +57,36 @@ clic, validación, honeypot, rechazo del proveedor, timeout, error o envío loca
 con `testMode`. Sin consentimiento al completarse, no se guarda para enviarlo
 más tarde. La aceptación de privacidad del formulario no concede estadísticas.
 
-## Configuración pendiente dentro de GTM/GA4
+## Validación manual comunicada por la titular el 20/10/2026
 
-Aplicar [gtm-configuration.md](gtm-configuration.md) en el espacio de trabajo,
-**sin publicar todavía**. Hay que adaptar la etiqueta principal existente,
-no instalar otra. Incluye las dos etiquetas de evento y el filtro de consentimiento.
+Se da por realizada esta configuración y estas pruebas locales conforme al
+informe de la titular; no se requiere rehacer el workspace ni repetirlas como
+si estuvieran pendientes:
+
+- Tres etiquetas: Google principal con Initialization - All Pages y variable
+  de ajustes que incluye `send_page_view=false`; `GA4 - page_view` con
+  `automatizza_page_view`; `GA4 - generate_lead` con
+  `automatizza_contact_success`.
+- Las dos etiquetas de evento filtran `analytics_consent=granted`; las tres
+  requieren `analytics_storage`. Página y `form_id` usan las variables DLV
+  previstas en `gtm-configuration.md`.
+- DebugView recibe visitas y URL de página esperadas. Detectados duplicados,
+  se desactivaron las visitas automáticas por cambios de historial en GA4;
+  la repetición de la prueba confirma una visita por navegación.
+- Al aceptar: `analytics_storage=granted`, con `ad_storage`, `ad_user_data`
+  y `ad_personalization=denied`.
+- Al retirar: recarga de la web, cese de visitas y eliminación de `_ga` y
+  `_ga_1Y94M3HZRB`. Al volver a aceptar, se reanuda la medición; DebugView
+  muestra un dispositivo nuevo después de borrar cookies, según lo observado.
+
+El informe acredita el funcionamiento local de visitas y consentimiento.
+No indica un envío real confirmado por el servidor que se haya observado como
+`generate_lead` en GA4; esa comprobación concreta sigue pendiente, sin dar por
+probada la conversión solo por existir su etiqueta. Tampoco confirma que se
+haya publicado el contenedor. La comprobación final en el dominio de producción
+se realiza al activar el despliegue, sin repetir toda la preparación local.
+
+## Configuración que debe conservarse al publicar
 
 Es imprescindible desactivar el page view automático de la etiqueta y comprobar
 las opciones de medición mejorada en GA4. Los eventos de historial siguen pudiendo
@@ -94,6 +131,13 @@ Los borradores legales no se han aprobado automáticamente por recibir los IDs.
 
 ## Comprobaciones y límites
 
+- Auditoría local del 20/10/2026: 43 pruebas (20 de analítica y 23 de contacto),
+  lint y build correctos. En el navegador local: ningún script Google antes
+  de aceptar; un único `gtm.js` tras aceptar y durante navegación interna;
+  tras retirar, documento recargado sin scripts Google y envío bloqueado.
+  Estas pruebas propias verifican el cargador y el consentimiento. La titular
+  aporta además la validación manual real de las etiquetas de visitas y su
+  recepción en GA4, recogida arriba; no se confunden ambas procedencias.
 - `npm run test:analytics`: carga inicial, navegación, orden del consentimiento,
   una sola carga de GTM, exclusión de datos personales, caducidad, retirada,
   rechazo entre pestañas, recarga y conversión solo tras éxito confirmado.
@@ -105,8 +149,9 @@ Los borradores legales no se han aprobado automáticamente por recibir los IDs.
   Esa vista no demuestra recepción en la propiedad ni ejecuta el contenedor.
 - Consulta del contenedor público, sin ejecutar su código ni acceder a cuentas.
 
-Antes de producción: terminar/revisar contenedor y textos, publicar los ajustes
-remotos cuando se autorice, establecer `cookiePolicy.reviewed=true` y
+Antes de producción: conservar el workspace ya configurado y probado por la
+titular, completar la prueba de conversión no indicada en su informe y publicar
+los ajustes remotos cuando se autorice. Establecer `cookiePolicy.reviewed=true` y
 `ANALYTICS_ENABLED=true`, reconstruir/desplegar y comprobar con Tag Assistant y
 la pestaña Network: cero Google antes de aceptar y tras rechazar, GA inicial y
 SPA sin duplicados, cookies reales, retirada/recarga y `generate_lead` solo tras
