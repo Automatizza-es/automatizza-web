@@ -25,6 +25,12 @@ Datos facilitados directamente por la titular:
   No hace falta volver a pedirles el país de servidores y copias. La respuesta
   no facilita contrato de encargo, plazos de borrado/copias/registros ni detalle
   de posibles subencargados. No extender esta confirmación a Vercel, Resend o Google.
+- Decisión de la titular el 20/10/2026: cerrar por ahora la recopilación de
+  información de Abbas con lo recibido y no solicitar más documentación en
+  esta fase. Se conserva la confirmación de ubicación; los contratos y plazos
+  no aportados quedan anotados como documentación pendiente, sin darlos por
+  formalizados ni inventar condiciones. Este cierre de la recopilación no
+  aprueba la política ni cambia los interruptores del formulario o la analítica.
 - Google Analytics 4 confirmado por la titular mediante el ID `G-1Y94M3HZRB`.
   Integración y panel preparados, con medición real desactivada. La vista local
   sin red permite probar preferencias sin cargar Google. Existe además una
@@ -41,7 +47,7 @@ No se atribuye a estos datos una comprobación independiente en registros oficia
 
 | Pendiente | Qué necesitamos | Para qué sirve |
 | --- | --- | --- |
-| Proveedor del buzón | Abbas confirma infraestructura propia y copias en Córdoba (España). Falta documentar la entidad contratada, contrato de encargo, posibles subencargados y plazos de supresión, rotación de copias y registros. No necesita disponer de web. | Completar las condiciones del servicio de correo; la ubicación ya está confirmada por el proveedor. |
+| Proveedor del buzón | Recopilación cerrada por ahora por decisión de la titular. Abbas confirma infraestructura propia y copias en Córdoba (España). Quedan anotados como no aportados, sin solicitar más en esta fase: documentación de la entidad contratada, contrato de encargo, posibles subencargados y plazos de supresión, copias y registros. | Conservar lo confirmado y distinguirlo de las condiciones todavía sin documentar; no equivale a una aprobación legal. |
 | Alojamiento | El despliegue actual está en Vercel. Confirmar cuenta/plan, condiciones aplicables y región de ejecución; sin enviar contraseñas o claves. | Comprobar el acuerdo que cubre el plan concreto, subencargados, logs, retención y posibles transferencias. |
 | Resend | Confirmar entidad contratada, acuerdos, retención y subencargados. Región técnica `eu-west-1` y seguimiento de aperturas/clics desactivado, comprobados por API el 15/10/2026. | Completar los proveedores y garantías; las credenciales ya están configuradas de forma privada. La región de envío no cierra por sí sola la revisión de transferencias. |
 | Conservación de consultas | Propuesta: máximo 12 meses desde el último contacto para consultas sin contratación, con supresión o bloqueo cuando corresponda. Aprobar el plazo y acordar su aplicación al buzón y las copias. | Aplicar un criterio real; los expedientes de clientes se valoran por separado. Véase [propuesta de conservación](legal-retention-proposal.md). |
