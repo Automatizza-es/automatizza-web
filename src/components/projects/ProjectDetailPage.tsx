@@ -56,7 +56,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
       <main className={`${styles.page} ${styles[project.slug] ?? ""}`}>
         <Container className={styles.container}>
           <section className={styles.hero} aria-labelledby="project-title">
-            <Link className={styles.back} href="/proyectos"><span aria-hidden="true">←</span> Todos los proyectos</Link>
+            <Link className={styles.back} href="/#proyectos"><span aria-hidden="true">←</span> Todos los proyectos</Link>
             <p className={styles.eyebrow}>{project.client} <span aria-hidden="true">/</span> {project.category}</p>
             <div className={styles.heroCopy}>
               <h1 id="project-title">{project.title}</h1>
@@ -128,7 +128,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
           </nav>
           <footer className={styles.footer}>
             <Link href="/" aria-label="Automatizza, inicio">Automatizza</Link>
-            <Link href="/proyectos">Volver a Proyectos <span aria-hidden="true">↑</span></Link>
+            <Link href="/#proyectos">Volver a Proyectos <span aria-hidden="true">↑</span></Link>
             <span>© 2026 Automatizza</span>
           </footer>
         </Container>

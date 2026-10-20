@@ -1,5 +1,9 @@
 # Páginas individuales de proyectos
 
+El listado vigente está en `/#proyectos`. `/proyectos` redirige temporalmente a
+ese bloque de la home; los enlaces de regreso de las fichas apuntan directamente
+allí para evitar la galería y el contacto anteriores.
+
 Las tres rutas se generan desde `projectDetails.ts` y comparten `ProjectDetailPage`.
 Los estilos están aislados en un módulo CSS; los visuales de la home mantienen
 sus proporciones y animaciones originales.
