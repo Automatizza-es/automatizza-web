@@ -1,8 +1,14 @@
 # Propuesta de conservación y medición
 
-Actualización: 20/10/2026. Recomendaciones para aprobar y aplicar; no son plazos ya
-configurados ni límites máximos legales universales. La política sigue como
-borrador y el formulario público permanece desactivado.
+Actualización: 20/10/2026. La titular ha aprobado el criterio de 12 meses para
+consultas sin contratación dentro de la versión de lanzamiento. No son plazos
+automáticos ya configurados ni límites máximos legales universales. La activación
+del formulario público requiere su configuración de despliegue independiente.
+
+El texto concreto de prelanzamiento ya incorpora el criterio de 12 meses para
+consultas sin contratación. El procedimiento de aplicación y el estado actual
+de aprobación figuran en [launch.md](launch.md). Este documento conserva el
+origen de las recomendaciones; no acredita que se haya automatizado el borrado.
 
 ## Plazos propuestos
 
