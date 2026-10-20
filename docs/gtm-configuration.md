@@ -8,13 +8,13 @@ Las tres etiquetas requieren analytics_storage, y los eventos filtran
 analytics_consent=granted. Aceptar, retirar, borrar cookies y volver a aceptar
 se han comprobado manualmente, con publicidad siempre denegada.
 
-La última consulta pública (v1 sin etiquetas ni reglas) fue anterior a este
-informe y no representa el workspace probado. El informe no confirma una
-publicación del contenedor ni una conversión observada tras envío real del
-formulario. Solo esas verificaciones y la activación/comprobación final de
-producción siguen pendientes. No rehacer las etiquetas ni repetir como
-pendientes las pruebas locales ya aportadas. Detalle en `analytics.md`.
-No se ha publicado nada desde aquí ni debe publicarse sin autorización.
+Actualización de lanzamiento: el 20/10/2026 se ha revisado y publicado la
+**versión 2** del contenedor con autorización de la titular. Producción activa
+con consentimiento básico; Tag Assistant verifica un hit `generate_lead` tras
+un envío real confirmado, `form_id=contact`, sin datos del formulario y sin
+repetición tras recargar. Configuración y pruebas: [launch.md](launch.md).
+Las instrucciones locales siguientes se conservan para futuras modificaciones;
+no representan tareas pendientes para esta publicación.
 
 ## Prueba del workspace sin publicar ni desplegar
 

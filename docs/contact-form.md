@@ -2,12 +2,13 @@
 
 ## Estado actual
 
-- Actualización de lanzamiento 20/10/2026: la titular ha aprobado la versión
-  `2026-10-20-prelanzamiento-1` de privacidad y aviso legal. En `rediseño`,
-  `privacyPolicy.reviewed=true`; la activación sigue requiriendo la variable
-  `CONTACT_FORM_ENABLED=true` y configuración válida de Resend en el entorno.
-  El despliegue público anterior no se ha actualizado con esta preparación.
-  Estado de dominio y pasos restantes: [launch.md](launch.md).
+- Producción activa el 20/10/2026 en https://automatizza.es/contacto.
+  Privacidad aprobada (`2026-10-20-prelanzamiento-1`),
+  `privacyPolicy.reviewed=true`, `CONTACT_FORM_ENABLED=true` y Resend/orígenes
+  configurados de forma privada en Vercel. Modo de prueba desactivado.
+  Dos envíos ficticios desde la interfaz confirman entrega en Resend y
+  Reply-To correcto; el segundo, expresamente autorizado con Tag Assistant,
+  verifica un único `generate_lead` tras éxito. Véase [launch.md](launch.md).
 - Formulario único en `/contacto`, conservando campos, diseño, validación,
   estados, consentimiento y protección antispam. La home muestra un cierre
   compacto que enlaza a esa página; `/#contacto` sigue funcionando mediante
@@ -38,8 +39,8 @@
   prueba real desde el formulario local con datos ficticios: Resend confirma
   `delivered`, campos completos y `Reply-To` correcto. Sin cambios de DNS ni
   activación del formulario de producción.
-- **El envío público permanece desactivado en el cliente y en la API.** Poner una API key
-  o cambiar solo una variable de entorno no elude la revisión de la política.
+- El envío público está activo tras aprobar la política y configurar el entorno.
+  Se mantienen los bloqueos legales y operativos en cliente y servidor.
 
 ## Confirmación y conversiones
 
@@ -75,13 +76,13 @@ servidor de desarrollo si no ha recargado las variables de entorno.
 ## Variables privadas del servidor
 
 Crear `.env.local` a partir de `.env.example` cuando se disponga de la configuración;
-en un despliegue futuro, configurar los mismos valores en su entorno privado.
+en producción, los valores ya están configurados en el entorno privado de Vercel.
 No usar prefijos `NEXT_PUBLIC_`, no subir credenciales al repositorio y no
 introducirlas en el formulario o en mensajes de revisión.
 
 | Variable | Uso |
 | --- | --- |
-| `CONTACT_FORM_ENABLED` | Interruptor explícito. Actualmente `false`. |
+| `CONTACT_FORM_ENABLED` | Interruptor explícito. `true` en producción; configuración local independiente. |
 | `CONTACT_FORM_TEST_MODE` | Pruebas reales con datos ficticios solo con `NODE_ENV=development` y fuera de Vercel. Ignorado en producción. No aprueba la política. |
 | `RESEND_API_KEY` | Credencial para enviar email mediante Resend. |
 | `RESEND_VERIFY_API_KEY` | Opcional: credencial separada con permiso de lectura del dominio. Si falta, se usa la anterior y debe tener ese permiso. |
@@ -96,7 +97,9 @@ o de su cabecera Host local (Next puede normalizar la URL a 0.0.0.0).
 Con la lista de ejemplo se admiten localhost y 127.0.0.1. Para probar por Wi-Fi,
 añadir explícitamente el origen local del ordenador a esa lista.
 
-## Dominio y DNS pendientes
+## Dominio y DNS: procedimiento de referencia
+
+Completado para `automatizza.es`; no repetir ni modificar registros existentes.
 
 1. Añadir en Resend el dominio o subdominio de envío elegido. No asumir que
    `automatizza.es` ya esté verificado. Un subdominio de envío puede mantener
@@ -191,8 +194,8 @@ fallos del proveedor y límites de envío. **Esas pruebas no envían correos y n
 habilitan un modo de éxito simulado en la aplicación.**
 
 Ejecutar además `npm run lint` y `npm run build`. Tras aprobar la política y
-configurar las credenciales, queda pendiente una prueba real hasta la recepción
-en el buzón y la comprobación de responder al email del solicitante.
+configurar nuevas credenciales, repetir una prueba autorizada hasta la entrega
+y comprobar Reply-To. Las pruebas de lanzamiento actuales ya están documentadas.
 
 ## Medición opcional de envíos confirmados
 

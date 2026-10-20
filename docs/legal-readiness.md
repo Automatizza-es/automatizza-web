@@ -1,11 +1,11 @@
 # Información pendiente para cerrar los textos legales
 
-Actualización: 20 de octubre de 2026, rama `rediseño`.
+Actualización: 20 de octubre de 2026. Textos aprobados y publicación en main.
 Este inventario no es una auditoría del despliegue público ni una aprobación legal.
 
 **Estado de lanzamiento:** ver [launch.md](launch.md), que recoge las comprobaciones
 del 20/10/2026, el plan Pro/Enterprise confirmado por la titular, los textos
-concretos preparados y los pasos de dominio, entorno y GTM. Los pendientes
+aprobados, el dominio conectado y la activación de contacto y GTM completada. Los pendientes
 históricos de esta tabla se actualizan con las resoluciones siguientes; no
 deben volver a solicitarse como datos aún desconocidos.
 

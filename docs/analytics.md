@@ -14,15 +14,21 @@
   ocultación de datos y medición mejorada en GA4. Además comunica la validación
   manual del workspace con Tag Assistant y DebugView, detallada abajo. No se
   ha accedido a su cuenta para inspeccionarla de forma independiente.
-- Última consulta pública realizada del recurso `gtm.js?id=GTM-59RBDRPH`
-  el 20/10/2026, anterior al informe manual: versión 1, `tags: []`, `rules: []`.
-  Este dato histórico no describe el workspace ya probado ni demuestra su
-  estado de publicación posterior. No se ha publicado el contenedor desde aquí.
-- La integración está en main (`ba619e6`) y su despliegue Vercel figura correcto.
-  `/contacto` sirve el formulario desactivado y no carga scripts de Google.
-  La medición pública permanece cerrada: `cookiePolicy.reviewed=false` y
-  `ANALYTICS_ENABLED=false`. No se ha accedido a variables privadas de Vercel;
-  el bloqueo legal del código basta para impedir la carga aunque cambiase el flag.
+- Producción activada el 20/10/2026: `cookiePolicy.reviewed=true` y
+  `ANALYTICS_ENABLED=true`, commit `fb84daa` desplegado correctamente.
+  Credenciales y flags de producción configurados en Vercel; modos locales
+  de vista previa y Tag Assistant desactivados en producción.
+- GTM versión 2 publicada y revisada directamente: tres etiquetas, eventos
+  filtrados por consentimiento, sin detección de datos proporcionados por
+  usuarios, cookies 180 días sin renovación y `send_page_view=false`.
+- Prueba real en https://automatizza.es/contacto: envío aceptado y entregado
+  por Resend, un `automatizza_contact_success` y etiqueta `generate_lead`
+  completada. Tag Assistant muestra el hit enviado al endpoint GA4 con
+  `form_id=contact` y sin campos del formulario. Recargar no repite el lead.
+- Tag Assistant confirma estadísticas concedidas y publicidad denegada.
+  Antes de consentir no se cargan scripts Google; retirarlo recarga el
+  documento sin scripts Google, también durante la navegación posterior.
+  Detalles en [launch.md](launch.md).
 - `ANALYTICS_PREVIEW=true` solo permite revisar el panel con `next dev` fuera de
   Vercel, sin cargar Google ni generar conversiones. La elección sintética usa
   `automatizza-cookie-consent-preview` y nunca se convierte en consentimiento real.
@@ -79,12 +85,10 @@ si estuvieran pendientes:
   `_ga_1Y94M3HZRB`. Al volver a aceptar, se reanuda la medición; DebugView
   muestra un dispositivo nuevo después de borrar cookies, según lo observado.
 
-El informe acredita el funcionamiento local de visitas y consentimiento.
-No indica un envío real confirmado por el servidor que se haya observado como
-`generate_lead` en GA4; esa comprobación concreta sigue pendiente, sin dar por
-probada la conversión solo por existir su etiqueta. Tampoco confirma que se
-haya publicado el contenedor. La comprobación final en el dominio de producción
-se realiza al activar el despliegue, sin repetir toda la preparación local.
+El informe acredita las pruebas locales de la titular. La comprobación propia
+posterior en producción añade publicación, envío real y hit de conversión,
+como se detalla al inicio. No se confunde un hit enviado con una venta ni con
+una comprobación independiente de todos los informes agregados de GA4.
 
 ## Configuración que debe conservarse al publicar
 
@@ -124,8 +128,8 @@ ni garantizar lo que publique alguien posteriormente en GTM.
    y se solicita de nuevo si cambia la versión del consentimiento. Si el
    almacenamiento no está disponible, la elección dura solo en este documento.
 
-Los plazos analíticos de cookies deben fijarse en GTM a 180 días con
-`cookie_update=false`; aún deben verificarse las cookies efectivas. El panel,
+Los plazos analíticos publicados en GTM son 180 días con
+`cookie_update=false`; los navegadores pueden imponer duraciones inferiores. El panel,
 la aprobación de cookies y la activación del formulario siguen siendo independientes.
 Los borradores legales no se han aprobado automáticamente por recibir los IDs.
 
@@ -149,14 +153,11 @@ Los borradores legales no se han aprobado automáticamente por recibir los IDs.
   Esa vista no demuestra recepción en la propiedad ni ejecuta el contenedor.
 - Consulta del contenedor público, sin ejecutar su código ni acceder a cuentas.
 
-Antes de producción: conservar el workspace ya configurado y probado por la
-titular, completar la prueba de conversión no indicada en su informe y publicar
-los ajustes remotos cuando se autorice. Establecer `cookiePolicy.reviewed=true` y
-`ANALYTICS_ENABLED=true`, reconstruir/desplegar y comprobar con Tag Assistant y
-la pestaña Network: cero Google antes de aceptar y tras rechazar, GA inicial y
-SPA sin duplicados, cookies reales, retirada/recarga y `generate_lead` solo tras
-éxito. Validar recepción en DebugView/tiempo real y marcar `generate_lead` como
-evento clave. No hay API secret ni Measurement Protocol ni bypass por servidor.
+La activación de producción y el envío real se completaron el 20/10/2026.
+Conservar estas restricciones al modificar GTM. Las métricas agregadas y la
+clasificación de `generate_lead` como evento clave se administran en GA4; no
+se ha modificado esa clasificación desde esta auditoría. No existe API secret,
+Measurement Protocol ni bypass de consentimiento por servidor.
 
 ## Fuentes oficiales
 
