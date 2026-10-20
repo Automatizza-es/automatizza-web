@@ -1,6 +1,6 @@
 # Propuesta de conservación y medición
 
-16/10/2026. Recomendaciones para aprobar y aplicar; no son plazos ya
+Actualización: 20/10/2026. Recomendaciones para aprobar y aplicar; no son plazos ya
 configurados ni límites máximos legales universales. La política sigue como
 borrador y el formulario público permanece desactivado.
 
@@ -33,10 +33,15 @@ indefinidamente en el buzón activo.
 - Publicar el inventario real de cookies y la información de proveedores y
   transferencias tras comprobarlos. No presentar GA4 como exento por defecto.
 
-Integración y panel preparados; no se ha activado la medición real. La vista
-local permite probar preferencias sin cargar Google ni enviar datos.
-La captura registral y la ficha pública de Abbas no prueban contratos, ubicación
-de datos ni garantías de transferencias internacionales.
+Integración y panel preparados; no se ha activado la medición pública. La vista
+local sin red permite probar preferencias sin cargar Google ni enviar datos;
+el modo específico de Tag Assistant permite pruebas reales solo en localhost
+y tras consentimiento, sin publicar el contenedor ni aprobar los textos legales.
+Abbas confirma por escrito, según la respuesta trasladada por la titular el
+20/10/2026, infraestructura propia y copias en Córdoba (España). Esto resuelve
+la ubicación declarada de su servicio, pero no fija plazos de borrado ni de
+rotación de copias. Siguen pendientes los contratos y condiciones efectivas,
+y la revisión independiente de los demás proveedores.
 
 ## Fuentes oficiales consultadas
 

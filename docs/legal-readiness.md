@@ -1,6 +1,6 @@
 # Información pendiente para cerrar los textos legales
 
-Actualización: 16 de octubre de 2026, rama `rediseño`.
+Actualización: 20 de octubre de 2026, rama `rediseño`.
 Este inventario no es una auditoría del despliegue público ni una aprobación legal.
 
 ## Identificación recibida
@@ -16,12 +16,20 @@ Datos facilitados directamente por la titular:
   comunicado anteriormente; no se añade un número de inscripción no facilitado.
 - Abbas: proveedor de correo indicado por la titular. El enlace facilitado
   conduce a una ficha de Google titulada «ABBAS Servicios de Informática y
-  Telecomunicaciones, S.L.». La ficha no acredita la entidad contratada ni
-  dónde se aloja el buzón; confirmar estos extremos con su documentación.
+  Telecomunicaciones, S.L.». La ficha no acredita por sí sola la entidad
+  contratada; contrastar la denominación con la factura o contrato.
+- Respuesta de Abbas trasladada por la titular el 20/10/2026: los datos se
+  tratan en sus instalaciones de Córdoba, España; las copias se hacen en otras
+  instalaciones próximas también en Córdoba. Ubicación e infraestructura
+  propias confirmadas por el proveedor, sin verificación técnica independiente.
+  No hace falta volver a pedirles el país de servidores y copias. La respuesta
+  no facilita contrato de encargo, plazos de borrado/copias/registros ni detalle
+  de posibles subencargados. No extender esta confirmación a Vercel, Resend o Google.
 - Google Analytics 4 confirmado por la titular mediante el ID `G-1Y94M3HZRB`.
   Integración y panel preparados, con medición real desactivada. La vista local
-  permite probar preferencias sin cargar Google. Los detalles de Abbas siguen
-  pendientes: la titular aún no dispone de esa información.
+  sin red permite probar preferencias sin cargar Google. Existe además una
+  prueba real de Tag Assistant exclusiva de localhost y tras aceptar estadísticas;
+  no activa la medición pública. Véase [analytics.md](analytics.md).
 
 Los datos societarios y registrales figuran en los borradores de privacidad y
 aviso legal; este último está disponible en `/aviso-legal` y enlazado en el footer.
@@ -33,16 +41,22 @@ No se atribuye a estos datos una comprobación independiente en registros oficia
 
 | Pendiente | Qué necesitamos | Para qué sirve |
 | --- | --- | --- |
-| Proveedor del buzón | Abbas está identificado como proveedor: confirmar entidad contratada, si aloja el correo o utiliza a otro proveedor, países de servidores/copias, conservación y contrato de encargo. No necesita disponer de web. | Identificar quién recibe y conserva realmente las consultas. |
+| Proveedor del buzón | Abbas confirma infraestructura propia y copias en Córdoba (España). Falta documentar la entidad contratada, contrato de encargo, posibles subencargados y plazos de supresión, rotación de copias y registros. No necesita disponer de web. | Completar las condiciones del servicio de correo; la ubicación ya está confirmada por el proveedor. |
 | Alojamiento | El despliegue actual está en Vercel. Confirmar cuenta/plan, condiciones aplicables y región de ejecución; sin enviar contraseñas o claves. | Comprobar el acuerdo que cubre el plan concreto, subencargados, logs, retención y posibles transferencias. |
 | Resend | Confirmar entidad contratada, acuerdos, retención y subencargados. Región técnica `eu-west-1` y seguimiento de aperturas/clics desactivado, comprobados por API el 15/10/2026. | Completar los proveedores y garantías; las credenciales ya están configuradas de forma privada. La región de envío no cierra por sí sola la revisión de transferencias. |
 | Conservación de consultas | Propuesta: máximo 12 meses desde el último contacto para consultas sin contratación, con supresión o bloqueo cuando corresponda. Aprobar el plazo y acordar su aplicación al buzón y las copias. | Aplicar un criterio real; los expedientes de clientes se valoran por separado. Véase [propuesta de conservación](legal-retention-proposal.md). |
 | Atención de derechos y DPD | Mantener info@automatizza.es como canal y organizar quién lo atiende. Valorar por separado si procede designar DPD; no se presume que lo sea. | El ejercicio de derechos debe informarse y atenderse aunque todavía no haya solicitudes; no exige un buzón nuevo. |
-| Medición | GA4 `G-1Y94M3HZRB` y GTM `GTM-59RBDRPH` recibidos. La titular confirma ajustes de GA4. Falta verificar el contenedor, opciones automáticas, términos, transferencias y cookies reales antes de aprobar la política y activar el interruptor. | GA4 se gestiona solo mediante GTM; el contenedor público consultado el 19/10/2026 estaba vacío. Véanse [analytics.md](analytics.md) y [gtm-configuration.md](gtm-configuration.md). El consentimiento del formulario no concede medición. |
+| Medición | GA4 `G-1Y94M3HZRB` y GTM `GTM-59RBDRPH` recibidos. La titular confirma ajustes de GA4 y tres etiquetas preparadas en el workspace sin publicar. Falta verificar el workspace con Tag Assistant, opciones automáticas, términos, transferencias y cookies reales antes de aprobar la política y activar el interruptor. | GA4 se gestiona solo mediante GTM; el contenedor público consultado el 20/10/2026 estaba vacío. Véanse [analytics.md](analytics.md) y [gtm-configuration.md](gtm-configuration.md). El consentimiento del formulario no concede medición. |
 
 Con el proveedor y la configuración definitivos se revisarán los acuerdos de
 encargo, países, subencargados y garantías de transferencias. No basta con que
 una región se denomine europea para concluir que no hay accesos internacionales.
+
+La observación de Abbas sobre una web visible «al mundo» se refiere a la
+publicación de contenido y a la seguridad de la aplicación. No se interpreta
+como autorización para publicar consultas ni como afirmación de que el formulario
+exponga los datos enviados. El código no muestra las consultas en páginas públicas;
+las tramita desde el servidor hacia los proveedores del servicio de contacto.
 
 ## Resultado de la revisión del código sobre cookies
 
@@ -50,7 +64,9 @@ una región se denomine europea para concluir que no hay accesos internacionales
   elección durante 180 días. Su vista de prueba usa una clave independiente
   que nunca habilita la medición real. No hay almacenamiento de consultas allí.
 - Se ha preparado la carga condicional de GA4 tras aceptar. Está bloqueada por
-  revisión legal e interruptor; la vista local no carga la etiqueta de Google.
+  revisión legal e interruptor en producción. La vista local sin red no carga
+  Google; la prueba específica de Tag Assistant solo lo carga en localhost
+  tras consentimiento, sin aprobar los textos ni activar el formulario.
 - No se han añadido publicidad, iframes de mapas o vídeos externos ni chat.
 - Las demos de proyectos son componentes propios. El formulario solo llama a
   `/api/contacto`; la comunicación con Resend está en el servidor. El formulario
@@ -91,6 +107,7 @@ Fuentes oficiales:
 
 - [LSSI, art. 10 y 22](https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758).
 - [AEPD: derecho de información](https://www.aepd.es/derechos-y-deberes/conoce-tus-derechos/derecho-de-informacion).
+- [AEPD: contrato entre responsable y encargado](https://www.aepd.es/preguntas-frecuentes/2-tus-obligaciones-como-responsable-del-tratamiento/8-responsable-y-encargado-del-tratamiento/FAQ-0252-sobre-relacion-entre-responsable-y-encargado).
 - [AEPD: guía de cookies](https://www.aepd.es/guias/guia-cookies.pdf).
 - [AEPD: garantías de transferencias](https://www.aepd.es/derechos-y-deberes/cumple-tus-deberes/medidas-de-cumplimiento/garantias-transferencias-datos-personales).
 - [Vercel: DPA y planes incluidos](https://vercel.com/legal/dpa).

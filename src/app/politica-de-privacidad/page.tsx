@@ -28,7 +28,7 @@ export default function PrivacyPage() {
           <h1>Política de privacidad</h1>
           {!ready && <div className={styles.draft} role="note"><strong>Borrador pendiente de revisión</strong><p>El formulario público permanece desactivado. Los datos de la sociedad y su inscripción registral están incorporados. La conservación propuesta, los proveedores y la futura medición de visitas siguen pendientes de validación.</p></div>}
           <p className={styles.intro}>Información sobre el tratamiento previsto de los datos que nos facilites para hablar sobre automatización, software a medida, inteligencia artificial o desarrollo web.</p>
-          <p className={styles.version}>Versión del borrador: 16 de octubre de 2026 · {privacyPolicy.version}</p>
+          <p className={styles.version}>Versión del borrador: 20 de octubre de 2026 · {privacyPolicy.version}</p>
 
           <section aria-labelledby="privacy-controller">
             <h2 id="privacy-controller">01. Quién es responsable de tus datos</h2>
