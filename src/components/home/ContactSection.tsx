@@ -16,8 +16,11 @@ export function ContactSection({ withForm = false }: { withForm?: boolean }) {
           {withForm ? <>
             <div className={styles.copy}>
               <p className="contact-kicker">HABLEMOS</p>
-              <h2 id="contact-title">¿Hay algún proceso de tu empresa que sabes que podría funcionar mejor?</h2>
-              <p>No necesitas tenerlo todo definido. Cuéntanos tu idea y vemos cómo podemos ayudarte.</p>
+              <h2 id="contact-title">¿Hay algún proceso de tu empresa que podría funcionar mejor?</h2>
+              <p>
+                No necesitas tenerlo todo definido. <strong>Cuéntanos cómo trabajáis ahora y qué
+                te gustaría mejorar. Te ayudamos a encontrar la mejor forma de resolverlo.</strong>
+              </p>
               <Link className={styles.email} href="mailto:info@automatizza.es">info@automatizza.es</Link>
             </div>
             <ContactForm enabled={contactConfig?.ready ?? false} testMode={contactConfig?.testMode ?? false} privacyReady={isPrivacyPolicyReady()} policyVersion={privacyPolicy.version} controller={privacyPolicy.legalName} rightsEmail={privacyPolicy.rightsEmail} />

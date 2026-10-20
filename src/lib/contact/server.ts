@@ -140,8 +140,8 @@ export function createContactHandler(dependencies: Dependencies = {}) {
         headers: { Authorization: `Bearer ${config.apiKey}`, "Content-Type": "application/json", "Idempotency-Key": `contact/${data.submissionId}` },
         body: JSON.stringify({
           from: `Automatizza <${config.from}>`, to: [config.to], reply_to: email,
-          subject: `${config.testMode ? "[PRUEBA LOCAL] " : ""}Nueva consulta web · ${service || "Sin área especificada"}`,
-          text: [config.testMode ? "Prueba técnica del formulario de Automatizza · Datos ficticios" : "Nueva solicitud desde el formulario de Automatizza", "", `Nombre: ${name}`, `Email: ${email}`, `Área: ${service || "No especificada"}`, "", "Mensaje:", message, "", config.testMode ? "Prueba con datos ficticios confirmada. La política sigue pendiente; no se registra consentimiento real." : "Privacidad: aceptada expresamente", `Versión de la política: ${privacyPolicy.version}`].join("\n"),
+          subject: `${config.testMode ? "[PRUEBA LOCAL] " : ""}Nueva consulta web${service ? ` · ${service}` : ""}`,
+          text: [config.testMode ? "Prueba técnica del formulario de Automatizza · Datos ficticios" : "Nueva solicitud desde el formulario de Automatizza", "", `Nombre: ${name}`, `Email: ${email}`, ...(service ? [`Área: ${service}`] : []), "", "Mensaje:", message, "", config.testMode ? "Prueba con datos ficticios confirmada. La política sigue pendiente; no se registra consentimiento real." : "Privacidad: aceptada expresamente", `Versión de la política: ${privacyPolicy.version}`].join("\n"),
         }),
       });
       if (!response.ok) return json(502, { error: "No se ha podido enviar tu mensaje. Puedes volver a intentarlo o escribirnos por email." });

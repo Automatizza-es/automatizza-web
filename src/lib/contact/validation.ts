@@ -23,7 +23,7 @@ export function validateContact(input: unknown, testMode = false): { errors: Con
   if (!name || name.length > 100 || /[\x00-\x1f\x7f]/.test(name)) errors.name = "Escribe tu nombre (máximo 100 caracteres).";
   if (!isEmail(email)) errors.email = "Introduce un email válido.";
   if (service && !(contactServices as readonly string[]).includes(service)) errors.service = "Elige una de las opciones disponibles.";
-  if (!message || message.length > 5000 || /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(message)) errors.message = "Cuéntanos tu idea (máximo 5.000 caracteres).";
+  if (!message || message.length > 5000 || /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(message)) errors.message = "Cuéntanos qué te gustaría mejorar (máximo 5.000 caracteres).";
   if (data.privacy !== true) errors.privacy = testMode ? "Confirma que solo estás usando datos ficticios para esta prueba." : "Necesitamos que leas y aceptes la política de privacidad.";
   return Object.keys(errors).length ? { errors } : { errors, value: { name, email, service, message, privacy: true } };
 }

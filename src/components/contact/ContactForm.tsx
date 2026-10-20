@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
-import { contactServices, validateContact, type ContactErrors, type ContactField } from "@/lib/contact/validation";
+import { validateContact, type ContactErrors, type ContactField } from "@/lib/contact/validation";
 import { trackContactResult } from "@/lib/analytics/browser";
 import styles from "./ContactForm.module.css";
 
@@ -31,7 +31,7 @@ export function ContactForm({ enabled, testMode = false, privacyReady, policyVer
     if (!enabled || pending.current) return;
     const form = event.currentTarget;
     const fields = new FormData(form);
-    const data = { name: fields.get("name"), email: fields.get("email"), service: fields.get("service"), message: fields.get("message"), privacy: fields.get("privacy") === "on" };
+    const data = { name: fields.get("name"), email: fields.get("email"), message: fields.get("message"), privacy: fields.get("privacy") === "on" };
     const validation = validateContact(data, testMode);
     setErrors(validation.errors);
     setFeedback("");
@@ -63,7 +63,7 @@ export function ContactForm({ enabled, testMode = false, privacyReady, policyVer
       form.reset();
       attempt.current = null;
       setStatus("success");
-      setFeedback(testMode ? "Prueba enviada. Revisa el buzón de contacto de Automatizza." : "Mensaje enviado. Gracias por contarnos tu idea.");
+      setFeedback(testMode ? "Prueba enviada. Revisa el buzón de contacto de Automatizza." : "Mensaje enviado. Gracias por contarnos qué te gustaría mejorar.");
     } catch {
       setStatus("error");
       setFeedback("No se ha podido confirmar el envío. El texto sigue aquí para que puedas volver a intentarlo.");
@@ -90,16 +90,9 @@ export function ContactForm({ enabled, testMode = false, privacyReady, policyVer
         </div>
       </div>
       <div className={styles.field}>
-        <label htmlFor="contact-service">¿En qué podemos ayudarte?</label>
-        <select id="contact-service" name="service" defaultValue="" disabled={isSending} aria-invalid={Boolean(errors.service)} aria-describedby={errors.service ? "contact-service-error" : undefined}>
-          <option value="">Selecciona una opción (opcional)</option>
-          {contactServices.map((service) => <option key={service}>{service}</option>)}
-        </select>
-        {errorFor("service")}
-      </div>
-      <div className={styles.field}>
-        <label htmlFor="contact-message">Cuéntanos tu idea <span aria-hidden="true">*</span></label>
-        <textarea id="contact-message" name="message" rows={4} required maxLength={5000} disabled={isSending} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "contact-message-error" : undefined} />
+        <label htmlFor="contact-message">¿En qué podemos ayudarte? <span aria-hidden="true">*</span></label>
+        <p className={styles.hint} id="contact-message-hint">Cuéntanos qué proceso te gustaría mejorar, qué tarea te quita demasiado tiempo o qué problema quieres resolver.</p>
+        <textarea id="contact-message" name="message" rows={5} placeholder="Por ejemplo: gestionamos los presupuestos manualmente y perdemos mucho tiempo copiando información entre herramientas…" required maxLength={5000} disabled={isSending} aria-invalid={Boolean(errors.message)} aria-describedby={`contact-message-hint${errors.message ? " contact-message-error" : ""}`} />
         {errorFor("message")}
       </div>
       <div className={styles.honeypot} aria-hidden="true" inert>

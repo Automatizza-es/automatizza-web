@@ -152,6 +152,20 @@ test("a verified send contains every field, Reply-To and a server-owned recipien
   assert.equal(calls[1].init.headers["Idempotency-Key"], `contact/${data.submissionId}`);
   assert.equal(response.headers.get("Cache-Control"), "no-store");
 });
+test("a problem-led enquiry sends without choosing a service", async () => {
+  for (const service of [undefined, ""]) {
+    const { handler, calls } = setup();
+    const data = { ...base(), service };
+    const response = await handler(request(data));
+    assert.equal(response.status, 202);
+    assert.deepEqual(await response.json(), { ok: true });
+    const payload = JSON.parse(calls[1].init.body);
+    assert.equal(payload.subject, "Nueva consulta web");
+    assert.ok(!payload.text.includes("Área:"));
+    assert.ok(payload.text.includes(data.message));
+    assert.equal(payload.reply_to, data.email);
+  }
+});
 test("a separate domain-verification key is supported", async () => {
   const { handler, calls } = setup({ env: { RESEND_VERIFY_API_KEY: "test-domain-key" } });
   await handler(request());

@@ -4,6 +4,10 @@
 
 - Formulario integrado únicamente en el contacto de la home, conservando su
   fondo azul marino, texto y footer. El listado de proyectos conserva su contacto.
+- El visitante cuenta el problema en un campo libre, sin elegir tecnología ni
+  servicio. Nombre, email, consulta y aceptación de privacidad siguen siendo
+  obligatorios. La API admite el área opcional de versiones anteriores; las
+  consultas actuales se envían sin área ni categorías en el asunto.
 - `/politica-de-privacidad` existe y está enlazada desde la casilla y el footer.
   Es un **borrador sin indexación**, no una política definitiva.
 - La titular ha facilitado directamente el 15/10/2026 los datos de Grain Store
