@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:tag-assistant": "node scripts/dev-tag-assistant.mjs",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",

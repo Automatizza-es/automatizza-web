@@ -8,6 +8,10 @@ export function getAnalyticsConfig(env: Record<string, string | undefined> = pro
   const measurementId = env.GOOGLE_ANALYTICS_ID?.trim() || cookiePolicy.measurementId;
   const containerId = env.GOOGLE_TAG_MANAGER_ID?.trim() || cookiePolicy.containerId;
   const configured = /^G-[A-Z0-9]{6,20}$/.test(measurementId) && /^GTM-[A-Z0-9]{5,20}$/.test(containerId);
-  const preview = configured && env.NODE_ENV === "development" && env.VERCEL !== "1" && env.ANALYTICS_PREVIEW === "true";
-  return { measurementId, containerId, preview, enabled: configured && reviewed && env.ANALYTICS_ENABLED === "true" };
+  const localDevelopment = env.NODE_ENV === "development" && env.VERCEL !== "1";
+  const preview = configured && localDevelopment && env.ANALYTICS_PREVIEW === "true";
+  // Explicit, local-only real Google testing. The network-free preview wins if
+  // both flags are accidentally set. This never approves the public cookie policy.
+  const tagAssistant = configured && localDevelopment && !preview && env.ANALYTICS_TAG_ASSISTANT === "true";
+  return { measurementId, containerId, preview, tagAssistant, enabled: configured && reviewed && env.ANALYTICS_ENABLED === "true" };
 }

@@ -26,7 +26,7 @@ function subscribe(notify: () => void) {
   };
 }
 
-export function CookieConsent({ measurementId, containerId, enabled, preview }: { measurementId: string; containerId: string; enabled: boolean; preview: boolean }) {
+export function CookieConsent({ measurementId, containerId, enabled, preview, tagAssistant = false }: { measurementId: string; containerId: string; enabled: boolean; preview: boolean; tagAssistant?: boolean }) {
   // A synthetic preview choice must never become consent for live measurement.
   const storageKey = preview ? `${consentKey}-preview` : consentKey;
   const raw = useSyncExternalStore(subscribe, () => snapshot(storageKey), serverSnapshot);
@@ -38,7 +38,7 @@ export function CookieConsent({ measurementId, containerId, enabled, preview }: 
   const [analytics, setAnalytics] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const lastPage = useRef("");
-  const available = enabled || preview;
+  const available = enabled || preview || tagAssistant;
 
   useEffect(() => {
     // Hydration has not read the saved choice yet; do not erase cookies from a
@@ -55,10 +55,10 @@ export function CookieConsent({ measurementId, containerId, enabled, preview }: 
       return;
     }
     if (lastPage.current !== path) {
-      trackPage({ measurementId, containerId }, path, decision);
+      trackPage({ measurementId, containerId, localDebug: tagAssistant }, path, decision);
       lastPage.current = path;
     }
-  }, [available, containerId, decision, measurementId, path, preview, raw]);
+  }, [available, containerId, decision, measurementId, path, preview, raw, tagAssistant]);
 
   useEffect(() => {
     if (!expiresAt || !available) return;
@@ -101,6 +101,7 @@ export function CookieConsent({ measurementId, containerId, enabled, preview }: 
         <div><h2>Tu privacidad, a tu manera.</h2>
           <p>Usamos almacenamiento necesario para recordar tu elección. Si aceptas, Google Analytics nos ayuda a entender cómo se utiliza la web. Puedes rechazarlo y seguir navegando. <Link href="/politica-de-cookies">Política de cookies</Link>.</p>
           {preview && <p className={styles.preview}>Vista de prueba local: no envía datos a Google.</p>}
+          {tagAssistant && <p className={styles.preview}>Prueba local de Tag Assistant: solo al aceptar se cargará Google y se enviarán datos reales de navegación. La analítica pública sigue desactivada.</p>}
         </div>
         <div className={styles.actions}>
           <button type="button" onClick={() => save("denied")}>Rechazar</button>
@@ -115,6 +116,7 @@ export function CookieConsent({ measurementId, containerId, enabled, preview }: 
         <label className={styles.option}><input type="checkbox" checked disabled /> Necesarias <span>Siempre activas</span></label>
         <label className={styles.option}><input type="checkbox" checked={analytics} onChange={(event) => setAnalytics(event.target.checked)} /> Google Analytics</label>
         {preview && <p className={styles.preview}>Vista de prueba local: no envía datos a Google.</p>}
+        {tagAssistant && <p className={styles.preview}>Prueba local de Tag Assistant con Google real. Publicidad siempre denegada.</p>}
         <p><Link href="/politica-de-cookies">Consultar la política de cookies</Link></p>
         <div className={styles.actions}>
           <button type="button" onClick={() => save("denied")}>Rechazar analítica</button>

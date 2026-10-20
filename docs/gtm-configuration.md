@@ -1,9 +1,69 @@
 # Espacio de trabajo GTM-59RBDRPH — configuración para revisar
 
-No está aplicada a la cuenta ni publicada. Preparar como cambios de workspace,
-revisar en Preview/Tag Assistant y no publicar sin autorización. La versión
-pública consultada el 19/10/2026 estaba vacía (v1); no acredita el contenido
-pendiente de publicar del workspace de la titular.
+La titular confirma el 20/10/2026 que ha preparado las tres etiquetas en su
+workspace, sin publicar. La versión pública consultada el 20/10/2026 sigue
+vacía (v1, sin etiquetas ni reglas); no acredita el contenido pendiente de
+publicar. Revisar el workspace con Preview/Tag Assistant y no publicar sin
+autorización. La web ya está integrada en main y desplegada, con la medición
+pública desactivada. La preparación local de esta prueba queda en rediseño.
+
+## Prueba del workspace sin publicar ni desplegar
+
+1. En el proyecto, ejecutar `npm run dev:tag-assistant` y mantener la terminal
+   abierta. La URL exacta es **http://127.0.0.1:3003/contacto**. El servidor solo
+   escucha en loopback y utiliza `.next-tag-assistant`, sin alterar los servidores
+   existentes, `.env.local`, main ni la configuración de Vercel.
+2. En Chrome, abrir GTM → `GTM-59RBDRPH` → el workspace con los cambios guardados
+   → **Vista previa**. Introducir esa URL exacta en Tag Assistant y pulsar
+   **Conectar**. Usar la ventana que abre Tag Assistant y el mismo navegador.
+   No pulsar Enviar/Publicar. No copiar parámetros privados de una sesión de
+   depuración en el código o en variables de entorno.
+3. Antes de aceptar estadísticas, la web no carga GTM/GA. Tag Assistant puede
+   indicar que no encuentra la etiqueta mientras está bloqueada. Aceptar
+   **Aceptar analítica** en esa ventana; después volver a Tag Assistant y
+   continuar. Si la detección inicial caducó, reconectar a la misma URL con
+   la aceptación ya guardada. Nunca cargar GTM antes de consentir para evitar
+   este aviso. La primera visita ya aceptada puede necesitar recarga para
+   revisar el inicio completo del contenedor.
+4. Revisar la matriz de la sección 6: en Network, cero peticiones GTM/GA de
+   la web sin consentimiento; al aceptar, una carga de GTM y una visita;
+   navegar a un proyecto y volver a Contacto, sin duplicados. En Consent,
+   `analytics_storage=granted`, los tres consentimientos publicitarios
+   `denied`. Retirar estadísticas desde Configurar cookies: se guarda rechazo,
+   se eliminan cookies estadísticas accesibles y se recarga sin GTM/GA.
+   Para repetir desde cero, borrar los datos solo de `http://127.0.0.1:3003`
+   en DevTools → Application → Storage; no hace falta borrar datos de producción.
+5. Los scripts de depuración/extensión pueden generar sus propias conexiones.
+   Para comprobar el bloqueo inicial sin interferencias, abrir también una
+   ventana limpia sin Tag Assistant; después ejecutar la prueba conectada.
+   Desactivar solo para esta prueba bloqueadores que impidan Google, si existen.
+
+**La vista previa ejecuta etiquetas reales**: los eventos pueden llegar a la
+propiedad GA4 aunque el contenedor no se publique. Usar únicamente navegación
+de prueba y revisar DebugView; no introducir datos personales en URLs. Las
+URL enviadas por la web son las canónicas (`https://automatizza.es/...`), no
+localhost, y se excluyen query/hash/referrer. El modo no añade otra instalación
+GA4, ni fuerza etiquetas, ni simula el evento de contacto.
+
+El comando establece variables solo para ese proceso:
+`ANALYTICS_TAG_ASSISTANT=true`, `ANALYTICS_PREVIEW=false`,
+`ANALYTICS_ENABLED=false`, `CONTACT_FORM_ENABLED=false` y
+`CONTACT_FORM_TEST_MODE=false`. Los IDs ya están configurados en el código;
+no falta una clave secreta de Google ni hay que cambiar variables de Vercel.
+El modo de Tag Assistant se ignora en producción y Vercel, y rechaza hosts
+públicos o de la red local. El modo anterior `ANALYTICS_PREVIEW=true` continúa
+siendo una vista sin red y tiene prioridad si se activan ambos flags.
+
+**Límite del formulario:** el envío publicado está desactivado por configuración
+y revisión de privacidad. Esta prueba no lo habilita. Tampoco convierte los
+envíos con `testMode` en leads. `generate_lead` se comprueba ahora mediante las
+pruebas del manejador real con proveedor simulado, sin correos ni Google.
+La comprobación extremo a extremo de esa etiqueta en Tag Assistant queda
+pendiente de habilitar un envío real autorizado después de la revisión de
+privacidad y configuración de Resend. No usar clic, visualización de confirmación
+ni `dataLayer.push` manual como sustituto de la confirmación del servidor.
+
+Guía oficial: [Vista previa de contenedores](https://support.google.com/tagmanager/answer/6107056?hl=es).
 
 ## 1. Variables de capa de datos (versión 2)
 

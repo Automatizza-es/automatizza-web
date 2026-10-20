@@ -24,6 +24,20 @@ test("network-free preview cannot enable production or Vercel", () => {
   assert.equal(getAnalyticsConfig({ ...env, NODE_ENV: "production" }).preview, false);
   assert.equal(getAnalyticsConfig({ ...env, VERCEL: "1" }).preview, false);
 });
+test("Tag Assistant is explicit, development-only, and never approves production", () => {
+  const env = { NODE_ENV: "development", ANALYTICS_TAG_ASSISTANT: "true" };
+  assert.equal(getAnalyticsConfig(env).tagAssistant, true);
+  assert.equal(getAnalyticsConfig(env).enabled, false);
+  assert.equal(getAnalyticsConfig(env).preview, false);
+  for (const overrides of [
+    { NODE_ENV: "production" }, { NODE_ENV: "test" }, { NODE_ENV: undefined },
+    { VERCEL: "1" }, { ANALYTICS_TAG_ASSISTANT: "false" },
+    { GOOGLE_TAG_MANAGER_ID: "invalid" }, { GOOGLE_ANALYTICS_ID: "invalid" },
+    { ANALYTICS_PREVIEW: "true" },
+  ]) assert.equal(getAnalyticsConfig({ ...env, ...overrides }).tagAssistant, false);
+  assert.equal(getAnalyticsConfig({ ...env, ANALYTICS_PREVIEW: "true" }).preview, true);
+  assert.equal(cookiePolicy.reviewed, false);
+});
 test("both choices expire after 180 days without extension", () => {
   for (const choice of ["granted", "denied"]) {
     const raw = encodeConsent(choice, 1000);
@@ -58,6 +72,31 @@ function browser(choice = "granted") {
 }
 const commands = () => (window.dataLayer ?? []).filter(entry => typeof entry[Symbol.iterator] === "function").map(entry => [...entry]);
 const events = () => (window.dataLayer ?? []).filter(entry => entry.event?.startsWith("automatizza_"));
+
+test("local Tag Assistant still needs consent and refuses public or LAN hostnames", () => {
+  for (const hostname of ["automatizza.es", "automatizza-web.vercel.app", "192.168.1.10", "localhost.example.com"]) {
+    const b = browser();
+    window.location.hostname = hostname;
+    assert.equal(trackPage({ ...ids, localDebug: true }, "/contacto", "granted"), false);
+    assert.equal(b.scripts.size, 0);
+    assert.equal(events().length, 0);
+  }
+  for (const hostname of ["localhost", "127.0.0.1", "[::1]"]) {
+    const b = browser(null);
+    window.location.hostname = hostname;
+    assert.equal(trackPage({ ...ids, localDebug: true }, "/contacto"), false);
+    assert.equal(b.scripts.size, 0);
+    b.grant();
+    assert.equal(trackPage({ ...ids, localDebug: true }, "/contacto", "granted"), true);
+    assert.equal(b.scripts.size, 1);
+    assert.equal(trackContactResult({ responseOk: true, result: { ok: true }, submissionId: "test", testMode: true }), false);
+    assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 0);
+    assert.equal(commands()[1][2].ad_storage, "denied");
+    b.deny();
+    stopAnalytics(ids.measurementId);
+    assert.equal(b.reloads, 1);
+  }
+});
 
 test("unknown, denied and stale grants never load Google or queue events", () => {
   for (const choice of [undefined, "denied"]) {

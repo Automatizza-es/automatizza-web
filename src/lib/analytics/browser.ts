@@ -1,7 +1,7 @@
 import { analyticsPage, consentKey, consentLifetime, readConsent } from "./consent";
 
 type LayerEntry = IArguments | Record<string, unknown>;
-export type AnalyticsIds = { measurementId: string; containerId: string };
+export type AnalyticsIds = { measurementId: string; containerId: string; localDebug?: boolean };
 type Session = AnalyticsIds & { path: string; submissions: Set<string> };
 
 declare global {
@@ -62,13 +62,19 @@ function pageData(path: string) {
 }
 
 export function trackPage(ids: AnalyticsIds, path: string, consent?: "granted" | "denied") {
+  // A development server must not expose the local testing exception on a LAN
+  // or a public hostname, even if someone starts it with a broader bind address.
+  if (ids.localDebug && !["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname)) {
+    stopAnalytics(ids.measurementId);
+    return false;
+  }
   if (consent !== "granted" || !consentIsCurrent()) { stopAnalytics(ids.measurementId); return false; }
   // The old home anchor is only an alias for /contacto, not an extra visit.
   if (path === "/" && window.location.hash === "#contacto") return false;
   const page = pageData(path);
   if (!page || !/^GTM-[A-Z0-9]{5,20}$/.test(ids.containerId) || !/^G-[A-Z0-9]{6,20}$/.test(ids.measurementId)) return false;
   let session = sessions.get(window);
-  if (session && (session.containerId !== ids.containerId || session.measurementId !== ids.measurementId)) {
+  if (session && (session.containerId !== ids.containerId || session.measurementId !== ids.measurementId || session.localDebug !== ids.localDebug)) {
     stopAnalytics(session.measurementId);
     return false;
   }

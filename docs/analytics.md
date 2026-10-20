@@ -1,6 +1,6 @@
 # GA4 mediante Google Tag Manager y consentimiento básico v2
 
-## Estado en rediseño
+## Estado comprobado el 20/10/2026
 
 - El formulario se encuentra en `/contacto`; conserva `form_id=contact` y el
   mismo evento de éxito confirmado. La ruta está en la lista de páginas
@@ -13,14 +13,24 @@
 - La titular confirma configurados conservación, Signals, personalización,
   ocultación de datos y medición mejorada en GA4. No se ha accedido a su cuenta
   para comprobar los valores concretos o sus opciones de automatización.
-- Consulta del recurso público `gtm.js?id=GTM-59RBDRPH` el 19/10/2026: versión 1,
+- Consulta del recurso público `gtm.js?id=GTM-59RBDRPH` el 20/10/2026: versión 1,
   `tags: []`, `rules: []`. La etiqueta indicada por la titular puede estar en un
   espacio de trabajo sin publicar. No se ha modificado ni publicado el contenedor.
-- No se ha modificado main ni desplegado este trabajo. La medición permanece
-  cerrada: `cookiePolicy.reviewed=false` y `ANALYTICS_ENABLED=false`.
+- La integración está en main (`ba619e6`) y su despliegue Vercel figura correcto.
+  `/contacto` sirve el formulario desactivado y no carga scripts de Google.
+  La medición pública permanece cerrada: `cookiePolicy.reviewed=false` y
+  `ANALYTICS_ENABLED=false`. No se ha accedido a variables privadas de Vercel;
+  el bloqueo legal del código basta para impedir la carga aunque cambiase el flag.
 - `ANALYTICS_PREVIEW=true` solo permite revisar el panel con `next dev` fuera de
   Vercel, sin cargar Google ni generar conversiones. La elección sintética usa
   `automatizza-cookie-consent-preview` y nunca se convierte en consentimiento real.
+- `npm run dev:tag-assistant` permite una prueba real local en
+  `http://127.0.0.1:3003/contacto`, en rediseño sin desplegar. Activa únicamente
+  para ese proceso `ANALYTICS_TAG_ASSISTANT=true` con la vista sin red desactivada;
+  el permiso solo funciona en desarrollo fuera de Vercel y sobre loopback.
+  Conserva consentimiento explícito y publicidad denegada. No cambia la revisión
+  legal ni habilita envíos. Instrucciones y límites en
+  [gtm-configuration.md](gtm-configuration.md#prueba-del-workspace-sin-publicar-ni-desplegar).
 
 ## Contrato entre web y GTM
 
@@ -47,9 +57,10 @@ más tarde. La aceptación de privacidad del formulario no concede estadísticas
 
 ## Configuración pendiente dentro de GTM/GA4
 
-Aplicar [gtm-configuration.md](gtm-configuration.md) en el espacio de trabajo,
-**sin publicar todavía**. Hay que adaptar la etiqueta principal existente,
-no instalar otra. Incluye las dos etiquetas de evento y el filtro de consentimiento.
+La titular confirma las tres etiquetas preparadas en el workspace, **sin
+publicar todavía**. Revisar con [gtm-configuration.md](gtm-configuration.md)
+la etiqueta principal existente y las dos etiquetas de evento con consentimiento;
+no instalar otra. No se ha inspeccionado el workspace autenticado.
 
 Es imprescindible desactivar el page view automático de la etiqueta y comprobar
 las opciones de medición mejorada en GA4. Los eventos de historial siguen pudiendo
@@ -94,6 +105,13 @@ Los borradores legales no se han aprobado automáticamente por recibir los IDs.
 
 ## Comprobaciones y límites
 
+- Auditoría local del 20/10/2026: 42 pruebas (20 de analítica y 22 de contacto),
+  lint y build correctos. En el navegador local: ningún script Google antes
+  de aceptar; un único `gtm.js` tras aceptar y durante navegación interna;
+  tras retirar, documento recargado sin scripts Google y envío bloqueado.
+  Esto verifica el cargador y el consentimiento, no las etiquetas privadas
+  del workspace ni la recepción de eventos en GA4. Esas comprobaciones deben
+  completarse desde la sesión autenticada de la titular en Tag Assistant.
 - `npm run test:analytics`: carga inicial, navegación, orden del consentimiento,
   una sola carga de GTM, exclusión de datos personales, caducidad, retirada,
   rechazo entre pestañas, recarga y conversión solo tras éxito confirmado.
