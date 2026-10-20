@@ -28,6 +28,11 @@ La activación del formulario y la analítica siguen siendo independientes.
   debe designarlo por sus actividades reales.
 - Configuración y pruebas de consentimiento básico, publicidad denegada y
   conversión solo tras éxito confirmado conservadas.
+- La titular comunica la configuración de las tres etiquetas y pruebas locales
+  reales en Tag Assistant/DebugView: visitas y URL correctas, duplicados por
+  historial corregidos, una visita por navegación, aceptación/retirada y nueva
+  aceptación operativas, cookies borradas y publicidad siempre denegada. Esta
+  parte de la validación está realizada; no se vuelve a pedir como pendiente.
 - Comprobaciones de esta preparación: 43 pruebas (23 de contacto y 20 de
   analítica), lint y build correctos. Privacidad y cookies revisadas en el
   navegador a 1280 px y 390 px sin desbordamiento horizontal; sin scripts
@@ -127,10 +132,17 @@ autorizado, comprobar respuesta real del servidor, recepción y Reply-To.
 
 ## Activación de estadísticas
 
-Seguir `gtm-configuration.md`, usando primero Vista previa del workspace en
-`http://127.0.0.1:3003/contacto` (`npm run dev:tag-assistant`). No publicar
-el contenedor como sustituto de probarlo. Verificar configuración sin visitas
-automáticas de historial o formularios de medición mejorada.
+El workspace ya está configurado y sus visitas/consentimiento han sido probados
+por la titular con Vista previa y DebugView; véase `analytics.md`. En particular,
+las visitas automáticas de historial de GA4 se desactivaron y se repitió la
+prueba sin duplicados. No repetir la configuración ni tratar estas pruebas
+como trabajo por hacer. Conservar desactivada la medición automática de
+formularios conforme a `gtm-configuration.md`.
+
+Queda la prueba no indicada en el informe: un envío real confirmado por el
+servidor, con consentimiento estadístico, debe producir exactamente un
+`generate_lead` con `form_id=contact` en GA4. El comando de prueba de Tag Assistant
+no habilita envíos; no simular la conversión ni cambiarla a un activador de clic.
 
 Tras las comprobaciones y autorización, publicar el workspace de GTM,
 aprobar `cookiePolicy.reviewed` y establecer `ANALYTICS_ENABLED=true` en el
@@ -140,10 +152,12 @@ publicidad siempre denegada; retirada con borrado y recarga; un `generate_lead`
 con `form_id=contact` únicamente tras éxito real y consentimiento vigente,
 sin datos personales ni duplicados. No usar un evento manual como prueba de envío.
 
-No se han publicado ni verificado las etiquetas privadas del workspace desde
-la cuenta de la titular. El contenedor público anterior estaba vacío. Lanzar
-la web y el contacto puede separarse de activar estadísticas; no se activa
-la medición hasta superar estas comprobaciones.
+No se han publicado ni inspeccionado las etiquetas privadas desde aquí; su
+configuración y la validación manual se acreditan mediante el informe de la
+titular. El informe no confirma publicación ni conversión tras envío real.
+No deducir el estado actual del workspace de la antigua consulta pública vacía.
+Lanzar la web y el contacto puede separarse de activar estadísticas; no se activa
+la medición hasta superar las comprobaciones restantes.
 
 ## Fuentes revisadas
 

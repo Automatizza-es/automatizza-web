@@ -11,11 +11,13 @@
   IDs públicos, sustituibles con `GOOGLE_ANALYTICS_ID` y `GOOGLE_TAG_MANAGER_ID`.
 - Se ha retirado la instalación directa de `gtag.js`. Solo GTM configura GA4.
 - La titular confirma configurados conservación, Signals, personalización,
-  ocultación de datos y medición mejorada en GA4. No se ha accedido a su cuenta
-  para comprobar los valores concretos o sus opciones de automatización.
-- Consulta del recurso público `gtm.js?id=GTM-59RBDRPH` el 20/10/2026: versión 1,
-  `tags: []`, `rules: []`. La etiqueta indicada por la titular puede estar en un
-  espacio de trabajo sin publicar. No se ha modificado ni publicado el contenedor.
+  ocultación de datos y medición mejorada en GA4. Además comunica la validación
+  manual del workspace con Tag Assistant y DebugView, detallada abajo. No se
+  ha accedido a su cuenta para inspeccionarla de forma independiente.
+- Última consulta pública realizada del recurso `gtm.js?id=GTM-59RBDRPH`
+  el 20/10/2026, anterior al informe manual: versión 1, `tags: []`, `rules: []`.
+  Este dato histórico no describe el workspace ya probado ni demuestra su
+  estado de publicación posterior. No se ha publicado el contenedor desde aquí.
 - La integración está en main (`ba619e6`) y su despliegue Vercel figura correcto.
   `/contacto` sirve el formulario desactivado y no carga scripts de Google.
   La medición pública permanece cerrada: `cookiePolicy.reviewed=false` y
@@ -55,12 +57,36 @@ clic, validación, honeypot, rechazo del proveedor, timeout, error o envío loca
 con `testMode`. Sin consentimiento al completarse, no se guarda para enviarlo
 más tarde. La aceptación de privacidad del formulario no concede estadísticas.
 
-## Configuración pendiente dentro de GTM/GA4
+## Validación manual comunicada por la titular el 20/10/2026
 
-La titular confirma las tres etiquetas preparadas en el workspace, **sin
-publicar todavía**. Revisar con [gtm-configuration.md](gtm-configuration.md)
-la etiqueta principal existente y las dos etiquetas de evento con consentimiento;
-no instalar otra. No se ha inspeccionado el workspace autenticado.
+Se da por realizada esta configuración y estas pruebas locales conforme al
+informe de la titular; no se requiere rehacer el workspace ni repetirlas como
+si estuvieran pendientes:
+
+- Tres etiquetas: Google principal con Initialization - All Pages y variable
+  de ajustes que incluye `send_page_view=false`; `GA4 - page_view` con
+  `automatizza_page_view`; `GA4 - generate_lead` con
+  `automatizza_contact_success`.
+- Las dos etiquetas de evento filtran `analytics_consent=granted`; las tres
+  requieren `analytics_storage`. Página y `form_id` usan las variables DLV
+  previstas en `gtm-configuration.md`.
+- DebugView recibe visitas y URL de página esperadas. Detectados duplicados,
+  se desactivaron las visitas automáticas por cambios de historial en GA4;
+  la repetición de la prueba confirma una visita por navegación.
+- Al aceptar: `analytics_storage=granted`, con `ad_storage`, `ad_user_data`
+  y `ad_personalization=denied`.
+- Al retirar: recarga de la web, cese de visitas y eliminación de `_ga` y
+  `_ga_1Y94M3HZRB`. Al volver a aceptar, se reanuda la medición; DebugView
+  muestra un dispositivo nuevo después de borrar cookies, según lo observado.
+
+El informe acredita el funcionamiento local de visitas y consentimiento.
+No indica un envío real confirmado por el servidor que se haya observado como
+`generate_lead` en GA4; esa comprobación concreta sigue pendiente, sin dar por
+probada la conversión solo por existir su etiqueta. Tampoco confirma que se
+haya publicado el contenedor. La comprobación final en el dominio de producción
+se realiza al activar el despliegue, sin repetir toda la preparación local.
+
+## Configuración que debe conservarse al publicar
 
 Es imprescindible desactivar el page view automático de la etiqueta y comprobar
 las opciones de medición mejorada en GA4. Los eventos de historial siguen pudiendo
@@ -105,13 +131,13 @@ Los borradores legales no se han aprobado automáticamente por recibir los IDs.
 
 ## Comprobaciones y límites
 
-- Auditoría local del 20/10/2026: 42 pruebas (20 de analítica y 22 de contacto),
+- Auditoría local del 20/10/2026: 43 pruebas (20 de analítica y 23 de contacto),
   lint y build correctos. En el navegador local: ningún script Google antes
   de aceptar; un único `gtm.js` tras aceptar y durante navegación interna;
   tras retirar, documento recargado sin scripts Google y envío bloqueado.
-  Esto verifica el cargador y el consentimiento, no las etiquetas privadas
-  del workspace ni la recepción de eventos en GA4. Esas comprobaciones deben
-  completarse desde la sesión autenticada de la titular en Tag Assistant.
+  Estas pruebas propias verifican el cargador y el consentimiento. La titular
+  aporta además la validación manual real de las etiquetas de visitas y su
+  recepción en GA4, recogida arriba; no se confunden ambas procedencias.
 - `npm run test:analytics`: carga inicial, navegación, orden del consentimiento,
   una sola carga de GTM, exclusión de datos personales, caducidad, retirada,
   rechazo entre pestañas, recarga y conversión solo tras éxito confirmado.
@@ -123,8 +149,9 @@ Los borradores legales no se han aprobado automáticamente por recibir los IDs.
   Esa vista no demuestra recepción en la propiedad ni ejecuta el contenedor.
 - Consulta del contenedor público, sin ejecutar su código ni acceder a cuentas.
 
-Antes de producción: terminar/revisar contenedor y textos, publicar los ajustes
-remotos cuando se autorice, establecer `cookiePolicy.reviewed=true` y
+Antes de producción: conservar el workspace ya configurado y probado por la
+titular, completar la prueba de conversión no indicada en su informe y publicar
+los ajustes remotos cuando se autorice. Establecer `cookiePolicy.reviewed=true` y
 `ANALYTICS_ENABLED=true`, reconstruir/desplegar y comprobar con Tag Assistant y
 la pestaña Network: cero Google antes de aceptar y tras rechazar, GA inicial y
 SPA sin duplicados, cookies reales, retirada/recarga y `generate_lead` solo tras

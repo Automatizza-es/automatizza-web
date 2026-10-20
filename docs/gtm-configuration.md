@@ -1,11 +1,20 @@
-# Espacio de trabajo GTM-59RBDRPH — configuración para revisar
+# Espacio de trabajo GTM-59RBDRPH — configuración y validación
 
-La titular confirma el 20/10/2026 que ha preparado las tres etiquetas en su
-workspace, sin publicar. La versión pública consultada el 20/10/2026 sigue
-vacía (v1, sin etiquetas ni reglas); no acredita el contenido pendiente de
-publicar. Revisar el workspace con Preview/Tag Assistant y no publicar sin
-autorización. La web ya está integrada en main y desplegada, con la medición
-pública desactivada. La preparación local de esta prueba queda en rediseño.
+La titular confirma el 20/10/2026 que ha configurado las tres etiquetas conforme
+a esta guía y probado visitas y consentimiento en Tag Assistant y DebugView.
+Ha desactivado las visitas automáticas por cambios de historial en GA4 para
+eliminar duplicados; la prueba repetida entrega una visita por navegación.
+Las tres etiquetas requieren analytics_storage, y los eventos filtran
+analytics_consent=granted. Aceptar, retirar, borrar cookies y volver a aceptar
+se han comprobado manualmente, con publicidad siempre denegada.
+
+La última consulta pública (v1 sin etiquetas ni reglas) fue anterior a este
+informe y no representa el workspace probado. El informe no confirma una
+publicación del contenedor ni una conversión observada tras envío real del
+formulario. Solo esas verificaciones y la activación/comprobación final de
+producción siguen pendientes. No rehacer las etiquetas ni repetir como
+pendientes las pruebas locales ya aportadas. Detalle en `analytics.md`.
+No se ha publicado nada desde aquí ni debe publicarse sin autorización.
 
 ## Prueba del workspace sin publicar ni desplegar
 
@@ -54,13 +63,14 @@ El modo de Tag Assistant se ignora en producción y Vercel, y rechaza hosts
 públicos o de la red local. El modo anterior `ANALYTICS_PREVIEW=true` continúa
 siendo una vista sin red y tiene prioridad si se activan ambos flags.
 
-**Límite del formulario:** el envío publicado está desactivado por configuración
-y revisión de privacidad. Esta prueba no lo habilita. Tampoco convierte los
+**Límite del formulario:** la versión de privacidad y aviso legal ya ha sido
+aprobada por la titular. El comando local de Tag Assistant mantiene el envío
+desactivado por configuración; esta prueba no lo habilita. Tampoco convierte los
 envíos con `testMode` en leads. `generate_lead` se comprueba ahora mediante las
 pruebas del manejador real con proveedor simulado, sin correos ni Google.
 La comprobación extremo a extremo de esa etiqueta en Tag Assistant queda
-pendiente de habilitar un envío real autorizado después de la revisión de
-privacidad y configuración de Resend. No usar clic, visualización de confirmación
+pendiente de habilitar un envío real autorizado con la configuración de Resend.
+No usar clic, visualización de confirmación
 ni `dataLayer.push` manual como sustituto de la confirmación del servidor.
 
 Guía oficial: [Vista previa de contenedores](https://support.google.com/tagmanager/answer/6107056?hl=es).
