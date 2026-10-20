@@ -87,7 +87,7 @@ export function HeroSection() {
             Creamos aplicaciones y automatizaciones a medida que conectan procesos y simplifican tu día a día.
           </p>
           <div className={styles.actions}>
-            <Link className={`${styles.button} ${styles.primary}`} href="#contacto">
+            <Link className={`${styles.button} ${styles.primary}`} href="/contacto">
               <span>Hablemos de tu proyecto</span>
               <span className={styles.arrow} aria-hidden="true">
                 →

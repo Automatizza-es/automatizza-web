@@ -112,6 +112,62 @@ test("initial/restored consent and SPA navigation produce one page event per act
   assert.equal(b.scripts.size, 1);
   assert.equal(events().length, 1);
 });
+test("the contact route keeps one page view per visit and one confirmed conversion", () => {
+  const b = browser();
+  window.location.pathname = "/contacto";
+  trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(b.scripts.size, 1);
+  assert.deepEqual(events(), [{ event: "automatizza_page_view", analytics_consent: "granted", page_location: "https://automatizza.es/contacto", page_title: "Contacto | Automatizza", page_referrer: "" }]);
+  assert.equal(trackContactResult(success), true);
+  assert.equal(trackContactResult(success), false);
+  const lead = events().filter(e => e.event === "automatizza_contact_success");
+  assert.equal(lead.length, 1);
+  assert.equal(lead[0].form_id, "contact");
+  assert.equal(lead[0].page_location, "https://automatizza.es/contacto");
+  trackPage(ids, "/", "granted");
+  trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(events().filter(e => e.event === "automatizza_page_view").length, 3);
+  assert.equal(b.scripts.size, 1);
+  b.deny();
+  assert.equal(trackContactResult({ ...success, submissionId: "after-withdrawal" }), false);
+});
+test("the legacy home contact anchor does not record an intermediate home visit", () => {
+  const b = browser();
+  window.location.hash = "#contacto";
+  assert.equal(trackPage(ids, "/", "granted"), false);
+  assert.equal(b.scripts.size, 0);
+  assert.equal(events().length, 0);
+  window.location.pathname = "/contacto";
+  window.location.hash = "";
+  assert.equal(trackPage(ids, "/contacto", "granted"), true);
+  assert.equal(trackPage(ids, "/contacto", "granted"), false);
+  assert.equal(events().length, 1);
+});
+test("repeated page tracking, revisiting contact and a fresh document never replay a confirmed lead", () => {
+  browser();
+  window.location.pathname = "/contacto";
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 0);
+  assert.equal(trackContactResult(success), true);
+
+  for (let render = 0; render < 3; render++) trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/", "granted");
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(trackContactResult(success), false);
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 1);
+
+  // A reload creates a new document. Loading it records only a page visit;
+  // no previous server outcome or conversion is restored from storage.
+  const reloaded = browser();
+  window.location.pathname = "/contacto";
+  trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(reloaded.scripts.size, 1);
+  assert.equal(events().filter(e => e.event === "automatizza_page_view").length, 1);
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 0);
+});
 test("arbitrary URLs, query strings, hashes and user-provided titles are excluded", () => {
   const b = browser();
   for (const path of ["/private-person@example.test", "/?email=person@example.test", "/#secret"]) trackPage(ids, path, "granted");
@@ -196,7 +252,8 @@ test("real contact handler outcomes convert only after provider confirmation (no
   };
   for (const scenario of ["validation", "honeypot", "disabled", "unverified", "provider-error", "network-error", "invalid-provider-success", "success"]) {
     browser();
-    trackPage(ids, "/", "granted");
+    window.location.pathname = "/contacto";
+    trackPage(ids, "/contacto", "granted");
     const form = {
       name: "Persona ficticia", email: "private@example.test", service: "Automatización",
       message: "Consulta ficticia, no se envía a ningún servicio.", privacy: true,
@@ -218,6 +275,7 @@ test("real contact handler outcomes convert only after provider confirmation (no
     }));
     const result = await response.json();
     assert.equal(trackContactResult({ responseOk: response.ok, result, submissionId: form.submissionId, testMode: false }), scenario === "success", scenario);
+    assert.equal(trackContactResult({ responseOk: response.ok, result, submissionId: form.submissionId, testMode: false }), false, `${scenario}: no duplicate conversion`);
     assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, scenario === "success" ? 1 : 0, scenario);
     assert.ok(!JSON.stringify(events()).includes(form.email));
     assert.ok(!JSON.stringify(events()).includes(form.message));

@@ -23,7 +23,7 @@ export default function PrivacyPage() {
       <Header redesign homeLinks />
       <main className={styles.page}>
         <Container className={styles.container}>
-          <Link className={styles.back} href="/#contacto">← Volver al contacto</Link>
+          <Link className={styles.back} href="/contacto">← Volver al contacto</Link>
           <p className={styles.eyebrow}>INFORMACIÓN LEGAL</p>
           <h1>Política de privacidad</h1>
           {!ready && <div className={styles.draft} role="note"><strong>Borrador pendiente de revisión</strong><p>El formulario público permanece desactivado. Los datos de la sociedad y su inscripción registral están incorporados. La conservación propuesta, los proveedores y la futura medición de visitas siguen pendientes de validación.</p></div>}
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
           </section>
           <section aria-labelledby="privacy-data">
             <h2 id="privacy-data">02. Qué datos se solicitan</h2>
-            <p>Nombre, email, área de interés —opcional—, mensaje y aceptación de esta política. Los campos obligatorios permiten responder a tu solicitud. No incluyas datos sensibles ni información de otras personas que no sea necesaria.</p>
+            <p>Nombre, email, mensaje y aceptación de esta política. Los campos obligatorios permiten responder a tu solicitud. No incluyas datos sensibles ni información de otras personas que no sea necesaria.</p>
             <p>Para prevenir abuso se prevén identificadores seudonimizados derivados del email y, cuando lo facilite un proxy de confianza, de la dirección IP. La aplicación no guarda las consultas en una base de datos ni utiliza almacenamiento local del navegador para conservarlas.</p>
           </section>
           <section aria-labelledby="privacy-purpose">
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
           <section id="contacto" className={styles.contact} aria-labelledby="privacy-contact">
             <h2 id="privacy-contact">Una consulta sobre tus datos</h2>
             <p>Puedes escribirnos a <a href={`mailto:${privacyPolicy.rightsEmail}`}>{privacyPolicy.rightsEmail}</a>.</p>
-            <Link href="/#contacto">Volver al formulario <span aria-hidden="true">→</span></Link>
+            <Link href="/contacto">Volver al formulario <span aria-hidden="true">→</span></Link>
           </section>
         </Container>
       </main>
