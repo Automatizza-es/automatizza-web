@@ -9,8 +9,9 @@ const { trackPage, stopAnalytics, trackContactResult } = await compiled("lib/ana
 const ids = { measurementId: "G-1Y94M3HZRB", containerId: "GTM-59RBDRPH" };
 
 test("GTM stays off until enabling AND cookie review, with validated IDs", () => {
-  assert.equal(cookiePolicy.reviewed, false);
-  assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true" }).enabled, false);
+  assert.equal(cookiePolicy.reviewed, true);
+  assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true" }, false).enabled, false);
+  assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true" }).enabled, true);
   assert.equal(getAnalyticsConfig({}, true).enabled, false);
   for (const invalid of [{ GOOGLE_ANALYTICS_ID: "invalid" }, { GOOGLE_TAG_MANAGER_ID: "invalid" }]) {
     assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true", ...invalid }, true).enabled, false);
@@ -36,7 +37,7 @@ test("Tag Assistant is explicit, development-only, and never approves production
     { ANALYTICS_PREVIEW: "true" },
   ]) assert.equal(getAnalyticsConfig({ ...env, ...overrides }).tagAssistant, false);
   assert.equal(getAnalyticsConfig({ ...env, ANALYTICS_PREVIEW: "true" }).preview, true);
-  assert.equal(cookiePolicy.reviewed, false);
+  assert.equal(cookiePolicy.reviewed, true);
 });
 test("both choices expire after 180 days without extension", () => {
   for (const choice of ["granted", "denied"]) {

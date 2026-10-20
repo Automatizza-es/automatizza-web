@@ -1,8 +1,8 @@
 import { consentVersion } from "./consent";
 
-// Separate from contact privacy approval: no assumption about Abbas is needed
-// to prepare analytics. Review the cookie policy and Google settings first.
-export const cookiePolicy = { reviewed: false, version: consentVersion, measurementId: "G-1Y94M3HZRB", containerId: "GTM-59RBDRPH" };
+// Cookie copy and manual GTM/GA4 consent checks reviewed for the owner-authorized
+// launch on 2026-10-20. The production environment switch remains independent.
+export const cookiePolicy = { reviewed: true, version: consentVersion, measurementId: "G-1Y94M3HZRB", containerId: "GTM-59RBDRPH" };
 
 export function getAnalyticsConfig(env: Record<string, string | undefined> = process.env, reviewed = cookiePolicy.reviewed) {
   const measurementId = env.GOOGLE_ANALYTICS_ID?.trim() || cookiePolicy.measurementId;
