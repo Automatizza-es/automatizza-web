@@ -1,0 +1,10 @@
+.page { background: #010d46; color: #fff; }
+.section { padding-block: clamp(3rem, 6vw, 5.5rem); }
+.layout:global(.contact-layout) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(3rem, 6vw, 6rem); align-items: start; justify-items: stretch; max-width: 1200px; text-align: left; }
+.copy h1 { max-width: 560px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2.25rem, 3.4vw, 3.25rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.12; text-wrap: balance; }
+.copy > p:not(:global(.contact-kicker)) { max-width: 430px; margin: 1.75rem 0 0; color: #c4cada; font-size: 1rem; line-height: 1.7; }
+.copy > p strong { color: #fff; font-weight: 600; }
+.email { display: inline-block; margin-top: 2.5rem; padding-bottom: .4rem; border-bottom: 1px solid rgba(255, 255, 255, .3); color: #fff; font-size: .9375rem; }
+.email:focus-visible { outline: 2px solid #8cd7ff; outline-offset: 5px; }
+@media (max-width: 900px) { .layout:global(.contact-layout) { grid-template-columns: minmax(0, 1fr); gap: 3rem; } .copy h1 { max-width: 650px; } }
+@media (max-width: 600px) { .copy h1 { font-size: 2.1rem; } .email { margin-top: 1.5rem; } }

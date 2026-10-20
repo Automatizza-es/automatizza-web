@@ -1,8 +1,10 @@
-.withForm:global(.contact-layout) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(3rem, 6vw, 6rem); align-items: start; justify-items: stretch; max-width: 1200px; text-align: left; }
-.withForm .copy h2 { max-width: 560px; font-size: clamp(2.25rem, 3.4vw, 3.25rem); line-height: 1.12; }
-.copy > p:not(:global(.contact-kicker)) { max-width: 430px; margin: 1.75rem 0 0; color: #c4cada; font-size: 1rem; line-height: 1.7; }
-.copy > p strong { color: #fff; font-weight: 600; }
-.email { display: inline-block; margin-top: 2.5rem; padding-bottom: .4rem; border-bottom: 1px solid rgba(255, 255, 255, .3); color: #fff; font-size: .9375rem; }
-.email:focus-visible { outline: 2px solid #8cd7ff; outline-offset: 5px; }
-@media (max-width: 900px) { .withForm:global(.contact-layout) { grid-template-columns: minmax(0, 1fr); gap: 3rem; } .withForm .copy h2 { max-width: 650px; } }
-@media (max-width: 600px) { .withForm .copy h2 { font-size: 2.1rem; } .email { margin-top: 1.5rem; } }
+.compact:global(.contact-section) { padding-block: clamp(3rem, 5vw, 4.5rem); }
+.compact :global(.contact-layout > .contact-kicker) { margin: 0 0 1.25rem; color: var(--color-cyan); font-size: .75rem; line-height: 1.4; }
+.compact :global(.contact-layout h2) { max-width: 800px; font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1.15; }
+.compact :global(.contact-layout > p:not(.contact-kicker)) { max-width: 620px; margin-top: 1.25rem; font-size: 1rem; line-height: 1.7; }
+.compact :global(.contact-actions) { margin-top: 1.75rem; }
+.compact :global(.contact-button) { border-radius: 999px; }
+.compact a:focus-visible { outline: 2px solid #8cd7ff; outline-offset: 5px; }
+@media (max-width: 600px) {
+  .compact :global(.contact-layout h2) { font-size: 1.875rem; }
+}

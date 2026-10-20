@@ -2,8 +2,15 @@
 
 ## Estado actual
 
-- Formulario integrado únicamente en el contacto de la home, conservando su
-  fondo azul marino, texto y footer. El listado de proyectos conserva su contacto.
+- Formulario único en `/contacto`, conservando campos, diseño, validación,
+  estados, consentimiento y protección antispam. La home muestra un cierre
+  compacto que enlaza a esa página; `/#contacto` sigue funcionando mediante
+  redirección en el cliente (los fragmentos no llegan al servidor).
+- Cabecera, menú móvil, pie, hero, calculadora, fichas y retornos de privacidad
+  enlazan a `/contacto`. El email visible conserva su enlace `mailto:`.
+- La página utiliza el dominio de `NEXT_PUBLIC_SITE_URL` para su canonical,
+  con `https://automatizza.es` como valor predeterminado. No existe sitemap
+  en el proyecto. El cambio de ubicación no activa el formulario ni Analytics.
 - El visitante cuenta el problema en un campo libre, sin elegir tecnología ni
   servicio. Nombre, email, consulta y aceptación de privacidad siguen siendo
   obligatorios. La API admite el área opcional de versiones anteriores; las
@@ -30,7 +37,7 @@
 ## Pruebas locales con envío real
 
 `CONTACT_FORM_TEST_MODE=true` en `.env.local` permite probar el formulario de
-`http://127.0.0.1:3000/#contacto` con `next dev`. La excepción solo funciona con
+`http://127.0.0.1:3000/contacto` con `next dev`. La excepción solo funciona con
 `NODE_ENV=development` y fuera de Vercel; las compilaciones y despliegues de
 producción continúan exigiendo la política revisada y el interruptor público.
 `CONTACT_FORM_ENABLED` sigue en `false`; la política permanece como borrador.

@@ -113,7 +113,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
           <section className={styles.contact} id="contacto" aria-labelledby="detail-contact-title">
             <p className={styles.eyebrow}>Tu próximo proyecto</p>
             <h2 id="detail-contact-title">Todo empieza por entender cómo trabajas.</h2>
-            <Link href="mailto:info@automatizza.es" className={styles.contactLink}>Hablemos de tu proyecto <span aria-hidden="true">↗</span></Link>
+            <Link href="/contacto" className={styles.contactLink}>Hablemos de tu proyecto <span aria-hidden="true">↗</span></Link>
           </section>
 
           <nav className={styles.otherProjects} aria-label="Otros proyectos">

@@ -2,41 +2,24 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
 import { Footer } from "@/components/layout/Footer";
-import { ContactForm } from "@/components/contact/ContactForm";
-import { getContactConfig } from "@/lib/contact/server";
-import { isPrivacyPolicyReady, privacyPolicy } from "@/content/privacy";
 import styles from "./ContactSection.module.css";
 
-export function ContactSection({ withForm = false }: { withForm?: boolean }) {
-  const contactConfig = withForm ? getContactConfig() : null;
+export function ContactSection() {
   return (
     <div className="closing-block">
-      <section className="contact-section" id="contacto" aria-labelledby="contact-title">
-        <Container className={`contact-layout${withForm ? ` ${styles.withForm}` : ""}`} data-reveal>
-          {withForm ? <>
-            <div className={styles.copy}>
-              <p className="contact-kicker">HABLEMOS</p>
-              <h2 id="contact-title">¿Hay algún proceso de tu empresa que podría funcionar mejor?</h2>
-              <p>
-                No necesitas tenerlo todo definido. <strong>Cuéntanos cómo trabajáis ahora y qué
-                te gustaría mejorar. Te ayudamos a encontrar la mejor forma de resolverlo.</strong>
-              </p>
-              <Link className={styles.email} href="mailto:info@automatizza.es">info@automatizza.es</Link>
-            </div>
-            <ContactForm enabled={contactConfig?.ready ?? false} testMode={contactConfig?.testMode ?? false} privacyReady={isPrivacyPolicyReady()} policyVersion={privacyPolicy.version} controller={privacyPolicy.legalName} rightsEmail={privacyPolicy.rightsEmail} />
-          </> : <>
+      <section className={`contact-section ${styles.compact}`} id="contacto" aria-labelledby="contact-title">
+        <Container className="contact-layout" data-reveal>
           <p className="contact-kicker">HABLEMOS</p>
           <h2 id="contact-title">
-            ¿Hay algún proceso de tu empresa que sabes que podría funcionar mejor?
+            ¿Qué proceso de tu empresa podría funcionar mejor?
           </h2>
-          <p>Cuéntanos cómo trabajáis ahora. Empezaremos por entender el problema.</p>
+          <p>No necesitas tenerlo todo definido. Cuéntanos tu idea y vemos cómo podemos ayudarte.</p>
           <div className="contact-actions">
-            <Link className="contact-button" href="mailto:info@automatizza.es">
+            <Link className="contact-button" href="/contacto">
               Hablemos de tu proyecto <span aria-hidden="true">→</span>
             </Link>
             <Link href="mailto:info@automatizza.es">info@automatizza.es</Link>
           </div>
-          </>}
         </Container>
       </section>
 

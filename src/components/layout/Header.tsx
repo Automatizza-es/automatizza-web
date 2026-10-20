@@ -10,11 +10,11 @@ const navigation = [
   { label: "Servicios", href: "#servicios" },
   { label: "Proyectos", href: "#proyectos" },
   { label: "Sobre Automatizza", href: "#sobre-automatizza" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Contacto", href: "/contacto" },
 ];
 
 export function Header({ redesign = false, homeLinks = false }: { redesign?: boolean; homeLinks?: boolean }) {
-  const hrefFor = (href: string) => homeLinks && href !== "#contacto" ? `/${href}` : href;
+  const hrefFor = (href: string) => homeLinks && href.startsWith("#") ? `/${href}` : href;
   return (
     <header className={`site-header${redesign ? ` ${styles.redesigned}` : ""}`}>
       <Container className="header-inner">
@@ -36,7 +36,7 @@ export function Header({ redesign = false, homeLinks = false }: { redesign?: boo
           ))}
         </nav>
 
-        <Link className="header-cta" href="#contacto">
+        <Link className="header-cta" href="/contacto">
           <span>Hablemos</span>
           <span aria-hidden="true">→</span>
         </Link>
@@ -68,7 +68,7 @@ export function Header({ redesign = false, homeLinks = false }: { redesign?: boo
                 {item.label}
               </Link>
             ))}
-            <Link className="mobile-navigation-cta" href="#contacto">
+            <Link className="mobile-navigation-cta" href="/contacto">
               Hablemos <span aria-hidden="true">→</span>
             </Link>
           </nav>

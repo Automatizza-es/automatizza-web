@@ -2,6 +2,11 @@
 
 ## Estado en rediseño
 
+- El formulario se encuentra en `/contacto`; conserva `form_id=contact` y el
+  mismo evento de éxito confirmado. La ruta está en la lista de páginas
+  permitidas. La antigua entrada `/#contacto` no registra una visita intermedia
+  a la home antes de redirigir. No se han añadido etiquetas ni integraciones.
+
 - GA4: `G-1Y94M3HZRB`; contenedor: `GTM-59RBDRPH`; sitio: `https://automatizza.es`.
   IDs públicos, sustituibles con `GOOGLE_ANALYTICS_ID` y `GOOGLE_TAG_MANAGER_ID`.
 - Se ha retirado la instalación directa de `gtag.js`. Solo GTM configura GA4.

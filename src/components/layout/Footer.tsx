@@ -3,7 +3,7 @@ import { Container } from "./Container";
 
 const navigation = [
   ["Servicios", "#servicios"], ["Proyectos", "#proyectos"],
-  ["Sobre Automatizza", "#sobre-automatizza"], ["Contacto", "#contacto"],
+  ["Sobre Automatizza", "#sobre-automatizza"], ["Contacto", "/contacto"],
 ];
 
 export function Footer({ homeLinks = false }: { homeLinks?: boolean }) {
@@ -11,7 +11,7 @@ export function Footer({ homeLinks = false }: { homeLinks?: boolean }) {
     <footer className="site-footer">
       <Container className="footer-inner">
         <nav aria-label="Navegación del pie">
-          {navigation.map(([label, href]) => <Link key={href} href={homeLinks ? `/${href}` : href}>{label}</Link>)}
+          {navigation.map(([label, href]) => <Link key={href} href={homeLinks && href.startsWith("#") ? `/${href}` : href}>{label}</Link>)}
         </nav>
         <Link href="mailto:info@automatizza.es">info@automatizza.es</Link>
         <div className="footer-legal">

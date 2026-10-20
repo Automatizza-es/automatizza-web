@@ -14,7 +14,7 @@ export function CalculatorSection() {
             Calcula cuánto te cuestan las tareas repetitivas de tu empresa y estima el tiempo y el
             valor económico que podrías recuperar al automatizarlas.
           </p>
-          <Link className="button button-primary" href="#contacto">
+          <Link className="button button-primary" href="/contacto">
             Cuéntanos tu proyecto <span aria-hidden="true">→</span>
           </Link>
         </div>
