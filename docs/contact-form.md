@@ -34,6 +34,19 @@
 - **El envío público permanece desactivado en el cliente y en la API.** Poner una API key
   o cambiar solo una variable de entorno no elude la revisión de la política.
 
+## Confirmación y conversiones
+
+La confirmación se muestra en el propio formulario de `/contacto`: «Mensaje
+enviado. Gracias por contarnos qué te gustaría mejorar». No existe una página
+`/gracias` ni una redirección después de enviar. Solo se vacían los campos y se
+muestra el éxito después de una respuesta HTTP correcta con `ok: true`.
+
+`trackContactResult` se llama desde ese manejador de respuesta; no desde un clic,
+un efecto de React ni al visualizar el mensaje. Mantiene `form_id=contact`,
+exige consentimiento estadístico vigente y deduplica por identificador de envío.
+Una recarga no restaura la confirmación ni reenvía el formulario; volver a la
+página o renderizarla de nuevo no recupera ni repite la conversión.
+
 ## Pruebas locales con envío real
 
 `CONTACT_FORM_TEST_MODE=true` en `.env.local` permite probar el formulario de

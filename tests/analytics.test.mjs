@@ -145,6 +145,29 @@ test("the legacy home contact anchor does not record an intermediate home visit"
   assert.equal(trackPage(ids, "/contacto", "granted"), false);
   assert.equal(events().length, 1);
 });
+test("repeated page tracking, revisiting contact and a fresh document never replay a confirmed lead", () => {
+  browser();
+  window.location.pathname = "/contacto";
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 0);
+  assert.equal(trackContactResult(success), true);
+
+  for (let render = 0; render < 3; render++) trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/", "granted");
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(trackContactResult(success), false);
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 1);
+
+  // A reload creates a new document. Loading it records only a page visit;
+  // no previous server outcome or conversion is restored from storage.
+  const reloaded = browser();
+  window.location.pathname = "/contacto";
+  trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/contacto", "granted");
+  assert.equal(reloaded.scripts.size, 1);
+  assert.equal(events().filter(e => e.event === "automatizza_page_view").length, 1);
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 0);
+});
 test("arbitrary URLs, query strings, hashes and user-provided titles are excluded", () => {
   const b = browser();
   for (const path of ["/private-person@example.test", "/?email=person@example.test", "/#secret"]) trackPage(ids, path, "granted");
