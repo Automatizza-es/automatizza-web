@@ -12,6 +12,9 @@ formulario/consentimiento. Solo metadatos, recursos SEO y reglas HTTP.
 - Vercel producción **READY**, despliegue `dpl_p9q2to523SvTqQAcg1MPCLjw4MzG`.
   El ID aparece en el HTML público de las cinco páginas y corresponde al
   merge `efdea8d`. Se ha comprobado también mediante la API de Vercel.
+  La auditoría completa se repitió correctamente en el despliegue
+  `dpl_6L8BNHTM7qEYgdrF6bcHqvcJKLep`, commit `ae391b9`, que añade únicamente
+  este informe a ese mismo código.
 - Portada, contacto, Silos Spain, APC Europe y La Factory: **HTTP 200**, un
   título y descripción específicos y un canonical correcto por página.
   Las páginas comerciales devuelven `index, follow` y no tienen
@@ -28,7 +31,12 @@ formulario/consentimiento. Solo metadatos, recursos SEO y reglas HTTP.
   `dpl_9Qjyd7QshwfAaYLWC5NaXKteo3xn`, commit `50f88e2`, entorno preview,
   estado **READY**. La protección original de Vercel exige autenticación:
   sin sesión devuelve **302** al acceso de Vercel y `X-Robots-Tag: noindex`.
-  La comprobación del contenido autenticado está pendiente de acceso autorizado.
+  Con acceso temporal expresamente autorizado, las cinco páginas responden
+  **200**, sin redirigir a producción, con canonical correcto y meta/cabecera
+  `noindex, nofollow`. Robots responde **200** sin anunciar sitemap; el sitemap
+  responde **200** con XML válido sin URLs. Son **7 comprobaciones autenticadas**.
+  La clave temporal se ha revocado, se ha comprobado su ausencia en el proyecto
+  y el preview vuelve a exigir autenticación. No se han desactivado protecciones.
 - Auditoría pública: **23 respuestas HTTP**, sin errores. Solo peticiones de
   lectura; no se han enviado formularios ni activado manualmente eventos.
 
