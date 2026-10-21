@@ -1,12 +1,38 @@
 # Revisión SEO técnica — 21/10/2026
 
-**Preparado para revisar, sin desplegar.** Rama local
-`codex/technical-seo-review`, basada en `main` (`e976cad`). No se ha hecho push,
-merge, publicación de contenedores ni cambios de configuración en Vercel.
+**Cambios aprobados, integrados y desplegados el 21/10/2026.**
+Merge en `main`: `efdea8dbee639bf65219fb34eccc934fa2ab7ad0`.
+La rama `codex/technical-seo-review` se conserva; no había cambios remotos
+posteriores a su base que resolver. No se ha reescrito historial.
 No se han cambiado JSX, H1/H2, textos visibles, CSS, estructura o lógica del
 formulario/consentimiento. Solo metadatos, recursos SEO y reglas HTTP.
 
-## Producción: diagnóstico confirmado
+## Verificación directa después del despliegue
+
+- Vercel producción **READY**, despliegue `dpl_p9q2to523SvTqQAcg1MPCLjw4MzG`.
+  El ID aparece en el HTML público de las cinco páginas y corresponde al
+  merge `efdea8d`. Se ha comprobado también mediante la API de Vercel.
+- Portada, contacto, Silos Spain, APC Europe y La Factory: **HTTP 200**, un
+  título y descripción específicos y un canonical correcto por página.
+  Las páginas comerciales devuelven `index, follow` y no tienen
+  `X-Robots-Tag: noindex`.
+- `/robots.txt`: **200**, texto plano, rastreo permitido, `/api/` excluido y
+  enlace al sitemap. `/sitemap.xml`: **200**, XML válido y exactamente cinco
+  URLs canónicas, sin las páginas legales ni las redirecciones.
+- Diez comprobaciones de redirección en `www` y en el alias estable de Vercel:
+  **308**, conservando ruta y query, incluidas portada, contacto, un proyecto,
+  robots y sitemap.
+- `/proyectos`: **308** a `/#proyectos`. Las rutas y proyectos inexistentes
+  mantienen **404**. Los documentos legales conservan `noindex, nofollow`.
+- El preview real se ha creado desde el mismo código revisado:
+  `dpl_9Qjyd7QshwfAaYLWC5NaXKteo3xn`, commit `50f88e2`, entorno preview,
+  estado **READY**. La protección original de Vercel exige autenticación:
+  sin sesión devuelve **302** al acceso de Vercel y `X-Robots-Tag: noindex`.
+  La comprobación del contenido autenticado está pendiente de acceso autorizado.
+- Auditoría pública: **23 respuestas HTTP**, sin errores. Solo peticiones de
+  lectura; no se han enviado formularios ni activado manualmente eventos.
+
+## Producción: diagnóstico previo a la corrección
 
 Las comprobaciones se han realizado contra respuestas HTTP completas de los
 dominios públicos, no únicamente con una captura o un resultado de buscador.
@@ -33,7 +59,7 @@ Se ha contrastado el ID de despliegue incluido en el HTML con la API de Vercel:
 **No era un despliegue antiguo:** la configuración genérica de la portada y
 la ausencia de los recursos SEO también estaban en ese código.
 
-## Correcciones preparadas
+## Correcciones publicadas
 
 ### Metadatos
 
@@ -111,20 +137,14 @@ anclas y existencia de archivos públicos enlazados. Se prueba incluso un
 Los H1/H2 de las cinco páginas indexables se han comparado con producción:
 coinciden. Las 43 pruebas existentes de consentimiento/contacto también pasan.
 
-## Después de aprobar y desplegar
+## Tareas externas posteriores
 
-1. Publicar esta rama mediante el flujo habitual. Este trabajo todavía no está
-   en `main` ni en producción.
-2. Repetir la comprobación HTTP en el dominio real: nuevo título/description,
-   canonical por página, robots y sitemap 200, dominio principal sin `noindex`,
-   alias estable de Vercel con 308, previews accesibles con `noindex`.
-   La validación local no sustituye comprobar los encabezados finales del CDN.
-3. En **Google Search Console**, enviar `https://automatizza.es/sitemap.xml`
+1. En **Google Search Console**, enviar `https://automatizza.es/sitemap.xml`
    y usar Inspección de URLs para la portada y páginas relevantes. Si aún no
    existe una propiedad verificada del dominio, la titular debe verificarla
    con los valores exactos que proporcione Google. No se han cambiado DNS ni
    añadido verificaciones ficticias.
-4. Revisar después el canonical elegido y la indexación en Search Console.
+2. Revisar después el canonical elegido y la indexación en Search Console.
    El cambio no actualiza instantáneamente los resultados ya almacenados.
 
 No se ha detectado una cabecera externa que requiera desbloquear el dominio
