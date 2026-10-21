@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ProjectDetailPage } from "@/components/projects/ProjectDetailPage";
 import { findProject, projectDetails } from "@/components/projects/projectDetails";
+import { pageMetadata } from "@/lib/seo";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -15,16 +16,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const project = findProject(slug);
   if (!project) return {};
 
+  const metadata = pageMetadata(`/proyectos/${project.slug}`, project.seo.title, project.seo.description);
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://automatizza.es"),
-    title: `${project.client} | Proyectos | Automatizza`,
-    description: project.introduction,
-    alternates: { canonical: `/proyectos/${project.slug}` },
+    ...metadata,
     openGraph: {
-      title: `${project.client} — ${project.title}`,
-      description: project.introduction,
-      type: "website",
-      locale: "es_ES",
+      ...metadata.openGraph,
       images: [{ url: project.seoImage, alt: project.client }],
     },
   };

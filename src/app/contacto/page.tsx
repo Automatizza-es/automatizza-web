@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ContactForm } from "@/components/contact/ContactForm";
@@ -7,14 +6,14 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { getContactConfig } from "@/lib/contact/server";
 import { isPrivacyPolicyReady, privacyPolicy } from "@/content/privacy";
+import { pageMetadata } from "@/lib/seo";
 import styles from "@/components/contact/ContactPage.module.css";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://automatizza.es"),
-  title: "Contacto | Automatizza",
-  description: "Cuéntanos cómo trabaja tu empresa y qué te gustaría mejorar. En Automatizza te ayudamos a encontrar una solución práctica y adaptada a tu negocio.",
-  alternates: { canonical: "/contacto" },
-};
+export const metadata = pageMetadata(
+  "/contacto",
+  "Contacto | Automatizza",
+  "Cuéntanos cómo trabaja tu empresa y qué te gustaría mejorar. En Automatizza te ayudamos a encontrar una solución práctica y adaptada a tu negocio.",
+);
 
 export default function ContactPage() {
   const config = getContactConfig();

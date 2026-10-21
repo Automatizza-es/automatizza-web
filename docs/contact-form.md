@@ -15,9 +15,9 @@
   redirección en el cliente (los fragmentos no llegan al servidor).
 - Cabecera, menú móvil, pie, hero, calculadora, fichas y retornos de privacidad
   enlazan a `/contacto`. El email visible conserva su enlace `mailto:`.
-- La página utiliza el dominio de `NEXT_PUBLIC_SITE_URL` para su canonical,
-  con `https://automatizza.es` como valor predeterminado. No existe sitemap
-  en el proyecto. El cambio de ubicación no activa el formulario ni Analytics.
+- La página utiliza `https://automatizza.es/contacto` como canonical,
+  centralizado en `src/lib/seo.ts` e incluido en el sitemap de producción.
+  El cambio de ubicación no activa el formulario ni Analytics.
 - El visitante cuenta el problema en un campo libre, sin elegir tecnología ni
   servicio. Nombre, email, consulta y aceptación de privacidad siguen siendo
   obligatorios. La API admite el área opcional de versiones anteriores; las

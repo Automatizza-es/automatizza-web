@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { ProjectRouteScroll } from "@/components/projects/ProjectRouteScroll";
 import { CookieConsent } from "@/components/privacy/CookieConsent";
 import { getAnalyticsConfig } from "@/lib/analytics/config";
+import { isProductionDeployment, siteOrigin } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -14,8 +15,10 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteOrigin),
   title: "Automatizza",
-  description: "Web corporativa de Automatizza.",
+  description: "Automatización de procesos, inteligencia artificial y software a medida para empresas.",
+  robots: isProductionDeployment() ? { index: true, follow: true } : { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

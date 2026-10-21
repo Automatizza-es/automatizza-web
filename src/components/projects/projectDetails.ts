@@ -2,6 +2,10 @@ export const projectDetails = [
   {
     slug: "silos-spain",
     client: "Silos Spain",
+    seo: {
+      title: "Silos Spain | CRM y gestión comercial a medida | Automatizza",
+      description: "Una plataforma a medida para centralizar solicitudes, oportunidades y presupuestos de Silos Spain, conectando su gestión comercial y reduciendo tareas manuales.",
+    },
     category: "Plataforma empresarial",
     title: "De procesos dispersos a una gestión conectada.",
     introduction: "Una plataforma diseñada para centralizar la gestión comercial, simplificar el trabajo diario y conectar procesos que antes funcionaban por separado.",
@@ -23,6 +27,10 @@ export const projectDetails = [
   {
     slug: "apc",
     client: "APC Europe",
+    seo: {
+      title: "APC Europe | App para logística y recogidas | Automatizza",
+      description: "Aplicación web para APC Europe que permite registrar recogidas y viajes desde el móvil y centralizar la información de sus operaciones de transporte.",
+    },
     category: "Aplicación de operaciones",
     title: "Cada recogida registrada. Cada viaje bajo control.",
     introduction: "Una aplicación web diseñada para simplificar el trabajo de los conductores y centralizar la información de las operaciones de transporte y recogida de materia prima.",
@@ -44,6 +52,10 @@ export const projectDetails = [
   {
     slug: "la-factory-coworking",
     client: "La Factory Coworking",
+    seo: {
+      title: "La Factory Coworking | App de reservas de salas | Automatizza",
+      description: "Aplicación web para La Factory Coworking que reúne reservas de salas, usuarios y servicios para simplificar la gestión diaria del espacio.",
+    },
     category: "Webapp de coworking",
     title: "Un espacio compartido. Una gestión mucho más sencilla.",
     introduction: "Una aplicación web que reúne reservas, usuarios y servicios del coworking en una experiencia digital sencilla.",

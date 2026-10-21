@@ -9,6 +9,13 @@ import { ProjectsSection } from "@/components/home/ProjectsSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { Header } from "@/components/layout/Header";
 import { LegacyContactRedirect } from "@/components/contact/LegacyContactRedirect";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata(
+  "/",
+  "Automatizza | Automatización de procesos e IA para empresas",
+  "Automatizamos tareas repetitivas, conectamos herramientas y desarrollamos soluciones a medida para que tu empresa trabaje mejor.",
+);
 
 // Cambiar a true para recuperar la sección, conservada con sus estilos y animaciones.
 const showProcessSection = false;
