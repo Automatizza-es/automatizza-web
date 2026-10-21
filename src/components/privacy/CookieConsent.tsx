@@ -98,14 +98,14 @@ export function CookieConsent({ measurementId, containerId, enabled, preview, ta
   return (
     <>
       {!decision && <aside className={styles.banner} aria-label="Preferencias de cookies">
-        <div><h2>Tu privacidad, a tu manera.</h2>
-          <p>Usamos almacenamiento necesario para recordar tu elección. Si aceptas, Google Analytics nos ayuda a entender cómo se utiliza la web. Puedes rechazarlo y seguir navegando. <Link href="/politica-de-cookies">Política de cookies</Link>.</p>
+        <div><h2>Cookies</h2>
+          <p>Utilizamos cookies de Google Analytics para entender cómo se usa nuestra web, solo si las aceptas. Puedes rechazarlas y seguir navegando. Guardamos tu elección para recordarla. <Link href="/politica-de-cookies">Política de cookies</Link>.</p>
           {preview && <p className={styles.preview}>Vista de prueba local: no envía datos a Google.</p>}
           {tagAssistant && <p className={styles.preview}>Prueba local de Tag Assistant: solo al aceptar se cargará Google y se enviarán datos reales de navegación. La analítica pública sigue desactivada.</p>}
         </div>
         <div className={styles.actions}>
-          <button type="button" onClick={() => save("denied")}>Rechazar</button>
-          <button type="button" onClick={() => save("granted")}>Aceptar analítica</button>
+          <button type="button" onClick={() => save("denied")}>Rechazar cookies</button>
+          <button type="button" onClick={() => save("granted")}>Aceptar cookies</button>
           <button type="button" className={styles.settings} onClick={openSettings}>Configurar</button>
         </div>
       </aside>}
