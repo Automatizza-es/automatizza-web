@@ -3,6 +3,7 @@ import { CalculatorSection } from "@/components/home/CalculatorSection";
 import { ChangeShowcaseSection } from "@/components/home/ChangeShowcaseSection";
 import { ContactSection } from "@/components/home/ContactSection";
 import { EditorialMotion } from "@/components/home/EditorialMotion";
+import { FaqSection } from "@/components/home/FaqSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { ProjectsSection } from "@/components/home/ProjectsSection";
@@ -34,6 +35,7 @@ export default function Home() {
         {showProcessSection && <ProcessSection />}
         <CalculatorSection />
         <AboutSection />
+        <FaqSection />
       </main>
       <ContactSection />
     </>
