@@ -1,0 +1,104 @@
+.section {
+  padding-block: 0 clamp(3rem, 5vw, 4rem);
+  background: var(--color-white);
+}
+
+.eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--color-cyan);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  line-height: 1.4;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-navy);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.875rem, 2.6vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.questions {
+  width: 80%;
+  margin-top: 1.75rem;
+}
+
+.item + .item { border-top: 1px solid #e1e4e8; }
+
+.summary {
+  padding: 1.25rem 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker { display: none; }
+
+.summary:focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 4px;
+}
+
+.summary h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 0;
+  color: var(--color-navy);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.0625rem, 1.5vw, 1.125rem);
+  font-weight: 500;
+  letter-spacing: -.015em;
+  line-height: 1.5;
+}
+
+.icon {
+  position: relative;
+  flex: 0 0 20px;
+  height: 20px;
+  color: var(--color-navy);
+}
+
+.icon::before, .icon::after {
+  position: absolute;
+  inset: 9px 3px auto;
+  height: 1.5px;
+  background: currentColor;
+  content: "";
+}
+
+.icon::after {
+  transform: rotate(90deg);
+  transition: transform 180ms ease;
+}
+
+.item[open] .icon::after { transform: rotate(90deg) scaleX(0); }
+
+.answer {
+  margin: 0;
+  padding: 0 2.75rem 1.5rem 0;
+  color: #6d7580;
+  font-size: .9375rem;
+  line-height: 1.75;
+}
+
+@media (max-width: 900px) {
+  .questions { width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .section { padding-bottom: 2.5rem; }
+  .eyebrow { margin-bottom: 1.25rem; font-size: .6875rem; letter-spacing: .13em; }
+  .title { font-size: 1.75rem; line-height: 1.25; }
+  .summary h3 { gap: 1rem; }
+  .answer { padding-right: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon::after { transition: none; }
+}
