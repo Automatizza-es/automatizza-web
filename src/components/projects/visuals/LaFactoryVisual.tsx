@@ -1,5 +1,7 @@
 "use client";
 
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import type { ReactNode } from "react";
 import Image from "next/image";
 
@@ -91,12 +93,11 @@ const sidebar: { icon: IconName; label: string }[] = [
 ];
 
 function Toolbar() {
+  const { t } = useI18n();
   return (
     <div className="lf-toolbar">
       <span className="lf-lang">
-        <Icon name="globe" />
-        ES
-        <Icon name="chevronDown" />
+        <Icon name="globe" />{t("ES")}<Icon name="chevronDown" />
       </span>
       <span className="lf-bell">
         <Icon name="bell" />
@@ -107,27 +108,27 @@ function Toolbar() {
 }
 
 function QuotaCard() {
+  const { t } = useI18n();
   return (
     <div className="lf-quota">
       <div className="lf-quota-head">
-        <span>Tu tarifa actual</span>
+        <span>{t("Tu tarifa actual")}</span>
         <span className="lf-pill">
-          <Icon name="calendar" />
-          Octubre de 2026
-        </span>
+          <Icon name="calendar" />{t("Octubre de 2026")}</span>
       </div>
-      <b className="lf-plan">FIXED</b>
+      <b className="lf-plan">{t("FIXED")}</b>
       <b className="lf-hours">16 h</b>
-      <span className="lf-muted">disponibles de 20 h</span>
+      <span className="lf-muted">{t("disponibles de 20 h")}</span>
       <i className="lf-bar">
         <span />
       </i>
-      <span className="lf-muted">4 h utilizadas este mes</span>
+      <span className="lf-muted">{t("4 h utilizadas este mes")}</span>
     </div>
   );
 }
 
 function ActionCards() {
+  const { t } = useI18n();
   return (
     <>
       <div className="lf-action">
@@ -135,8 +136,8 @@ function ActionCards() {
           <Icon name="package" />
         </span>
         <div>
-          <b>Registrar paquete</b>
-          <small>¿Ha llegado un paquete para alguien? Avísale en un momento.</small>
+          <b>{t("Registrar paquete")}</b>
+          <small>{t("¿Ha llegado un paquete para alguien? Avísale en un momento.")}</small>
         </div>
         <Icon name="chevron" />
       </div>
@@ -145,8 +146,8 @@ function ActionCards() {
           <Icon name="wrench" />
         </span>
         <div>
-          <b>¿Algo no funciona?</b>
-          <small>Comunica una incidencia del espacio.</small>
+          <b>{t("¿Algo no funciona?")}</b>
+          <small>{t("Comunica una incidencia del espacio.")}</small>
         </div>
         <Icon name="chevron" />
       </div>
@@ -155,11 +156,12 @@ function ActionCards() {
 }
 
 function SectionHead({ title, link }: { title: string; link: string }) {
+  const { t } = useI18n();
   return (
     <div className="lf-section-head">
-      <b>{title}</b>
+      <b>{t(title)}</b>
       <span>
-        {link}
+        {t(link)}
         <Icon name="chevron" />
       </span>
     </div>
@@ -167,16 +169,18 @@ function SectionHead({ title, link }: { title: string; link: string }) {
 }
 
 function Greeting() {
+  const { t } = useI18n();
   return (
     <div className="lf-greeting">
-      <b>Hola, Marta</b>
-      <span>Qué bueno tenerte por aquí</span>
+      <b>{t("Hola, Marta")}</b>
+      <span>{t("Qué bueno tenerte por aquí")}</span>
     </div>
   );
 }
 
 // Desktop web app: sidebar, rooms and bookings on the left, plan on the right.
 export function WebHome() {
+  const { t } = useI18n();
   return (
     <div className="lf-web">
       <aside className="lf-sidebar">
@@ -188,7 +192,7 @@ export function WebHome() {
           {sidebar.map((item, index) => (
             <span className={index === 0 ? "is-active" : undefined} key={item.label}>
               <Icon name={item.icon} />
-              {item.label}
+              {t(item.label)}
             </span>
           ))}
         </nav>
@@ -203,37 +207,33 @@ export function WebHome() {
         <Greeting />
         <div className="lf-web-grid">
           <div>
-            <SectionHead title="Reservar una sala" link="Ver calendario" />
+            <SectionHead title={t("Reservar una sala")} link="Ver calendario" />
             <div className="lf-rooms">
               {rooms.map((room) => (
                 <div className="lf-room" key={room.name}>
                   <span className="lf-room-photo">
                     <Image src={room.photo} alt="" width={480} height={360} />
                     <span className="lf-capacity">
-                      <Icon name="users" />
-                      2–4 pers.
-                    </span>
+                      <Icon name="users" />{t("2–4 pers.")}</span>
                   </span>
                   <b>{room.name}</b>
-                  <span className="lf-room-button">
-                    Disponibilidad
-                    <Icon name="chevron" />
+                  <span className="lf-room-button">{t("Disponibilidad")}<Icon name="chevron" />
                   </span>
                 </div>
               ))}
             </div>
 
-            <SectionHead title="Próximas reservas" link="Ver todas" />
+            <SectionHead title={t("Próximas reservas")} link="Ver todas" />
             <div className="lf-bookings">
               {bookings.map((booking) => (
                 <div className="lf-booking" key={booking.room}>
                   <span className="lf-booking-date">
                     <b>{booking.day}</b>
-                    {booking.month}
+                    {t(booking.month)}
                   </span>
                   <div>
                     <b>{booking.room}</b>
-                    <span>{booking.date}</span>
+                    <span>{t(booking.date)}</span>
                     <span>{booking.time}</span>
                   </div>
                 </div>
@@ -252,6 +252,7 @@ export function WebHome() {
 
 // Phone app home, same product in one column with the bottom tab bar.
 function MobileHome() {
+  const { t } = useI18n();
   return (
     <div className="lf-mobile">
       <div className="lf-status">
@@ -269,35 +270,25 @@ function MobileHome() {
       <Greeting />
       <QuotaCard />
       <ActionCards />
-      <SectionHead title="Reservar una sala" link="Ver calendario" />
+      <SectionHead title={t("Reservar una sala")} link="Ver calendario" />
       <div className="lf-mobile-rooms">
         {rooms.map((room) => (
           <span className="lf-room-photo" key={room.name}>
             <Image src={room.photo} alt="" width={480} height={360} />
             <span className="lf-capacity">
-              <Icon name="users" />
-              2–4 pers.
-            </span>
+              <Icon name="users" />{t("2–4 pers.")}</span>
           </span>
         ))}
       </div>
       <nav className="lf-tabs">
         <span className="is-active">
-          <Icon name="home" />
-          Inicio
-        </span>
+          <Icon name="home" />{t("Inicio")}</span>
         <span>
-          <Icon name="calendar" />
-          Reservar
-        </span>
+          <Icon name="calendar" />{t("Reservar")}</span>
         <span>
-          <Icon name="list" />
-          Mis reservas
-        </span>
+          <Icon name="list" />{t("Mis reservas")}</span>
         <span>
-          <Icon name="user" />
-          Perfil
-        </span>
+          <Icon name="user" />{t("Perfil")}</span>
       </nav>
     </div>
   );

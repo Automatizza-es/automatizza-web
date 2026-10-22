@@ -35,3 +35,14 @@
 @media (prefers-reduced-motion: reduce) {
   .redesigned a, .redesigned span { transition: none; }
 }
+
+.actions { display: flex; align-items: center; justify-self: end; gap: 1.25rem; }
+@media (max-width: 900px) {
+  .actions { gap: .65rem; }
+}
+@media (max-width: 600px) {
+  .redesigned :global(.brand) { width: clamp(96px, 30vw, 148px); }
+  .redesigned :global(.header-inner) { gap: .6rem; }
+  .redesigned :global(.header-cta) { padding-inline: .75rem; }
+  .actions { gap: .5rem; }
+}

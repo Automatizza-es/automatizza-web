@@ -1,6 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
+import Link from "@/components/i18n/LocaleLink";
 import { useRef, useState, type FormEvent } from "react";
 import { validateContact, type ContactErrors, type ContactField } from "@/lib/contact/validation";
 import { trackContactResult } from "@/lib/analytics/browser";
@@ -19,6 +21,7 @@ function submissionId() {
 }
 
 export function ContactForm({ enabled, testMode = false, privacyReady, policyVersion, controller, rightsEmail }: Props) {
+  const { t } = useI18n();
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<ContactErrors>({});
   const [feedback, setFeedback] = useState("");
@@ -71,47 +74,47 @@ export function ContactForm({ enabled, testMode = false, privacyReady, policyVer
   }
 
   function errorFor(field: ContactField) {
-    return errors[field] ? <span id={`contact-${field}-error`} className={styles.fieldError}>{errors[field]}</span> : null;
+    return errors[field] ? <span id={`contact-${field}-error`} className={styles.fieldError}>{t(errors[field])}</span> : null;
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate aria-label="Formulario de contacto" aria-busy={isSending} aria-describedby={testMode ? "contact-test-mode" : !enabled ? "contact-availability" : undefined}>
-      {testMode && <p className={styles.availability} id="contact-test-mode">Modo de prueba local: el email se envía de verdad. Usa solo datos ficticios. El formulario publicado sigue desactivado y la política está pendiente de revisión.</p>}
+    <form className={styles.form} onSubmit={handleSubmit} noValidate aria-label={t("Formulario de contacto")} aria-busy={isSending} aria-describedby={testMode ? "contact-test-mode" : !enabled ? "contact-availability" : undefined}>
+      {testMode && <p className={styles.availability} id="contact-test-mode">{t("Modo de prueba local: el email se envía de verdad. Usa solo datos ficticios. El formulario publicado sigue desactivado y la política está pendiente de revisión.")}</p>}
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="contact-name">Nombre <span aria-hidden="true">*</span></label>
+          <label htmlFor="contact-name">{t("Nombre ")}<span aria-hidden="true">*</span></label>
           <input id="contact-name" name="name" autoComplete="name" required maxLength={100} disabled={isSending} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "contact-name-error" : undefined} />
           {errorFor("name")}
         </div>
         <div className={styles.field}>
-          <label htmlFor="contact-email">Email <span aria-hidden="true">*</span></label>
+          <label htmlFor="contact-email">{t("Email ")}<span aria-hidden="true">*</span></label>
           <input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} disabled={isSending} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "contact-email-error" : undefined} />
           {errorFor("email")}
         </div>
       </div>
       <div className={styles.field}>
-        <label htmlFor="contact-message">¿En qué podemos ayudarte? <span aria-hidden="true">*</span></label>
-        <p className={styles.hint} id="contact-message-hint">Cuéntanos qué proceso te gustaría mejorar, qué tarea te quita demasiado tiempo o qué problema quieres resolver.</p>
-        <textarea id="contact-message" name="message" rows={5} placeholder="Por ejemplo: gestionamos los presupuestos manualmente y perdemos mucho tiempo copiando información entre herramientas…" required maxLength={5000} disabled={isSending} aria-invalid={Boolean(errors.message)} aria-describedby={`contact-message-hint${errors.message ? " contact-message-error" : ""}`} />
+        <label htmlFor="contact-message">{t("¿En qué podemos ayudarte? ")}<span aria-hidden="true">*</span></label>
+        <p className={styles.hint} id="contact-message-hint">{t("Cuéntanos qué proceso te gustaría mejorar, qué tarea te quita demasiado tiempo o qué problema quieres resolver.")}</p>
+        <textarea id="contact-message" name="message" rows={5} placeholder={t("Por ejemplo: gestionamos los presupuestos manualmente y perdemos mucho tiempo copiando información entre herramientas…")} required maxLength={5000} disabled={isSending} aria-invalid={Boolean(errors.message)} aria-describedby={`contact-message-hint${errors.message ? " contact-message-error" : ""}`} />
         {errorFor("message")}
       </div>
       <div className={styles.honeypot} aria-hidden="true" inert>
-        <label htmlFor="contact-website">Deja este campo vacío</label>
+        <label htmlFor="contact-website">{t("Deja este campo vacío")}</label>
         <input id="contact-website" name="companyWebsite" tabIndex={-1} autoComplete="off" />
       </div>
       <div className={styles.privacy}>
         <input id="contact-privacy" name="privacy" type="checkbox" required disabled={isSending || !enabled} aria-invalid={Boolean(errors.privacy)} aria-describedby={errors.privacy ? "contact-privacy-error" : undefined} />
-        <label htmlFor="contact-privacy">{testMode ? "Confirmo que uso solo datos ficticios y quiero enviar una prueba técnica." : <>He leído y acepto la <Link href="/politica-de-privacidad">política de privacidad</Link> y consiento el tratamiento de mis datos para responder a mi consulta.</>} <span aria-hidden="true">*</span></label>
+        <label htmlFor="contact-privacy">{testMode ? t("Confirmo que uso solo datos ficticios y quiero enviar una prueba técnica.") : <>{t("He leído y acepto la ")}<Link href="/politica-de-privacidad">{t("política de privacidad")}</Link>{t(" y consiento el tratamiento de mis datos para responder a mi consulta.")}</>} <span aria-hidden="true">*</span></label>
       </div>
       {errorFor("privacy")}
-      {testMode ? <p className={styles.privacySummary}>Esta prueba no registra consentimiento real. <Link href="/politica-de-privacidad">Consultar el borrador de privacidad</Link>.</p> : <div className={styles.privacySummary}>
-        <p><strong>Responsable:</strong> {controller || "pendiente de identificar en el borrador"}. <strong>Finalidad:</strong> atender tu consulta. <strong>Base:</strong> consentimiento o medidas precontractuales solicitadas por ti.</p>
-        <p><strong>Destinatarios:</strong> proveedores de alojamiento y correo {privacyReady ? "detallados en la política" : "pendientes de validar en la política"}. <strong>Derechos:</strong> acceso, rectificación y supresión, entre otros, en <a href={`mailto:${rightsEmail}`}>{rightsEmail}</a>. No te añadiremos a listas comerciales.</p>
+      {testMode ? <p className={styles.privacySummary}>{t("Esta prueba no registra consentimiento real. ")}<Link href="/politica-de-privacidad">{t("Consultar el borrador de privacidad")}</Link>.</p> : <div className={styles.privacySummary}>
+        <p><strong>{t("Responsable:")}</strong> {controller || t("pendiente de identificar en el borrador")}. <strong>{t("Finalidad:")}</strong>{t(" atender tu consulta. ")}<strong>{t("Base:")}</strong>{t(" consentimiento o medidas precontractuales solicitadas por ti.")}</p>
+        <p><strong>{t("Destinatarios:")}</strong>{t(" proveedores de alojamiento y correo ")}{privacyReady ? t("detallados en la política") : t("pendientes de validar en la política")}. <strong>{t("Derechos:")}</strong>{t(" acceso, rectificación y supresión, entre otros, en ")}<a href={`mailto:${rightsEmail}`}>{rightsEmail}</a>{t(". No te añadiremos a listas comerciales.")}</p>
       </div>}
-      {!enabled && <p className={styles.availability} id="contact-availability">{privacyReady ? "El formulario no está disponible temporalmente. Puedes escribirnos por email." : "El envío está desactivado mientras revisamos y completamos la política de privacidad. Puedes escribirnos por email."}</p>}
-      <button className={styles.submit} type="submit" disabled={!enabled || isSending}>{isSending ? "Enviando…" : "Enviar mensaje"} <span aria-hidden="true">→</span></button>
-      <p className={styles.feedback} role={status === "error" ? "alert" : "status"} aria-live={status === "error" ? "assertive" : "polite"}>{feedback}</p>
-      <noscript><p>Necesitas JavaScript para usar el formulario. Puedes escribirnos por email.</p></noscript>
+      {!enabled && <p className={styles.availability} id="contact-availability">{privacyReady ? t("El formulario no está disponible temporalmente. Puedes escribirnos por email.") : t("El envío está desactivado mientras revisamos y completamos la política de privacidad. Puedes escribirnos por email.")}</p>}
+      <button className={styles.submit} type="submit" disabled={!enabled || isSending}>{isSending ? t("Enviando…") : t("Enviar mensaje")} <span aria-hidden="true">→</span></button>
+      <p className={styles.feedback} role={status === "error" ? "alert" : "status"} aria-live={status === "error" ? "assertive" : "polite"}>{t(feedback)}</p>
+      <noscript><p>{t("Necesitas JavaScript para usar el formulario. Puedes escribirnos por email.")}</p></noscript>
     </form>
   );
 }

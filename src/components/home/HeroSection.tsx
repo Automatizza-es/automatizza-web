@@ -1,4 +1,8 @@
-import Link from "next/link";
+"use client";
+
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
+import Link from "@/components/i18n/LocaleLink";
 import type { CSSProperties } from "react";
 
 import { Container } from "@/components/layout/Container";
@@ -18,6 +22,7 @@ const convergenceParticles = Array.from({ length: 24 }, (_, index) => {
 });
 
 export function HeroSection() {
+  const { t } = useI18n();
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
       <div className={styles.network} aria-hidden="true">
@@ -67,13 +72,11 @@ export function HeroSection() {
       <Container className={styles.inner}>
         <div className={styles.copy}>
           <h1 id="hero-title" className={styles.title}>
-            <span className={styles.lead}>Menos tareas repetitivas.</span>{" "}
+            <span className={styles.lead}>{t("Menos tareas repetitivas.")}</span>{" "}
             <span className={styles.benefit}>
               <strong className={styles.emphasis}>
-                <span className={`${styles.word} ${styles.wordMore}`}>Más</span>{" "}
-                <span className={`${styles.word} ${styles.wordTime}`}>
-                  tiempo
-                  <span className={styles.particles} aria-hidden="true">
+                <span className={`${styles.word} ${styles.wordMore}`}>{t("Más")}</span>{" "}
+                <span className={`${styles.word} ${styles.wordTime}`}>{t("tiempo")}<span className={styles.particles} aria-hidden="true">
                     {convergenceParticles.map((style, index) => (
                       <i className={styles.particle} key={index} style={style} />
                     ))}
@@ -81,21 +84,17 @@ export function HeroSection() {
                 </span>
               </strong>
             </span>{" "}
-            <span className={styles.closing}>para hacer crecer tu empresa.</span>
+            <span className={styles.closing}>{t("para hacer crecer tu empresa.")}</span>
           </h1>
-          <p className={styles.description}>
-            Creamos aplicaciones y automatizaciones a medida que conectan procesos y simplifican tu día a día.
-          </p>
+          <p className={styles.description}>{t("Creamos aplicaciones y automatizaciones a medida que conectan procesos y simplifican tu día a día.")}</p>
           <div className={styles.actions}>
             <Link className={`${styles.button} ${styles.primary}`} href="/contacto">
-              <span>Hablemos de tu proyecto</span>
+              <span>{t("Hablemos de tu proyecto")}</span>
               <span className={styles.arrow} aria-hidden="true">
                 →
               </span>
             </Link>
-            <Link className={`${styles.button} ${styles.secondary}`} href="#proyectos">
-              Ver proyectos
-            </Link>
+            <Link className={`${styles.button} ${styles.secondary}`} href="#proyectos">{t("Ver proyectos")}</Link>
           </div>
         </div>
       </Container>

@@ -321,3 +321,50 @@ test("real contact handler outcomes convert only after provider confirmation (no
     assert.ok(!JSON.stringify(events()).includes(form.message));
   }
 });
+
+test("all four languages keep one page event per route and one GTM loader", () => {
+  browser();
+  const paths = ["/", "/en", "/fr", "/pt", "/contacto", "/en/contact", "/fr/contact", "/pt/contacto",
+    ...["silos-spain", "apc", "la-factory-coworking"].flatMap(slug => [`/proyectos/${slug}`, `/en/projects/${slug}`, `/fr/projets/${slug}`, `/pt/projetos/${slug}`])];
+  for (const path of paths) {
+    window.location.pathname = path;
+    assert.equal(trackPage(ids, path, "granted"), true, path);
+    assert.equal(trackPage(ids, path, "granted"), false, `no render duplicate: ${path}`);
+  }
+  assert.equal(events().length,20);
+  assert.deepEqual(events().map(e=>e.page_location),paths.map(path=>`https://automatizza.es${path}`));
+  assert.equal(window.dataLayer.filter(e=>e.event==="gtm.js").length,1);
+  assert.deepEqual(commands().filter(c=>c[0]==="consent").map(c=>c[2].ad_storage),["denied","denied"]);
+});
+
+test("localized contact conversions need real success and consent; language changes cannot replay a lead", () => {
+  const state=browser();
+  for (const [i,path] of ["/contacto","/en/contact","/fr/contact","/pt/contacto"].entries()) {
+    window.location.pathname=path;
+    trackPage(ids,path,"granted");
+    const outcome={responseOk:true,result:{ok:true},submissionId:`localized-${i}`,testMode:false};
+    assert.equal(trackContactResult({...outcome,responseOk:false}),false);
+    assert.equal(trackContactResult({...outcome,result:{ok:false}}),false);
+    assert.equal(trackContactResult(outcome),true);
+    assert.equal(trackContactResult(outcome),false);
+    if (i>0) assert.equal(trackContactResult({...outcome,submissionId:"localized-0"}),false);
+  }
+  assert.equal(events().filter(e=>e.event==="automatizza_contact_success").length,4);
+  for(const e of events().filter(e=>e.event==="automatizza_contact_success")) assert.equal(e.form_id,"contact");
+  state.deny();
+  assert.equal(trackContactResult({responseOk:true,result:{ok:true},submissionId:"after-withdrawal",testMode:false}),false);
+});
+
+test("localized routes and legacy contact anchors never bypass consent or the route allowlist", () => {
+  for(const path of ["/en", "/fr/contact", "/pt/projetos/apc"]) {
+    const state=browser("denied");window.location.pathname=path;
+    assert.equal(trackPage(ids,path,"denied"),false);assert.equal(state.scripts.size,0);
+  }
+  for(const path of ["/en/contact?email=private@example.test", "/es", "/en/not-published", "/fr/politica-de-privacidad"]) {
+    browser();assert.equal(trackPage(ids,path,"granted"),false);
+  }
+  for(const path of ["/en","/fr","/pt"]) {
+    browser();window.location.hash="#contacto";
+    assert.equal(trackPage(ids,path,"granted"),false);
+  }
+});

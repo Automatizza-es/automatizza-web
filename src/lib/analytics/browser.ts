@@ -1,3 +1,4 @@
+import { resolveRoute } from "../i18n/routes";
 import { analyticsPage, consentKey, consentLifetime, readConsent } from "./consent";
 
 type LayerEntry = IArguments | Record<string, unknown>;
@@ -70,7 +71,7 @@ export function trackPage(ids: AnalyticsIds, path: string, consent?: "granted" |
   }
   if (consent !== "granted" || !consentIsCurrent()) { stopAnalytics(ids.measurementId); return false; }
   // The old home anchor is only an alias for /contacto, not an extra visit.
-  if (path === "/" && window.location.hash === "#contacto") return false;
+  if (resolveRoute(path)?.id === "home" && window.location.hash === "#contacto") return false;
   const page = pageData(path);
   if (!page || !/^GTM-[A-Z0-9]{5,20}$/.test(ids.containerId) || !/^G-[A-Z0-9]{6,20}$/.test(ids.measurementId)) return false;
   let session = sessions.get(window);

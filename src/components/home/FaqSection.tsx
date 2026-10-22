@@ -1,3 +1,7 @@
+"use client";
+
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import { Container } from "@/components/layout/Container";
 import styles from "./FaqSection.module.css";
 
@@ -33,23 +37,24 @@ const questions = [
 ];
 
 export function FaqSection() {
+  const { t } = useI18n();
   return (
     <section className={styles.section} aria-labelledby="faq-title">
       <Container className="editorial-container">
         <header>
-          <p className={`section-eyebrow ${styles.eyebrow}`}>PREGUNTAS FRECUENTES</p>
-          <h2 id="faq-title" className={styles.title}>Antes de empezar</h2>
+          <p className={`section-eyebrow ${styles.eyebrow}`}>{t("PREGUNTAS FRECUENTES")}</p>
+          <h2 id="faq-title" className={styles.title}>{t("Antes de empezar")}</h2>
         </header>
         <div className={styles.questions}>
           {questions.map(({ question, answer }) => (
             <details className={styles.item} key={question}>
               <summary className={styles.summary}>
                 <h3>
-                  <span>{question}</span>
+                  <span>{t(question)}</span>
                   <span className={styles.icon} aria-hidden="true" />
                 </h3>
               </summary>
-              <p className={styles.answer}>{answer}</p>
+              <p className={styles.answer}>{t(answer)}</p>
             </details>
           ))}
         </div>

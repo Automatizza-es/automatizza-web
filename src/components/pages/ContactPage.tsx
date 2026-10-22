@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/layout/Container";
@@ -6,16 +6,12 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { getContactConfig } from "@/lib/contact/server";
 import { isPrivacyPolicyReady, privacyPolicy } from "@/content/privacy";
-import { pageMetadata } from "@/lib/seo";
+import { translator } from "@/lib/i18n/translate";
+import type { Locale } from "@/lib/i18n/routes";
 import styles from "@/components/contact/ContactPage.module.css";
 
-export const metadata = pageMetadata(
-  "/contacto",
-  "Contacto | Automatizza",
-  "Cuéntanos cómo trabaja tu empresa y qué te gustaría mejorar. En Automatizza te ayudamos a encontrar una solución práctica y adaptada a tu negocio.",
-);
-
-export default function ContactPage() {
+export default function ContactPage({ locale = "es" }: { locale?: Locale }) {
+  const t = translator(locale);
   const config = getContactConfig();
   return (
     <>
@@ -24,11 +20,9 @@ export default function ContactPage() {
         <section className={styles.section} aria-labelledby="contact-title">
           <Container className={`contact-layout ${styles.layout}`}>
             <div className={styles.copy}>
-              <p className="contact-kicker">HABLEMOS</p>
-              <h1 id="contact-title">¿Hay algún proceso de tu empresa que podría funcionar mejor?</h1>
-              <p>
-                No necesitas tenerlo todo definido. <strong>Cuéntanos cómo trabajáis ahora y qué
-                te gustaría mejorar. Te ayudamos a encontrar la mejor forma de resolverlo.</strong>
+              <p className="contact-kicker">{t("HABLEMOS")}</p>
+              <h1 id="contact-title">{t("¿Hay algún proceso de tu empresa que podría funcionar mejor?")}</h1>
+              <p>{t("No necesitas tenerlo todo definido. ")}<strong>{t("Cuéntanos cómo trabajáis ahora y qué te gustaría mejorar. Te ayudamos a encontrar la mejor forma de resolverlo.")}</strong>
               </p>
               <Link className={styles.email} href="mailto:info@automatizza.es">info@automatizza.es</Link>
             </div>

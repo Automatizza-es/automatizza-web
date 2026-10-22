@@ -1,5 +1,7 @@
 "use client";
 
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import type { ReactNode } from "react";
 import Image from "next/image";
 
@@ -49,6 +51,7 @@ function Icon({ name }: { name: IconName }) {
 // The APC driver app's home screen (real layout and labels), with
 // fictitious driver, plate and slaughterhouse.
 function ApcHome() {
+  const { t } = useI18n();
   return (
     <div className="apc-app">
       <div className="apc-status">
@@ -61,18 +64,16 @@ function ApcHome() {
       </div>
       <Image className="apc-hero" src="/projects/apc/hero.jpg" alt="" width={600} height={312} />
       <div className="apc-body">
-        <p className="apc-greeting">¡Hola Laura!</p>
-        <p className="apc-plate">Viajas con esta matrícula: 4821-KLM</p>
+        <p className="apc-greeting">{t("¡Hola Laura!")}</p>
+        <p className="apc-plate">{t("Viajas con esta matrícula: 4821-KLM")}</p>
         <span className="apc-button">
-          <Icon name="truck" />
-          Añadir Recogida
-        </span>
+          <Icon name="truck" />{t("Añadir Recogida")}</span>
         <div className="apc-item">
           <span className="apc-item-tile" aria-hidden="true">
             🚚
           </span>
           <div>
-            <small>455,0 KILOS</small>
+            <small>{t("455,0 KILOS")}</small>
             <b>6210007590</b>
             <span>Cárnicas del Valle, S.L.</span>
           </div>
@@ -81,27 +82,20 @@ function ApcHome() {
       </div>
       <nav className="apc-tabs">
         <span className="is-active">
-          <Icon name="home" />
-          Inicio
-        </span>
+          <Icon name="home" />{t("Inicio")}</span>
         <span>
-          <Icon name="trucks" />
-          Todos los Via…
-        </span>
+          <Icon name="trucks" />{t("Todos los Via…")}</span>
         <span>
-          <Icon name="pins" />
-          Direcciones
-        </span>
+          <Icon name="pins" />{t("Direcciones")}</span>
         <span>
-          <Icon name="users" />
-          Usuarios
-        </span>
+          <Icon name="users" />{t("Usuarios")}</span>
       </nav>
     </div>
   );
 }
 
 export function ApcVisual() {
+  const { t } = useI18n();
   const ref = usePlayOnView<HTMLDivElement>();
 
   return (
@@ -134,20 +128,16 @@ export function ApcVisual() {
           <b>Cárnicas del Valle</b>
           <span className="apc-pickup-status">
             <span className="apc-status-pending">
-              <i />
-              Recogida en curso
-            </span>
+              <i />{t("Recogida en curso")}</span>
             <span className="apc-status-done">
               <i>
                 <Icon name="check" />
-              </i>
-              Recogida validada
-            </span>
+              </i>{t("Recogida validada")}</span>
           </span>
         </div>
         <div className="apc-stop apc-stop-destination">
           <b>APC Europe</b>
-          <small>Granollers</small>
+          <small>{t("Granollers")}</small>
         </div>
       </div>
     </div>
