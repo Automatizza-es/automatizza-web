@@ -24,7 +24,7 @@
 }
 
 .questions {
-  max-width: 52rem;
+  width: 80%;
   margin-top: 1.75rem;
 }
 
@@ -80,12 +80,15 @@
 .item[open] .icon::after { transform: rotate(90deg) scaleX(0); }
 
 .answer {
-  max-width: 65ch;
   margin: 0;
   padding: 0 2.75rem 1.5rem 0;
   color: #6d7580;
   font-size: .9375rem;
   line-height: 1.75;
+}
+
+@media (max-width: 900px) {
+  .questions { width: 100%; }
 }
 
 @media (max-width: 600px) {
