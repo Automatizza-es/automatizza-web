@@ -1,6 +1,6 @@
 .section {
-  padding-block: 0 clamp(3rem, 5vw, 4rem);
-  background: var(--color-white);
+  padding-block: clamp(2.5rem, 3.5vw, 3rem) clamp(3rem, 5vw, 4rem);
+  background: #f8f9fb;
 }
 
 .eyebrow {
@@ -92,7 +92,7 @@
 }
 
 @media (max-width: 600px) {
-  .section { padding-bottom: 2.5rem; }
+  .section { padding-block: 2.5rem; }
   .eyebrow { margin-bottom: 1.25rem; font-size: .6875rem; letter-spacing: .13em; }
   .title { font-size: 1.75rem; line-height: 1.25; }
   .summary h3 { gap: 1rem; }
