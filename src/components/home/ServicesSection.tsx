@@ -1,3 +1,7 @@
+"use client";
+
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "./SectionHeading";
 import styles from "./ServicesSection.module.css";
@@ -10,22 +14,23 @@ const services = [
 ];
 
 export function ServicesSection() {
+  const { t } = useI18n();
   return (
     <section className={`whatwedo-section ${styles.section}`} id="servicios" aria-labelledby="services-title">
       <Container className="editorial-container">
         <SectionHeading
           id="services-title"
-          eyebrow="QUÉ PODEMOS HACER POR TI"
-          title="De la idea a la solución."
-          description="Automatización, software a medida, IA y desarrollo web para acompañar la forma real de trabajar de tu empresa."
+          eyebrow={t("QUÉ PODEMOS HACER POR TI")}
+          title={t("De la idea a la solución.")}
+          description={t("Automatización, software a medida, IA y desarrollo web para acompañar la forma real de trabajar de tu empresa.")}
         />
 
         <ol className={styles.services}>
           {services.map((service) => (
             <li className={styles.service} key={service.number} data-reveal>
               <span className={styles.number}>{service.number}</span>
-              <h3><span>{service.title}</span></h3>
-              <p>{service.text}</p>
+              <h3><span>{t(service.title)}</span></h3>
+              <p>{t(service.text)}</p>
             </li>
           ))}
         </ol>

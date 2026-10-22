@@ -1,9 +1,12 @@
 "use client";
 
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 
 import { Container } from "@/components/layout/Container";
+import { LanguageSelector } from "@/components/i18n/LanguageSelector";
 import styles from "./Header.module.css";
 
 const navigation = [
@@ -14,11 +17,12 @@ const navigation = [
 ];
 
 export function Header({ redesign = false, homeLinks = false }: { redesign?: boolean; homeLinks?: boolean }) {
+  const { t } = useI18n();
   const hrefFor = (href: string) => homeLinks && href.startsWith("#") ? `/${href}` : href;
   return (
     <header className={`site-header${redesign ? ` ${styles.redesigned}` : ""}`}>
       <Container className="header-inner">
-        <Link className="brand" href="/" aria-label="Automatizza, inicio">
+        <Link className="brand" href="/" aria-label={t("Automatizza, inicio")}>
           <Image
             src="/brand/automatizza-logo.png"
             alt="Automatizza"
@@ -28,18 +32,22 @@ export function Header({ redesign = false, homeLinks = false }: { redesign?: boo
           />
         </Link>
 
-        <nav className="desktop-navigation" aria-label="Navegación principal">
+        <nav className="desktop-navigation" aria-label={t("Navegación principal")}>
           {navigation.map((item) => (
             <Link key={item.href} href={hrefFor(item.href)}>
-              {item.label}
+              {t(item.label)}
             </Link>
           ))}
         </nav>
 
+        <div className={styles.actions}>
+        <LanguageSelector />
         <Link className="header-cta" href="/contacto">
-          <span>Hablemos</span>
+          <span>{t("Hablemos")}</span>
           <span aria-hidden="true">→</span>
         </Link>
+
+        </div>
 
         <details
           className="mobile-navigation"
@@ -50,12 +58,12 @@ export function Header({ redesign = false, homeLinks = false }: { redesign?: boo
             }
           } : undefined}
         >
-          <summary aria-label={redesign ? "Menú de navegación" : "Abrir menú"}>
+          <summary aria-label={redesign ? t("Menú de navegación") : t("Abrir menú")}>
             <span />
             <span />
           </summary>
           <nav
-            aria-label="Navegación móvil"
+            aria-label={t("Navegación móvil")}
             onClick={redesign ? (event) => {
               if ((event.target as HTMLElement).closest("a")) {
                 const menu = event.currentTarget.closest("details");
@@ -65,11 +73,10 @@ export function Header({ redesign = false, homeLinks = false }: { redesign?: boo
           >
             {navigation.map((item) => (
               <Link key={item.href} href={hrefFor(item.href)}>
-                {item.label}
+                {t(item.label)}
               </Link>
             ))}
-            <Link className="mobile-navigation-cta" href="/contacto">
-              Hablemos <span aria-hidden="true">→</span>
+            <Link className="mobile-navigation-cta" href="/contacto">{t("Hablemos ")}<span aria-hidden="true">→</span>
             </Link>
           </nav>
         </details>

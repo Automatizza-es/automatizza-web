@@ -21,6 +21,20 @@ const pages = [
   ["/proyectos/silos-spain", "Silos Spain | CRM y gestión comercial a medida | Automatizza"],
   ["/proyectos/apc", "APC Europe | App para logística y recogidas | Automatizza"],
   ["/proyectos/la-factory-coworking", "La Factory Coworking | App de reservas de salas | Automatizza"],
+
+  ["/en", "Automatizza | Process automation and AI for businesses"],
+  ["/fr", "Automatizza | Automatisation des processus et IA pour les entreprises"],
+  ["/pt", "Automatizza | Automatização de processos e IA para empresas"],
+  ["/en/contact", "Contact | Automatizza"], ["/fr/contact", "Contact | Automatizza"], ["/pt/contacto", "Contacto | Automatizza"],
+  ["/en/projects/silos-spain", "Silos Spain | Bespoke CRM and sales management | Automatizza"],
+  ["/fr/projets/silos-spain", "Silos Spain | CRM et gestion commerciale sur mesure | Automatizza"],
+  ["/pt/projetos/silos-spain", "Silos Spain | CRM e gestão comercial à medida | Automatizza"],
+  ["/en/projects/apc", "APC Europe | Logistics and collections app | Automatizza"],
+  ["/fr/projets/apc", "APC Europe | Application de logistique et de collecte | Automatizza"],
+  ["/pt/projetos/apc", "APC Europe | Aplicação de logística e recolhas | Automatizza"],
+  ["/en/projects/la-factory-coworking", "La Factory Coworking | Room booking app | Automatizza"],
+  ["/fr/projets/la-factory-coworking", "La Factory Coworking | Application de réservation de salles | Automatizza"],
+  ["/pt/projetos/la-factory-coworking", "La Factory Coworking | Aplicação de reservas de salas | Automatizza"],
 ];
 const legal = ["/aviso-legal", "/politica-de-privacidad", "/politica-de-cookies"];
 const unescape = (text) => text.replaceAll("&amp;", "&").replaceAll("&quot;", '"').replaceAll("&#x27;", "'");
@@ -60,11 +74,11 @@ async function verify(environment) {
   await new Promise((done) => socket.close(done));
   server = spawn(process.execPath, [next, "start", "--hostname", "127.0.0.1", "--port", String(port)], { cwd: fixture, env, stdio: "inherit" });
   const origin = `http://127.0.0.1:${port}`;
-  async function get(path, host = "automatizza.es") {
+  async function get(path, host = "automatizza.es", extraHeaders = {}) {
     // Node's fetch replaces Host with the URL host. HTTP request preserves the
     // explicit domain so these checks exercise Next's real host conditions.
     return new Promise((done, reject) => {
-      const req = request(`${origin}${path}`, { headers: { host, "user-agent": "Googlebot" } }, (res) => {
+      const req = request(`${origin}${path}`, { headers: { host, "user-agent": "Googlebot", ...extraHeaders } }, (res) => {
         let html = "";
         res.setEncoding("utf8");
         res.on("data", (chunk) => { html += chunk; });
@@ -110,6 +124,29 @@ async function verify(environment) {
     const headings = [...html.matchAll(/<(h[12])\b[^>]*>([\s\S]*?)<\/\1>/g)].map(([, level, text]) => [level, unescape(text.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim())]);
     assert.equal(headings.filter(([level]) => level === "h1").length, 1, path);
     documents.set(path, html);
+    const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
+    assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);
+    if (["/en", "/fr", "/pt"].includes(path)) {
+      const firstQuestion = { "/en": "Which processes can an SME automate?", "/fr": "Quels processus d'une PME peut-on automatiser ?", "/pt": "Que processos de uma PME podem ser automatizados?" }[path];
+      const faq = unescape(html.match(/<section[^>]*aria-labelledby="faq-title"[\s\S]*?<\/section>/)?.[0] ?? "");
+      assert.ok(faq.includes(firstQuestion), `translated FAQ in initial HTML: ${path}`);
+      assert.equal(count(faq, /<details\b/g), 7);
+      assert.equal(count(faq, /<p class="[^"]*answer/g), 7);
+      assert.ok(!faq.includes("¿"), `no Spanish FAQ questions: ${path}`);
+      assert.ok(!html.includes("FAQPage"));
+    }
+    const alternateLinks = [...head.matchAll(/<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"/g)];
+    assert.deepEqual(alternateLinks.map(m => m[1]).sort(), ["en", "es", "fr", "pt-PT", "x-default"].sort(), `hreflang set: ${path}`);
+    const group = path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
+      : path.includes("/apc") ? ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"]
+      : path.includes("la-factory-coworking") ? ["/proyectos/la-factory-coworking","/en/projects/la-factory-coworking","/fr/projets/la-factory-coworking","/pt/projetos/la-factory-coworking"]
+      : /contact/.test(path) ? ["/contacto","/en/contact","/fr/contact","/pt/contacto"] : ["/","/en","/fr","/pt"];
+    const tags = ["es","en","fr","pt-PT","x-default"];
+    for (let i=0;i<tags.length;i++) assert.equal(alternateLinks.find(m=>m[1]===tags[i])?.[2],pageUrl(group[i===4?0:i]), `reciprocal equivalent: ${path} ${tags[i]}`);
+    const selector = html.match(/<details[^>]*class="[^"]*LanguageSelector[\s\S]*?<\/details>/)?.[0];
+    assert.ok(selector, `language selector: ${path}`);
+    for (const target of group) assert.ok(selector.includes(`href="${target}"`), `real equivalent link: ${path} → ${target}`);
+
     results[environment] ??= [];
     results[environment].push({ path, title, description, canonical: pageUrl(path), xRobotsTag: response.headers.get("x-robots-tag"), headings });
     checks++;
@@ -122,13 +159,24 @@ async function verify(environment) {
     documents.set(path, html);
     checks++;
   }
-  for (const path of ["/no-existe-seo-audit", "/proyectos/no-existe-seo-audit"]) {
+  for (const path of ["/no-existe-seo-audit", "/proyectos/no-existe-seo-audit", "/es", "/es/contacto", "/en/contacto", "/fr/contacto", "/pt/contact", "/en/politica-de-privacidad", "/en/services"]) {
     const { response, html } = await get(path);
     assert.equal(response.status, 404, path);
     assert.ok(html.includes('content="noindex'), path);
     assert.ok(!html.includes('<link rel="canonical"'), "404 must not canonicalize to the home");
     checks++;
   }
+  for (const icon of ["/favicon.ico", "/icon1.png", "/icon2.png", "/apple-icon.png", "/brand/automatizza-logo.png"]) {
+    const asset = await get(icon);
+    assert.equal(asset.response.status,200,icon);
+    assert.match(asset.response.headers.get("content-type"),/image\//);
+    checks++;
+  }
+  const requestedSpanish = await get("/", "automatizza.es", { "accept-language": "fr,en;q=0.9", cookie: "preferred-language=fr" });
+  assert.equal(requestedSpanish.response.status,200);
+  assert.ok(requestedSpanish.html.includes('<html lang="es"'));
+  assert.equal(requestedSpanish.response.headers.get("location"),null);
+  checks++;
   const redirect = await get("/proyectos");
   assert.equal(redirect.response.status, 308);
   assert.equal(redirect.response.headers.get("location"), "/#proyectos");
@@ -144,6 +192,7 @@ async function verify(environment) {
   assert.match(sitemap.response.headers.get("content-type"), /(?:application|text)\/xml/);
   const urls = [...sitemap.html.matchAll(/<loc>(.*?)<\/loc>/g)].map(([, url]) => url);
   assert.deepEqual(urls.sort(), production ? pages.map(([path]) => pageUrl(path)).sort() : []);
+  assert.equal(count(sitemap.html, /<xhtml:link\b/g), production ? 100 : 0, "multilingual sitemap alternatives");
   checks += 2;
   for (const host of ["www.automatizza.es", "automatizza-web.vercel.app"]) {
     const { response } = await get("/contacto?utm_source=seo-test", host);
@@ -161,6 +210,16 @@ async function verify(environment) {
   const query = await get("/contacto?email=ficticio%40example.org&utm_source=test");
   assert.ok(query.html.includes(`<link rel="canonical" href="${canonical}/contacto"`));
   checks++;
+  for (const lang of ["en", "fr", "pt"]) {
+    const alias = `/${lang}/${{en:"projects",fr:"projets",pt:"projetos"}[lang]}`;
+    const redirect = await get(alias);
+    assert.equal(redirect.response.status,308);
+    assert.equal(redirect.response.headers.get("location"),`/${lang}#proyectos`);
+    const slash = await get(`/${lang}/`);
+    assert.equal(slash.response.status,308);
+    assert.equal(slash.response.headers.get("location"),`/${lang}`);
+    checks += 2;
+  }
   for (const html of documents.values()) {
     for (const [, href] of html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)) {
       if (!href.startsWith("/") && !href.startsWith("#")) continue;

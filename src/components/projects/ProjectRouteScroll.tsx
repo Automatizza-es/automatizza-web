@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { resolveRoute } from "@/lib/i18n/routes";
 import { usePathname } from "next/navigation";
 
 // The shared, tall <main> remains visible between project routes, so Next's
@@ -18,8 +19,10 @@ export function ProjectRouteScroll() {
   }, []);
 
   useEffect(() => {
-    const shouldReset = previousPath.current !== pathname && pathname.startsWith("/proyectos/") && !historyNavigation.current && !window.location.hash;
-    const projectAnchor = pathname === "/" && window.location.hash === "#proyectos" && !historyNavigation.current;
+    const route = resolveRoute(pathname);
+    const isProject = route && !["home", "contact", "privacy", "cookies", "legal"].includes(route.id);
+    const shouldReset = previousPath.current !== pathname && isProject && !historyNavigation.current && !window.location.hash;
+    const projectAnchor = route?.id === "home" && window.location.hash === "#proyectos" && !historyNavigation.current;
     previousPath.current = pathname;
     historyNavigation.current = false;
     if (projectAnchor) {

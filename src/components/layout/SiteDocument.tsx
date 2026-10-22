@@ -5,7 +5,9 @@ import { CookieConsent } from "@/components/privacy/CookieConsent";
 import { getAnalyticsConfig } from "@/lib/analytics/config";
 import { isProductionDeployment, siteOrigin } from "@/lib/seo";
 
-import "./globals.css";
+import "@/app/globals.css";
+import { LocaleProvider } from "@/components/i18n/LocaleProvider";
+import { languageInfo, type Locale } from "@/lib/i18n/routes";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
 const spaceGrotesk = Space_Grotesk({
@@ -21,14 +23,16 @@ export const metadata: Metadata = {
   robots: isProductionDeployment() ? { index: true, follow: true } : { index: false, follow: false },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export function SiteDocument({ children, locale }: Readonly<{ children: React.ReactNode; locale: Locale }>) {
   const analytics = getAnalyticsConfig();
   return (
-    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang={languageInfo[locale].tag} className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body>
+        <LocaleProvider locale={locale}>
         <ProjectRouteScroll />
         {children}
         <CookieConsent {...analytics} />
+        </LocaleProvider>
       </body>
     </html>
   );

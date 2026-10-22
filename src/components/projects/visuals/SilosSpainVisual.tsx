@@ -1,5 +1,7 @@
 "use client";
 
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import { Catamaran } from "next/font/google";
@@ -78,52 +80,52 @@ const activity: { icon: IconName; title: string; time: string; highlight?: boole
 ];
 
 export function CrmDashboard() {
+  const { t } = useI18n();
   return (
     <div className={`ss-app ${catamaran.variable}`}>
       <div className="ss-topbar">
         <Image className="ss-logo" src="/projects/silos-spain/logo.png" alt="" width={360} height={173} />
         <nav className="ss-nav">
-          <span>Inicio</span>
-          <span className="is-active">CRM</span>
-          <span>Administración</span>
-          <span>Equipo</span>
+          <span>{t("Inicio")}</span>
+          <span className="is-active">{t("CRM")}</span>
+          <span>{t("Administración")}</span>
+          <span>{t("Equipo")}</span>
         </nav>
-        <span className="ss-user">
-          Avisos <b>Marta</b>
+        <span className="ss-user">{t("Avisos ")}<b>Marta</b>
         </span>
       </div>
 
       <div className="ss-page">
         <div className="ss-subnav">
-          <span className="is-active">Dashboard</span>
-          <span>Solicitudes</span>
-          <span>Bandeja</span>
-          <span>Contactos</span>
-          <span>Oportunidades</span>
-          <span>Presupuestos</span>
+          <span className="is-active">{t("Dashboard")}</span>
+          <span>{t("Solicitudes")}</span>
+          <span>{t("Bandeja")}</span>
+          <span>{t("Contactos")}</span>
+          <span>{t("Oportunidades")}</span>
+          <span>{t("Presupuestos")}</span>
         </div>
-        <h4 className="ss-title">Dashboard</h4>
-        <p className="ss-subtitle">El ciclo comercial de un vistazo: de la solicitud a la venta.</p>
+        <h4 className="ss-title">{t("Dashboard")}</h4>
+        <p className="ss-subtitle">{t("El ciclo comercial de un vistazo: de la solicitud a la venta.")}</p>
 
         <div className="ss-kpis">
           {kpis.map((kpi, index) => (
             <div className="ss-kpi fx-in" style={at(650 + index * 110)} key={kpi.label}>
-              <small>{kpi.label}</small>
+              <small>{t(kpi.label)}</small>
               <b>{kpi.value}</b>
               <i>
                 <span className="fx-grow" style={{ ...at(900 + index * 110), width: `${kpi.fill * 100}%` }} />
               </i>
-              <em>{kpi.detail}</em>
+              <em>{t(kpi.detail)}</em>
             </div>
           ))}
         </div>
 
         <div className="ss-lower">
           <div className="ss-panel fx-in" style={at(1000)}>
-            <strong>Embudo comercial</strong>
+            <strong>{t("Embudo comercial")}</strong>
             {funnel.map((step, index) => (
               <div className="ss-funnel-row" key={step.label}>
-                <span>{step.label}</span>
+                <span>{t(step.label)}</span>
                 <i>
                   <span className="fx-grow" style={{ ...at(1150 + index * 90), width: `${(step.value / 14) * 100}%` }} />
                 </i>
@@ -132,10 +134,10 @@ export function CrmDashboard() {
             ))}
           </div>
           <div className="ss-panel fx-in" style={at(1100)}>
-            <strong>Espera acción</strong>
+            <strong>{t("Espera acción")}</strong>
             {waiting.map((item) => (
               <div className="ss-wait-row" key={item.label}>
-                <span>{item.label}</span>
+                <span>{t(item.label)}</span>
                 <b>{item.value}</b>
               </div>
             ))}
@@ -147,6 +149,7 @@ export function CrmDashboard() {
 }
 
 export function SilosSpainVisual() {
+  const { t } = useI18n();
   const ref = usePlayOnView<HTMLDivElement>();
 
   return (
@@ -166,16 +169,16 @@ export function SilosSpainVisual() {
             <Icon name="inbox" />
           </span>
           <div>
-            <strong>Nueva solicitud</strong>
-            <small>Web · hace 5 min</small>
+            <strong>{t("Nueva solicitud")}</strong>
+            <small>{t("Web · hace 5 min")}</small>
           </div>
         </div>
         <p className="ss-person">
           Javier Ortega <span>AgroNorte S.L.</span>
         </p>
         <dl className="ss-field">
-          <dt>Producto de interés</dt>
-          <dd>Nave 500 m²</dd>
+          <dt>{t("Producto de interés")}</dt>
+          <dd>{t("Nave 500 m²")}</dd>
         </dl>
       </div>
 
@@ -185,22 +188,20 @@ export function SilosSpainVisual() {
             <Icon name="doc" />
           </span>
           <div>
-            <strong>Presupuesto</strong>
+            <strong>{t("Presupuesto")}</strong>
             <small>P-0412 · v2</small>
           </div>
         </div>
-        <p className="ss-quote-title">Nave 500 m² — Francia</p>
+        <p className="ss-quote-title">{t("Nave 500 m² — Francia")}</p>
         <div className="ss-quote-total">
           <b>48.300 €</b>
           <span className="ss-pill ss-pill-sent">
-            <Icon name="send" />
-            Enviado
-          </span>
+            <Icon name="send" />{t("Enviado")}</span>
         </div>
       </div>
 
       <div className="ss-float ss-float-activity" style={at(3100)}>
-        <strong className="ss-activity-title">Actividad</strong>
+        <strong className="ss-activity-title">{t("Actividad")}</strong>
         <ol>
           {activity.map((item, index) => (
             <li className={`fx-in${item.highlight ? " is-highlight" : ""}`} style={at(3550 + index * 300)} key={item.title}>
@@ -208,8 +209,8 @@ export function SilosSpainVisual() {
                 <Icon name={item.icon} />
               </span>
               <div>
-                <b>{item.title}</b>
-                <small>{item.time}</small>
+                <b>{t(item.title)}</b>
+                <small>{t(item.time)}</small>
               </div>
             </li>
           ))}

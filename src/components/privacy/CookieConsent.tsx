@@ -1,6 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
+import Link from "@/components/i18n/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { consentKey, encodeConsent, readConsent, type AnalyticsChoice } from "@/lib/analytics/consent";
@@ -27,6 +29,7 @@ function subscribe(notify: () => void) {
 }
 
 export function CookieConsent({ measurementId, containerId, enabled, preview, tagAssistant = false }: { measurementId: string; containerId: string; enabled: boolean; preview: boolean; tagAssistant?: boolean }) {
+  const { t } = useI18n();
   // A synthetic preview choice must never become consent for live measurement.
   const storageKey = preview ? `${consentKey}-preview` : consentKey;
   const raw = useSyncExternalStore(subscribe, () => snapshot(storageKey), serverSnapshot);
@@ -97,31 +100,31 @@ export function CookieConsent({ measurementId, containerId, enabled, preview, ta
   if (!available || raw === "server") return null;
   return (
     <>
-      {!decision && <aside className={styles.banner} aria-label="Preferencias de cookies">
-        <div><h2>Cookies</h2>
-          <p>Utilizamos cookies de Google Analytics para entender cómo se usa nuestra web, solo si las aceptas. Puedes rechazarlas y seguir navegando. Guardamos tu elección para recordarla. <Link href="/politica-de-cookies">Política de cookies</Link>.</p>
-          {preview && <p className={styles.preview}>Vista de prueba local: no envía datos a Google.</p>}
-          {tagAssistant && <p className={styles.preview}>Prueba local de Tag Assistant: solo al aceptar se cargará Google y se enviarán datos reales de navegación. La analítica pública sigue desactivada.</p>}
+      {!decision && <aside className={styles.banner} aria-label={t("Preferencias de cookies")}>
+        <div><h2>{t("Cookies")}</h2>
+          <p>{t("Utilizamos cookies de Google Analytics para entender cómo se usa nuestra web, solo si las aceptas. Puedes rechazarlas y seguir navegando. Guardamos tu elección para recordarla. ")}<Link href="/politica-de-cookies">{t("Política de cookies")}</Link>.</p>
+          {preview && <p className={styles.preview}>{t("Vista de prueba local: no envía datos a Google.")}</p>}
+          {tagAssistant && <p className={styles.preview}>{t("Prueba local de Tag Assistant: solo al aceptar se cargará Google y se enviarán datos reales de navegación. La analítica pública sigue desactivada.")}</p>}
         </div>
         <div className={styles.actions}>
-          <button type="button" onClick={() => save("denied")}>Rechazar cookies</button>
-          <button type="button" onClick={() => save("granted")}>Aceptar cookies</button>
-          <button type="button" className={styles.settings} onClick={openSettings}>Configurar</button>
+          <button type="button" onClick={() => save("denied")}>{t("Rechazar cookies")}</button>
+          <button type="button" onClick={() => save("granted")}>{t("Aceptar cookies")}</button>
+          <button type="button" className={styles.settings} onClick={openSettings}>{t("Configurar")}</button>
         </div>
       </aside>}
-      {decision && <button type="button" className={styles.reopen} onClick={openSettings}>Configurar cookies</button>}
+      {decision && <button type="button" className={styles.reopen} onClick={openSettings}>{t("Configurar cookies")}</button>}
       <dialog ref={dialog} className={styles.dialog} aria-labelledby="cookie-settings-title" onCancel={() => setSettings(false)}>
-        <h2 id="cookie-settings-title">Preferencias de cookies</h2>
-        <p>Las necesarias recuerdan tu elección. La analítica es opcional y puedes cambiarla cuando quieras.</p>
-        <label className={styles.option}><input type="checkbox" checked disabled /> Necesarias <span>Siempre activas</span></label>
-        <label className={styles.option}><input type="checkbox" checked={analytics} onChange={(event) => setAnalytics(event.target.checked)} /> Google Analytics</label>
-        {preview && <p className={styles.preview}>Vista de prueba local: no envía datos a Google.</p>}
-        {tagAssistant && <p className={styles.preview}>Prueba local de Tag Assistant con Google real. Publicidad siempre denegada.</p>}
-        <p><Link href="/politica-de-cookies">Consultar la política de cookies</Link></p>
+        <h2 id="cookie-settings-title">{t("Preferencias de cookies")}</h2>
+        <p>{t("Las necesarias recuerdan tu elección. La analítica es opcional y puedes cambiarla cuando quieras.")}</p>
+        <label className={styles.option}><input type="checkbox" checked disabled />{t(" Necesarias ")}<span>{t("Siempre activas")}</span></label>
+        <label className={styles.option}><input type="checkbox" checked={analytics} onChange={(event) => setAnalytics(event.target.checked)} />{t(" Google Analytics")}</label>
+        {preview && <p className={styles.preview}>{t("Vista de prueba local: no envía datos a Google.")}</p>}
+        {tagAssistant && <p className={styles.preview}>{t("Prueba local de Tag Assistant con Google real. Publicidad siempre denegada.")}</p>}
+        <p><Link href="/politica-de-cookies">{t("Consultar la política de cookies")}</Link></p>
         <div className={styles.actions}>
-          <button type="button" onClick={() => save("denied")}>Rechazar analítica</button>
-          <button type="button" onClick={() => save(analytics ? "granted" : "denied")}>Guardar preferencias</button>
-          <button type="button" className={styles.settings} onClick={() => setSettings(false)}>Cerrar</button>
+          <button type="button" onClick={() => save("denied")}>{t("Rechazar analítica")}</button>
+          <button type="button" onClick={() => save(analytics ? "granted" : "denied")}>{t("Guardar preferencias")}</button>
+          <button type="button" className={styles.settings} onClick={() => setSettings(false)}>{t("Cerrar")}</button>
         </div>
       </dialog>
     </>

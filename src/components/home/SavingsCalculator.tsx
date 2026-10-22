@@ -1,16 +1,25 @@
 "use client";
 
+import { languageInfo } from "@/lib/i18n/routes";
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import { useState, type CSSProperties } from "react";
 
-const numberFormat = (n: number) =>
+const spanishNumber = (n: number) =>
   Math.round(n)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const moneyFormat = (n: number) => `${numberFormat(n)} €`;
-const decimalFormat = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 1 });
 
 type SliderId = "employees" | "hours" | "days" | "automation";
 
+// Live savings calculator, styled like the original preview card. Same
+// arithmetic as the standalone tool: employees × hours × hourly cost × days,
+// times the recoverable share the visitor chooses (a hypothesis).
+export function SavingsCalculator() {
+  const { t, locale } = useI18n();
+  const numberFormat = (n: number) => locale === "es" ? spanishNumber(n) : new Intl.NumberFormat(languageInfo[locale].format, { maximumFractionDigits: 0 }).format(n);
+  const moneyFormat = (n: number) => locale === "es" ? `${numberFormat(n)} €` : new Intl.NumberFormat(languageInfo[locale].format, { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
+  const decimalFormat = new Intl.NumberFormat(languageInfo[locale].format, { maximumFractionDigits: 1 });
 const sliders: {
   id: SliderId;
   label: string;
@@ -41,10 +50,7 @@ const sliders: {
   },
 ];
 
-// Live savings calculator, styled like the original preview card. Same
-// arithmetic as the standalone tool: employees × hours × hourly cost × days,
-// times the recoverable share the visitor chooses (a hypothesis).
-export function SavingsCalculator() {
+
   const [values, setValues] = useState<Record<SliderId, number>>({
     employees: 3,
     hours: 2,
@@ -66,8 +72,8 @@ export function SavingsCalculator() {
       <div className="calc-card">
         <div className="calc-head">
           <div>
-            <span className="calc-eyebrow">Estimación</span>
-            <h3>Coste de tareas repetitivas</h3>
+            <span className="calc-eyebrow">{t("Estimación")}</span>
+            <h3>{t("Coste de tareas repetitivas")}</h3>
           </div>
         </div>
 
@@ -79,12 +85,12 @@ export function SavingsCalculator() {
               return (
                 <div className="calc-slider" key={slider.id}>
                   <label htmlFor={`calc-${slider.id}`}>
-                    <span>{slider.label}</span>
+                    <span>{t(slider.label)}</span>
                     <output htmlFor={`calc-${slider.id}`}>{slider.format(value)}</output>
                   </label>
                   {slider.hint ? (
                     <small className="calc-slider-hint" id={`calc-${slider.id}-hint`}>
-                      {slider.hint}
+                      {t(slider.hint)}
                     </small>
                   ) : null}
                   <input
@@ -105,7 +111,7 @@ export function SavingsCalculator() {
             })}
 
             <label className={`calc-rate${validRate ? "" : " is-invalid"}`} htmlFor="calc-rate">
-              <span>Coste medio por hora</span>
+              <span>{t("Coste medio por hora")}</span>
               <span className="calc-rate-input">
                 <input
                   type="number"
@@ -123,33 +129,33 @@ export function SavingsCalculator() {
             </label>
             <small className="calc-rate-help" id="calc-rate-help">
               {validRate
-                ? "Salario bruto + costes de empresa."
+                ? t("Salario bruto + costes de empresa.")
                 : "Introduce un coste por hora mayor que 0 y de hasta 500 €."}
             </small>
           </div>
 
           <div className="calc-result" aria-live="polite">
-            <span>Valor potencial anual</span>
+            <span>{t("Valor potencial anual")}</span>
             <strong>{moneyFormat(annualValue)}</strong>
             <div className="calc-result-detail">
               <i aria-hidden="true" />
-              <span>Horas recuperables al año</span>
+              <span>{t("Horas recuperables al año")}</span>
               <b>{numberFormat(annualHours)} h</b>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="calc-comparison" role="group" aria-label="Comparación mensual">
+      <div className="calc-comparison" role="group" aria-label={t("Comparación mensual")}>
         <div className="calc-comparison-row">
-          <span>Coste mensual de las tareas</span>
+          <span>{t("Coste mensual de las tareas")}</span>
           <div className="calc-comparison-track" aria-hidden="true">
             <span style={{ width: monthlyCost > 0 ? "100%" : "0%" }} />
           </div>
           <strong>{moneyFormat(monthlyCost)}</strong>
         </div>
         <div className="calc-comparison-row">
-          <span>Valor mensual recuperable</span>
+          <span>{t("Valor mensual recuperable")}</span>
           <div className="calc-comparison-track is-recoverable" aria-hidden="true">
             <span style={{ width: monthlyCost > 0 ? `${values.automation}%` : "0%" }} />
           </div>
@@ -157,18 +163,11 @@ export function SavingsCalculator() {
         </div>
       </div>
 
-      <p className="calc-insight">
-        Con esta hipótesis, tu equipo podría recuperar <strong>{numberFormat(annualHours)} horas al año</strong>,
-        con un valor potencial de <strong>{moneyFormat(annualValue)}</strong>. El cálculo anual supone
-        <strong> 12 meses con la misma carga de trabajo</strong>.
+      <p className="calc-insight">{t("Con esta hipótesis, tu equipo podría recuperar ")}<strong>{numberFormat(annualHours)}{t(" horas al año")}</strong>{t(", con un valor potencial de ")}<strong>{moneyFormat(annualValue)}</strong>{t(". El cálculo anual supone")}<strong>{t(" 12 meses con la misma carga de trabajo")}</strong>.
       </p>
 
       <p className="calc-disclaimer">
-        <strong>Estimación orientativa, no ahorro garantizado.</strong> El valor del tiempo recuperado
-        no equivale necesariamente a una reducción de gastos. El ahorro efectivo dependerá de cómo se
-        reorganice el trabajo y de los costes de implantación, mantenimiento y licencias, no incluidos
-        en el cálculo.
-      </p>
+        <strong>{t("Estimación orientativa, no ahorro garantizado.")}</strong>{t(" El valor del tiempo recuperado no equivale necesariamente a una reducción de gastos. El ahorro efectivo dependerá de cómo se reorganice el trabajo y de los costes de implantación, mantenimiento y licencias, no incluidos en el cálculo.")}</p>
     </div>
   );
 }

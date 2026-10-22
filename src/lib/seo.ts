@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { resolveRoute, equivalents, indexableRoutes, languageInfo, type Locale } from "./i18n/routes";
 
 // Canonicals always identify the real site, including in local/preview builds.
 // Do not derive them from the request host or a Vercel deployment URL.
@@ -13,10 +14,15 @@ export function canonicalUrl(path: string) {
 }
 
 export function pageMetadata(path: string, title: string, description: string): Metadata {
+  const route = resolveRoute(path);
+  const languages = route && indexableRoutes.includes(route.id) ? Object.fromEntries([
+    ...Object.entries(equivalents(route.id)).map(([locale, url]) => [languageInfo[locale as Locale].tag, canonicalUrl(url)]),
+    ["x-default", canonicalUrl(equivalents(route.id).es!)],
+  ]) : undefined;
   return {
     title,
     description,
-    alternates: { canonical: canonicalUrl(path) },
-    openGraph: { title, description, url: canonicalUrl(path), siteName: "Automatizza", locale: "es_ES", type: "website" },
+    alternates: { canonical: canonicalUrl(path), ...(languages ? { languages } : {}) },
+    openGraph: { title, description, url: canonicalUrl(path), siteName: "Automatizza", locale: languageInfo[route?.locale ?? "es"].og, type: "website" },
   };
 }

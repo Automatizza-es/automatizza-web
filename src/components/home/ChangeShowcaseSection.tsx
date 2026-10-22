@@ -1,5 +1,7 @@
 "use client";
 
+import { useI18n } from "@/components/i18n/LocaleProvider";
+
 import Image from "next/image";
 import {
   useCallback,
@@ -72,8 +74,9 @@ function ConnectionPulses({ paths }: { paths: string[] }) {
 }
 
 function DocumentDemo() {
+  const { t } = useI18n();
   return (
-    <div className={styles.documentScene} role="group" aria-label="De tus documentos a datos registrados automáticamente">
+    <div className={styles.documentScene} role="group" aria-label={t("De tus documentos a datos registrados automáticamente")}>
       <svg className={styles.documentConnections} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
         <path d="M155 175 C155 245 380 235 430 285M335 145 C335 210 450 220 450 285M515 175 C515 225 485 230 475 285M560 285 H660" />
         <circle cx="660" cy="285" r="2.5" />
@@ -83,28 +86,26 @@ function DocumentDemo() {
         <path d="M155 0 C155 180 350 170 440 240M500 0 V240M850 0 C850 180 650 170 560 240M500 340 V520" />
         <ConnectionPulses paths={mobileDocumentPaths} />
       </svg>
-      <ul className={styles.floatingDocuments} aria-label="Documentos de origen">
+      <ul className={styles.floatingDocuments} aria-label={t("Documentos de origen")}>
         {["factura.pdf", "pedido.pdf", "solicitud.pdf"].map((name) => (
           <li className={styles.floatingDocument} key={name}>
             <DocumentIcon />
-            <span>{name}</span>
+            <span>{t(name)}</span>
           </li>
         ))}
       </ul>
       <div className={styles.extraction}>
         <span className={styles.extractionLoader} aria-hidden="true" />
-        <span>Extrayendo datos…</span>
+        <span>{t("Extrayendo datos…")}</span>
       </div>
-      <dl className={styles.registeredInvoice} aria-label="Datos registrados">
+      <dl className={styles.registeredInvoice} aria-label={t("Datos registrados")}>
         {invoiceFields.map(([label, value]) => (
-          <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+          <div key={label}><dt>{t(label)}</dt><dd>{t(value)}</dd></div>
         ))}
         <div>
-          <dt>Estado</dt>
+          <dt>{t("Estado")}</dt>
           <dd className={styles.registeredStatus}>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 8 3 3 7-7" /></svg>
-            Registrada
-          </dd>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 8 3 3 7-7" /></svg>{t("Registrada")}</dd>
         </div>
       </dl>
     </div>
@@ -130,6 +131,7 @@ function CoordinationIcon({ icon }: { icon: typeof coordinationSteps[number]["ic
 }
 
 function CoordinationDemo({ active }: { active: boolean }) {
+  const { t } = useI18n();
   const sceneRef = useRef<HTMLDivElement>(null);
   const walkerRef = useRef<HTMLDivElement>(null);
   const mobile = useMediaQuery("(max-width: 600px)");
@@ -231,12 +233,12 @@ function CoordinationDemo({ active }: { active: boolean }) {
   } as CSSProperties;
 
   return (
-    <div className={styles.coordinationScene} ref={sceneRef} data-active={active} data-ready={ready} role="group" aria-label="Personas y equipos coordinados para atender cada solicitud">
+    <div className={styles.coordinationScene} ref={sceneRef} data-active={active} data-ready={ready} role="group" aria-label={t("Personas y equipos coordinados para atender cada solicitud")}>
       <Image
         className={styles.officePhoto}
         src="/images/automation/team-office-v1.webp"
         loading="eager"
-        alt="Equipos trabajando y colaborando en una oficina de dos plantas."
+        alt={t("Equipos trabajando y colaborando en una oficina de dos plantas.")}
         fill
         sizes="(max-width: 600px) 950px, (max-width: 999px) 90vw, 800px"
       />
@@ -265,11 +267,11 @@ function CoordinationDemo({ active }: { active: boolean }) {
         </div>
         <Image className={styles.officeChairForeground} src="/images/automation/team-office-v1.webp" alt="" fill unoptimized loading="eager" onLoad={() => setChairLoaded(true)} onError={() => setAssetFailed(true)} />
       </div>
-      <ol className={styles.coordinationSteps} aria-label="Seguimiento de una solicitud">
+      <ol className={styles.coordinationSteps} aria-label={t("Seguimiento de una solicitud")}>
         {coordinationSteps.map((step) => (
           <li className={styles.coordinationLabel} key={step.icon}>
             <span className={styles.coordinationIcon}><CoordinationIcon icon={step.icon} /></span>
-            <span>{step.label}</span>
+            <span>{t(step.label)}</span>
           </li>
         ))}
       </ol>
@@ -326,14 +328,15 @@ function SystemWires({ paths, mobilePaths }: { paths: string[]; mobilePaths: str
 }
 
 function ConnectedDemo() {
+  const { t } = useI18n();
   return (
-    <div className={styles.connectedScene} role="group" aria-label="Automatizza conecta tus fuentes de información y la distribuye donde hace falta">
+    <div className={styles.connectedScene} role="group" aria-label={t("Automatizza conecta tus fuentes de información y la distribuye donde hace falta")}>
       <div className={styles.connectedFlow}>
-        <ul className={styles.systemSources} aria-label="Fuentes de información">
-          {systemSources.map((source) => <li key={source.icon}><SystemIcon name={source.icon} /><span>{source.label}</span></li>)}
+        <ul className={styles.systemSources} aria-label={t("Fuentes de información")}>
+          {systemSources.map((source) => <li key={source.icon}><SystemIcon name={source.icon} /><span>{t(source.label)}</span></li>)}
         </ul>
         <SystemWires paths={systemInPaths} mobilePaths={systemInMobilePaths} />
-        <div className={styles.systemCore} role="img" aria-label="Automatizza, núcleo que conecta y distribuye la información">
+        <div className={styles.systemCore} role="img" aria-label={t("Automatizza, núcleo que conecta y distribuye la información")}>
           <span className={styles.systemMark}>
             <svg width="34" height="34" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
               <path d="M7 3h20L15 18.5h3.5L15 23H2L14 8H3Z" />
@@ -343,10 +346,10 @@ function ConnectedDemo() {
           <span className={styles.systemName}>Automatizza</span>
         </div>
         <SystemWires paths={systemOutPaths} mobilePaths={systemOutMobilePaths} />
-        <ul className={styles.systemResults} aria-label="Información disponible en cada destino">
+        <ul className={styles.systemResults} aria-label={t("Información disponible en cada destino")}>
           {systemResults.map((result) => (
             <li key={result.icon}>
-              <SystemIcon name={result.icon} /><span>{result.label}</span>
+              <SystemIcon name={result.icon} /><span>{t(result.label)}</span>
               <svg className={styles.systemCheck} width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 8 3 3 7-7" /></svg>
             </li>
           ))}
@@ -369,6 +372,7 @@ function useMediaQuery(query: string) {
 }
 
 export function ChangeShowcaseSection() {
+  const { t } = useI18n();
   const [active, setActive] = useState(0);
   const [fitsViewport, setFitsViewport] = useState(true);
   const [mobileFitsViewport, setMobileFitsViewport] = useState(false);
@@ -569,9 +573,9 @@ export function ChangeShowcaseSection() {
           <div className={styles.composition} ref={compositionRef}>
             <SectionHeading
               id="change-title"
-              eyebrow="EN LA PRÁCTICA"
-              title="Cuando todo fluye."
-              description="Menos trabajo manual, equipos mejor coordinados y herramientas que trabajan juntas."
+              eyebrow={t("EN LA PRÁCTICA")}
+              title={t("Cuando todo fluye.")}
+              description={t("Menos trabajo manual, equipos mejor coordinados y herramientas que trabajan juntas.")}
             />
             <div className={styles.stageTrack} ref={stageTrackRef}>
               <div className={styles.stage} ref={stageRef}>
@@ -582,11 +586,11 @@ export function ChangeShowcaseSection() {
                         {demonstrations.map((demo, index) => (
                           <h3 className={styles.mobileCaseTitle} data-active={active === index} key={demo.id}>
                             <span className={styles.mobileCaseNumber}>0{index + 1}</span>
-                            <span>{demo.title}</span>
+                            <span>{t(demo.title)}</span>
                           </h3>
                         ))}
                       </div>
-                      <div className={styles.mobileSteps} role="tablist" aria-label="Demostraciones de automatización" aria-orientation="horizontal">
+                      <div className={styles.mobileSteps} role="tablist" aria-label={t("Demostraciones de automatización")} aria-orientation="horizontal">
                         {demonstrations.map((demo, index) => (
                           <button
                             className={styles.mobileStep}
@@ -594,7 +598,7 @@ export function ChangeShowcaseSection() {
                             type="button"
                             role="tab"
                             id={`automation-tab-${demo.id}`}
-                            aria-label={demo.title}
+                            aria-label={t(demo.title)}
                             aria-selected={active === index}
                             aria-controls={`automation-panel-${demo.id}`}
                             aria-describedby={`automation-description-${demo.id}`}
@@ -607,7 +611,7 @@ export function ChangeShowcaseSection() {
                         ))}
                       </div>
                     </div>
-                  ) : <div className={styles.tabs} role="tablist" aria-label="Demostraciones de automatización" aria-orientation={verticalTabs ? "vertical" : "horizontal"}>
+                  ) : <div className={styles.tabs} role="tablist" aria-label={t("Demostraciones de automatización")} aria-orientation={verticalTabs ? "vertical" : "horizontal"}>
                     {demonstrations.map((demo, index) => (
                       <button
                         className={styles.tab}
@@ -626,13 +630,13 @@ export function ChangeShowcaseSection() {
                         onKeyDown={(event) => onTabKeyDown(event, index)}
                       >
                         <span className={styles.caseNumber} aria-hidden="true">0{index + 1}</span>
-                        <span className={styles.tabHeading} id={`automation-label-${demo.id}`}>{demo.title}</span>
-                        <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{demo.description}</span>
+                        <span className={styles.tabHeading} id={`automation-label-${demo.id}`}>{t(demo.title)}</span>
+                        <span className={styles.tabDescription} id={`automation-description-${demo.id}`}>{t(demo.description)}</span>
                       </button>
                     ))}
                   </div>}
                   <div className={styles.mobileDescriptions} aria-hidden="true">
-                    {demonstrations.map((demo, index) => <p className={styles.mobileDescription} id={mobile ? `automation-description-${demo.id}` : undefined} data-active={active === index} key={demo.id}>{demo.description}</p>)}
+                    {demonstrations.map((demo, index) => <p className={styles.mobileDescription} id={mobile ? `automation-description-${demo.id}` : undefined} data-active={active === index} key={demo.id}>{t(demo.description)}</p>)}
                   </div>
                 </div>
                 <div className={styles.demonstration}>
