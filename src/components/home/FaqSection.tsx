@@ -35,8 +35,11 @@ const questions = [
 export function FaqSection() {
   return (
     <section className={styles.section} aria-labelledby="faq-title">
-      <Container className={`editorial-container ${styles.layout}`}>
-        <h2 id="faq-title" className={styles.title}>Preguntas frecuentes</h2>
+      <Container className="editorial-container">
+        <header>
+          <p className={`section-eyebrow ${styles.eyebrow}`}>PREGUNTAS FRECUENTES</p>
+          <h2 id="faq-title" className={styles.title}>Antes de empezar</h2>
+        </header>
         <div className={styles.questions}>
           {questions.map(({ question, answer }) => (
             <details className={styles.item} key={question}>

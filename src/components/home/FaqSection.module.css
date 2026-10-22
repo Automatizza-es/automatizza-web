@@ -1,13 +1,15 @@
 .section {
-  padding-block: clamp(3rem, 5vw, 4rem);
+  padding-block: 0 clamp(3rem, 5vw, 4rem);
   background: var(--color-white);
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, .65fr) minmax(0, 1fr);
-  align-items: start;
-  gap: 2rem clamp(2rem, 5vw, 5rem);
+.eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--color-cyan);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  line-height: 1.4;
 }
 
 .title {
@@ -21,8 +23,12 @@
   text-wrap: balance;
 }
 
-.questions { border-top: 1px solid #e1e4e8; }
-.item { border-bottom: 1px solid #e1e4e8; }
+.questions {
+  max-width: 52rem;
+  margin-top: 1.75rem;
+}
+
+.item + .item { border-top: 1px solid #e1e4e8; }
 
 .summary {
   padding: 1.25rem 0;
@@ -82,12 +88,9 @@
   line-height: 1.75;
 }
 
-@media (max-width: 900px) {
-  .layout { grid-template-columns: minmax(0, 1fr); }
-}
-
 @media (max-width: 600px) {
-  .section { padding-block: 2.5rem; }
+  .section { padding-bottom: 2.5rem; }
+  .eyebrow { margin-bottom: 1.25rem; font-size: .6875rem; letter-spacing: .13em; }
   .title { font-size: 1.75rem; line-height: 1.25; }
   .summary h3 { gap: 1rem; }
   .answer { padding-right: 0; }
