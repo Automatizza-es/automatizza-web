@@ -20,11 +20,19 @@ export function LanguageSelector() {
     if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); }
   }}>
     <summary aria-label={`${t("Idioma")}: ${languageInfo[locale].name}`}>
-      {languageInfo[locale].code}<span aria-hidden="true">⌄</span>
+      <svg className={styles.globe} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="9" />
+        <ellipse cx="12" cy="12" rx="4" ry="9" />
+        <path d="M3 12h18M5 6.5h14M5 17.5h14" />
+      </svg>
+      {languageInfo[locale].code}
     </summary>
     <ul aria-label={t("Idioma")}>
       {locales.map(option => <li key={option}>
-        {paths[option] ? <a href={paths[option]} lang={languageInfo[option].tag} hrefLang={languageInfo[option].tag} aria-current={option === locale ? "page" : undefined}>{languageInfo[option].name}</a>
+        {paths[option] ? <a href={paths[option]} lang={languageInfo[option].tag} hrefLang={languageInfo[option].tag} aria-current={option === locale ? "page" : undefined}>
+          {languageInfo[option].name}
+          {option === locale && <svg className={styles.check} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d="m3.5 8 3 3 6-6" /></svg>}
+        </a>
           : <span lang={languageInfo[option].tag} aria-disabled="true" title={t("Traducción no publicada")}>{languageInfo[option].name}</span>}
       </li>)}
     </ul>
