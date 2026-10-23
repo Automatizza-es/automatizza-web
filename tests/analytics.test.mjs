@@ -174,7 +174,7 @@ test("the contact route keeps one page view per visit and one confirmed conversi
   assert.equal(trackContactResult({ ...success, submissionId: "after-withdrawal" }), false);
 });
 test("the Spanish service respects consent and does not turn visits or contact navigation into leads", () => {
-  const path = "/automatizacion-de-procesos";
+  const path = "/servicios/automatizacion-de-procesos";
   const state = browser("denied");
   window.location.pathname = path;
   assert.equal(trackPage(ids, path, "denied"), false);

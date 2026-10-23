@@ -18,7 +18,7 @@ const pageUrl = (path) => `${canonical}${path === "/" ? "" : path}`;
 const pages = [
   ["/", "Automatizza | Automatización de procesos e IA para empresas"],
   ["/contacto", "Contacto | Automatizza"],
-  ["/automatizacion-de-procesos", "Automatización de procesos para empresas | Automatizza"],
+  ["/servicios/automatizacion-de-procesos", "Automatización de procesos para empresas | Automatizza"],
   ["/proyectos/silos-spain", "Silos Spain | CRM y gestión comercial a medida | Automatizza"],
   ["/proyectos/apc", "APC Europe | App para logística y recogidas | Automatizza"],
   ["/proyectos/la-factory-coworking", "La Factory Coworking | App de reservas de salas | Automatizza"],
@@ -133,7 +133,7 @@ async function verify(environment) {
     documents.set(path, html);
     if (["/", "/en", "/fr", "/pt"].includes(path)) {
       const services = html.match(/<section[^>]*id="servicios"[\s\S]*?<\/section>/)?.[0] ?? "";
-      assert.equal(services.includes('href="/automatizacion-de-procesos"'), path === "/", "only the Spanish homepage links to the Spanish-only service");
+      assert.equal(services.includes('href="/servicios/automatizacion-de-procesos"'), path === "/", "only the Spanish homepage links to the Spanish-only service");
     }
     const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
     assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);
@@ -160,7 +160,7 @@ async function verify(environment) {
       assert.ok(!html.includes("FAQPage"));
     }
     const alternateLinks = [...head.matchAll(/<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"/g)];
-    const spanishService = path === "/automatizacion-de-procesos";
+    const spanishService = path === "/servicios/automatizacion-de-procesos";
     assert.deepEqual(alternateLinks.map(m => m[1]).sort(), (spanishService ? ["es", "x-default"] : ["en", "es", "fr", "pt-PT", "x-default"]).sort(), `hreflang set: ${path}`);
     const group = spanishService ? [path] : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
       : path.includes("/apc") ? ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"]
@@ -177,7 +177,21 @@ async function verify(environment) {
       assert.equal(description, "Conectamos herramientas y automatizamos solicitudes, documentos y seguimientos. Revisamos tu proceso y definimos qué automatizar y qué debe seguir bajo revisión.");
       const main = unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "");
       assert.equal(count(main, /<form\b/g), 0, "no duplicated contact form");
-      assert.ok(main.includes("Menos copiar y pegar. Menos pendientes entre herramientas."));
+      assert.ok(!main.includes("Menos copiar y pegar. Menos pendientes entre herramientas."));
+      assert.ok(main.includes("SERVICIOS / AUTOMATIZACIÓN"));
+      assert.ok(main.includes('href="/#servicios"'));
+      const sectionOrder = ["automation-title", "manual-work-title", "silos-example-title", "approach-title", "human-review-title", "service-faq-title", "service-contact-title"];
+      const positions = sectionOrder.map(id => main.indexOf(`aria-labelledby="${id}"`));
+      assert.ok(positions.every(position => position >= 0));
+      assert.deepEqual(positions, [...positions].sort((a,b) => a-b), "approved service section order");
+      const flow = main.match(/<ol[^>]*aria-label="Ejemplo ilustrativo de automatización"[\s\S]*?<\/ol>/)?.[0] ?? "";
+      assert.equal(count(flow, /<li\b/g), 4);
+      for (const label of ["Solicitud recibida", "Registro en el CRM", "Responsable asignado", "Revisión del equipo"]) assert.ok(flow.includes(label), `accessible flow label in initial HTML: ${label}`);
+      assert.ok(main.includes("Qué automatizamos y qué revisa tu equipo"));
+      const review = main.match(/<section[^>]*aria-labelledby="human-review-title"[\s\S]*?<\/section>/)?.[0] ?? "";
+      assert.equal(count(review, /<p\b/g), 2);
+      assert.ok(main.includes('alt="Equipo de Silos Spain en la fábrica."'));
+      assert.ok(main.includes("silos-spain-team.jpg"));
       assert.ok(main.includes("acordamos cómo gestionar el mantenimiento y los cambios posteriores."));
       for (const example of ["Solicitudes y seguimiento comercial", "Documentos y presupuestos", "Conexión entre herramientas", "Avisos y tareas pendientes"]) assert.ok(main.includes(example), `example in initial HTML: ${example}`);
       const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
@@ -216,7 +230,7 @@ async function verify(environment) {
     documents.set(path, html);
     checks++;
   }
-  for (const path of ["/no-existe-seo-audit", "/proyectos/no-existe-seo-audit", "/es", "/es/contacto", "/en/contacto", "/fr/contacto", "/pt/contact", "/en/politica-de-privacidad", "/en/services", "/es/automatizacion-de-procesos", "/en/automatizacion-de-procesos", "/fr/automatizacion-de-procesos", "/pt/automatizacion-de-procesos"]) {
+  for (const path of ["/no-existe-seo-audit", "/proyectos/no-existe-seo-audit", "/es", "/es/contacto", "/en/contacto", "/fr/contacto", "/pt/contact", "/en/politica-de-privacidad", "/en/services", "/es/servicios/automatizacion-de-procesos", "/en/servicios/automatizacion-de-procesos", "/fr/servicios/automatizacion-de-procesos", "/pt/servicios/automatizacion-de-procesos", "/servicios", "/automatizacion-de-procesos"]) {
     const { response, html } = await get(path);
     assert.equal(response.status, 404, path);
     assert.ok(html.includes('content="noindex'), path);
@@ -238,9 +252,9 @@ async function verify(environment) {
   assert.equal(redirect.response.status, 308);
   assert.equal(redirect.response.headers.get("location"), "/#proyectos");
   checks++;
-  const serviceSlash = await get("/automatizacion-de-procesos/");
+  const serviceSlash = await get("/servicios/automatizacion-de-procesos/");
   assert.equal(serviceSlash.response.status, 308);
-  assert.equal(serviceSlash.response.headers.get("location"), "/automatizacion-de-procesos");
+  assert.equal(serviceSlash.response.headers.get("location"), "/servicios/automatizacion-de-procesos");
   checks++;
   const robots = await get("/robots.txt");
   assert.equal(robots.response.status, 200);

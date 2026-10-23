@@ -31,7 +31,7 @@ export function ServicesSection() {
             <li className={styles.service} key={service.number} data-reveal>
               <span className={styles.number}>{service.number}</span>
               <h3><span>{service.number === "01" && locale === "es"
-                ? <Link className={styles.serviceLink} href="/automatizacion-de-procesos">{t(service.title)}</Link>
+                ? <Link className={styles.serviceLink} href="/servicios/automatizacion-de-procesos">{t(service.title)}</Link>
                 : t(service.title)}</span></h3>
               <p>{t(service.text)}</p>
             </li>

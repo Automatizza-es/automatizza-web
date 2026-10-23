@@ -19,9 +19,9 @@ test("published commercial routes resolve directly to their own language",()=>{
  for(const path of ["/es","/en/contacto","/fr/contacto","/pt/contact","/en/services","/en/unknown","/fr/contact?email=private@example.test"])assert.equal(resolveRoute(path),null);
 });
 test("the first service has only its complete Spanish equivalent",()=>{
- assert.deepEqual(equivalents("process-automation"),{es:"/automatizacion-de-procesos"});
- for(const locale of ["en","fr","pt"])assert.equal(resolveRoute(`/${locale}/automatizacion-de-procesos`),null);
- assert.equal(resolveRoute("/es/automatizacion-de-procesos"),null);
+ assert.deepEqual(equivalents("process-automation"),{es:"/servicios/automatizacion-de-procesos"});
+ for(const locale of ["en","fr","pt"])assert.equal(resolveRoute(`/${locale}/servicios/automatizacion-de-procesos`),null);
+ assert.equal(resolveRoute("/es/servicios/automatizacion-de-procesos"),null);
 });
 test("internal links preserve the selected language and the same project",()=>{
  for(const [locale,project,contact] of [["en","/en/projects/apc","/en/contact"],["fr","/fr/projets/apc","/fr/contact"],["pt","/pt/projetos/apc","/pt/contacto"]]){

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -32,22 +33,34 @@ export default function ProcessAutomationPage() {
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="automation-title">
         <Container className="editorial-container">
-          <p className="section-eyebrow">AUTOMATIZACIÓN DE PROCESOS</p>
+          <Link className={styles.back} href="/#servicios"><span aria-hidden="true">←</span> Todos los servicios</Link>
+          <p className={styles.eyebrow}>SERVICIOS / AUTOMATIZACIÓN</p>
           <div className={styles.heroGrid}>
             <h1 id="automation-title">Automatización de procesos para empresas</h1>
             <div className={styles.copy}>
-              <p className={styles.lead}>Menos copiar y pegar. Menos pendientes entre herramientas.</p>
               <p>Conectamos aplicaciones y automatizamos tareas repetitivas para que la información llegue donde hace falta, sin tener que trasladarla a mano cada vez.</p>
               <p>Empezamos por entender cómo trabaja tu equipo y qué proceso necesita mejorar.</p>
               <Link className={`button button-primary ${styles.button}`} href="/contacto">Hablemos de tu proceso <span aria-hidden="true">→</span></Link>
             </div>
           </div>
+          <ol className={styles.flow} aria-label="Ejemplo ilustrativo de automatización" role="list">
+            {[
+              ["Solicitud recibida", "M4 5h16v14H4z M4 6l8 6 8-6"],
+              ["Registro en el CRM", "M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3"],
+              ["Responsable asignado", "M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0 M5 20v-2a7 7 0 0 1 14 0v2"],
+              ["Revisión del equipo", "M8 4H5v16h14V4h-3 M9 3h6v4H9z M8 13l3 3 5-5"],
+            ].map(([label, path], i) => <li key={label}>
+              <svg className={styles.flowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>
+              <span>{label}</span>
+              {i < 3 && <span className={styles.flowArrow} aria-hidden="true">→</span>}
+            </li>)}
+          </ol>
         </Container>
       </section>
 
       <section className={styles.section} aria-labelledby="manual-work-title">
         <Container className="editorial-container">
-          <div className={styles.split}>
+          <div className={styles.sectionIntro}>
             <h2 id="manual-work-title">¿Dónde se puede reducir el trabajo manual?</h2>
             <p>Las oportunidades suelen aparecer cuando alguien tiene que registrar los mismos datos varias veces, preparar documentos con información que ya existe o estar pendiente de avisar a otra persona para que el trabajo continúe.</p>
           </div>
@@ -57,14 +70,15 @@ export default function ProcessAutomationPage() {
         </Container>
       </section>
 
-      <section className={`${styles.section} ${styles.soft}`} aria-labelledby="human-review-title">
-        <Container className={`editorial-container ${styles.split}`}>
-          <h2 id="human-review-title">Automatizar también es decidir qué debe seguir revisando una persona</h2>
+      <section className={styles.case} aria-labelledby="silos-example-title">
+        <Container className={`editorial-container ${styles.caseInner}`}>
           <div className={styles.copy}>
-            <p>Antes de construir una solución, revisamos cuánto se repite la tarea, qué tiempo consume y qué excepciones aparecen.</p>
-            <p>Si el proceso cambia constantemente o requiere decisiones difíciles de definir, puede convenir simplificarlo primero o automatizar solo una parte.</p>
-            <p>Dejamos claros los puntos de revisión, qué ocurre cuando falta un dato y cómo debe actuar el sistema si algo falla.</p>
+            <h2 id="silos-example-title">Un ejemplo: la gestión comercial de Silos Spain</h2>
+            <p>En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.</p>
+            <p>El CRM sirve como núcleo para conectar progresivamente procesos comerciales y administrativos. El equipo puede consultar la información y continuar el trabajo sin depender de herramientas aisladas.</p>
+            <Link className={styles.textLink} href="/proyectos/silos-spain">Ver el proyecto de Silos Spain <span aria-hidden="true">→</span></Link>
           </div>
+          <Image className={styles.casePhoto} src="/images/services/silos-spain-team.jpg" alt="Equipo de Silos Spain en la fábrica." width={598} height={454} sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 900px) 300px, 360px" />
         </Container>
       </section>
 
@@ -80,23 +94,20 @@ export default function ProcessAutomationPage() {
         </Container>
       </section>
 
-      <section className={styles.case} aria-labelledby="silos-example-title">
-        <Container className={`editorial-container ${styles.caseInner}`}>
-          <div className={styles.split}>
-            <h2 id="silos-example-title">Un ejemplo: la gestión comercial de Silos Spain</h2>
-            <div className={styles.copy}>
-              <p>En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.</p>
-              <p>El CRM sirve como núcleo para conectar progresivamente procesos comerciales y administrativos. El equipo puede consultar la información y continuar el trabajo sin depender de herramientas aisladas.</p>
-              <Link className={styles.textLink} href="/proyectos/silos-spain">Ver el proyecto de Silos Spain <span aria-hidden="true">→</span></Link>
-            </div>
+      <section className={`${styles.section} ${styles.soft}`} aria-labelledby="human-review-title">
+        <Container className={`editorial-container ${styles.review}`}>
+          <h2 id="human-review-title">Qué automatizamos y qué revisa tu equipo</h2>
+          <div className={styles.copy}>
+            <p>Antes de construir una solución, revisamos cuánto se repite la tarea, qué tiempo consume y qué excepciones aparecen. Si el proceso cambia constantemente o requiere decisiones difíciles de definir, puede convenir simplificarlo primero o automatizar solo una parte.</p>
+            <p>Dejamos claros los puntos de revisión, qué ocurre cuando falta un dato y cómo debe actuar el sistema si algo falla.</p>
           </div>
         </Container>
       </section>
 
-      <section className={`${styles.section} ${styles.soft}`} aria-labelledby="service-faq-title">
+      <section className={styles.section} aria-labelledby="service-faq-title">
         <Container className="editorial-container">
           <h2 id="service-faq-title">Antes de empezar</h2>
-          <div className={faqStyles.questions}>
+          <div className={`${faqStyles.questions} ${styles.questions}`}>
             {questions.map(([question, answer]) => <details className={faqStyles.item} key={question}>
               <summary className={faqStyles.summary}><h3><span>{question}</span><span className={faqStyles.icon} aria-hidden="true" /></h3></summary>
               <p className={faqStyles.answer}>{answer}</p>
