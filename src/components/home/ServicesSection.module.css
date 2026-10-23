@@ -45,6 +45,10 @@
 
 .service h3 > span:first-child { transition: transform 240ms ease; }
 
+.serviceLink { text-decoration: underline; text-decoration-color: #b9d8e8; text-underline-offset: .25em; text-decoration-thickness: 1px; }
+.serviceLink:hover { text-decoration-color: var(--color-cyan); }
+.serviceLink:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 5px; border-radius: 2px; }
+
 .service p {
   max-width: 290px;
   margin: .9rem 0 0;

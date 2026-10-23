@@ -173,6 +173,27 @@ test("the contact route keeps one page view per visit and one confirmed conversi
   b.deny();
   assert.equal(trackContactResult({ ...success, submissionId: "after-withdrawal" }), false);
 });
+test("the Spanish service respects consent and does not turn visits or contact navigation into leads", () => {
+  const path = "/automatizacion-de-procesos";
+  const state = browser("denied");
+  window.location.pathname = path;
+  assert.equal(trackPage(ids, path, "denied"), false);
+  assert.equal(state.scripts.size, 0);
+  assert.equal(events().length, 0);
+  state.grant();
+  assert.equal(trackPage(ids, path, "granted"), true);
+  assert.equal(trackPage(ids, path, "granted"), false);
+  assert.deepEqual(events().map(e => [e.event, e.page_location, e.page_title]), [["automatizza_page_view", `https://automatizza.es${path}`, "Automatización de procesos para empresas | Automatizza"]]);
+  window.location.pathname = "/contacto";
+  assert.equal(trackPage(ids, "/contacto", "granted"), true);
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 0);
+  assert.equal(state.scripts.size, 1);
+  assert.equal(trackContactResult({ responseOk: false, result: { ok: false }, submissionId: "service-error", testMode: false }), false);
+  assert.equal(trackContactResult({ ...success, submissionId: "service-confirmed" }), true);
+  assert.equal(trackContactResult({ ...success, submissionId: "service-confirmed" }), false);
+  assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 1);
+  assert.ok(commands().filter(c => c[0] === "consent").every(c => c[2].ad_storage === "denied" && c[2].ad_user_data === "denied" && c[2].ad_personalization === "denied"));
+});
 test("the legacy home contact anchor does not record an intermediate home visit", () => {
   const b = browser();
   window.location.hash = "#contacto";

@@ -14,6 +14,7 @@ export const isLocale = (value: string): value is Locale => (locales as readonly
 export const routes = {
   home: { es: "/", en: "/en", fr: "/fr", pt: "/pt" },
   contact: { es: "/contacto", en: "/en/contact", fr: "/fr/contact", pt: "/pt/contacto" },
+  "process-automation": { es: "/automatizacion-de-procesos" },
   "silos-spain": { es: "/proyectos/silos-spain", en: "/en/projects/silos-spain", fr: "/fr/projets/silos-spain", pt: "/pt/projetos/silos-spain" },
   apc: { es: "/proyectos/apc", en: "/en/projects/apc", fr: "/fr/projets/apc", pt: "/pt/projetos/apc" },
   "la-factory-coworking": { es: "/proyectos/la-factory-coworking", en: "/en/projects/la-factory-coworking", fr: "/fr/projets/la-factory-coworking", pt: "/pt/projetos/la-factory-coworking" },
@@ -22,7 +23,7 @@ export const routes = {
   legal: { es: "/aviso-legal", en: "/en/legal-notice", fr: "/fr/mentions-legales", pt: "/pt/aviso-legal" },
 } satisfies Record<string, Partial<Record<Locale, string>>>;
 export type RouteId = keyof typeof routes;
-export const indexableRoutes: RouteId[] = ["home", "contact", "silos-spain", "apc", "la-factory-coworking"];
+export const indexableRoutes: RouteId[] = ["home", "contact", "process-automation", "silos-spain", "apc", "la-factory-coworking"];
 export const legalRoutes = ["privacy", "cookies", "legal"] as const;
 export const equivalents = (id: RouteId): Partial<Record<Locale, string>> => routes[id];
 export function resolveRoute(path: string): { id: RouteId; locale: Locale } | null {

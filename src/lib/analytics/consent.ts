@@ -22,6 +22,7 @@ export function readConsent(raw: string | null, now = Date.now()): { analytics: 
 const pageTitles: Record<string, string> = {
   "/": "Automatizza", "/proyectos": "Proyectos | Automatizza",
   "/contacto": "Contacto | Automatizza",
+  "/automatizacion-de-procesos": "Automatización de procesos para empresas | Automatizza",
   "/proyectos/apc": "APC Europe | Automatizza", "/proyectos/silos-spain": "Silos Spain | Automatizza",
   "/proyectos/la-factory-coworking": "La Factory Coworking | Automatizza",
   "/aviso-legal": "Aviso legal | Automatizza", "/politica-de-privacidad": "Política de privacidad | Automatizza",

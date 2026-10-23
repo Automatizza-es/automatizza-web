@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/components/i18n/LocaleProvider";
+import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "./SectionHeading";
@@ -14,7 +15,7 @@ const services = [
 ];
 
 export function ServicesSection() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   return (
     <section className={`whatwedo-section ${styles.section}`} id="servicios" aria-labelledby="services-title">
       <Container className="editorial-container">
@@ -29,7 +30,9 @@ export function ServicesSection() {
           {services.map((service) => (
             <li className={styles.service} key={service.number} data-reveal>
               <span className={styles.number}>{service.number}</span>
-              <h3><span>{t(service.title)}</span></h3>
+              <h3><span>{service.number === "01" && locale === "es"
+                ? <Link className={styles.serviceLink} href="/automatizacion-de-procesos">{t(service.title)}</Link>
+                : t(service.title)}</span></h3>
               <p>{t(service.text)}</p>
             </li>
           ))}

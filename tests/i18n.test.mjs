@@ -11,12 +11,17 @@ const {legalTranslator}=await compiled("lib/i18n/legal.js");
 const {default:legalModule}=await compiled("lib/i18n/legalMessages.js");
 const legalMessages=legalModule.default ?? legalModule;
 
-test("twenty unique commercial routes resolve directly to their own language",()=>{
+test("published commercial routes resolve directly to their own language",()=>{
  const all=[];
- for(const id of indexableRoutes) for(const locale of locales){const path=equivalents(id)[locale];assert.ok(path);all.push(path);assert.deepEqual(resolveRoute(path),{id,locale});}
- assert.equal(all.length,20);assert.equal(new Set(all).size,20);
+ for(const id of indexableRoutes) for(const [locale,path] of Object.entries(equivalents(id))){assert.ok(path);all.push(path);assert.deepEqual(resolveRoute(path),{id,locale});}
+ assert.equal(all.length,21);assert.equal(new Set(all).size,21);
  assert.equal(equivalents("home").es,"/");assert.equal(languageInfo.pt.tag,"pt-PT");
  for(const path of ["/es","/en/contacto","/fr/contacto","/pt/contact","/en/services","/en/unknown","/fr/contact?email=private@example.test"])assert.equal(resolveRoute(path),null);
+});
+test("the first service has only its complete Spanish equivalent",()=>{
+ assert.deepEqual(equivalents("process-automation"),{es:"/automatizacion-de-procesos"});
+ for(const locale of ["en","fr","pt"])assert.equal(resolveRoute(`/${locale}/automatizacion-de-procesos`),null);
+ assert.equal(resolveRoute("/es/automatizacion-de-procesos"),null);
 });
 test("internal links preserve the selected language and the same project",()=>{
  for(const [locale,project,contact] of [["en","/en/projects/apc","/en/contact"],["fr","/fr/projets/apc","/fr/contact"],["pt","/pt/projetos/apc","/pt/contacto"]]){

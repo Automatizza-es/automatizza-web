@@ -18,6 +18,7 @@ const pageUrl = (path) => `${canonical}${path === "/" ? "" : path}`;
 const pages = [
   ["/", "Automatizza | Automatización de procesos e IA para empresas"],
   ["/contacto", "Contacto | Automatizza"],
+  ["/automatizacion-de-procesos", "Automatización de procesos para empresas | Automatizza"],
   ["/proyectos/silos-spain", "Silos Spain | CRM y gestión comercial a medida | Automatizza"],
   ["/proyectos/apc", "APC Europe | App para logística y recogidas | Automatizza"],
   ["/proyectos/la-factory-coworking", "La Factory Coworking | App de reservas de salas | Automatizza"],
@@ -130,6 +131,10 @@ async function verify(environment) {
     const headings = [...html.matchAll(/<(h[12])\b[^>]*>([\s\S]*?)<\/\1>/g)].map(([, level, text]) => [level, unescape(text.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim())]);
     assert.equal(headings.filter(([level]) => level === "h1").length, 1, path);
     documents.set(path, html);
+    if (["/", "/en", "/fr", "/pt"].includes(path)) {
+      const services = html.match(/<section[^>]*id="servicios"[\s\S]*?<\/section>/)?.[0] ?? "";
+      assert.equal(services.includes('href="/automatizacion-de-procesos"'), path === "/", "only the Spanish homepage links to the Spanish-only service");
+    }
     const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
     assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);
     const jsonLd = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
@@ -155,16 +160,36 @@ async function verify(environment) {
       assert.ok(!html.includes("FAQPage"));
     }
     const alternateLinks = [...head.matchAll(/<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"/g)];
-    assert.deepEqual(alternateLinks.map(m => m[1]).sort(), ["en", "es", "fr", "pt-PT", "x-default"].sort(), `hreflang set: ${path}`);
-    const group = path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
+    const spanishService = path === "/automatizacion-de-procesos";
+    assert.deepEqual(alternateLinks.map(m => m[1]).sort(), (spanishService ? ["es", "x-default"] : ["en", "es", "fr", "pt-PT", "x-default"]).sort(), `hreflang set: ${path}`);
+    const group = spanishService ? [path] : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
       : path.includes("/apc") ? ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"]
       : path.includes("la-factory-coworking") ? ["/proyectos/la-factory-coworking","/en/projects/la-factory-coworking","/fr/projets/la-factory-coworking","/pt/projetos/la-factory-coworking"]
       : /contact/.test(path) ? ["/contacto","/en/contact","/fr/contact","/pt/contacto"] : ["/","/en","/fr","/pt"];
-    const tags = ["es","en","fr","pt-PT","x-default"];
-    for (let i=0;i<tags.length;i++) assert.equal(alternateLinks.find(m=>m[1]===tags[i])?.[2],pageUrl(group[i===4?0:i]), `reciprocal equivalent: ${path} ${tags[i]}`);
+    const tags = spanishService ? ["es","x-default"] : ["es","en","fr","pt-PT","x-default"];
+    for (let i=0;i<tags.length;i++) assert.equal(alternateLinks.find(m=>m[1]===tags[i])?.[2],pageUrl(group[tags[i]==="x-default"?0:i]), `reciprocal equivalent: ${path} ${tags[i]}`);
     const selector = html.match(/<details[^>]*class="[^"]*LanguageSelector[\s\S]*?<\/details>/)?.[0];
     assert.ok(selector, `language selector: ${path}`);
     for (const target of group) assert.ok(selector.includes(`href="${target}"`), `real equivalent link: ${path} → ${target}`);
+    if (spanishService) {
+      assert.equal(count(selector, /<a\b/g), 1, "only available service language is shown");
+      assert.ok(!selector.includes("English") && !selector.includes("Français") && !selector.includes("Português"));
+      assert.equal(description, "Conectamos herramientas y automatizamos solicitudes, documentos y seguimientos. Revisamos tu proceso y definimos qué automatizar y qué debe seguir bajo revisión.");
+      const main = unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "");
+      assert.equal(count(main, /<form\b/g), 0, "no duplicated contact form");
+      assert.ok(main.includes("Menos copiar y pegar. Menos pendientes entre herramientas."));
+      assert.ok(main.includes("acordamos cómo gestionar el mantenimiento y los cambios posteriores."));
+      for (const example of ["Solicitudes y seguimiento comercial", "Documentos y presupuestos", "Conexión entre herramientas", "Avisos y tareas pendientes"]) assert.ok(main.includes(example), `example in initial HTML: ${example}`);
+      const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
+      assert.equal(count(faq, /<details\b/g), 4);
+      assert.equal(count(faq, /<details\b[^>]*\bopen(?:[\s=>])/g), 0, "answers start closed");
+      assert.equal(count(faq, /<summary\b/g), 4);
+      assert.equal(count(faq, /<p\b/g), 4, "all answers are server-rendered");
+      for (const answer of ["Siempre que permitan una conexión adecuada", "Muchas tareas se resuelven conectando aplicaciones", "costes recurrentes de herramientas, infraestructura y mantenimiento", "sin confundir una estimación con un ahorro demostrado"]) assert.ok(faq.includes(answer), `answer in initial HTML: ${answer}`);
+      assert.ok(main.includes('href="/proyectos/silos-spain"'));
+      assert.equal(count(main, /href="\/contacto"/g), 2, "both service CTAs use the existing contact page");
+      assert.ok(!html.includes("FAQPage"));
+    }
 
     results[environment] ??= [];
     results[environment].push({ path, title, description, canonical: pageUrl(path), xRobotsTag: response.headers.get("x-robots-tag"), headings });
@@ -191,7 +216,7 @@ async function verify(environment) {
     documents.set(path, html);
     checks++;
   }
-  for (const path of ["/no-existe-seo-audit", "/proyectos/no-existe-seo-audit", "/es", "/es/contacto", "/en/contacto", "/fr/contacto", "/pt/contact", "/en/politica-de-privacidad", "/en/services"]) {
+  for (const path of ["/no-existe-seo-audit", "/proyectos/no-existe-seo-audit", "/es", "/es/contacto", "/en/contacto", "/fr/contacto", "/pt/contact", "/en/politica-de-privacidad", "/en/services", "/es/automatizacion-de-procesos", "/en/automatizacion-de-procesos", "/fr/automatizacion-de-procesos", "/pt/automatizacion-de-procesos"]) {
     const { response, html } = await get(path);
     assert.equal(response.status, 404, path);
     assert.ok(html.includes('content="noindex'), path);
@@ -213,6 +238,10 @@ async function verify(environment) {
   assert.equal(redirect.response.status, 308);
   assert.equal(redirect.response.headers.get("location"), "/#proyectos");
   checks++;
+  const serviceSlash = await get("/automatizacion-de-procesos/");
+  assert.equal(serviceSlash.response.status, 308);
+  assert.equal(serviceSlash.response.headers.get("location"), "/automatizacion-de-procesos");
+  checks++;
   const robots = await get("/robots.txt");
   assert.equal(robots.response.status, 200);
   assert.match(robots.response.headers.get("content-type"), /text\/plain/);
@@ -224,7 +253,7 @@ async function verify(environment) {
   assert.match(sitemap.response.headers.get("content-type"), /(?:application|text)\/xml/);
   const urls = [...sitemap.html.matchAll(/<loc>(.*?)<\/loc>/g)].map(([, url]) => url);
   assert.deepEqual(urls.sort(), production ? pages.map(([path]) => pageUrl(path)).sort() : []);
-  assert.equal(count(sitemap.html, /<xhtml:link\b/g), production ? 100 : 0, "multilingual sitemap alternatives");
+  assert.equal(count(sitemap.html, /<xhtml:link\b/g), production ? 102 : 0, "only published multilingual sitemap alternatives");
   checks += 2;
   for (const host of ["www.automatizza.es", "automatizza-web.vercel.app"]) {
     const { response } = await get("/contacto?utm_source=seo-test", host);
