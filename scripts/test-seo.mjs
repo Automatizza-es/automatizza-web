@@ -111,6 +111,13 @@ async function verify(environment) {
   for (const [path, title] of pages) {
     const { response, html } = await get(path);
     assert.equal(response.status, 200, path);
+    const csp = response.headers.get("content-security-policy-report-only") ?? "";
+    assert.ok(csp.startsWith("default-src 'self';"), `Report-Only CSP: ${path}`);
+    assert.equal(response.headers.get("content-security-policy"), null, "do not enforce before GTM compatibility review");
+    assert.ok(!csp.includes("unsafe-eval"), "production builds must never allow eval");
+    assert.ok(csp.includes("report-uri /api/csp-report"));
+    assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+    assert.equal(response.headers.get("referrer-policy"), "strict-origin-when-cross-origin");
     assert.equal(unescape(html.match(/<title>(.*?)<\/title>/s)?.[1] ?? ""), title, path);
     const description = unescape(html.match(/<meta name="description" content="([^"]*)"/s)?.[1] ?? "");
     assert.ok(description.length > 70 && description.length < 170, `specific description: ${path}`);
@@ -173,6 +180,7 @@ async function verify(environment) {
   for (const [path, title, lang] of legal) {
     const { response, html } = await get(path);
     assert.equal(response.status, 200, path);
+    assert.ok(response.headers.get("content-security-policy-report-only"));
     assert.ok(html.includes('<meta name="robots" content="noindex, nofollow"'), path);
     assert.ok(html.includes(`<link rel="canonical" href="${canonical}${path}"`), path);
     assert.ok(html.includes(`<html lang="${lang}"`), path);

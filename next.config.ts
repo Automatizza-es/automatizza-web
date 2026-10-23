@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { networkInterfaces } from "node:os";
 import { isProductionDeployment, siteOrigin } from "./src/lib/seo";
+import { securityHeaders } from "./src/lib/security-policy";
 
 const localDevHosts = Object.values(networkInterfaces()).flatMap((addresses) =>
   (addresses ?? []).filter((address) => address.family === "IPv4" && !address.internal).map((address) => address.address),
@@ -12,6 +13,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1", ...localDevHosts],
   async headers() {
     return [{
+      source: "/:path*",
+      headers: securityHeaders(process.env.NODE_ENV === "development"),
+    }, {
       source: "/:path*",
       // Generated production URLs must also stay out of the index. The real
       // domain remains indexable; previews (including custom hosts) never are.
