@@ -107,6 +107,7 @@ async function verify(environment) {
   const production = environment === "production";
   const descriptions = new Set();
   const documents = new Map();
+  let homepageIdentity;
   for (const [path, title] of pages) {
     const { response, html } = await get(path);
     assert.equal(response.status, 200, path);
@@ -131,6 +132,17 @@ async function verify(environment) {
     documents.set(path, html);
     const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
     assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);
+    const jsonLd = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
+    if (["/", "/en", "/fr", "/pt"].includes(path)) {
+      assert.equal(jsonLd.length, 1, `single initial JSON-LD block: ${path}`);
+      const identity = JSON.parse(jsonLd[0][1]);
+      assert.equal(identity["@context"], "https://schema.org");
+      assert.deepEqual(identity["@graph"].map(node => node["@type"]).sort(), ["Brand", "ImageObject", "Organization", "WebSite"]);
+      assert.equal(new Set(identity["@graph"].map(node => node["@id"])).size, 4);
+      if (!homepageIdentity) homepageIdentity = identity;
+      else assert.deepEqual(identity, homepageIdentity, `same entities across language homepages: ${path}`);
+      for (const node of identity["@graph"]) assert.ok(node["@id"].startsWith(`${canonical}/#`), "never identify entities by the preview host");
+    } else assert.equal(jsonLd.length, 0, `no redundant homepage identity block on inner pages: ${path}`);
     if (["/en", "/fr", "/pt"].includes(path)) {
       const firstQuestion = { "/en": "Which processes can an SME automate?", "/fr": "Quels processus d'une PME peut-on automatiser ?", "/pt": "Que processos de uma PME podem ser automatizados?" }[path];
       const faq = unescape(html.match(/<section[^>]*aria-labelledby="faq-title"[\s\S]*?<\/section>/)?.[0] ?? "");
@@ -167,6 +179,7 @@ async function verify(environment) {
     assert.ok(head.includes('<meta name="description"'),path);
     assert.equal(count(head, /<link rel="alternate" hrefLang=/g),0,"no hreflang for noindex legal pages");
     const main=unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0]??"");
+    assert.ok(!html.includes('type="application/ld+json"'), `legal pages do not repeat the homepage graph: ${path}`);
     assert.ok(main.includes(title),`translated H1 in initial HTML: ${path}`);
     assert.ok(main.includes("20") && main.includes("2026"),path);
     if (!path.includes("cookies") && !path.includes("cookie-policy")) for(const value of ["Grain Store Technology, S.L.","B56885676","CO-45659","2946","info@automatizza.es"]) assert.ok(main.includes(value),`${path} identity: ${value}`);

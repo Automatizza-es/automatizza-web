@@ -10,6 +10,7 @@ import { ProjectsSection } from "@/components/home/ProjectsSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { Header } from "@/components/layout/Header";
 import { LegacyContactRedirect } from "@/components/contact/LegacyContactRedirect";
+import { SiteIdentityStructuredData } from "@/components/seo/SiteIdentityStructuredData";
 
 // Cambiar a true para recuperar la sección, conservada con sus estilos y animaciones.
 const showProcessSection = false;
@@ -17,6 +18,7 @@ const showProcessSection = false;
 export default function Home() {
   return (
     <>
+      <SiteIdentityStructuredData />
       <LegacyContactRedirect />
       <EditorialMotion />
       <Header redesign />

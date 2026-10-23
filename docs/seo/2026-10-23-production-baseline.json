@@ -1,0 +1,914 @@
+{
+  "reviewDate": "2026-10-23",
+  "productionCommit": "b13b8e39b4a7f8802d691de454cf6aa4017f593f",
+  "readOnly": true,
+  "commercialPages": [
+    {
+      "path": "/",
+      "status": 200,
+      "lang": "es",
+      "title": "Automatizza | Automatización de procesos e IA para empresas",
+      "description": "Automatizamos tareas repetitivas, conectamos herramientas y desarrollamos soluciones a medida para que tu empresa trabaje mejor.",
+      "canonical": "https://automatizza.es",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es"
+        }
+      ]
+    },
+    {
+      "path": "/proyectos/apc",
+      "status": 200,
+      "lang": "es",
+      "title": "APC Europe | App para logística y recogidas | Automatizza",
+      "description": "Aplicación web para APC Europe que permite registrar recogidas y viajes desde el móvil y centralizar la información de sus operaciones de transporte.",
+      "canonical": "https://automatizza.es/proyectos/apc",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/apc"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/apc"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/apc"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/apc"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/apc"
+        }
+      ]
+    },
+    {
+      "path": "/contacto",
+      "status": 200,
+      "lang": "es",
+      "title": "Contacto | Automatizza",
+      "description": "Cuéntanos cómo trabaja tu empresa y qué te gustaría mejorar. En Automatizza te ayudamos a encontrar una solución práctica y adaptada a tu negocio.",
+      "canonical": "https://automatizza.es/contacto",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/contacto"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/contact"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/contact"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/contacto"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/contacto"
+        }
+      ]
+    },
+    {
+      "path": "/proyectos/silos-spain",
+      "status": 200,
+      "lang": "es",
+      "title": "Silos Spain | CRM y gestión comercial a medida | Automatizza",
+      "description": "Una plataforma a medida para centralizar solicitudes, oportunidades y presupuestos de Silos Spain, conectando su gestión comercial y reduciendo tareas manuales.",
+      "canonical": "https://automatizza.es/proyectos/silos-spain",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/silos-spain"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/silos-spain"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/silos-spain"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        }
+      ]
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "lang": "en",
+      "title": "Automatizza | Process automation and AI for businesses",
+      "description": "We automate repetitive tasks, connect tools and build bespoke solutions to help your business work better.",
+      "canonical": "https://automatizza.es/en",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es"
+        }
+      ]
+    },
+    {
+      "path": "/pt",
+      "status": 200,
+      "lang": "pt-PT",
+      "title": "Automatizza | Automatização de processos e IA para empresas",
+      "description": "Automatizamos tarefas repetitivas, ligamos ferramentas e desenvolvemos soluções à medida para a sua empresa trabalhar melhor.",
+      "canonical": "https://automatizza.es/pt",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es"
+        }
+      ]
+    },
+    {
+      "path": "/fr",
+      "status": 200,
+      "lang": "fr",
+      "title": "Automatizza | Automatisation des processus et IA pour les entreprises",
+      "description": "Nous automatisons les tâches répétitives, connectons vos outils et développons des solutions sur mesure pour que votre entreprise travaille mieux.",
+      "canonical": "https://automatizza.es/fr",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es"
+        }
+      ]
+    },
+    {
+      "path": "/proyectos/la-factory-coworking",
+      "status": 200,
+      "lang": "es",
+      "title": "La Factory Coworking | App de reservas de salas | Automatizza",
+      "description": "Aplicación web para La Factory Coworking que reúne reservas de salas, usuarios y servicios para simplificar la gestión diaria del espacio.",
+      "canonical": "https://automatizza.es/proyectos/la-factory-coworking",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/la-factory-coworking"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/la-factory-coworking"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/la-factory-coworking"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        }
+      ]
+    },
+    {
+      "path": "/en/contact",
+      "status": 200,
+      "lang": "en",
+      "title": "Contact | Automatizza",
+      "description": "Tell us how your business works and what you'd like to improve. Automatizza helps you find a practical solution tailored to your business.",
+      "canonical": "https://automatizza.es/en/contact",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/contacto"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/contact"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/contact"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/contacto"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/contacto"
+        }
+      ]
+    },
+    {
+      "path": "/pt/contacto",
+      "status": 200,
+      "lang": "pt-PT",
+      "title": "Contacto | Automatizza",
+      "description": "Conte-nos como trabalha a sua empresa e o que gostaria de melhorar. Na Automatizza, ajudamos a encontrar uma solução prática e adaptada ao seu negócio.",
+      "canonical": "https://automatizza.es/pt/contacto",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/contacto"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/contact"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/contact"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/contacto"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/contacto"
+        }
+      ]
+    },
+    {
+      "path": "/fr/contact",
+      "status": 200,
+      "lang": "fr",
+      "title": "Contact | Automatizza",
+      "description": "Expliquez-nous comment travaille votre entreprise et ce que vous aimeriez améliorer. Automatizza vous aide à trouver une solution pratique et adaptée à votre activité.",
+      "canonical": "https://automatizza.es/fr/contact",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/contacto"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/contact"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/contact"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/contacto"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/contacto"
+        }
+      ]
+    },
+    {
+      "path": "/en/projects/silos-spain",
+      "status": 200,
+      "lang": "en",
+      "title": "Silos Spain | Bespoke CRM and sales management | Automatizza",
+      "description": "A bespoke platform that brings Silos Spain's enquiries, opportunities and quotes together, connecting sales management and reducing manual tasks.",
+      "canonical": "https://automatizza.es/en/projects/silos-spain",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/silos-spain"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/silos-spain"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/silos-spain"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        }
+      ]
+    },
+    {
+      "path": "/fr/projets/silos-spain",
+      "status": 200,
+      "lang": "fr",
+      "title": "Silos Spain | CRM et gestion commerciale sur mesure | Automatizza",
+      "description": "Une plateforme sur mesure pour centraliser les demandes, opportunités et devis de Silos Spain, connecter sa gestion commerciale et réduire les tâches manuelles.",
+      "canonical": "https://automatizza.es/fr/projets/silos-spain",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/silos-spain"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/silos-spain"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/silos-spain"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        }
+      ]
+    },
+    {
+      "path": "/fr/projets/apc",
+      "status": 200,
+      "lang": "fr",
+      "title": "APC Europe | Application de logistique et de collecte | Automatizza",
+      "description": "Une application web pour APC Europe qui permet d'enregistrer les collectes et trajets sur mobile et de centraliser les informations de ses opérations de transport.",
+      "canonical": "https://automatizza.es/fr/projets/apc",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/apc"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/apc"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/apc"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/apc"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/apc"
+        }
+      ]
+    },
+    {
+      "path": "/pt/projetos/silos-spain",
+      "status": 200,
+      "lang": "pt-PT",
+      "title": "Silos Spain | CRM e gestão comercial à medida | Automatizza",
+      "description": "Uma plataforma à medida para centralizar pedidos, oportunidades e orçamentos da Silos Spain, ligando a gestão comercial e reduzindo tarefas manuais.",
+      "canonical": "https://automatizza.es/pt/projetos/silos-spain",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/silos-spain"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/silos-spain"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/silos-spain"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/silos-spain"
+        }
+      ]
+    },
+    {
+      "path": "/en/projects/apc",
+      "status": 200,
+      "lang": "en",
+      "title": "APC Europe | Logistics and collections app | Automatizza",
+      "description": "A web application for APC Europe to record collections and trips on mobile and centralise information from its transport operations.",
+      "canonical": "https://automatizza.es/en/projects/apc",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/apc"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/apc"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/apc"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/apc"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/apc"
+        }
+      ]
+    },
+    {
+      "path": "/pt/projetos/apc",
+      "status": 200,
+      "lang": "pt-PT",
+      "title": "APC Europe | Aplicação de logística e recolhas | Automatizza",
+      "description": "Aplicação web para a APC Europe que permite registar recolhas e viagens no telemóvel e centralizar a informação das suas operações de transporte.",
+      "canonical": "https://automatizza.es/pt/projetos/apc",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/apc"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/apc"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/apc"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/apc"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/apc"
+        }
+      ]
+    },
+    {
+      "path": "/en/projects/la-factory-coworking",
+      "status": 200,
+      "lang": "en",
+      "title": "La Factory Coworking | Room booking app | Automatizza",
+      "description": "A web application for La Factory Coworking that brings room bookings, users and services together to simplify daily management of the space.",
+      "canonical": "https://automatizza.es/en/projects/la-factory-coworking",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/la-factory-coworking"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/la-factory-coworking"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/la-factory-coworking"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        }
+      ]
+    },
+    {
+      "path": "/pt/projetos/la-factory-coworking",
+      "status": 200,
+      "lang": "pt-PT",
+      "title": "La Factory Coworking | Aplicação de reservas de salas | Automatizza",
+      "description": "Aplicação web para a La Factory Coworking que reúne reservas de salas, utilizadores e serviços para simplificar a gestão diária do espaço.",
+      "canonical": "https://automatizza.es/pt/projetos/la-factory-coworking",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/la-factory-coworking"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/la-factory-coworking"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/la-factory-coworking"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        }
+      ]
+    },
+    {
+      "path": "/fr/projets/la-factory-coworking",
+      "status": 200,
+      "lang": "fr",
+      "title": "La Factory Coworking | Application de réservation de salles | Automatizza",
+      "description": "Une application web pour La Factory Coworking qui réunit réservations de salles, utilisateurs et services pour simplifier la gestion quotidienne de l'espace.",
+      "canonical": "https://automatizza.es/fr/projets/la-factory-coworking",
+      "alternates": [
+        {
+          "lang": "es",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        },
+        {
+          "lang": "en",
+          "url": "https://automatizza.es/en/projects/la-factory-coworking"
+        },
+        {
+          "lang": "fr",
+          "url": "https://automatizza.es/fr/projets/la-factory-coworking"
+        },
+        {
+          "lang": "pt-PT",
+          "url": "https://automatizza.es/pt/projetos/la-factory-coworking"
+        },
+        {
+          "lang": "x-default",
+          "url": "https://automatizza.es/proyectos/la-factory-coworking"
+        }
+      ]
+    }
+  ],
+  "legalPages": [
+    {
+      "path": "/aviso-legal",
+      "status": 200,
+      "lang": "es",
+      "canonical": "https://automatizza.es/aviso-legal",
+      "noindex": true,
+      "sections": 4
+    },
+    {
+      "path": "/politica-de-privacidad",
+      "status": 200,
+      "lang": "es",
+      "canonical": "https://automatizza.es/politica-de-privacidad",
+      "noindex": true,
+      "sections": 10
+    },
+    {
+      "path": "/politica-de-cookies",
+      "status": 200,
+      "lang": "es",
+      "canonical": "https://automatizza.es/politica-de-cookies",
+      "noindex": true,
+      "sections": 5
+    },
+    {
+      "path": "/en/privacy-policy",
+      "status": 200,
+      "lang": "en",
+      "canonical": "https://automatizza.es/en/privacy-policy",
+      "noindex": true,
+      "sections": 10
+    },
+    {
+      "path": "/en/cookie-policy",
+      "status": 200,
+      "lang": "en",
+      "canonical": "https://automatizza.es/en/cookie-policy",
+      "noindex": true,
+      "sections": 5
+    },
+    {
+      "path": "/en/legal-notice",
+      "status": 200,
+      "lang": "en",
+      "canonical": "https://automatizza.es/en/legal-notice",
+      "noindex": true,
+      "sections": 4
+    },
+    {
+      "path": "/fr/politique-de-confidentialite",
+      "status": 200,
+      "lang": "fr",
+      "canonical": "https://automatizza.es/fr/politique-de-confidentialite",
+      "noindex": true,
+      "sections": 10
+    },
+    {
+      "path": "/fr/politique-de-cookies",
+      "status": 200,
+      "lang": "fr",
+      "canonical": "https://automatizza.es/fr/politique-de-cookies",
+      "noindex": true,
+      "sections": 5
+    },
+    {
+      "path": "/fr/mentions-legales",
+      "status": 200,
+      "lang": "fr",
+      "canonical": "https://automatizza.es/fr/mentions-legales",
+      "noindex": true,
+      "sections": 4
+    },
+    {
+      "path": "/pt/aviso-legal",
+      "status": 200,
+      "lang": "pt-PT",
+      "canonical": "https://automatizza.es/pt/aviso-legal",
+      "noindex": true,
+      "sections": 4
+    },
+    {
+      "path": "/pt/politica-de-privacidade",
+      "status": 200,
+      "lang": "pt-PT",
+      "canonical": "https://automatizza.es/pt/politica-de-privacidade",
+      "noindex": true,
+      "sections": 10
+    },
+    {
+      "path": "/pt/politica-de-cookies",
+      "status": 200,
+      "lang": "pt-PT",
+      "canonical": "https://automatizza.es/pt/politica-de-cookies",
+      "noindex": true,
+      "sections": 5
+    }
+  ],
+  "reciprocalHreflang": true,
+  "sitemapURLs": 20,
+  "sitemapHreflangLinks": 100,
+  "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: https://automatizza.es/sitemap.xml\n",
+  "redirects": [
+    {
+      "host": "www.automatizza.es",
+      "status": 308,
+      "location": "https://automatizza.es/fr/projets/apc?utm_source=language-check"
+    },
+    {
+      "host": "automatizza-web.vercel.app",
+      "status": 308,
+      "location": "https://automatizza.es/fr/projets/apc?utm_source=language-check"
+    }
+  ],
+  "homepages": [
+    {
+      "path": "/",
+      "status": 200,
+      "questionsInInitialHTML": 7,
+      "answersInInitialHTML": 7,
+      "jsonLdBlocks": 0,
+      "deployment": "dpl_GecbZAVrESTQDM672vt3XWLLmZZx",
+      "knownInternalLinks": [
+        "/",
+        "#servicios",
+        "#proyectos",
+        "#sobre-automatizza",
+        "/contacto",
+        "/en",
+        "/fr",
+        "/pt",
+        "/proyectos/silos-spain",
+        "/proyectos/apc",
+        "/proyectos/la-factory-coworking",
+        "/aviso-legal",
+        "/politica-de-privacidad",
+        "/politica-de-cookies"
+      ]
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "questionsInInitialHTML": 7,
+      "answersInInitialHTML": 7,
+      "jsonLdBlocks": 0,
+      "deployment": "dpl_GecbZAVrESTQDM672vt3XWLLmZZx",
+      "knownInternalLinks": [
+        "/en",
+        "#servicios",
+        "#proyectos",
+        "#sobre-automatizza",
+        "/en/contact",
+        "/",
+        "/fr",
+        "/pt",
+        "/en/projects/silos-spain",
+        "/en/projects/apc",
+        "/en/projects/la-factory-coworking",
+        "/en/legal-notice",
+        "/en/privacy-policy",
+        "/en/cookie-policy"
+      ]
+    },
+    {
+      "path": "/fr",
+      "status": 200,
+      "questionsInInitialHTML": 7,
+      "answersInInitialHTML": 7,
+      "jsonLdBlocks": 0,
+      "deployment": "dpl_GecbZAVrESTQDM672vt3XWLLmZZx",
+      "knownInternalLinks": [
+        "/fr",
+        "#servicios",
+        "#proyectos",
+        "#sobre-automatizza",
+        "/fr/contact",
+        "/",
+        "/en",
+        "/pt",
+        "/fr/projets/silos-spain",
+        "/fr/projets/apc",
+        "/fr/projets/la-factory-coworking",
+        "/fr/mentions-legales",
+        "/fr/politique-de-confidentialite",
+        "/fr/politique-de-cookies"
+      ]
+    },
+    {
+      "path": "/pt",
+      "status": 200,
+      "questionsInInitialHTML": 7,
+      "answersInInitialHTML": 7,
+      "jsonLdBlocks": 0,
+      "deployment": "dpl_GecbZAVrESTQDM672vt3XWLLmZZx",
+      "knownInternalLinks": [
+        "/pt",
+        "#servicios",
+        "#proyectos",
+        "#sobre-automatizza",
+        "/pt/contacto",
+        "/",
+        "/en",
+        "/fr",
+        "/pt/projetos/silos-spain",
+        "/pt/projetos/apc",
+        "/pt/projetos/la-factory-coworking",
+        "/pt/aviso-legal",
+        "/pt/politica-de-privacidade",
+        "/pt/politica-de-cookies"
+      ]
+    }
+  ],
+  "userAgentChecks": [
+    {
+      "userAgent": "Googlebot",
+      "path": "/",
+      "status": 200,
+      "xRobotsTag": null,
+      "canonical": "https://automatizza.es",
+      "realCrawlerEvidence": false
+    },
+    {
+      "userAgent": "Googlebot",
+      "path": "/robots.txt",
+      "status": 200,
+      "xRobotsTag": null,
+      "canonical": null,
+      "realCrawlerEvidence": false
+    },
+    {
+      "userAgent": "bingbot",
+      "path": "/",
+      "status": 200,
+      "xRobotsTag": null,
+      "canonical": "https://automatizza.es",
+      "realCrawlerEvidence": false
+    },
+    {
+      "userAgent": "bingbot",
+      "path": "/robots.txt",
+      "status": 200,
+      "xRobotsTag": null,
+      "canonical": null,
+      "realCrawlerEvidence": false
+    },
+    {
+      "userAgent": "OAI-SearchBot",
+      "path": "/",
+      "status": 200,
+      "xRobotsTag": null,
+      "canonical": "https://automatizza.es",
+      "realCrawlerEvidence": false
+    },
+    {
+      "userAgent": "OAI-SearchBot",
+      "path": "/robots.txt",
+      "status": 200,
+      "xRobotsTag": null,
+      "canonical": null,
+      "realCrawlerEvidence": false
+    }
+  ],
+  "disclaimer": "Requests only set a User-Agent header. They do not verify actual Googlebot, Bingbot or OAI-SearchBot access or indexation.",
+  "logo": {
+    "url": "https://automatizza.es/brand/automatizza-logo.png",
+    "status": 200,
+    "type": "image/png",
+    "contentDisposition": "inline; filename=\"automatizza-logo.png\"",
+    "width": 1909,
+    "height": 280
+  },
+  "previewCheck": {
+    "url": "https://automatizza-p2hr42i7o-mjlopezzs-projects.vercel.app/contacto",
+    "commit": "50f88e2dad5a8daaeeee6d3d9825f96b28005c32",
+    "status": 302,
+    "location": "https://vercel.com/sso-api",
+    "xRobotsTag": "noindex",
+    "protectionsChanged": false,
+    "newBranchDeployed": false
+  },
+  "trailingSlashAndSpanishPrefix": [
+    {
+      "path": "/en/",
+      "status": 308,
+      "location": "/en"
+    },
+    {
+      "path": "/fr/",
+      "status": 308,
+      "location": "/fr"
+    },
+    {
+      "path": "/pt/",
+      "status": 308,
+      "location": "/pt"
+    },
+    {
+      "path": "/contacto/",
+      "status": 308,
+      "location": "/contacto"
+    },
+    {
+      "path": "/es",
+      "status": 404,
+      "location": null
+    }
+  ]
+}
