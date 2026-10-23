@@ -9,11 +9,11 @@ const policy = () => Object.fromEntries(contentSecurityPolicy().split("; ").map(
 const report = (body = {}) => ({ "csp-report": { "document-uri": "https://automatizza.es/contacto?email=private@example.test#secret", "effective-directive": "script-src-elem", "blocked-uri": "eval", "script-sample": "private content", "source-file": "https://example.test/private?token=secret", referrer: "https://private.test/", ...body } });
 const request = (body, type = "application/csp-report", headers = {}) => new Request("https://automatizza.es/api/csp-report", { method: "POST", headers: { "content-type": type,...headers }, body: typeof body === "string" ? body : JSON.stringify(body) });
 
-test("initial rollout is Report-Only, with no duplicate effective CSP or provider HSTS", () => {
-  assert.equal(cspHeaderName, "Content-Security-Policy-Report-Only");
+test("optimized builds enforce one CSP without duplicate Report-Only or provider HSTS", () => {
+  assert.equal(cspHeaderName, "Content-Security-Policy");
   const headers = securityHeaders();
   assert.equal(new Set(headers.map(h=>h.key.toLowerCase())).size, headers.length);
-  assert.ok(!headers.some(h=>h.key === "Content-Security-Policy" || h.key === "Strict-Transport-Security"));
+  assert.ok(!headers.some(h=>h.key === "Content-Security-Policy-Report-Only" || h.key === "Strict-Transport-Security"));
   assert.ok(headers.some(h=>h.key === "X-Content-Type-Options" && h.value === "nosniff"));
 });
 test("production forbids eval and script attributes; inline script exception preserves static Next rendering", () => {
@@ -33,6 +33,7 @@ test("resources match self-hosted assets, same-origin contact and non-advertisin
   for (const forbidden of ["doubleclick","googlesyndication","api.resend.com","fonts.googleapis.com","blob:","https:;","http:"]) assert.ok(!contentSecurityPolicy().includes(forbidden), forbidden);
 });
 test("development exceptions cannot leak into production policy", () => {
+  assert.equal(securityHeaders(true)[0].key, "Content-Security-Policy-Report-Only");
   assert.ok(contentSecurityPolicy(true).includes("'unsafe-eval'"));
   assert.ok(contentSecurityPolicy(true).includes("ws://127.0.0.1:*"));
   assert.ok(!contentSecurityPolicy(false).includes("ws:"));
@@ -70,4 +71,16 @@ test("per-instance report rate and batch sizes bound log volume and recover afte
   clock=60_001;
   await post(request(Array.from({length:15},()=>report()),"application/reports+json"));
   assert.equal(logs.length,40);
+});
+
+// Preview tooling must not widen the policy served by automatizza.es.
+test("Vercel/Tag Assistant sources are isolated to preview builds", () => {
+  const production = contentSecurityPolicy(false, false);
+  const preview = contentSecurityPolicy(false, true);
+  for (const source of ["https://vercel.live", "wss://ws-us3.pusher.com", "https://vercel.com", "https://assets.vercel.com", "https://tagmanager.google.com", "https://fonts.googleapis.com", "https://fonts.gstatic.com"]) {
+    assert.ok(!production.includes(source), `never in production: ${source}`);
+    assert.ok(preview.includes(source), `preview compatibility: ${source}`);
+  }
+  assert.ok(!preview.includes("unsafe-eval"));
+  assert.equal(securityHeaders(false, true)[0].key, "Content-Security-Policy");
 });

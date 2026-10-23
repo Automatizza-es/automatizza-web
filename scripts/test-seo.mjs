@@ -111,9 +111,10 @@ async function verify(environment) {
   for (const [path, title] of pages) {
     const { response, html } = await get(path);
     assert.equal(response.status, 200, path);
-    const csp = response.headers.get("content-security-policy-report-only") ?? "";
-    assert.ok(csp.startsWith("default-src 'self';"), `Report-Only CSP: ${path}`);
-    assert.equal(response.headers.get("content-security-policy"), null, "do not enforce before GTM compatibility review");
+    const csp = response.headers.get("content-security-policy") ?? "";
+    assert.ok(csp.startsWith("default-src 'self';"), `effective CSP: ${path}`);
+    assert.equal(response.headers.get("content-security-policy-report-only"), null, "do not send a stale duplicate policy");
+    assert.equal(csp.includes("https://vercel.live"), !production, "toolbar permitted only in preview");
     assert.ok(!csp.includes("unsafe-eval"), "production builds must never allow eval");
     assert.ok(csp.includes("report-uri /api/csp-report"));
     assert.equal(response.headers.get("x-content-type-options"), "nosniff");
@@ -180,7 +181,7 @@ async function verify(environment) {
   for (const [path, title, lang] of legal) {
     const { response, html } = await get(path);
     assert.equal(response.status, 200, path);
-    assert.ok(response.headers.get("content-security-policy-report-only"));
+    assert.ok(response.headers.get("content-security-policy"));
     assert.ok(html.includes('<meta name="robots" content="noindex, nofollow"'), path);
     assert.ok(html.includes(`<link rel="canonical" href="${canonical}${path}"`), path);
     assert.ok(html.includes(`<html lang="${lang}"`), path);

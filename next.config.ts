@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{
       source: "/:path*",
-      headers: securityHeaders(process.env.NODE_ENV === "development"),
+      headers: securityHeaders(process.env.NODE_ENV === "development", process.env.VERCEL_ENV === "preview"),
     }, {
       source: "/:path*",
       // Generated production URLs must also stay out of the index. The real
