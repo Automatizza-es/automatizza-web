@@ -1,0 +1,145 @@
+{
+  "reviewDate": "2026-10-23",
+  "verifiedCommit": "651f74102254cb350c77a174a7df601a58ca8e9e",
+  "productionReadOnly": true,
+  "homepages": [
+    {
+      "path": "/",
+      "status": 200,
+      "lang": "es",
+      "canonical": "https://automatizza.es",
+      "robots": "index, follow",
+      "xRobotsTag": null,
+      "jsonLdBlocks": 1,
+      "identifiers": [
+        "https://automatizza.es/#website",
+        "https://automatizza.es/#organization",
+        "https://automatizza.es/#brand",
+        "https://automatizza.es/#logo"
+      ],
+      "brandSameAs": [
+        "https://www.linkedin.com/company/automatizza-es/"
+      ],
+      "organizationHasSameAs": false,
+      "graphSha256": "eb959886d41ad9009d51ac9586d43893c5831cc681bbfa13bd24999b60b05fdb",
+      "deployment": "dpl_6xsF94DrsjwAWACYMhmxoKiezeWz",
+      "faqQuestions": 7
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "lang": "en",
+      "canonical": "https://automatizza.es/en",
+      "robots": "index, follow",
+      "xRobotsTag": null,
+      "jsonLdBlocks": 1,
+      "identifiers": [
+        "https://automatizza.es/#website",
+        "https://automatizza.es/#organization",
+        "https://automatizza.es/#brand",
+        "https://automatizza.es/#logo"
+      ],
+      "brandSameAs": [
+        "https://www.linkedin.com/company/automatizza-es/"
+      ],
+      "organizationHasSameAs": false,
+      "graphSha256": "eb959886d41ad9009d51ac9586d43893c5831cc681bbfa13bd24999b60b05fdb",
+      "deployment": "dpl_6xsF94DrsjwAWACYMhmxoKiezeWz",
+      "faqQuestions": 7
+    },
+    {
+      "path": "/fr",
+      "status": 200,
+      "lang": "fr",
+      "canonical": "https://automatizza.es/fr",
+      "robots": "index, follow",
+      "xRobotsTag": null,
+      "jsonLdBlocks": 1,
+      "identifiers": [
+        "https://automatizza.es/#website",
+        "https://automatizza.es/#organization",
+        "https://automatizza.es/#brand",
+        "https://automatizza.es/#logo"
+      ],
+      "brandSameAs": [
+        "https://www.linkedin.com/company/automatizza-es/"
+      ],
+      "organizationHasSameAs": false,
+      "graphSha256": "eb959886d41ad9009d51ac9586d43893c5831cc681bbfa13bd24999b60b05fdb",
+      "deployment": "dpl_6xsF94DrsjwAWACYMhmxoKiezeWz",
+      "faqQuestions": 7
+    },
+    {
+      "path": "/pt",
+      "status": 200,
+      "lang": "pt-PT",
+      "canonical": "https://automatizza.es/pt",
+      "robots": "index, follow",
+      "xRobotsTag": null,
+      "jsonLdBlocks": 1,
+      "identifiers": [
+        "https://automatizza.es/#website",
+        "https://automatizza.es/#organization",
+        "https://automatizza.es/#brand",
+        "https://automatizza.es/#logo"
+      ],
+      "brandSameAs": [
+        "https://www.linkedin.com/company/automatizza-es/"
+      ],
+      "organizationHasSameAs": false,
+      "graphSha256": "eb959886d41ad9009d51ac9586d43893c5831cc681bbfa13bd24999b60b05fdb",
+      "deployment": "dpl_6xsF94DrsjwAWACYMhmxoKiezeWz",
+      "faqQuestions": 7
+    }
+  ],
+  "sitemap": {
+    "status": 200,
+    "commercialURLs": 20,
+    "hreflangReferences": 100,
+    "URLs": [
+      "https://automatizza.es",
+      "https://automatizza.es/en",
+      "https://automatizza.es/fr",
+      "https://automatizza.es/pt",
+      "https://automatizza.es/contacto",
+      "https://automatizza.es/en/contact",
+      "https://automatizza.es/fr/contact",
+      "https://automatizza.es/pt/contacto",
+      "https://automatizza.es/proyectos/silos-spain",
+      "https://automatizza.es/en/projects/silos-spain",
+      "https://automatizza.es/fr/projets/silos-spain",
+      "https://automatizza.es/pt/projetos/silos-spain",
+      "https://automatizza.es/proyectos/apc",
+      "https://automatizza.es/en/projects/apc",
+      "https://automatizza.es/fr/projets/apc",
+      "https://automatizza.es/pt/projetos/apc",
+      "https://automatizza.es/proyectos/la-factory-coworking",
+      "https://automatizza.es/en/projects/la-factory-coworking",
+      "https://automatizza.es/fr/projets/la-factory-coworking",
+      "https://automatizza.es/pt/projetos/la-factory-coworking"
+    ]
+  },
+  "robots": {
+    "status": 200,
+    "content": "User-Agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: https://automatizza.es/sitemap.xml\n"
+  },
+  "accountSetup": {
+    "searchConsoleVerified": true,
+    "searchConsoleSitemapSubmitted": true,
+    "bingVerified": true,
+    "bingSitemapSubmitted": true,
+    "source": "Explicit owner confirmation",
+    "coverageReviewedInAccounts": false
+  },
+  "actualCrawlerVisitsVerified": false,
+  "commercialPagesChecked": 20,
+  "legalPagesChecked": 12,
+  "legalNoindexPreserved": true,
+  "redirectsPreserved": true,
+  "visibleHomeTextUnchanged": true,
+  "schemaValidator": {
+    "source": "JSON-LD extracted from production",
+    "errors": 0,
+    "warnings": 0
+  }
+}

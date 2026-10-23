@@ -6,6 +6,8 @@ Entrega inicial local, posteriormente aprobada por la titular para integrar y
 publicar. Esta actualización incorpora su confirmación de Search Console,
 Bing y LinkedIn corporativo; la evidencia inicial de producción se conserva
 como baseline anterior al despliegue de esta fase.
+La fase está integrada en `main` mediante `651f741` y verificada en producción;
+el apartado 6 y su evidencia JSON registran el resultado posterior al despliegue.
 
 La auditoría «Auditoría SEO + GEO/AEO · Automatizza · Octubre 2026», facilitada
 como HTML, se ha tratado como una hoja de ruta. Sus propuestas no sustituyen las
@@ -41,7 +43,7 @@ La preview muestreada corresponde a un commit anterior, `50f88e2`; no se
 presenta como una preview del código nuevo ni se ha inspeccionado la aplicación
 detrás del acceso protegido.
 
-## 2. Cambio preparado
+## 2. Cambio integrado y publicado
 
 Un componente de servidor, `SiteIdentityStructuredData`, incluido una sola vez
 en la vista compartida de las cuatro portadas. Se genera en el HTML inicial,
@@ -97,13 +99,15 @@ consulta independiente al Registro Mercantil.
 - 124 escenarios HTTP/SEO correctos, ampliados para comprobar un único bloque
   JSON-LD inicial en cada portada, el mismo grafo entre idiomas, ausencia de
   duplicados en interiores y legales, e IDs del dominio real en previews.
-- 59 pruebas: 23 contacto, 24 analítica, 7 idiomas y 5 datos
+- 59 pruebas correctas: 23 contacto, 24 analítica, 7 idiomas y 5 datos
   estructurados. Comprueban relaciones resueltas, datos legales y dirección,
   PNG original, propiedades no confirmadas ausentes, serialización segura y
   atribución exclusiva del LinkedIn limpio al nodo Brand.
 - Schema.org Validator, modo fragmento de código, sobre una muestra generada
   por el módulo real: **0 errores y 0 advertencias**. Reconoce WebSite con
   Organization, Brand e ImageObject relacionados por ID. [Captura del resultado](/Users/evamartin/.codex/visualizations/2026/10/13/01a13580-b25d-7dc1-b33c-fa89ee0e69d4/seo-phase1/schema-validation.png).
+  Tras publicar, se repitió con el JSON-LD extraído de producción, incluido el
+  LinkedIn de Brand: **0 errores y 0 advertencias**. [Captura del marcado publicado](/Users/evamartin/.codex/visualizations/2026/10/13/01a13580-b25d-7dc1-b33c-fa89ee0e69d4/seo-phase1/schema-validation-released.png).
 - Comparación del texto visible de las cuatro portadas locales frente al HTML
   publicado: idéntico. No cambian CSS, cabecera, FAQ, textos comerciales, rutas,
   formulario, proveedor de email, condiciones de activación o consentimiento.
@@ -129,7 +133,7 @@ npm run test:seo
 
 | Comprobación o decisión | Estado y acceso necesario |
 | --- | --- |
-| Publicación de esta fase | Aprobada expresamente por la titular. La integración y comprobación del despliegue se realizan mediante el flujo habitual, conservando los cambios posteriores de main. |
+| Publicación de esta fase | Completada: merge `651f741` en main, push y despliegue habitual de Vercel verificados. Main remoto no había avanzado respecto a la base; no hubo conflictos ni se descartó trabajo. El resultado posterior está en el apartado 6. |
 | Search Console | Verificación y envío correcto del sitemap completados según confirmación de la titular. Pendiente solo de seguimiento dentro de la cuenta: URLs descubiertas/rastreadas/indexadas, canonical elegida, cobertura y prueba de URL en directo. No se repite el alta ni el envío. |
 | Bing Webmaster Tools | Verificación y envío correcto del sitemap completados según confirmación de la titular. El seguimiento de inspección y cobertura requiere acceso a la cuenta. No se configura IndexNow ni se generan claves. |
 | Rastreo real | Registros de Vercel/CDN y verificación de IP/DNS o rangos oficiales; Search Console/Bing aportan además su evidencia propia. No se solicita reducir ninguna protección. |
@@ -171,3 +175,46 @@ historia publicada. Debe mantener:
 
 Este protocolo permite que la nueva página incorpore la fase publicada sin
 sobrescribirla. No autoriza a publicar la futura página antes de su revisión.
+
+## 6. Verificación posterior en producción
+
+Commit de código verificado: `651f74102254cb350c77a174a7df601a58ca8e9e`.
+Despliegue de Vercel: `dpl_6xsF94DrsjwAWACYMhmxoKiezeWz`, completado
+correctamente y servido por `automatizza.es`. [Evidencia JSON](2026-10-23-release-verification.json).
+
+| Portada | HTTP | Canonical | JSON-LD | Directivas |
+| --- | --- | --- | --- | --- |
+| `/` | 200 | `https://automatizza.es` | 1 bloque, 4 nodos con ID | index, follow; sin X-Robots-Tag noindex |
+| `/en` | 200 | `https://automatizza.es/en` | 1 bloque, mismos IDs y relaciones | index, follow; sin X-Robots-Tag noindex |
+| `/fr` | 200 | `https://automatizza.es/fr` | 1 bloque, mismos IDs y relaciones | index, follow; sin X-Robots-Tag noindex |
+| `/pt` | 200 | `https://automatizza.es/pt` | 1 bloque, mismos IDs y relaciones | index, follow; sin X-Robots-Tag noindex |
+
+El grafo es idéntico en las cuatro respuestas. Su SHA-256 serializado es
+`eb959886d41ad9009d51ac9586d43893c5831cc681bbfa13bd24999b60b05fdb`.
+Se han comprobado expresamente `WebSite.publisher → Organization`,
+`WebSite.about → Brand`, `Organization.brand → Brand` y las referencias al
+logo compartido. Los IDs se mantienen en el dominio principal sin prefijos
+lingüísticos.
+
+El único `sameAs` está en Brand y contiene exactamente
+`https://www.linkedin.com/company/automatizza-es/`. Organization no tiene
+sameAs; no se atribuye ese perfil a Grain Store Technology, S.L.
+
+Comprobaciones adicionales correctas después del despliegue:
+
+- 20 páginas comerciales: HTTP 200, idioma, título, descripción, canonical y
+  referencias hreflang correctos. Sin noindex comercial.
+- 12 páginas legales: HTTP 200 y noindex conservado, fuera del sitemap.
+- Sitemap y robots: HTTP 200; 20 URLs comerciales y 100 referencias alternativas.
+- Redirecciones 308 de www y del alias estable de Vercel conservando ruta y
+  parámetros; `/` conserva español y no se añade `/es`.
+- Siete FAQ iniciales por idioma, sin FAQPage. El texto visible de las cuatro
+  portadas publicadas sigue idéntico al baseline anterior al cambio.
+- Sin cambios de diseño, textos comerciales, formulario, consentimiento,
+  activación, GTM/GA4 o políticas de acceso.
+
+Esto verifica la disponibilidad del marcado y las directivas que permiten la
+indexación. No afirma haber revisado la cobertura, la canonical elegida ni
+visitas reales de rastreadores dentro de Search Console o Bing. La verificación
+de las propiedades y el envío correcto del sitemap en ambas cuentas se
+registran como completados por confirmación expresa de la titular.
