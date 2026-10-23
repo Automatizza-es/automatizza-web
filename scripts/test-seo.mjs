@@ -36,7 +36,12 @@ const pages = [
   ["/fr/projets/la-factory-coworking", "La Factory Coworking | Application de réservation de salles | Automatizza"],
   ["/pt/projetos/la-factory-coworking", "La Factory Coworking | Aplicação de reservas de salas | Automatizza"],
 ];
-const legal = ["/aviso-legal", "/politica-de-privacidad", "/politica-de-cookies"];
+const legal = [
+  ["/aviso-legal", "Aviso legal", "es"], ["/politica-de-privacidad", "Política de privacidad", "es"], ["/politica-de-cookies", "Política de cookies", "es"],
+  ["/en/legal-notice", "Legal notice", "en"], ["/en/privacy-policy", "Privacy policy", "en"], ["/en/cookie-policy", "Cookie policy", "en"],
+  ["/fr/mentions-legales", "Mentions légales", "fr"], ["/fr/politique-de-confidentialite", "Politique de confidentialité", "fr"], ["/fr/politique-de-cookies", "Politique de cookies", "fr"],
+  ["/pt/aviso-legal", "Aviso legal", "pt-PT"], ["/pt/politica-de-privacidade", "Política de privacidade", "pt-PT"], ["/pt/politica-de-cookies", "Política de cookies", "pt-PT"],
+];
 const unescape = (text) => text.replaceAll("&amp;", "&").replaceAll("&quot;", '"').replaceAll("&#x27;", "'");
 const count = (html, pattern) => [...html.matchAll(pattern)].length;
 const results = {};
@@ -151,11 +156,23 @@ async function verify(environment) {
     results[environment].push({ path, title, description, canonical: pageUrl(path), xRobotsTag: response.headers.get("x-robots-tag"), headings });
     checks++;
   }
-  for (const path of legal) {
+  for (const [path, title, lang] of legal) {
     const { response, html } = await get(path);
     assert.equal(response.status, 200, path);
     assert.ok(html.includes('<meta name="robots" content="noindex, nofollow"'), path);
     assert.ok(html.includes(`<link rel="canonical" href="${canonical}${path}"`), path);
+    assert.ok(html.includes(`<html lang="${lang}"`), path);
+    const head = html.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
+    assert.equal(unescape(head.match(/<title>(.*?)<\/title>/)?.[1] ?? ""),`${title} | Automatizza`,path);
+    assert.ok(head.includes('<meta name="description"'),path);
+    assert.equal(count(head, /<link rel="alternate" hrefLang=/g),0,"no hreflang for noindex legal pages");
+    const main=unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0]??"");
+    assert.ok(main.includes(title),`translated H1 in initial HTML: ${path}`);
+    assert.ok(main.includes("20") && main.includes("2026"),path);
+    if (!path.includes("cookies") && !path.includes("cookie-policy")) for(const value of ["Grain Store Technology, S.L.","B56885676","CO-45659","2946","info@automatizza.es"]) assert.ok(main.includes(value),`${path} identity: ${value}`);
+    const selector=html.match(/<details[^>]*class="[^\"]*LanguageSelector[\s\S]*?<\/details>/)?.[0]??"";
+    assert.equal(count(selector,/<a\b/g),4,`all legal equivalents available: ${path}`);
+    assert.ok(!main.includes("(In Spanish)")&&!main.includes("(En espagnol)")&&!main.includes("(Em espanhol)"),path);
     documents.set(path, html);
     checks++;
   }

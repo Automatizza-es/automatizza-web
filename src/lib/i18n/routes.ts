@@ -9,19 +9,21 @@ export const languageInfo = {
 export const isLocale = (value: string): value is Locale => (locales as readonly string[]).includes(value);
 
 // This registry is the sole source of published equivalents. Legal translations
-// are intentionally absent until reviewed; aliases are never SEO equivalents.
+// are available for review at the owner's request, but remain noindex.
+// Aliases are never SEO equivalents.
 export const routes = {
   home: { es: "/", en: "/en", fr: "/fr", pt: "/pt" },
   contact: { es: "/contacto", en: "/en/contact", fr: "/fr/contact", pt: "/pt/contacto" },
   "silos-spain": { es: "/proyectos/silos-spain", en: "/en/projects/silos-spain", fr: "/fr/projets/silos-spain", pt: "/pt/projetos/silos-spain" },
   apc: { es: "/proyectos/apc", en: "/en/projects/apc", fr: "/fr/projets/apc", pt: "/pt/projetos/apc" },
   "la-factory-coworking": { es: "/proyectos/la-factory-coworking", en: "/en/projects/la-factory-coworking", fr: "/fr/projets/la-factory-coworking", pt: "/pt/projetos/la-factory-coworking" },
-  privacy: { es: "/politica-de-privacidad" },
-  cookies: { es: "/politica-de-cookies" },
-  legal: { es: "/aviso-legal" },
+  privacy: { es: "/politica-de-privacidad", en: "/en/privacy-policy", fr: "/fr/politique-de-confidentialite", pt: "/pt/politica-de-privacidade" },
+  cookies: { es: "/politica-de-cookies", en: "/en/cookie-policy", fr: "/fr/politique-de-cookies", pt: "/pt/politica-de-cookies" },
+  legal: { es: "/aviso-legal", en: "/en/legal-notice", fr: "/fr/mentions-legales", pt: "/pt/aviso-legal" },
 } satisfies Record<string, Partial<Record<Locale, string>>>;
 export type RouteId = keyof typeof routes;
 export const indexableRoutes: RouteId[] = ["home", "contact", "silos-spain", "apc", "la-factory-coworking"];
+export const legalRoutes = ["privacy", "cookies", "legal"] as const;
 export const equivalents = (id: RouteId): Partial<Record<Locale, string>> => routes[id];
 export function resolveRoute(path: string): { id: RouteId; locale: Locale } | null {
   for (const [id, paths] of Object.entries(routes)) for (const [locale, url] of Object.entries(paths)) {
@@ -35,7 +37,6 @@ export function localizeHref(href: string, locale: Locale) {
   const [path, hash] = href.split("#", 2);
   const route = resolveRoute(path);
   if (!route) return href;
-  // Explicitly approved Spanish legal pages are the only legal destinations.
   const translated = localePath(route.id, locale) ?? localePath(route.id, "es")!;
   return `${translated}${hash === undefined ? "" : `#${hash}`}`;
 }

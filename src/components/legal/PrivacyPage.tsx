@@ -1,0 +1,93 @@
+import Link from "@/components/i18n/LocaleLink";
+import { legalTranslator } from "@/lib/i18n/legal";
+import type { Locale } from "@/lib/i18n/routes";
+import { Container } from "@/components/layout/Container";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { isPrivacyPolicyReady, privacyPolicy } from "@/content/privacy";
+import styles from "./LegalPage.module.css";
+
+function Pending({ value, label, t }: { value: string; label: string; t: ReturnType<typeof legalTranslator> }) {
+  return value ? <>{t(value)}</> : <span className={styles.pending}>{t("Pendiente de completar o validar: ")}{label}{t(".")}</span>;
+}
+
+export default function PrivacyPage({ locale = "es" }: { locale?: Locale }) {
+  const t = legalTranslator(locale);
+  const ready = isPrivacyPolicyReady();
+  return (
+    <>
+      <Header redesign homeLinks />
+      <main className={styles.page}>
+        <Container className={styles.container}>
+          <Link className={styles.back} href="/contacto">{t("← Volver al contacto")}</Link>
+          <p className={styles.eyebrow}>{t("INFORMACIÓN LEGAL")}</p>
+          <h1>{t("Política de privacidad")}</h1>
+          {!ready && <div className={styles.draft} role="note"><strong>{t("Versión preparada para revisión final")}</strong><p>{t("El formulario público permanece desactivado hasta la aprobación de esta versión y la activación del servicio.")}</p></div>}
+          <p className={styles.intro}>{t("Información sobre el tratamiento de los datos que nos facilites para consultar sobre nuestros servicios y sobre los datos técnicos necesarios para utilizar esta web.")}</p>
+          <p className={styles.version}>{t("Última actualización: 20 de octubre de 2026.")}</p>
+
+          <section aria-labelledby="privacy-controller">
+            <h2 id="privacy-controller">{t("01. Quién es responsable de tus datos")}</h2>
+            <p>{t("Automatizza es la marca comercial de ")}<strong>{privacyPolicy.legalName}</strong>{t(", sociedad titular de este sitio web y responsable del tratamiento de los datos personales.")}</p>
+            <dl className={styles.facts}>
+              <div><dt>{t("Razón social")}</dt><dd><Pending t={t} value={privacyPolicy.legalName} label={t("denominación de la sociedad responsable")} /></dd></div>
+              <div><dt>{t("NIF")}</dt><dd><Pending t={t} value={privacyPolicy.taxId} label={t("NIF de la sociedad")} /></dd></div>
+              <div><dt>{t("Domicilio")}</dt><dd><Pending t={t} value={privacyPolicy.address} label={t("domicilio y dirección para ejercer derechos")} /></dd></div>
+              <div><dt>{t("Inscripción registral")}</dt><dd><Pending t={t} value={privacyPolicy.registry} label={t("datos de inscripción de la sociedad")} /></dd></div>
+              <div><dt>{t("Contacto y ejercicio de derechos")}</dt><dd><a href={`mailto:${privacyPolicy.rightsEmail}`}>{privacyPolicy.rightsEmail}</a></dd></div>
+              {privacyPolicy.dpo && <div><dt>{t("Delegado de protección de datos")}</dt><dd>{privacyPolicy.dpo}</dd></div>}
+            </dl>
+          </section>
+          <section aria-labelledby="privacy-data">
+            <h2 id="privacy-data">{t("02. Qué datos se solicitan")}</h2>
+            <p>{t("Nombre, email, mensaje y aceptación de esta política. Los campos obligatorios permiten responder a tu solicitud. No incluyas datos sensibles ni información de otras personas que no sea necesaria.")}</p>
+            <p>{t("Para prevenir abuso utilizamos identificadores seudonimizados derivados del email y, cuando lo facilita un proxy de confianza, de la dirección IP. El alojamiento puede tratar datos técnicos de las peticiones, como la IP, la ruta solicitada y datos del navegador, para prestar y proteger el servicio. La aplicación no guarda las consultas en una base de datos ni utiliza almacenamiento local del navegador para conservarlas.")}</p>
+          </section>
+          <section aria-labelledby="privacy-purpose">
+            <h2 id="privacy-purpose">{t("03. Para qué se utilizarán y con qué base")}</h2>
+            <p>{t("Los datos se utilizarán para responder consultas y valorar la solución que solicites. Las consultas generales se basarán en tu consentimiento (art. 6.1.a RGPD); las peticiones de presupuesto o actuaciones previas a una contratación solicitadas por ti, en medidas precontractuales (art. 6.1.b).")}</p>
+            <p>{t("La prevención de envíos abusivos y la seguridad de la web se basan en nuestro interés legítimo de proteger el servicio y las comunicaciones (art. 6.1.f RGPD). Aplicamos controles limitados a esta finalidad, sin utilizarlos para publicidad o perfiles comerciales.")}</p>
+            <p>{t("No se prevé incorporar los contactos a listas comerciales, enviar publicidad por este formulario ni adoptar decisiones automatizadas con efectos jurídicos o elaborar perfiles.")}</p>
+          </section>
+          <section aria-labelledby="privacy-retention">
+            <h2 id="privacy-retention">{t("04. Durante cuánto tiempo")}</h2>
+            <p><Pending t={t} value={privacyPolicy.retention} label={t("plazo o criterio de conservación de consultas y correos, supresión, bloqueo cuando corresponda y retención de copias y registros de proveedores")} /></p>
+            <p>{t("Los contadores antispam de la aplicación permanecen solo en memoria del servidor, con ventanas de 15 minutos y caducidad lógica. Se eliminan en la limpieza de las siguientes solicitudes o al reiniciar la instancia. No incluyen el mensaje ni la dirección IP en claro.")}</p>
+            <p>{t("Las copias de seguridad y los registros técnicos de los proveedores siguen sus propios ciclos de conservación y supresión; el plazo del buzón no equivale al borrado inmediato de todas las copias. Resend publica una conservación de mensajes y registros de 30 días en sus planes Free, Pro y Scale. Puedes consultar sus condiciones o solicitar información sobre el tratamiento de tu consulta a nuestro email de contacto.")}</p>
+          </section>
+          <section aria-labelledby="privacy-processors">
+            <h2 id="privacy-processors">{t("05. Proveedores y posibles destinatarios")}</h2>
+            <p><Pending t={t} value={privacyPolicy.processors} label={t("identidad jurídica de Resend y de los proveedores efectivos de alojamiento y correo, contratos, regiones y subencargados")} /></p>
+            <p>{t("Puedes consultar las condiciones de tratamiento de ")}<a href="https://vercel.com/legal/dpa">{t("Vercel")}</a> {t(" y ")}<a href="https://resend.com/legal/dpa">{t("Resend")}</a>{t(", los ")}<a href="https://resend.com/legal/subprocessors">{t("subencargados de Resend")}</a> {t(" y su ")}<a href="https://resend.com/security">{t("información de seguridad y conservación")}</a>{t(". La información de los subencargados de Vercel está disponible a través de su ")}<a href="https://security.vercel.com/">{t("centro de seguridad")}</a>{t(".")}</p>
+          </section>
+          <section aria-labelledby="privacy-transfers">
+            <h2 id="privacy-transfers">{t("06. Transferencias internacionales")}</h2>
+            <p><Pending t={t} value={privacyPolicy.transfers} label={t("países, entidades receptoras y garantías aplicables —decisión de adecuación o, en su caso, cláusulas contractuales y medidas complementarias—, con acceso a la información correspondiente")} /></p>
+          </section>
+          <section aria-labelledby="privacy-rights">
+            <h2 id="privacy-rights">{t("07. Cómo ejercer tus derechos")}</h2>
+            <p>{t("Puedes solicitar acceso, rectificación, supresión, oposición, limitación y portabilidad, cuando procedan, escribiendo al correo de contacto indicado. Si el tratamiento se basa en el consentimiento, puedes retirarlo sin afectar a su licitud anterior. Podremos solicitar información proporcionada para verificar tu identidad si existen dudas razonables.")}</p>
+            <p>{t("Atenderemos tu solicitud, con carácter general, en el plazo de un mes. Cuando la normativa permita una ampliación por la complejidad o el número de solicitudes, te informaremos dentro de ese primer mes.")}</p>
+            <p>{t("También puedes presentar una reclamación ante la ")}<a href="https://www.aepd.es/">{t("Agencia Española de Protección de Datos")}</a>{t(".")}</p>
+          </section>
+          <section aria-labelledby="privacy-security">
+            <h2 id="privacy-security">{t("08. Seguridad y alcance")}</h2>
+            <p>{t("Aplicamos validación de campos, controles antispam y envío desde el servidor sin exponer las credenciales del servicio. No incluyas información especialmente sensible en el mensaje. Estas medidas reducen riesgos, pero ningún servicio en Internet puede garantizar seguridad absoluta.")}</p>
+            <p>{t("El marco de referencia es el ")}<a href="https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807">{t("Reglamento (UE) 2016/679")}</a>{t(", la ")}<a href="https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673">{t("Ley Orgánica 3/2018")}</a> {t(" y la ")}<a href="https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758">{t("Ley 34/2002")}</a>{t(", en lo que resulte aplicable. Esta información se organiza siguiendo el criterio de ")}<a href="https://www.aepd.es/derechos-y-deberes/conoce-tus-derechos/derecho-de-informacion">{t("información por capas de la AEPD")}</a>{t(".")}</p>
+          </section>
+          <section aria-labelledby="privacy-analytics">
+            <h2 id="privacy-analytics">{t("09. Medición de visitas y cookies")}</h2>
+            <p>{t("La integración de Google Analytics 4 mediante Google Tag Manager permite medir páginas visitadas y envíos de contacto confirmados únicamente cuando la medición está activada y has aceptado las estadísticas. No enviamos nombre, email, contenido del mensaje ni otros campos del formulario a Analytics. La medición utiliza tu consentimiento (art. 6.1.a RGPD); rechazarla no impide contactar.")}</p>
+            <p>{t("La ")}<Link href="/politica-de-cookies">{t("política de cookies")}</Link> {t(" detalla el panel, los datos y los plazos previstos. La integración bloquea la carga de Google hasta aceptar y permite rechazar o retirar el consentimiento. La aceptación del formulario de contacto es independiente de la elección sobre cookies.")}</p>
+          </section>
+          <section id="contacto" className={styles.contact} aria-labelledby="privacy-contact">
+            <h2 id="privacy-contact">{t("Una consulta sobre tus datos")}</h2>
+            <p>{t("Puedes escribirnos a ")}<a href={`mailto:${privacyPolicy.rightsEmail}`}>{privacyPolicy.rightsEmail}</a>{t(".")}</p>
+            <Link href="/contacto">{t("Volver al formulario ")}<span aria-hidden="true">{t("→")}</span></Link>
+          </section>
+        </Container>
+      </main>
+      <Footer homeLinks />
+    </>
+  );
+}

@@ -36,21 +36,19 @@ El selector usa enlaces reales a equivalentes, muestra ES/EN/FR/PT y conserva la
 página al cambiar de idioma. Los enlaces internos siguen el idioma de la URL.
 No se guarda una preferencia capaz de sustituir el idioma indicado por la URL.
 
-## Legal pendiente de revisión lingüística
+## Actualización legal — 23 de octubre de 2026
 
-Privacidad, cookies y aviso legal conservan íntegramente la versión española
-aprobada, incluidos datos, fechas, condiciones y su noindex. Se ha comprobado
-que los tres archivos son idénticos al contenido aprobado; solo cambia su
-ubicación interna en el grupo de rutas español.
+Tras la entrega inicial, la titular ha solicitado traducir privacidad, cookies
+y aviso legal y publicarlos directamente desde `main` para revisión posterior.
+Las nueve traducciones y sus URLs están en [la guía del revisor](legal-translations-review.md).
+Conservan los datos y condiciones de la versión española aprobada; el texto
+español visible sigue idéntico y se reutilizan tres vistas compartidas.
 
-No se publican traducciones legales sin revisión. Los enlaces desde páginas
-traducidas identifican que el destino está en español; en las páginas legales,
-el selector no ofrece enlaces a versiones inexistentes. No se incluyen páginas
-legales en sitemap ni en hreflang.
-
-Pendiente: redactar y revisar específicamente las versiones legales EN/FR/PT
-antes de habilitar equivalentes legales en el registro de rutas. Esta entrega
-no modifica la aprobación ni las restricciones de activación del formulario.
+Las doce páginas legales conservan su noindex y siguen fuera del sitemap y de
+hreflang. Selector, footer, formulario y enlaces internos permiten acceder al
+equivalente legal del idioma activo. La revisión lingüística del revisor sigue
+pendiente; no se registra como completada ni se altera la aprobación española
+o las condiciones de activación del formulario.
 
 ## SEO, consentimiento y formulario
 

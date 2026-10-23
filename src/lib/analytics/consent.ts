@@ -1,4 +1,4 @@
-import { indexableRoutes, equivalents, type Locale } from "../i18n/routes";
+import { indexableRoutes, legalRoutes, equivalents, type Locale } from "../i18n/routes";
 import { translator } from "../i18n/translate";
 export const consentKey = "automatizza-cookie-consent";
 export const consentVersion = "2026-10-19-v2";
@@ -30,6 +30,9 @@ const pageTitles: Record<string, string> = {
 
 for (const id of indexableRoutes) for (const [locale, path] of Object.entries(equivalents(id))) {
   if (locale !== "es") pageTitles[path] = translator(locale as Locale)(pageTitles[equivalents(id).es!]);
+}
+for (const id of legalRoutes) for (const [locale, path] of Object.entries(equivalents(id))) {
+  if (locale !== "es") pageTitles[path] = `${translator(locale as Locale)(pageTitles[equivalents(id).es!].replace(" | Automatizza", ""))} | Automatizza`;
 }
 
 // Only known public routes: never query strings, hashes or user-supplied paths.

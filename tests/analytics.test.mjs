@@ -368,3 +368,13 @@ test("localized routes and legacy contact anchors never bypass consent or the ro
     assert.equal(trackPage(ids,path,"granted"),false);
   }
 });
+
+test("translated legal pages keep consent gating and deduplicate page events", () => {
+ const paths=["/en/privacy-policy","/en/cookie-policy","/en/legal-notice","/fr/politique-de-confidentialite","/fr/politique-de-cookies","/fr/mentions-legales","/pt/politica-de-privacidade","/pt/politica-de-cookies","/pt/aviso-legal"];
+ for(const path of paths){const state=browser("denied");window.location.pathname=path;assert.equal(trackPage(ids,path,"denied"),false);assert.equal(state.scripts.size,0);}
+ browser();
+ for(const path of paths){window.location.pathname=path;assert.equal(trackPage(ids,path,"granted"),true);assert.equal(trackPage(ids,path,"granted"),false);}
+ assert.equal(events().length,9);
+ assert.equal(window.dataLayer.filter(e=>e.event==="gtm.js").length,1);
+ assert.equal(events().filter(e=>e.event==="automatizza_contact_success").length,0);
+});

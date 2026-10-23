@@ -7,7 +7,7 @@ export default function LocaleLink({ children, ...props }: ComponentProps<typeof
   const { locale, t } = useI18n();
   const href = typeof props.href === "string" ? localizeHref(props.href, locale) : props.href;
   const route = typeof href === "string" ? resolveRoute(href.split("#")[0]) : null;
-  const legalInSpanish = locale !== "es" && route && ["privacy", "cookies", "legal"].includes(route.id);
+  const legalInSpanish = locale !== "es" && route?.locale === "es" && ["privacy", "cookies", "legal"].includes(route.id);
   return <Link {...props} href={href} hrefLang={legalInSpanish ? "es" : props.hrefLang}>
     {children}{legalInSpanish ? ` (${t("En español")})` : null}
   </Link>;

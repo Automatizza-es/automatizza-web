@@ -7,6 +7,9 @@ const {locales,languageInfo,indexableRoutes,equivalents,resolveRoute,localizeHre
 const {translator}=await compiled("lib/i18n/translate.js");
 const {default:messageModule}=await compiled("lib/i18n/messages.js");
 const messages=messageModule.default ?? messageModule;
+const {legalTranslator}=await compiled("lib/i18n/legal.js");
+const {default:legalModule}=await compiled("lib/i18n/legalMessages.js");
+const legalMessages=legalModule.default ?? legalModule;
 
 test("twenty unique commercial routes resolve directly to their own language",()=>{
  const all=[];
@@ -22,9 +25,30 @@ test("internal links preserve the selected language and the same project",()=>{
   assert.equal(localizeHref("mailto:info@automatizza.es",locale),"mailto:info@automatizza.es");
  }
 });
-test("unreviewed legal translations are not published equivalents",()=>{
- for(const id of ["legal","privacy","cookies"]){assert.deepEqual(Object.keys(equivalents(id)),["es"]);assert.ok(!indexableRoutes.includes(id));}
- for(const locale of locales)assert.equal(localizeHref("/politica-de-privacidad",locale),"/politica-de-privacidad");
+test("all twelve legal equivalents are available for review but excluded from indexable routes",()=>{
+ for(const id of ["legal","privacy","cookies"]){
+  const paths=equivalents(id);assert.deepEqual(Object.keys(paths),locales);assert.ok(!indexableRoutes.includes(id));
+  for(const locale of locales){assert.deepEqual(resolveRoute(paths[locale]),{id,locale});assert.equal(localizeHref(paths.es,locale),paths[locale]);}
+ }
+ assert.equal(localizeHref("/politica-de-privacidad","en"),"/en/privacy-policy");
+ assert.equal(localizeHref("/politica-de-privacidad","fr"),"/fr/politique-de-confidentialite");
+ assert.equal(localizeHref("/politica-de-privacidad","pt"),"/pt/politica-de-privacidade");
+});
+test("legal translations are complete and preserve the approved Spanish copy and provider data",async()=>{
+ for(const [source,values] of Object.entries(legalMessages)){
+  assert.equal(legalTranslator("es")(source),source);assert.equal(values.length,3);
+  for(const [i,locale] of ["en","fr","pt"].entries()) {assert.ok(values[i].trim());assert.equal(legalTranslator(locale)(source),values[i]);}
+ }
+ const {privacyPolicy}=await compiled("content/privacy.js");
+ for(const field of ["address","registry","retention","processors","transfers"]) {
+  const source=privacyPolicy[field];assert.ok(legalMessages[source],`Missing approved policy field: ${field}`);
+  for(const locale of ["en","fr","pt"])assert.notEqual(legalTranslator(locale)(source),source,field);
+ }
+ for(const locale of locales){
+  const t=legalTranslator(locale);
+  for(const key of ["legalName","taxId","rightsEmail"])assert.equal(t(privacyPolicy[key]),privacyPolicy[key]);
+  for(const [field,identifiers] of [["retention",["12"]],["processors",["Vercel Inc.","Resend","Plus Five Five, Inc.","Abbas","info@automatizza.es","Córdoba"]],["registry",["CO-45659","2946","21"]]])for(const identifier of identifiers)assert.ok(t(privacyPolicy[field]).includes(identifier),`${locale} ${field}: ${identifier}`);
+ }
 });
 test("Spanish source strings and whitespace remain exact; all translation triples are complete",()=>{
  for(const [source,values] of Object.entries(messages)){
@@ -55,7 +79,8 @@ test("new literal UI messages cannot silently fall back to Spanish", async()=>{
   function visit(node){
    if(ts.isCallExpression(node)&&node.expression.getText(source)==="t"&&node.arguments[0]&&ts.isStringLiteral(node.arguments[0])){
     const message=node.arguments[0].text.trim().replace(/\s+/g," ");
-    assert.ok(messages[message]||neutral.has(message),`Missing translated message in ${file}: ${message}`);
+    const catalog=file.includes("/legal/")?legalMessages:messages;
+    assert.ok(catalog[message]||neutral.has(message),`Missing translated message in ${file}: ${message}`);
    }
    ts.forEachChild(node,visit);
   }
