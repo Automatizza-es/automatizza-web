@@ -11,7 +11,8 @@
     "test:contact": "node scripts/test-contact.mjs",
     "test:analytics": "node scripts/test-analytics.mjs",
     "test:seo": "node scripts/test-seo.mjs",
-    "test:i18n": "node scripts/test-i18n.mjs"
+    "test:i18n": "node scripts/test-i18n.mjs",
+    "test:structured-data": "node scripts/test-structured-data.mjs"
   },
   "dependencies": {
     "next": "^16.3.5",
