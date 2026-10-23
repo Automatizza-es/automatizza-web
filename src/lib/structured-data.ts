@@ -49,6 +49,8 @@ export function siteIdentityStructuredData() {
         "@id": siteIdentityIds.brand,
         name: "Automatizza",
         url: siteOrigin,
+        // Corporate brand profile explicitly confirmed by the owner.
+        sameAs: ["https://www.linkedin.com/company/automatizza-es/"],
         logo: { "@id": siteIdentityIds.logo },
       },
       {

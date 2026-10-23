@@ -139,6 +139,8 @@ async function verify(environment) {
       assert.equal(identity["@context"], "https://schema.org");
       assert.deepEqual(identity["@graph"].map(node => node["@type"]).sort(), ["Brand", "ImageObject", "Organization", "WebSite"]);
       assert.equal(new Set(identity["@graph"].map(node => node["@id"])).size, 4);
+      assert.deepEqual(identity["@graph"].find(node => node["@type"] === "Brand").sameAs, ["https://www.linkedin.com/company/automatizza-es/"]);
+      assert.ok(!Object.hasOwn(identity["@graph"].find(node => node["@type"] === "Organization"), "sameAs"), "LinkedIn belongs to the brand, not the legal owner");
       if (!homepageIdentity) homepageIdentity = identity;
       else assert.deepEqual(identity, homepageIdentity, `same entities across language homepages: ${path}`);
       for (const node of identity["@graph"]) assert.ok(node["@id"].startsWith(`${canonical}/#`), "never identify entities by the preview host");

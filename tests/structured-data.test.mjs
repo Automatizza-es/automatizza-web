@@ -43,12 +43,22 @@ test("identity and registered office match the approved legal data without specu
   assert.equal(address["@type"], "PostalAddress");
   assert.equal(address.addressCountry, "ES");
   assert.equal(`${address.streetAddress}, ${address.postalCode} ${address.addressLocality}, España.`, privacyPolicy.address);
-  const disallowed = ["sameAs", "founder", "foundingDate", "employee", "numberOfEmployees", "review", "aggregateRating", "award", "parentOrganization", "subOrganization", "telephone", "vatID", "areaServed", "potentialAction"];
+  const disallowed = ["founder", "foundingDate", "employee", "numberOfEmployees", "review", "aggregateRating", "award", "parentOrganization", "subOrganization", "telephone", "vatID", "areaServed", "potentialAction"];
   function inspect(value) {
     if (!value || typeof value !== "object") return;
     for (const [key, child] of Object.entries(value)) { assert.ok(!disallowed.includes(key), `unconfirmed property: ${key}`); inspect(child); }
   }
   inspect(graph);
+});
+
+test("the confirmed clean LinkedIn URL identifies only the Automatizza brand", () => {
+  const brand = entity("Brand");
+  assert.deepEqual(brand.sameAs, ["https://www.linkedin.com/company/automatizza-es/"]);
+  const profile = new URL(brand.sameAs[0]);
+  assert.equal(profile.pathname, "/company/automatizza-es/");
+  assert.equal(profile.search, "");
+  assert.equal(profile.hash, "");
+  for (const node of graph["@graph"]) if (node !== brand) assert.ok(!Object.hasOwn(node, "sameAs"), `profile attributed to ${node["@type"]}`);
 });
 
 test("the public logo is the existing PNG with its real dimensions", () => {
