@@ -43,18 +43,6 @@ export default function ProcessAutomationPage() {
               <Link className={`button button-primary ${styles.button}`} href="/contacto">Hablemos de tu proceso <span aria-hidden="true">→</span></Link>
             </div>
           </div>
-          <ol className={styles.flow} aria-label="Ejemplo ilustrativo de automatización" role="list">
-            {[
-              ["Solicitud recibida", "M4 5h16v14H4z M4 6l8 6 8-6"],
-              ["Registro en el CRM", "M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3"],
-              ["Responsable asignado", "M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0 M5 20v-2a7 7 0 0 1 14 0v2"],
-              ["Revisión del equipo", "M8 4H5v16h14V4h-3 M9 3h6v4H9z M8 13l3 3 5-5"],
-            ].map(([label, path], i) => <li key={label}>
-              <svg className={styles.flowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>
-              <span>{label}</span>
-              {i < 3 && <span className={styles.flowArrow} aria-hidden="true">→</span>}
-            </li>)}
-          </ol>
         </Container>
       </section>
 
@@ -67,23 +55,38 @@ export default function ProcessAutomationPage() {
           <ul className={styles.examples}>
             {examples.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
           </ul>
+          <div className={styles.journey}>
+            <p className={styles.journeyLabel}>Un ejemplo de recorrido</p>
+            <ol className={styles.flow} aria-label="Ejemplo ilustrativo de automatización" role="list">
+              {[
+                ["Solicitud recibida", "M4 5h16v14H4z M4 6l8 6 8-6"],
+                ["Registro en el CRM", "M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3"],
+                ["Responsable asignado", "M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0 M5 20v-2a7 7 0 0 1 14 0v2"],
+                ["Revisión del equipo", "M8 4H5v16h14V4h-3 M9 3h6v4H9z M8 13l3 3 5-5"],
+              ].map(([label, path], i) => <li key={label}>
+                <svg className={styles.flowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>
+                <span>{label}</span>
+                {i < 3 && <span className={styles.flowArrow} aria-hidden="true">→</span>}
+              </li>)}
+            </ol>
+          </div>
         </Container>
       </section>
 
       <section className={styles.case} aria-labelledby="silos-example-title">
         <Container className={`editorial-container ${styles.caseInner}`}>
+          <Image className={styles.casePhoto} src="/images/services/silos-spain-team.jpg" alt="Equipo de Silos Spain en la fábrica." width={598} height={454} sizes="(max-width: 600px) calc(100vw - 32px), 360px" />
           <div className={styles.copy}>
-            <h2 id="silos-example-title">Un ejemplo: la gestión comercial de Silos Spain</h2>
+            <h2 id="silos-example-title">Así lo aplicamos en Silos Spain</h2>
             <p>En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.</p>
             <p>El CRM sirve como núcleo para conectar progresivamente procesos comerciales y administrativos. El equipo puede consultar la información y continuar el trabajo sin depender de herramientas aisladas.</p>
             <Link className={styles.textLink} href="/proyectos/silos-spain">Ver el proyecto de Silos Spain <span aria-hidden="true">→</span></Link>
           </div>
-          <Image className={styles.casePhoto} src="/images/services/silos-spain-team.jpg" alt="Equipo de Silos Spain en la fábrica." width={598} height={454} sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 900px) 300px, 360px" />
         </Container>
       </section>
 
       <section className={styles.section} aria-labelledby="approach-title">
-        <Container className="editorial-container">
+        <Container className={`editorial-container ${styles.approach}`}>
           <h2 id="approach-title">Así abordamos el proceso</h2>
           <ol className={styles.steps}>
             {steps.map(([title, text], i) => <li key={title}>
@@ -94,7 +97,7 @@ export default function ProcessAutomationPage() {
         </Container>
       </section>
 
-      <section className={`${styles.section} ${styles.soft}`} aria-labelledby="human-review-title">
+      <section className={styles.section} aria-labelledby="human-review-title">
         <Container className={`editorial-container ${styles.review}`}>
           <h2 id="human-review-title">Qué automatizamos y qué revisa tu equipo</h2>
           <div className={styles.copy}>
