@@ -52,7 +52,6 @@ export default function ProcessAutomationPage() {
         <Container className="editorial-container">
           <div className={styles.sectionIntro} data-service-reveal>
             <h2 id="manual-work-title">¿Dónde se puede reducir el trabajo manual?</h2>
-            <p>Las oportunidades suelen aparecer cuando alguien tiene que registrar los mismos datos varias veces, preparar documentos con información que ya existe o estar pendiente de avisar a otra persona para que el trabajo continúe.</p>
           </div>
           <ul className={styles.examples} data-service-reveal>
             {examples.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}

@@ -47,9 +47,9 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 
 - `ProcessAutomationMotion` usa IntersectionObserver, sin manejadores de scroll,
   bucles ni parallax. Cada elemento deja de observarse tras su primera entrada.
-- Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 620 ms y
-  10 px en los bloques, incluido el hero; 520 ms y 8 px en el recorrido, con
-  intervalos de 110 ms (máximo 330 ms). Las secciones no cambian de alto.
+- Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 850 ms y
+  10 px en los bloques, incluido el hero; 720 ms y 8 px en el recorrido, con
+  intervalos de 140 ms (máximo 420 ms). Las secciones no cambian de alto.
 - El HTML y CSS parten de contenido visible. Solo se anima cuando hay soporte;
   ni la carga de JavaScript ni IntersectionObserver ocultan contenido en espera.
   El fundido se inicia al entrar en pantalla, de opacidad 0 a 1; el HTML y CSS
@@ -71,7 +71,9 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 La comprobación del navegador confirmó que la primera versión sí se activaba,
 pero el fundido desde 0,55 y los 4–6 px resultaban poco perceptibles. Se añade
 entrada al hero y se ajustan fundido, desplazamiento e intervalos indicados arriba.
-El observador exige un 15 % de intersección y un margen inferior del 5 %, para
+Se retira el párrafo introductorio de «¿Dónde se puede reducir el trabajo manual?»
+y se ralentizan las entradas (850 ms por bloque y 720 ms por paso) para evitar
+una sensación de aparición brusca. El observador exige un 15 % de intersección y un margen inferior del 5 %, para
 no consumir la entrada demasiado pronto.
 
 Verificación real mediante instrumentación temporal exclusiva de la copia local:

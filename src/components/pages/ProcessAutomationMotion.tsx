@@ -24,9 +24,9 @@ export function ProcessAutomationMotion() {
           { opacity: 0, transform: `translateY(${isFlowStep ? 8 : 10}px)` },
           { opacity: 1, transform: "none" },
         ], {
-          duration: isFlowStep ? 520 : 620,
+          duration: isFlowStep ? 720 : 850,
           easing: "cubic-bezier(.22,.7,.25,1)",
-          delay: index * 110,
+          delay: index * 140,
           fill: "backwards",
         });
         animations.add(animation);
