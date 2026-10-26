@@ -14,12 +14,14 @@ const legalMessages=legalModule.default ?? legalModule;
 test("published commercial routes resolve directly to their own language",()=>{
  const all=[];
  for(const id of indexableRoutes) for(const [locale,path] of Object.entries(equivalents(id))){assert.ok(path);all.push(path);assert.deepEqual(resolveRoute(path),{id,locale});}
- assert.equal(all.length,21);assert.equal(new Set(all).size,21);
+ assert.equal(all.length,24);assert.equal(new Set(all).size,24);
  assert.equal(equivalents("home").es,"/");assert.equal(languageInfo.pt.tag,"pt-PT");
  for(const path of ["/es","/en/contacto","/fr/contacto","/pt/contact","/en/services","/en/unknown","/fr/contact?email=private@example.test"])assert.equal(resolveRoute(path),null);
 });
-test("the first service has only its complete Spanish equivalent",()=>{
- assert.deepEqual(equivalents("process-automation"),{es:"/servicios/automatizacion-de-procesos"});
+test("automation has complete, direct equivalents in all four languages",()=>{
+ const expected={es:"/servicios/automatizacion-de-procesos",en:"/en/services/process-automation",fr:"/fr/services/automatisation-des-processus",pt:"/pt/servicos/automatizacao-de-processos"};
+ assert.deepEqual(equivalents("process-automation"),expected);
+ for(const locale of locales){assert.deepEqual(resolveRoute(expected[locale]),{id:"process-automation",locale});assert.equal(localizeHref(expected.es,locale),expected[locale]);}
  for(const locale of ["en","fr","pt"])assert.equal(resolveRoute(`/${locale}/servicios/automatizacion-de-procesos`),null);
  assert.equal(resolveRoute("/es/servicios/automatizacion-de-procesos"),null);
 });

@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 
-export function ProcessAutomationMotion() {
+export function ProcessAutomationMotion({ rootId = "process-automation-content" }: { rootId?: string }) {
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const root = document.getElementById("process-automation-content");
+    const root = document.getElementById(rootId);
     if (preference.matches || !root || !("IntersectionObserver" in window) ||
         typeof Element.prototype.animate !== "function") return;
 
@@ -100,7 +100,7 @@ export function ProcessAutomationMotion() {
       stop();
       preference.removeEventListener("change", onPreferenceChange);
     };
-  }, []);
+  }, [rootId]);
 
   return null;
 }

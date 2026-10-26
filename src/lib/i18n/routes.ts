@@ -14,7 +14,7 @@ export const isLocale = (value: string): value is Locale => (locales as readonly
 export const routes = {
   home: { es: "/", en: "/en", fr: "/fr", pt: "/pt" },
   contact: { es: "/contacto", en: "/en/contact", fr: "/fr/contact", pt: "/pt/contacto" },
-  "process-automation": { es: "/servicios/automatizacion-de-procesos" },
+  "process-automation": { es: "/servicios/automatizacion-de-procesos", en: "/en/services/process-automation", fr: "/fr/services/automatisation-des-processus", pt: "/pt/servicos/automatizacao-de-processos" },
   "silos-spain": { es: "/proyectos/silos-spain", en: "/en/projects/silos-spain", fr: "/fr/projets/silos-spain", pt: "/pt/projetos/silos-spain" },
   apc: { es: "/proyectos/apc", en: "/en/projects/apc", fr: "/fr/projets/apc", pt: "/pt/projetos/apc" },
   "la-factory-coworking": { es: "/proyectos/la-factory-coworking", en: "/en/projects/la-factory-coworking", fr: "/fr/projets/la-factory-coworking", pt: "/pt/projetos/la-factory-coworking" },

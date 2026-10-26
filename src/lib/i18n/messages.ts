@@ -1,4 +1,7 @@
+import serviceMessages from "./serviceMessages";
+
 const messages: Record<string, readonly [string, string, string]> = {
+  ...serviceMessages,
   "Menos tareas repetitivas.": [
     "Fewer repetitive tasks.",
     "Moins de tâches répétitives.",

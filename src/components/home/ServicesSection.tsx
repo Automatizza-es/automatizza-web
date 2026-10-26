@@ -2,6 +2,7 @@
 
 import { useI18n } from "@/components/i18n/LocaleProvider";
 import Link from "next/link";
+import { localePath } from "@/lib/i18n/routes";
 
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "./SectionHeading";
@@ -30,8 +31,8 @@ export function ServicesSection() {
           {services.map((service) => (
             <li className={styles.service} key={service.number} data-reveal>
               <span className={styles.number}>{service.number}</span>
-              <h3><span>{service.number === "01" && locale === "es"
-                ? <Link className={styles.serviceLink} href="/servicios/automatizacion-de-procesos">{t(service.title)}</Link>
+              <h3><span>{service.number === "01"
+                ? <Link className={styles.serviceLink} href={localePath("process-automation", locale)!}>{t(service.title)}</Link>
                 : t(service.title)}</span></h3>
               <p>{t(service.text)}</p>
             </li>

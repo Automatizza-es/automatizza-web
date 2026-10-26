@@ -139,3 +139,24 @@ usan los últimos textos facilitados, empezando por «Entendemos tu proceso».
 El segundo párrafo de Silos Spain se sustituye por la explicación aprobada
 sobre consultar y continuar cada gestión desde la misma plataforma. No se
 modifican las animaciones sin fundido, otras páginas ni la configuración.
+
+## Continuación multilingüe
+
+Las cuatro versiones completas de automatización están preparadas en
+`codex/services-multilingual-software`, conservando todos los commits anteriores.
+Main sigue en `1b1b2fa`; no hay integración ni despliegue.
+
+- ES: `/servicios/automatizacion-de-procesos`
+- EN: `/en/services/process-automation`
+- FR: `/fr/services/automatisation-des-processus`
+- PT-PT: `/pt/servicos/automatizacao-de-processos`
+
+Se reutilizan registro de rutas, selector, catálogo, canonicals y sitemap. La
+escalera y las FAQ se extraen en componentes compartidos sin cambiar su HTML.
+El efecto de entrada acepta un identificador de página para reiniciar su
+observación al cambiar entre equivalentes, con el mismo movimiento sin fundidos.
+
+Contraste con el HTML español aprobado: mismas etiquetas, atributos y textos
+visibles del main. Las pruebas de idiomas (8), analítica (25), lint y las builds
+reales de producción/preview pasan, con 146 escenarios HTTP/SEO. Las traducciones
+y metadatos aparecen en el HTML inicial; equivalentes recíprocos completos.
