@@ -1,5 +1,9 @@
 # Primera página de servicio: revisión local
 
+Estado actual y validación de los dos servicios en cuatro idiomas:
+[services-multilingual-review.md](./services-multilingual-review.md).
+Las notas siguientes conservan el historial de la revisión española y su ampliación.
+
 Actualización: 2026-10-26. Rama: `codex/process-automation-page`.
 Base: `origin/main` incorporado en `1b1b2fa`, con los datos estructurados y la CSP efectiva ya publicados. No se han integrado ni desplegado estos cambios.
 

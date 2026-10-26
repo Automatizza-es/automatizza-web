@@ -399,3 +399,35 @@ test("translated legal pages keep consent gating and deduplicate page events", (
  assert.equal(window.dataLayer.filter(e=>e.event==="gtm.js").length,1);
  assert.equal(events().filter(e=>e.event==="automatizza_contact_success").length,0);
 });
+
+
+test("language switches across both services record one visit each and never replay conversions", async()=>{
+ const {indexableRoutes,equivalents}=await compiled("lib/i18n/routes.js");
+ const {translator}=await compiled("lib/i18n/translate.js");
+ for(const id of indexableRoutes.filter(id=>["process-automation","bespoke-software"].includes(id))){
+  const state=browser("denied");
+  const paths=equivalents(id);
+  for(const path of Object.values(paths)){window.location.pathname=path;assert.equal(trackPage(ids,path,"denied"),false);}
+  assert.equal(state.scripts.size,0);assert.equal(events().length,0);
+  state.grant();
+  for(const [locale,path] of Object.entries(paths)){
+   window.location.pathname=path;
+   assert.equal(trackPage(ids,path,"granted"),true);assert.equal(trackPage(ids,path,"granted"),false);
+   assert.equal(events().at(-1).page_location,`https://automatizza.es${path}`);
+   const title=id==="process-automation"?"Automatización de procesos para empresas | Automatizza":"Software a medida para empresas | Automatizza";
+   assert.equal(events().at(-1).page_title,translator(locale)(title));
+  }
+  assert.equal(events().length,4);assert.equal(state.scripts.size,1);
+  window.location.pathname="/pt/contacto";trackPage(ids,"/pt/contacto","granted");
+  assert.equal(events().filter(e=>e.event==="automatizza_contact_success").length,0);
+  const outcome={...success,submissionId:`${id}-confirmed`};
+  assert.equal(trackContactResult({...outcome,responseOk:false}),false);
+  assert.equal(trackContactResult(outcome),true);assert.equal(trackContactResult(outcome),false);
+  trackPage(ids,paths.en,"granted");trackPage(ids,"/pt/contacto","granted");
+  assert.equal(events().filter(e=>e.event==="automatizza_contact_success").length,1);
+  state.deny();stopAnalytics(ids.measurementId);
+  assert.equal(trackContactResult({...success,submissionId:`${id}-denied`}),false);
+  assert.equal(trackPage(ids,paths.fr,"granted"),false);assert.equal(state.scripts.size,0);
+  assert.ok(commands().filter(c=>c[0]==="consent").every(c=>c[2].ad_storage==="denied"&&c[2].ad_user_data==="denied"&&c[2].ad_personalization==="denied"));
+ }
+});

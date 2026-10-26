@@ -1,6 +1,7 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import HomePage from "@/components/pages/HomePage";
 import ProcessAutomationPage from "@/components/pages/ProcessAutomationPage";
+import SoftwareServicePage from "@/components/pages/SoftwareServicePage";
 import { serviceMetadata } from "@/lib/service-seo";
 import ContactPage from "@/components/pages/ContactPage";
 import { ProjectDetailPage } from "@/components/projects/ProjectDetailPage";
@@ -33,7 +34,7 @@ async function routeFor(params: Props["params"]) {
 export async function generateMetadata({ params }: Props) {
   const { id, path, t, locale } = await routeFor(params);
   if (id === "privacy" || id === "cookies" || id === "legal") return legalPageMetadata(id, locale);
-  if (id === "process-automation") return serviceMetadata(id, locale);
+  if (id === "process-automation" || id === "bespoke-software") return serviceMetadata(id, locale);
   const project = findProject(id);
   const title = project ? t(project.seo.title) : id === "home" ? t("Automatizza | Automatización de procesos e IA para empresas") : t("Contacto | Automatizza");
   const description = project ? t(project.seo.description) : id === "home" ? t("Automatizamos tareas repetitivas, conectamos herramientas y desarrollamos soluciones a medida para que tu empresa trabaje mejor.") : t("Cuéntanos cómo trabaja tu empresa y qué te gustaría mejorar. En Automatizza te ayudamos a encontrar una solución práctica y adaptada a tu negocio.");
@@ -44,6 +45,7 @@ export default async function Page({ params }: Props) {
   const { id, locale } = await routeFor(params);
   if (id === "home") return <HomePage />;
   if (id === "process-automation") return <ProcessAutomationPage locale={locale} />;
+  if (id === "bespoke-software") return <SoftwareServicePage locale={locale} />;
   if (id === "contact") return <ContactPage locale={locale as Locale} />;
   if (id === "privacy") return <PrivacyPage locale={locale} />;
   if (id === "cookies") return <CookiePolicyPage locale={locale} />;

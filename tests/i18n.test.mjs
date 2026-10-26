@@ -14,7 +14,7 @@ const legalMessages=legalModule.default ?? legalModule;
 test("published commercial routes resolve directly to their own language",()=>{
  const all=[];
  for(const id of indexableRoutes) for(const [locale,path] of Object.entries(equivalents(id))){assert.ok(path);all.push(path);assert.deepEqual(resolveRoute(path),{id,locale});}
- assert.equal(all.length,24);assert.equal(new Set(all).size,24);
+ assert.equal(all.length,28);assert.equal(new Set(all).size,28);
  assert.equal(equivalents("home").es,"/");assert.equal(languageInfo.pt.tag,"pt-PT");
  for(const path of ["/es","/en/contacto","/fr/contacto","/pt/contact","/en/services","/en/unknown","/fr/contact?email=private@example.test"])assert.equal(resolveRoute(path),null);
 });
@@ -93,4 +93,26 @@ test("new literal UI messages cannot silently fall back to Spanish", async()=>{
   }
   visit(source);
  }
+});
+
+
+test("software has complete equivalents without Spanish-prefixed or service-index aliases",()=>{
+ const expected={es:"/servicios/software-a-medida",en:"/en/services/bespoke-software",fr:"/fr/services/logiciel-sur-mesure",pt:"/pt/servicos/software-a-medida"};
+ assert.deepEqual(equivalents("bespoke-software"),expected);
+ for(const locale of locales){assert.deepEqual(resolveRoute(expected[locale]),{id:"bespoke-software",locale});assert.equal(localizeHref(expected.es,locale),expected[locale]);}
+ for(const path of ["/es/servicios/software-a-medida","/en/servicios/software-a-medida","/servicios","/en/services","/fr/services","/pt/servicos"])assert.equal(resolveRoute(path),null);
+});
+
+test("all service example, step and FAQ arrays have complete translations",async()=>{
+ const {readFileSync}=await import("node:fs");
+ const {default:ts}=await import("typescript");
+ const names=new Set(["automationExamples","automationSteps","automationQuestions","softwareNeeds","softwareExamples","softwareSteps","softwareQuestions"]);
+ let strings=0;
+ for(const file of ["ProcessAutomationPage.tsx","SoftwareServicePage.tsx"]){
+  const source=ts.createSourceFile(file,readFileSync(join("src/components/pages",file),"utf8"),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  function check(node){if(ts.isStringLiteral(node)){strings++;assert.ok(messages[node.text],`Missing service translation: ${node.text}`);for(const locale of ["en","fr","pt"])assert.notEqual(translator(locale)(node.text),node.text);}ts.forEachChild(node,check);}
+  function visit(node){if(ts.isVariableDeclaration(node)&&names.has(node.name.getText(source))&&node.initializer)check(node.initializer);else ts.forEachChild(node,visit);}
+  visit(source);
+ }
+ assert.equal(strings,54,"both services covered, including dynamically translated arrays");
 });

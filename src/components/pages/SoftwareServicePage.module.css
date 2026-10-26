@@ -1,0 +1,13 @@
+.needs { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 1.5rem clamp(2.5rem, 6vw, 6rem); margin-top: 1.5rem; }
+.needs > p { max-width: 52ch; }
+.needs ul { margin: 0; padding-left: 1.2rem; color: #58616d; font-size: .9375rem; line-height: 1.75; }
+.needs li + li { margin-top: .75rem; }
+.needs li::marker { color: var(--color-cyan); }
+.projects { margin-top: 2rem; }
+.project { display: grid; grid-template-columns: minmax(0, .65fr) minmax(0, 1fr); gap: 1rem clamp(2.5rem, 6vw, 6rem); }
+.project + .project { margin-top: 1.75rem; padding-top: 1.75rem; border-top: 1px solid #e1e4e8; }
+.project p { max-width: 64ch; }
+
+@media (max-width: 700px) {
+  .needs, .project { grid-template-columns: minmax(0, 1fr); }
+}

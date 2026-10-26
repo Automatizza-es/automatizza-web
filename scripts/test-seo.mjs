@@ -17,10 +17,13 @@ const canonical = "https://automatizza.es";
 const pageUrl = (path) => `${canonical}${path === "/" ? "" : path}`;
 const automationPaths = ["/servicios/automatizacion-de-procesos", "/en/services/process-automation", "/fr/services/automatisation-des-processus", "/pt/servicos/automatizacao-de-processos"];
 const automationTitles = ["Automatización de procesos para empresas | Automatizza", "Process automation for businesses | Automatizza", "Automatisation des processus pour les entreprises | Automatizza", "Automatização de processos para empresas | Automatizza"];
+const softwarePaths = ["/servicios/software-a-medida", "/en/services/bespoke-software", "/fr/services/logiciel-sur-mesure", "/pt/servicos/software-a-medida"];
+const softwareTitles = ["Software a medida para empresas | Automatizza", "Bespoke software for businesses | Automatizza", "Logiciels sur mesure pour les entreprises | Automatizza", "Software à medida para empresas | Automatizza"];
 const pages = [
   ["/", "Automatizza | Automatización de procesos e IA para empresas"],
   ["/contacto", "Contacto | Automatizza"],
   ...automationPaths.map((path,i)=>[path,automationTitles[i]]),
+  ...softwarePaths.map((path,i)=>[path,softwareTitles[i]]),
   ["/proyectos/silos-spain", "Silos Spain | CRM y gestión comercial a medida | Automatizza"],
   ["/proyectos/apc", "APC Europe | App para logística y recogidas | Automatizza"],
   ["/proyectos/la-factory-coworking", "La Factory Coworking | App de reservas de salas | Automatizza"],
@@ -144,7 +147,8 @@ async function verify(environment) {
     if (["/", "/en", "/fr", "/pt"].includes(path)) {
       const services = html.match(/<section[^>]*id="servicios"[\s\S]*?<\/section>/)?.[0] ?? "";
       const languageIndex = ["/", "/en", "/fr", "/pt"].indexOf(path);
-      assert.ok(services.includes(`href="${automationPaths[languageIndex]}"`), "homepage links to its service language");
+      assert.ok(services.includes(`href="${automationPaths[languageIndex]}"`), "homepage links to its automation language");
+      assert.ok(services.includes(`href="${softwarePaths[languageIndex]}"`), "homepage links to its software language");
     }
     const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
     assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);
@@ -173,7 +177,7 @@ async function verify(environment) {
     const alternateLinks = [...head.matchAll(/<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"/g)];
     const spanishService = path === "/servicios/automatizacion-de-procesos";
     assert.deepEqual(alternateLinks.map(m => m[1]).sort(), ["en", "es", "fr", "pt-PT", "x-default"].sort(), `hreflang set: ${path}`);
-    const group = automationPaths.includes(path) ? automationPaths : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
+    const group = automationPaths.includes(path) ? automationPaths : softwarePaths.includes(path) ? softwarePaths : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
       : path.includes("/apc") ? ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"]
       : path.includes("la-factory-coworking") ? ["/proyectos/la-factory-coworking","/en/projects/la-factory-coworking","/fr/projets/la-factory-coworking","/pt/projetos/la-factory-coworking"]
       : /contact/.test(path) ? ["/contacto","/en/contact","/fr/contact","/pt/contacto"] : ["/","/en","/fr","/pt"];
@@ -191,6 +195,30 @@ async function verify(environment) {
       assert.equal(count(main.match(/<ol[^>]*data-service-staircase[\s\S]*?<\/ol>/)?.[0]??"", /<li\b/g),4);
       for (const text of ["We understand your process", "Nous comprenons votre processus", "Compreendemos o seu processo"].filter((_, n)=>n===i-1)) assert.ok(main.includes(text));
       if(i>0) assert.ok(!main.includes("¿") && !main.includes("Revisamos cómo trabaja tu equipo"), "translated service HTML");
+    }
+    if (softwarePaths.includes(path)) {
+      const main = unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "");
+      const i = softwarePaths.indexOf(path);
+      const contact = ["/contacto", "/en/contact", "/fr/contact", "/pt/contacto"][i];
+      assert.equal(count(main, new RegExp(`href="${contact}"`, "g")), 2, "both software CTAs use localized contact");
+      assert.equal(count(main, /<form\b/g), 0, "software does not duplicate the form");
+      assert.equal(count(main, /<img\b/g), 0, "no invented photo or placeholder");
+      const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
+      assert.equal(count(faq, /<details\b/g), 5);
+      assert.equal(count(faq, /<details\b[^>]*\bopen(?:[\s=>])/g), 0);
+      assert.equal(count(faq, /<summary\b/g), 5);
+      assert.equal(count(faq, /<p\b/g), 5, "all software answers in initial HTML");
+      assert.equal(count(main.match(/<ol[^>]*data-service-staircase[\s\S]*?<\/ol>/)?.[0]??"", /<li\b/g),4);
+      const factory = ["/proyectos/la-factory-coworking","/en/projects/la-factory-coworking","/fr/projets/la-factory-coworking","/pt/projetos/la-factory-coworking"][i];
+      const apc = ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"][i];
+      for(const project of [factory,apc]) assert.ok(main.includes(`href="${project}"`));
+      const order = ["software-title","software-needs-title","software-examples-title","software-projects-title","approach-title","service-faq-title","service-contact-title"].map(id=>main.indexOf(`aria-labelledby="${id}"`));
+      assert.ok(order.every(position=>position>=0));assert.deepEqual(order,[...order].sort((a,b)=>a-b));
+      const firstStep = ["Definimos una primera versión","We define a first version","Nous définissons une première version","Definimos uma primeira versão"][i];
+      assert.ok(main.includes(firstStep), "localized step rendered server-side");
+      if(i>0)assert.ok(!main.includes("¿")&&!main.includes("Herramientas de gestión interna"), "no Spanish fallback in software");
+      else for(const text of ["Primero valoramos si una herramienta existente", "posibilidades de integración de cada herramienta", "costes recurrentes de infraestructura, licencias y mantenimiento", "El alcance de ese trabajo se define para cada proyecto"])assert.ok(main.includes(text));
+      assert.ok(!html.includes("FAQPage"));
     }
     if (spanishService) {
       assert.equal(count(selector, /<a\b/g), 4, "all complete service languages are shown");
