@@ -16,13 +16,12 @@ export function ProcessAutomationMotion() {
     const reveal = (element: Element, index = 0) => {
       if (preference.matches || revealed.has(element)) return;
       revealed.add(element);
-      const isFlowStep = element.parentElement?.hasAttribute("data-service-flow");
       const isStairStep = element.parentElement?.hasAttribute("data-service-staircase");
       const animation = element.animate([
-        { opacity: 0, transform: `translateY(${isFlowStep || isStairStep ? 8 : 10}px)` },
+        { opacity: 0, transform: `translateY(${isStairStep ? 8 : 10}px)` },
         { opacity: 1, transform: "none" },
       ], {
-        duration: isFlowStep ? 720 : 850,
+        duration: 850,
         easing: "cubic-bezier(.22,.7,.25,1)",
         delay: index * 140,
         fill: "backwards",
@@ -34,14 +33,11 @@ export function ProcessAutomationMotion() {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
         observer.unobserve(entry.target);
-        const parent = entry.target.parentElement;
-        const index = parent?.hasAttribute("data-service-flow")
-          ? Array.from(parent.children).indexOf(entry.target) : 0;
-        reveal(entry.target, index);
+        reveal(entry.target);
       }
     }, { rootMargin: "0px 0px -5%", threshold: .15 });
 
-    root.querySelectorAll("[data-service-reveal], [data-service-flow] > li")
+    root.querySelectorAll("[data-service-reveal]")
       .forEach((element) => observer.observe(element));
 
     const staircase = root.querySelector("[data-service-staircase]");

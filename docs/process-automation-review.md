@@ -8,13 +8,12 @@ Base: `origin/main` incorporado en `1b1b2fa`, con los datos estructurados y la C
 - Nueva página española `/servicios/automatizacion-de-procesos`, con el contenido aprobado, un único H1, cuatro ejemplos, cuatro pasos, el caso de Silos Spain y cuatro preguntas en acordeón nativo.
 - Reutiliza cabecera, footer, contenedor editorial, fuentes, colores, botones y estilos del acordeón existente. Incorpora únicamente la foto original adjunta del equipo de Silos Spain, sin recortar personas ni retocar el archivo. Las entradas reutilizan la curva y el lenguaje de movimiento editorial de la portada mediante un componente acotado a esta página, sin cambiar el movimiento de la home.
 - Cabecera proporcionada como la del proyecto de Silos Spain: retorno a `/#servicios`, etiqueta «SERVICIOS / AUTOMATIZACIÓN» y un único H1, sin el anterior segundo titular.
-- Esquema accesible y estático, identificado como ejemplo: Solicitud recibida → Registro en el CRM → Responsable asignado → Revisión del equipo, con una explicación breve bajo cada título; vertical en móvil.
 - Hero conservado, con más separación antes de los ejemplos.
-- Tareas en dos columnas en escritorio y una en móvil, con textos de anchura limitada y separación entre filas. El esquema se integra debajo, con la etiqueta «Un ejemplo de recorrido», sin borde ni fondo.
+- Tareas en dos columnas en escritorio y una en móvil, con textos de anchura limitada y separación entre filas. Se retira el ejemplo de recorrido, conservando únicamente los cuatro tipos de tareas.
 - Silos Spain tiene un bloque propio con fondo suave: foto completa de hasta 360 px a la izquierda y texto a la derecha; ambos se apilan en móvil. Pie semántico de 12 px: «Con el equipo de Silos Spain en la fábrica». El archivo y sus proporciones no se modifican. Título: «Así lo aplicamos en Silos Spain».
 - «Cómo lo ponemos en marcha»: escalera ascendente de cuatro columnas en escritorio, con círculos numerados y conexiones azules finas. Conserva las explicaciones aprobadas en HTML. Por debajo de 1000 px pasa a una lista vertical conectada, sin comprimir el texto ni crear scroll lateral.
 - Se elimina el bloque «Tu equipo mantiene el control». Las FAQ recuperan el fondo gris suave `#f8f9fb`; se mantienen sus preguntas, acordeón y cierre.
-- Orden: hero, tareas y recorrido, caso real, pasos, FAQ y cierre.
+- Orden: hero, tareas, caso real, pasos en escalera, FAQ y cierre.
 - Enlace subrayado en «Automatización» de la portada española. Se conserva `#servicios` y el resto del bloque.
 - Ambos CTA llevan a `/contacto`; el caso enlaza a `/proyectos/silos-spain`. No hay otro formulario.
 - El mantenimiento se acuerda por proyecto, como indica el borrador; no se añaden compromisos, resultados ni precios.
@@ -37,7 +36,7 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 - `npm run test:i18n`: 8 pruebas correctas; contempla equivalentes parcialmente publicados.
 - `npm run test:security`: 9 pruebas correctas, con la CSP de main conservada.
 - `npm run test:structured-data`: 5 pruebas correctas; se conservan relaciones, identificadores y LinkedIn del nodo Brand.
-- `npm run test:seo`: builds optimizadas y TypeScript correctos en producción y preview; 140 escenarios HTTP/página correctos. Verifica metadatos y contenido en HTML inicial, sitemap, alternates, cabeceras, enlaces, 404 de traducciones inexistentes, del índice `/servicios` y de la ruta antigua, y redirección de barra final. Verifica también el orden de los bloques, el esquema y la ausencia del bloque de control en el HTML inicial. Las nuevas explicaciones y el pie de foto se han comprobado además en la respuesta HTML sin ejecutar JavaScript.
+- `npm run test:seo`: builds optimizadas y TypeScript correctos en producción y preview; 140 escenarios HTTP/página correctos. Verifica metadatos y contenido en HTML inicial, sitemap, alternates, cabeceras, enlaces, 404 de traducciones inexistentes, del índice `/servicios` y de la ruta antigua, y redirección de barra final. Verifica también el orden de los bloques y la ausencia del ejemplo de recorrido y del bloque de control en el HTML inicial. Las nuevas explicaciones y el pie de foto se han comprobado además en la respuesta HTML sin ejecutar JavaScript.
 - Revisión de composición del 26/10: escritorio 1440 px, tablet 768 px y móvil 390/320 px, sin desbordamientos horizontales. Revisados el enlace de la portada, navegación móvil, Silos Spain y CTA a contacto.
 - Foto: original JPEG 598 × 454, idéntico al archivo adjunto; URL pública y optimizador local responden HTTP 200. Proporción completa conservada en escritorio y móvil.
 - Acordeón: cerrado inicialmente; Enter y Espacio permiten abrir y cerrar varias respuestas simultáneamente, con foco visible. Preguntas y respuestas presentes en el HTML inicial.
@@ -48,9 +47,8 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 - `ProcessAutomationMotion` usa IntersectionObserver, sin manejadores de scroll,
   bucles ni parallax. Cada elemento deja de observarse tras su primera entrada.
 - Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 850 ms y
-  10 px en los bloques, incluido el hero; 720 ms y 8 px en el recorrido, con
-  intervalos de 140 ms (máximo 420 ms). La escalera usa 850 ms por paso y el
-  mismo intervalo. Las entradas no cambian la altura de las secciones.
+  10 px en los bloques, incluido el hero; la escalera usa 850 ms y 8 px por
+  paso, con intervalos de 140 ms (máximo 420 ms). Las entradas no cambian la altura de las secciones.
 - El HTML y CSS parten de contenido visible. Solo se anima cuando hay soporte;
   ni la carga de JavaScript ni IntersectionObserver ocultan contenido en espera.
   El fundido se inicia al entrar en pantalla, de opacidad 0 a 1; el HTML y CSS
@@ -108,3 +106,10 @@ Vista local: http://127.0.0.1:3007/servicios/automatizacion-de-procesos
 La vista usa una copia aislada, con envío de contacto y medición real desactivados. No cambia las variables locales del proyecto ni la configuración publicada. Capturas de esta revisión: `staircase-desktop.jpg` y `staircase-mobile.jpg`, en el directorio local de evidencias `process-automation-review`. Se han verificado dos FAQ abiertas simultáneamente mediante Enter/Espacio y foco visible. No se han enviado formularios reales ni publicado cambios.
 
 Pendiente: revisión visual del propietario y autorización para integrar/publicar. Las traducciones del servicio quedan para otra fase; no hay enlaces a versiones pendientes.
+
+## Simplificación del bloque de tareas
+
+Se elimina «Un ejemplo de recorrido» de «¿Dónde se puede reducir el trabajo
+manual?», incluidos sus estilos y el código de animación exclusivo de ese
+ejemplo. Permanecen las cuatro tareas, el caso de Silos Spain, la escalera
+animada de puesta en marcha, FAQ y cierre. Sin integración ni despliegue.

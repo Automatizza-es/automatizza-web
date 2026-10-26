@@ -56,21 +56,6 @@ export default function ProcessAutomationPage() {
           <ul className={styles.examples} data-service-reveal>
             {examples.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
           </ul>
-          <div className={styles.journey}>
-            <p className={styles.journeyLabel}>Un ejemplo de recorrido</p>
-            <ol className={styles.flow} data-service-flow aria-label="Ejemplo ilustrativo de automatización" role="list">
-              {[
-                ["Solicitud recibida", "Llega desde el formulario", "M4 5h16v14H4z M4 6l8 6 8-6"],
-                ["Registro en el CRM", "Se guardan los datos", "M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3"],
-                ["Responsable asignado", "Recibe el aviso", "M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0 M5 20v-2a7 7 0 0 1 14 0v2"],
-                ["Revisión del equipo", "Comprueba y continúa", "M8 4H5v16h14V4h-3 M9 3h6v4H9z M8 13l3 3 5-5"],
-              ].map(([label, description, path], i) => <li key={label}>
-                <svg className={styles.flowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>
-                <div className={styles.flowText}><span>{label}</span><p className={styles.flowDescription}>{description}</p></div>
-                {i < 3 && <span className={styles.flowArrow} aria-hidden="true">→</span>}
-              </li>)}
-            </ol>
-          </div>
         </Container>
       </section>
 

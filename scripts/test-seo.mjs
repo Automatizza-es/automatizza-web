@@ -192,9 +192,7 @@ async function verify(environment) {
       const positions = sectionOrder.map(id => main.indexOf(`aria-labelledby="${id}"`));
       assert.ok(positions.every(position => position >= 0));
       assert.deepEqual(positions, [...positions].sort((a,b) => a-b), "approved service section order");
-      const flow = main.match(/<ol[^>]*aria-label="Ejemplo ilustrativo de automatización"[\s\S]*?<\/ol>/)?.[0] ?? "";
-      assert.equal(count(flow, /<li\b/g), 4);
-      for (const label of ["Solicitud recibida", "Registro en el CRM", "Responsable asignado", "Revisión del equipo"]) assert.ok(flow.includes(label), `accessible flow label in initial HTML: ${label}`);
+      assert.ok(!main.includes("Un ejemplo de recorrido"), "removed illustrative flow stays absent");
       assert.ok(!main.includes("Tu equipo mantiene el control"), "removed control block stays absent");
       assert.ok(main.includes('alt="Equipo de Silos Spain en la fábrica."'));
       assert.ok(main.includes("silos-spain-team.jpg"));
