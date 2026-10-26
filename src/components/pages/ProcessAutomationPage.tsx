@@ -90,11 +90,14 @@ export default function ProcessAutomationPage() {
       </section>
 
       <section className={styles.section} aria-labelledby="approach-title">
-        <Container className={`editorial-container ${styles.approach}`} data-service-reveal>
-          <h2 id="approach-title">Cómo lo ponemos en marcha</h2>
-          <ol className={styles.steps}>
+        <Container className="editorial-container">
+          <h2 id="approach-title" data-service-reveal>Cómo lo ponemos en marcha</h2>
+          <ol className={styles.steps} data-service-staircase role="list">
             {steps.map(([title, text], i) => <li key={title}>
               <span className={styles.number} aria-hidden="true">0{i + 1}</span>
+              {i < steps.length - 1 && <svg className={styles.stepConnector} viewBox="0 0 100 64" preserveAspectRatio="none" fill="none" aria-hidden="true" focusable="false">
+                <path d="M0 64H68V0H100M96 -4L100 0L96 4" stroke="currentColor" strokeWidth="1.25" vectorEffect="non-scaling-stroke" />
+              </svg>}
               <h3>{title}</h3><p>{text}</p>
             </li>)}
           </ol>

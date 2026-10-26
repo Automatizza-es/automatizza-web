@@ -12,7 +12,7 @@ Base: `origin/main` incorporado en `1b1b2fa`, con los datos estructurados y la C
 - Hero conservado, con más separación antes de los ejemplos.
 - Tareas en dos columnas en escritorio y una en móvil, con textos de anchura limitada y separación entre filas. El esquema se integra debajo, con la etiqueta «Un ejemplo de recorrido», sin borde ni fondo.
 - Silos Spain tiene un bloque propio con fondo suave: foto completa de hasta 360 px a la izquierda y texto a la derecha; ambos se apilan en móvil. Pie semántico de 12 px: «Con el equipo de Silos Spain en la fábrica». El archivo y sus proporciones no se modifican. Título: «Así lo aplicamos en Silos Spain».
-- «Cómo lo ponemos en marcha»: cuatro pasos en lista vertical, con las explicaciones finales aprobadas en voz «tu equipo», dentro de un contenedor de 820 px como máximo. Las filas se adaptan al contenido, sin alturas fijas.
+- «Cómo lo ponemos en marcha»: escalera ascendente de cuatro columnas en escritorio, con círculos numerados y conexiones azules finas. Conserva las explicaciones aprobadas en HTML. Por debajo de 1000 px pasa a una lista vertical conectada, sin comprimir el texto ni crear scroll lateral.
 - Se elimina el bloque «Tu equipo mantiene el control». Las FAQ recuperan el fondo gris suave `#f8f9fb`; se mantienen sus preguntas, acordeón y cierre.
 - Orden: hero, tareas y recorrido, caso real, pasos, FAQ y cierre.
 - Enlace subrayado en «Automatización» de la portada española. Se conserva `#servicios` y el resto del bloque.
@@ -49,11 +49,15 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
   bucles ni parallax. Cada elemento deja de observarse tras su primera entrada.
 - Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 850 ms y
   10 px en los bloques, incluido el hero; 720 ms y 8 px en el recorrido, con
-  intervalos de 140 ms (máximo 420 ms). Las secciones no cambian de alto.
+  intervalos de 140 ms (máximo 420 ms). La escalera usa 850 ms por paso y el
+  mismo intervalo. Las entradas no cambian la altura de las secciones.
 - El HTML y CSS parten de contenido visible. Solo se anima cuando hay soporte;
   ni la carga de JavaScript ni IntersectionObserver ocultan contenido en espera.
   El fundido se inicia al entrar en pantalla, de opacidad 0 a 1; el HTML y CSS
   base siguen siendo visibles cuando no se ejecuta JavaScript. No se utiliza la clase global `motion-ready`.
+- En escritorio la escalera espera a que su primer peldaño inferior sea visible
+  y revela los cuatro pasos del 01 al 04; en móvil cada fila entra al aparecer.
+  El título entra por separado, evitando animaciones superpuestas del contenedor.
 - `prefers-reduced-motion` evita las entradas; activarlo durante una animación
   cancela las animaciones activas y la observación. La limpieza al salir de la
   página cancela también los efectos pendientes.
@@ -83,10 +87,24 @@ local se restaura sin instrumentación después de comprobarlo. Evidencia en
 `motion-runtime-verification.json`, junto a las capturas de la revisión.
 No se cambian la CSP, las preferencias de movimiento ni la composición.
 
+## Revisión de la escalera
+
+- Revisada en 1440 y 1000 px con cuatro peldaños ascendentes; en 390 y 320 px
+  con recorrido vertical. Sin desbordamientos. Círculos y conectores decorativos;
+  el orden y contenido se mantienen en una lista numerada accesible.
+- Ejecución real en el navegador: cuatro animaciones de 850 ms, intervalos
+  0/140/280/420 ms y una iteración por paso. Instrumentación temporal retirada
+  de la copia local tras comprobarlo.
+- Comprobaciones aisladas de espera al primer paso, orden único 01–04, entradas
+  móviles, movimiento reducido y cancelación al desmontar/cambiar preferencia
+  correctas. Lint y builds optimizadas correctos; 140 escenarios HTTP/SEO pasan.
+- No cambia el resto de la composición, los textos, metadatos, formulario,
+  consentimiento, analítica ni CSP. Sin integración ni despliegue.
+
 ## Revisar
 
 Vista local: http://127.0.0.1:3007/servicios/automatizacion-de-procesos
 
-La vista usa una copia aislada, con envío de contacto y medición real desactivados. No cambia las variables locales del proyecto ni la configuración publicada. Capturas de esta revisión: `motion-faq-desktop.jpg` y `motion-mobile.jpg`, en el directorio local de evidencias `process-automation-review`. Se han verificado dos FAQ abiertas simultáneamente mediante Enter/Espacio y foco visible. No se han enviado formularios reales ni publicado cambios.
+La vista usa una copia aislada, con envío de contacto y medición real desactivados. No cambia las variables locales del proyecto ni la configuración publicada. Capturas de esta revisión: `staircase-desktop.jpg` y `staircase-mobile.jpg`, en el directorio local de evidencias `process-automation-review`. Se han verificado dos FAQ abiertas simultáneamente mediante Enter/Espacio y foco visible. No se han enviado formularios reales ni publicado cambios.
 
 Pendiente: revisión visual del propietario y autorización para integrar/publicar. Las traducciones del servicio quedan para otra fase; no hay enlaces a versiones pendientes.
