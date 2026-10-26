@@ -15,10 +15,10 @@ const examples = [
   ["Avisos y tareas pendientes", "Enviar recordatorios, comunicar cambios de estado y avisar cuando falta información o hace falta una revisión."],
 ];
 const steps = [
-  ["Entendemos cómo funciona hoy", "Revisamos los pasos, las personas implicadas y las herramientas que utilizáis. Localizamos dónde se duplica trabajo o se pierde información."],
-  ["Definimos qué cambiar", "Acordamos qué se automatiza, qué necesita aprobación y cómo se gestionan las excepciones. También valoramos las limitaciones de las aplicaciones existentes."],
-  ["Construimos y probamos", "Conectamos las herramientas y comprobamos el recorrido con situaciones habituales y casos que pueden dar problemas."],
-  ["Lo ponemos en marcha", "Probamos su funcionamiento con el equipo y acordamos cómo gestionar el mantenimiento y los cambios posteriores. Podemos empezar por un solo proceso y ampliar por fases."],
+  ["Entendemos cómo funciona hoy", "Revisamos los pasos y las herramientas de tu equipo para localizar tareas duplicadas y puntos donde se pierde información"],
+  ["Definimos qué cambiar", "Acordamos qué automatizar, qué necesita aprobación y cómo gestionar las excepciones"],
+  ["Construimos y probamos", "Conectamos las herramientas y probamos tanto las situaciones habituales como los posibles fallos"],
+  ["Lo ponemos en marcha", "Lo probamos con tu equipo y acordamos el mantenimiento y los cambios posteriores, con la posibilidad de ampliar por fases"],
 ];
 const questions = [
   ["¿Podemos mantener los programas que utilizamos?", "Siempre que permitan una conexión adecuada, partimos de las herramientas existentes. Si alguna impone limitaciones, valoramos las alternativas antes de proponer un cambio."],
@@ -59,13 +59,13 @@ export default function ProcessAutomationPage() {
             <p className={styles.journeyLabel}>Un ejemplo de recorrido</p>
             <ol className={styles.flow} aria-label="Ejemplo ilustrativo de automatización" role="list">
               {[
-                ["Solicitud recibida", "M4 5h16v14H4z M4 6l8 6 8-6"],
-                ["Registro en el CRM", "M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3"],
-                ["Responsable asignado", "M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0 M5 20v-2a7 7 0 0 1 14 0v2"],
-                ["Revisión del equipo", "M8 4H5v16h14V4h-3 M9 3h6v4H9z M8 13l3 3 5-5"],
-              ].map(([label, path], i) => <li key={label}>
+                ["Solicitud recibida", "Llega desde el formulario", "M4 5h16v14H4z M4 6l8 6 8-6"],
+                ["Registro en el CRM", "Se guardan los datos", "M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3"],
+                ["Responsable asignado", "Recibe el aviso", "M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0 M5 20v-2a7 7 0 0 1 14 0v2"],
+                ["Revisión del equipo", "Comprueba y continúa", "M8 4H5v16h14V4h-3 M9 3h6v4H9z M8 13l3 3 5-5"],
+              ].map(([label, description, path], i) => <li key={label}>
                 <svg className={styles.flowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>
-                <span>{label}</span>
+                <div className={styles.flowText}><span>{label}</span><p className={styles.flowDescription}>{description}</p></div>
                 {i < 3 && <span className={styles.flowArrow} aria-hidden="true">→</span>}
               </li>)}
             </ol>
@@ -75,7 +75,10 @@ export default function ProcessAutomationPage() {
 
       <section className={styles.case} aria-labelledby="silos-example-title">
         <Container className={`editorial-container ${styles.caseInner}`}>
-          <Image className={styles.casePhoto} src="/images/services/silos-spain-team.jpg" alt="Equipo de Silos Spain en la fábrica." width={598} height={454} sizes="(max-width: 600px) calc(100vw - 32px), 360px" />
+          <figure className={styles.caseFigure}>
+            <Image className={styles.casePhoto} src="/images/services/silos-spain-team.jpg" alt="Equipo de Silos Spain en la fábrica." width={598} height={454} sizes="(max-width: 600px) calc(100vw - 32px), 360px" />
+            <figcaption>Con el equipo de Silos Spain en la fábrica</figcaption>
+          </figure>
           <div className={styles.copy}>
             <h2 id="silos-example-title">Así lo aplicamos en Silos Spain</h2>
             <p>En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.</p>
@@ -87,7 +90,7 @@ export default function ProcessAutomationPage() {
 
       <section className={styles.section} aria-labelledby="approach-title">
         <Container className={`editorial-container ${styles.approach}`}>
-          <h2 id="approach-title">Así abordamos el proceso</h2>
+          <h2 id="approach-title">Cómo lo ponemos en marcha</h2>
           <ol className={styles.steps}>
             {steps.map(([title, text], i) => <li key={title}>
               <span className={styles.number} aria-hidden="true">0{i + 1}</span>
@@ -97,13 +100,10 @@ export default function ProcessAutomationPage() {
         </Container>
       </section>
 
-      <section className={styles.section} aria-labelledby="human-review-title">
+      <section className={styles.control} aria-labelledby="human-review-title">
         <Container className={`editorial-container ${styles.review}`}>
-          <h2 id="human-review-title">Qué automatizamos y qué revisa tu equipo</h2>
-          <div className={styles.copy}>
-            <p>Antes de construir una solución, revisamos cuánto se repite la tarea, qué tiempo consume y qué excepciones aparecen. Si el proceso cambia constantemente o requiere decisiones difíciles de definir, puede convenir simplificarlo primero o automatizar solo una parte.</p>
-            <p>Dejamos claros los puntos de revisión, qué ocurre cuando falta un dato y cómo debe actuar el sistema si algo falla.</p>
-          </div>
+          <h2 id="human-review-title">Tu equipo mantiene el control</h2>
+          <p>Definimos qué acciones puede ejecutar el sistema, cuáles necesitan aprobación y qué ocurre cuando falta información o algo falla</p>
         </Container>
       </section>
 

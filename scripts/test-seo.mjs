@@ -195,12 +195,12 @@ async function verify(environment) {
       const flow = main.match(/<ol[^>]*aria-label="Ejemplo ilustrativo de automatización"[\s\S]*?<\/ol>/)?.[0] ?? "";
       assert.equal(count(flow, /<li\b/g), 4);
       for (const label of ["Solicitud recibida", "Registro en el CRM", "Responsable asignado", "Revisión del equipo"]) assert.ok(flow.includes(label), `accessible flow label in initial HTML: ${label}`);
-      assert.ok(main.includes("Qué automatizamos y qué revisa tu equipo"));
+      assert.ok(main.includes("Tu equipo mantiene el control"));
       const review = main.match(/<section[^>]*aria-labelledby="human-review-title"[\s\S]*?<\/section>/)?.[0] ?? "";
-      assert.equal(count(review, /<p\b/g), 2);
+      assert.equal(count(review, /<p\b/g), 1);
       assert.ok(main.includes('alt="Equipo de Silos Spain en la fábrica."'));
       assert.ok(main.includes("silos-spain-team.jpg"));
-      assert.ok(main.includes("acordamos cómo gestionar el mantenimiento y los cambios posteriores."));
+      assert.ok(main.includes("acordamos el mantenimiento y los cambios posteriores, con la posibilidad de ampliar por fases"));
       for (const example of ["Solicitudes y seguimiento comercial", "Documentos y presupuestos", "Conexión entre herramientas", "Avisos y tareas pendientes"]) assert.ok(main.includes(example), `example in initial HTML: ${example}`);
       const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
       assert.equal(count(faq, /<details\b/g), 4);

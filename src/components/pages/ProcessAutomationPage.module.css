@@ -17,10 +17,12 @@
 .journey { margin-top: 2.5rem; }
 .page .journeyLabel { color: #697381; font-size: .75rem; font-weight: 500; }
 .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
-.flow li { position: relative; display: flex; align-items: center; gap: .65rem; min-width: 0; padding-right: 1rem; color: var(--color-navy); font-size: .8125rem; font-weight: 500; line-height: 1.45; }
+.flow li { position: relative; display: flex; align-items: flex-start; gap: .65rem; min-width: 0; padding-right: 1rem; color: var(--color-navy); font-size: .8125rem; font-weight: 500; line-height: 1.45; }
 .flow li:last-child { padding-right: 0; }
+.flowText { min-width: 0; }
+.page .flowDescription { margin-top: .35rem; font-size: .8125rem; line-height: 1.6; }
 .flowIcon { flex: 0 0 22px; width: 22px; height: 22px; color: #007dbd; }
-.flowArrow { position: absolute; right: -.8rem; color: #8499aa; font-weight: 400; }
+.flowArrow { position: absolute; top: .1rem; right: -.8rem; color: #8499aa; font-weight: 400; }
 .section { padding-block: clamp(2.5rem, 4vw, 3.25rem); }
 .hero + .section { padding-top: 1rem; }
 .sectionIntro > p { max-width: 820px; margin-top: 1.25rem; }
@@ -35,10 +37,15 @@
 .case { padding-block: clamp(2.5rem, 4vw, 3.25rem); background: #f8f9fb; }
 .caseInner { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); }
 .case h2 { max-width: 640px; }
+.caseFigure { width: 100%; max-width: 360px; margin: 0; }
+.caseFigure figcaption { margin-top: .65rem; color: #58616d; font-size: .8125rem; line-height: 1.6; }
 .casePhoto { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 6px; }
 .textLink { display: inline-flex; align-items: center; gap: .65rem; min-height: 44px; color: var(--color-navy); font-size: .9375rem; font-weight: 500; text-decoration: underline; text-decoration-color: #b9d8e8; text-underline-offset: .3em; }
 .textLink:hover { text-decoration-color: var(--color-cyan); }
-.review { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 2rem clamp(3rem, 6vw, 6rem); }
+.control { padding-block: 1.75rem; }
+.review { max-width: 820px; }
+.page .review h2 { font-size: clamp(1.25rem, 1.8vw, 1.5rem); text-wrap: initial; }
+.review p { max-width: 70ch; margin-top: .75rem; }
 .questions { margin-top: 1.25rem; }
 .page .questions p { color: #58616d; }
 .closing { padding-block: clamp(3rem, 5vw, 4rem); background: #010d46; }
@@ -48,7 +55,7 @@
 .contactButton:hover { background: #36b4fd; }
 
 @media (max-width: 900px) {
-  .heroGrid, .split, .review { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .heroGrid, .split { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
   .hero .copy { max-width: 620px; }
   .page h1 { max-width: 660px; font-size: clamp(2rem, 6.7vw, 2.75rem); }
   .caseInner { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 2rem; }
