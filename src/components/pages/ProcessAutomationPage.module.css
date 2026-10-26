@@ -38,14 +38,11 @@
 .caseInner { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); }
 .case h2 { max-width: 640px; }
 .caseFigure { width: 100%; max-width: 360px; margin: 0; }
-.caseFigure figcaption { margin-top: .65rem; color: #58616d; font-size: .8125rem; line-height: 1.6; }
+.caseFigure figcaption { margin-top: .65rem; color: #58616d; font-size: .75rem; line-height: 1.6; }
 .casePhoto { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 6px; }
 .textLink { display: inline-flex; align-items: center; gap: .65rem; min-height: 44px; color: var(--color-navy); font-size: .9375rem; font-weight: 500; text-decoration: underline; text-decoration-color: #b9d8e8; text-underline-offset: .3em; }
 .textLink:hover { text-decoration-color: var(--color-cyan); }
-.control { padding-block: 1.75rem; }
-.review { max-width: 820px; }
-.page .review h2 { font-size: clamp(1.25rem, 1.8vw, 1.5rem); text-wrap: initial; }
-.review p { max-width: 70ch; margin-top: .75rem; }
+.faq { background: #f8f9fb; }
 .questions { margin-top: 1.25rem; }
 .page .questions p { color: #58616d; }
 .closing { padding-block: clamp(3rem, 5vw, 4rem); background: #010d46; }

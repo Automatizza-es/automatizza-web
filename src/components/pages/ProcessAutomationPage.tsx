@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import faqStyles from "@/components/home/FaqSection.module.css";
 import styles from "./ProcessAutomationPage.module.css";
+import { ProcessAutomationMotion } from "./ProcessAutomationMotion";
 
 // Approved Spanish copy. Other languages are added to the route registry only
 // once their complete page is ready; this view is not a translation fallback.
@@ -30,7 +31,8 @@ const questions = [
 export default function ProcessAutomationPage() {
   return <>
     <Header redesign homeLinks />
-    <main className={styles.page}>
+    <ProcessAutomationMotion />
+    <main id="process-automation-content" className={styles.page}>
       <section className={styles.hero} aria-labelledby="automation-title">
         <Container className="editorial-container">
           <Link className={styles.back} href="/#servicios"><span aria-hidden="true">←</span> Todos los servicios</Link>
@@ -48,16 +50,16 @@ export default function ProcessAutomationPage() {
 
       <section className={styles.section} aria-labelledby="manual-work-title">
         <Container className="editorial-container">
-          <div className={styles.sectionIntro}>
+          <div className={styles.sectionIntro} data-service-reveal>
             <h2 id="manual-work-title">¿Dónde se puede reducir el trabajo manual?</h2>
             <p>Las oportunidades suelen aparecer cuando alguien tiene que registrar los mismos datos varias veces, preparar documentos con información que ya existe o estar pendiente de avisar a otra persona para que el trabajo continúe.</p>
           </div>
-          <ul className={styles.examples}>
+          <ul className={styles.examples} data-service-reveal>
             {examples.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
           </ul>
           <div className={styles.journey}>
             <p className={styles.journeyLabel}>Un ejemplo de recorrido</p>
-            <ol className={styles.flow} aria-label="Ejemplo ilustrativo de automatización" role="list">
+            <ol className={styles.flow} data-service-flow aria-label="Ejemplo ilustrativo de automatización" role="list">
               {[
                 ["Solicitud recibida", "Llega desde el formulario", "M4 5h16v14H4z M4 6l8 6 8-6"],
                 ["Registro en el CRM", "Se guardan los datos", "M5 4h14v16H5z M9 9h6 M9 13h6 M9 17h3"],
@@ -74,7 +76,7 @@ export default function ProcessAutomationPage() {
       </section>
 
       <section className={styles.case} aria-labelledby="silos-example-title">
-        <Container className={`editorial-container ${styles.caseInner}`}>
+        <Container className={`editorial-container ${styles.caseInner}`} data-service-reveal>
           <figure className={styles.caseFigure}>
             <Image className={styles.casePhoto} src="/images/services/silos-spain-team.jpg" alt="Equipo de Silos Spain en la fábrica." width={598} height={454} sizes="(max-width: 600px) calc(100vw - 32px), 360px" />
             <figcaption>Con el equipo de Silos Spain en la fábrica</figcaption>
@@ -89,7 +91,7 @@ export default function ProcessAutomationPage() {
       </section>
 
       <section className={styles.section} aria-labelledby="approach-title">
-        <Container className={`editorial-container ${styles.approach}`}>
+        <Container className={`editorial-container ${styles.approach}`} data-service-reveal>
           <h2 id="approach-title">Cómo lo ponemos en marcha</h2>
           <ol className={styles.steps}>
             {steps.map(([title, text], i) => <li key={title}>
@@ -100,15 +102,8 @@ export default function ProcessAutomationPage() {
         </Container>
       </section>
 
-      <section className={styles.control} aria-labelledby="human-review-title">
-        <Container className={`editorial-container ${styles.review}`}>
-          <h2 id="human-review-title">Tu equipo mantiene el control</h2>
-          <p>Definimos qué acciones puede ejecutar el sistema, cuáles necesitan aprobación y qué ocurre cuando falta información o algo falla</p>
-        </Container>
-      </section>
-
-      <section className={styles.section} aria-labelledby="service-faq-title">
-        <Container className="editorial-container">
+      <section className={`${styles.section} ${styles.faq}`} aria-labelledby="service-faq-title">
+        <Container className="editorial-container" data-service-reveal>
           <h2 id="service-faq-title">Antes de empezar</h2>
           <div className={`${faqStyles.questions} ${styles.questions}`}>
             {questions.map(([question, answer]) => <details className={faqStyles.item} key={question}>
@@ -120,7 +115,7 @@ export default function ProcessAutomationPage() {
       </section>
 
       <section className={styles.closing} aria-labelledby="service-contact-title">
-        <Container className={`editorial-container ${styles.split}`}>
+        <Container className={`editorial-container ${styles.split}`} data-service-reveal>
           <h2 id="service-contact-title">¿Qué tarea sigue pasando por demasiadas manos?</h2>
           <div className={styles.copy}>
             <p>Cuéntanos qué ocurre desde que empieza hasta que termina. En una primera conversación gratuita y sin compromiso, podemos valorar por dónde empezar.</p>

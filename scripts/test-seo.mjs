@@ -188,16 +188,14 @@ async function verify(environment) {
       assert.ok(!main.includes("Menos copiar y pegar. Menos pendientes entre herramientas."));
       assert.ok(main.includes("SERVICIOS / AUTOMATIZACIÓN"));
       assert.ok(main.includes('href="/#servicios"'));
-      const sectionOrder = ["automation-title", "manual-work-title", "silos-example-title", "approach-title", "human-review-title", "service-faq-title", "service-contact-title"];
+      const sectionOrder = ["automation-title", "manual-work-title", "silos-example-title", "approach-title", "service-faq-title", "service-contact-title"];
       const positions = sectionOrder.map(id => main.indexOf(`aria-labelledby="${id}"`));
       assert.ok(positions.every(position => position >= 0));
       assert.deepEqual(positions, [...positions].sort((a,b) => a-b), "approved service section order");
       const flow = main.match(/<ol[^>]*aria-label="Ejemplo ilustrativo de automatización"[\s\S]*?<\/ol>/)?.[0] ?? "";
       assert.equal(count(flow, /<li\b/g), 4);
       for (const label of ["Solicitud recibida", "Registro en el CRM", "Responsable asignado", "Revisión del equipo"]) assert.ok(flow.includes(label), `accessible flow label in initial HTML: ${label}`);
-      assert.ok(main.includes("Tu equipo mantiene el control"));
-      const review = main.match(/<section[^>]*aria-labelledby="human-review-title"[\s\S]*?<\/section>/)?.[0] ?? "";
-      assert.equal(count(review, /<p\b/g), 1);
+      assert.ok(!main.includes("Tu equipo mantiene el control"), "removed control block stays absent");
       assert.ok(main.includes('alt="Equipo de Silos Spain en la fábrica."'));
       assert.ok(main.includes("silos-spain-team.jpg"));
       assert.ok(main.includes("acordamos el mantenimiento y los cambios posteriores, con la posibilidad de ampliar por fases"));

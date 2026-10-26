@@ -3,18 +3,18 @@
 Actualización: 2026-10-26. Rama: `codex/process-automation-page`.
 Base: `origin/main` incorporado en `1b1b2fa`, con los datos estructurados y la CSP efectiva ya publicados. No se han integrado ni desplegado estos cambios.
 
-## Alcance — revisión final de contenido y acabado
+## Alcance — acabado y entradas sutiles
 
 - Nueva página española `/servicios/automatizacion-de-procesos`, con el contenido aprobado, un único H1, cuatro ejemplos, cuatro pasos, el caso de Silos Spain y cuatro preguntas en acordeón nativo.
-- Reutiliza cabecera, footer, contenedor editorial, fuentes, colores, botones y estilos del acordeón existente. Incorpora únicamente la foto original adjunta del equipo de Silos Spain, sin recortar personas ni retocar el archivo. No introduce nuevas animaciones.
+- Reutiliza cabecera, footer, contenedor editorial, fuentes, colores, botones y estilos del acordeón existente. Incorpora únicamente la foto original adjunta del equipo de Silos Spain, sin recortar personas ni retocar el archivo. Las entradas reutilizan la curva y duración editorial de la portada mediante un componente acotado a esta página, sin cambiar el movimiento de la home.
 - Cabecera proporcionada como la del proyecto de Silos Spain: retorno a `/#servicios`, etiqueta «SERVICIOS / AUTOMATIZACIÓN» y un único H1, sin el anterior segundo titular.
 - Esquema accesible y estático, identificado como ejemplo: Solicitud recibida → Registro en el CRM → Responsable asignado → Revisión del equipo, con una explicación breve bajo cada título; vertical en móvil.
 - Hero conservado, con más separación antes de los ejemplos.
 - Tareas en dos columnas en escritorio y una en móvil, con textos de anchura limitada y separación entre filas. El esquema se integra debajo, con la etiqueta «Un ejemplo de recorrido», sin borde ni fondo.
-- Silos Spain tiene un bloque propio con fondo suave: foto completa de hasta 360 px a la izquierda y texto a la derecha; ambos se apilan en móvil. Pie semántico: «Con el equipo de Silos Spain en la fábrica». El archivo y sus proporciones no se modifican. Título: «Así lo aplicamos en Silos Spain».
+- Silos Spain tiene un bloque propio con fondo suave: foto completa de hasta 360 px a la izquierda y texto a la derecha; ambos se apilan en móvil. Pie semántico de 12 px: «Con el equipo de Silos Spain en la fábrica». El archivo y sus proporciones no se modifican. Título: «Así lo aplicamos en Silos Spain».
 - «Cómo lo ponemos en marcha»: cuatro pasos en lista vertical, con las explicaciones finales aprobadas en voz «tu equipo», dentro de un contenedor de 820 px como máximo. Las filas se adaptan al contenido, sin alturas fijas.
-- «Tu equipo mantiene el control»: un único párrafo sobre blanco, título secundario más contenido y separación propia para evitar un bloque alto. FAQ y cierre sin cambios.
-- Orden: hero, tareas y recorrido, caso real, pasos, revisión humana, FAQ y cierre.
+- Se elimina el bloque «Tu equipo mantiene el control». Las FAQ recuperan el fondo gris suave `#f8f9fb`; se mantienen sus preguntas, acordeón y cierre.
+- Orden: hero, tareas y recorrido, caso real, pasos, FAQ y cierre.
 - Enlace subrayado en «Automatización» de la portada española. Se conserva `#servicios` y el resto del bloque.
 - Ambos CTA llevan a `/contacto`; el caso enlaza a `/proyectos/silos-spain`. No hay otro formulario.
 - El mantenimiento se acuerda por proyecto, como indica el borrador; no se añaden compromisos, resultados ni precios.
@@ -37,16 +37,39 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 - `npm run test:i18n`: 8 pruebas correctas; contempla equivalentes parcialmente publicados.
 - `npm run test:security`: 9 pruebas correctas, con la CSP de main conservada.
 - `npm run test:structured-data`: 5 pruebas correctas; se conservan relaciones, identificadores y LinkedIn del nodo Brand.
-- `npm run test:seo`: builds optimizadas y TypeScript correctos en producción y preview; 140 escenarios HTTP/página correctos. Verifica metadatos y contenido en HTML inicial, sitemap, alternates, cabeceras, enlaces, 404 de traducciones inexistentes, del índice `/servicios` y de la ruta antigua, y redirección de barra final. Verifica también el orden de los bloques, el esquema y el único párrafo del bloque de control en el HTML inicial. Las nuevas explicaciones y el pie de foto se han comprobado además en la respuesta HTML sin ejecutar JavaScript.
+- `npm run test:seo`: builds optimizadas y TypeScript correctos en producción y preview; 140 escenarios HTTP/página correctos. Verifica metadatos y contenido en HTML inicial, sitemap, alternates, cabeceras, enlaces, 404 de traducciones inexistentes, del índice `/servicios` y de la ruta antigua, y redirección de barra final. Verifica también el orden de los bloques, el esquema y la ausencia del bloque de control en el HTML inicial. Las nuevas explicaciones y el pie de foto se han comprobado además en la respuesta HTML sin ejecutar JavaScript.
 - Revisión de composición del 26/10: escritorio 1440 px, tablet 768 px y móvil 390/320 px, sin desbordamientos horizontales. Revisados el enlace de la portada, navegación móvil, Silos Spain y CTA a contacto.
 - Foto: original JPEG 598 × 454, idéntico al archivo adjunto; URL pública y optimizador local responden HTTP 200. Proporción completa conservada en escritorio y móvil.
 - Acordeón: cerrado inicialmente; Enter y Espacio permiten abrir y cerrar varias respuestas simultáneamente, con foco visible. Preguntas y respuestas presentes en el HTML inicial.
 - Selector: solo Español en la nueva página; cierre con Escape conservado.
 
+## Movimiento y contenido sin JavaScript
+
+- `ProcessAutomationMotion` usa IntersectionObserver, sin manejadores de scroll,
+  bucles ni parallax. Cada elemento deja de observarse tras su primera entrada.
+- Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 520 ms y
+  6 px en los bloques; 420 ms y 4 px en el recorrido, con intervalos de 70 ms
+  (máximo 210 ms). El hero permanece estático y las secciones no cambian de alto.
+- El HTML y CSS parten de contenido visible. Solo se anima cuando hay soporte;
+  ni la carga de JavaScript ni IntersectionObserver ocultan contenido en espera.
+  Incluso durante la animación la opacidad inicial es 0,55, sin exigir esperar
+  para leer. No se utiliza la clase global `motion-ready`.
+- `prefers-reduced-motion` evita las entradas; activarlo durante una animación
+  cancela las animaciones activas y la observación. La limpieza al salir de la
+  página cancela también los efectos pendientes.
+- Comprobaciones aisladas del efecto: preferencia reducida, APIs no disponibles,
+  secuencia única, cancelación al cambiar preferencia y al desmontar correctas.
+- Navegador con scripts bloqueados mediante una cabecera de un proxy de prueba
+  exclusivamente local: todos los bloques con opacidad 1 y sin transformación;
+  el acordeón sigue abriéndose mediante teclado. No cambia la CSP del proyecto.
+- Escritorio 1440 px y móviles 390/320 px revisados, sin desbordamientos ni
+  errores de consola. Lint, builds y 140 escenarios HTTP/SEO correctos; regresión
+  de contacto (23), analítica (25) y seguridad (9) sin fallos ni envíos reales.
+
 ## Revisar
 
 Vista local: http://127.0.0.1:3007/servicios/automatizacion-de-procesos
 
-La vista usa una copia aislada, con envío de contacto y medición real desactivados. No cambia las variables locales del proyecto ni la configuración publicada. Capturas de esta revisión: `content-final-desktop.jpg` y `content-final-mobile.jpg`, en el directorio local de evidencias `process-automation-review`. Se han verificado dos FAQ abiertas simultáneamente mediante Enter/Espacio y foco visible. No se han enviado formularios reales ni publicado cambios.
+La vista usa una copia aislada, con envío de contacto y medición real desactivados. No cambia las variables locales del proyecto ni la configuración publicada. Capturas de esta revisión: `motion-faq-desktop.jpg` y `motion-mobile.jpg`, en el directorio local de evidencias `process-automation-review`. Se han verificado dos FAQ abiertas simultáneamente mediante Enter/Espacio y foco visible. No se han enviado formularios reales ni publicado cambios.
 
 Pendiente: revisión visual del propietario y autorización para integrar/publicar. Las traducciones del servicio quedan para otra fase; no hay enlaces a versiones pendientes.
