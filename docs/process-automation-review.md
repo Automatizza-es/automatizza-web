@@ -130,3 +130,12 @@ Se elimina «Un ejemplo de recorrido» de «¿Dónde se puede reducir el trabajo
 manual?», incluidos sus estilos y el código de animación exclusivo de ese
 ejemplo. Permanecen las cuatro tareas, el caso de Silos Spain, la escalera
 animada de puesta en marcha, FAQ y cierre. Sin integración ni despliegue.
+
+## Cierre de contenido aprobado
+
+Se conserva la estructura aprobada. La subida entre peldaños pasa de 64 a 52 px,
+sin cambiar el estilo ni la alineación general del encabezado. Los cuatro pasos
+usan los últimos textos facilitados, empezando por «Entendemos tu proceso».
+El segundo párrafo de Silos Spain se sustituye por la explicación aprobada
+sobre consultar y continuar cada gestión desde la misma plataforma. No se
+modifican las animaciones sin fundido, otras páginas ni la configuración.

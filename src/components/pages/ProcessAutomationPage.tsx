@@ -16,10 +16,10 @@ const examples = [
   ["Avisos y tareas pendientes", "Enviar recordatorios, comunicar cambios de estado y avisar cuando falta información o hace falta una revisión."],
 ];
 const steps = [
-  ["Entendemos cómo funciona hoy", "Revisamos los pasos y las herramientas de tu equipo para localizar tareas duplicadas y puntos donde se pierde información"],
-  ["Definimos qué cambiar", "Acordamos qué automatizar, qué necesita aprobación y cómo gestionar las excepciones"],
-  ["Construimos y probamos", "Conectamos las herramientas y probamos tanto las situaciones habituales como los posibles fallos"],
-  ["Lo ponemos en marcha", "Lo probamos con tu equipo y acordamos el mantenimiento y los cambios posteriores, con la posibilidad de ampliar por fases"],
+  ["Entendemos tu proceso", "Revisamos cómo trabaja tu equipo y dónde se repiten tareas o se pierde información."],
+  ["Definimos qué cambiar", "Acordamos qué automatizar, qué necesita aprobación y cómo gestionar las excepciones."],
+  ["Construimos y probamos", "Conectamos las herramientas y probamos tanto el funcionamiento habitual como los posibles fallos."],
+  ["Lo ponemos en marcha", "Lo probamos con tu equipo y acordamos el mantenimiento y los siguientes pasos."],
 ];
 const questions = [
   ["¿Podemos mantener los programas que utilizamos?", "Siempre que permitan una conexión adecuada, partimos de las herramientas existentes. Si alguna impone limitaciones, valoramos las alternativas antes de proponer un cambio."],
@@ -68,7 +68,7 @@ export default function ProcessAutomationPage() {
           <div className={styles.copy}>
             <h2 id="silos-example-title">Así lo aplicamos en Silos Spain</h2>
             <p>En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.</p>
-            <p>El CRM sirve como núcleo para conectar progresivamente procesos comerciales y administrativos. El equipo puede consultar la información y continuar el trabajo sin depender de herramientas aisladas.</p>
+            <p>El equipo puede consultar la información y continuar cada gestión desde la misma plataforma, sin ir pasando de una herramienta a otra.</p>
             <Link className={styles.textLink} href="/proyectos/silos-spain">Ver el proyecto de Silos Spain <span aria-hidden="true">→</span></Link>
           </div>
         </Container>

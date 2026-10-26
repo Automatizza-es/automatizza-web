@@ -19,7 +19,7 @@
 .examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem clamp(2.5rem, 6vw, 6rem); margin: 2rem 0 0; padding: 0; list-style: none; }
 .examples li { border-top: 1px solid #e1e4e8; padding-top: 1.25rem; }
 .examples p { max-width: 54ch; margin-top: .75rem; }
-.steps { --step-rise: 64px; --step-gap: clamp(1.5rem, 3vw, 3rem); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--step-gap); margin: 2.5rem 0 0; padding: calc(3 * var(--step-rise)) 0 0; list-style: none; }
+.steps { --step-rise: 52px; --step-gap: clamp(1.5rem, 3vw, 3rem); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--step-gap); margin: 2.5rem 0 0; padding: calc(3 * var(--step-rise)) 0 0; list-style: none; }
 .steps li { --step-index: 0; position: relative; min-width: 0; margin-top: calc(-1 * var(--step-index) * var(--step-rise)); }
 .steps li:nth-child(2) { --step-index: 1; }
 .steps li:nth-child(3) { --step-index: 2; }

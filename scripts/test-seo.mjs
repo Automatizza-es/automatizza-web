@@ -196,7 +196,7 @@ async function verify(environment) {
       assert.ok(!main.includes("Tu equipo mantiene el control"), "removed control block stays absent");
       assert.ok(main.includes('alt="Equipo de Silos Spain en la fábrica."'));
       assert.ok(main.includes("silos-spain-team.jpg"));
-      assert.ok(main.includes("acordamos el mantenimiento y los cambios posteriores, con la posibilidad de ampliar por fases"));
+      assert.ok(main.includes("acordamos el mantenimiento y los siguientes pasos."));
       for (const example of ["Solicitudes y seguimiento comercial", "Documentos y presupuestos", "Conexión entre herramientas", "Avisos y tareas pendientes"]) assert.ok(main.includes(example), `example in initial HTML: ${example}`);
       const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
       assert.equal(count(faq, /<details\b/g), 4);
