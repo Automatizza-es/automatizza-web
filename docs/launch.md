@@ -9,7 +9,7 @@
   `2026-10-20-prelanzamiento-1`. `privacyPolicy.reviewed=true`.
 - Activación de analítica en main, commit `fb84daa`, desplegada correctamente
   el 20/10/2026 a las 14:27 UTC. `cookiePolicy.reviewed=true`.
-- GTM `GTM-59RBDRPH`, versión **2**, publicada con autorización de lanzamiento:
+- GTM `GTM-59RBDRPH`, versión **2** en el lanzamiento del 20/10/2026 (sustituida después por la versión **3** compatible con CSP):
   «Lanzamiento Automatizza · analítica con consentimiento».
   GA4 `G-1Y94M3HZRB`, únicamente a través de GTM.
 - Revisión del contenedor: tres etiquetas, filtros de consentimiento y
@@ -114,3 +114,17 @@ válida de Resend en el entorno de despliegue.
 - [Google: condiciones de tratamiento](https://business.safety.google/adsprocessorterms/).
 - [AEPD: información a las personas](https://www.aepd.es/derechos-y-deberes/conoce-tus-derechos/derecho-de-informacion).
 - [AEPD: ejercicio de derechos y plazos](https://www.aepd.es/derechos-y-deberes/ejerce-tus-derechos).
+
+## Cierre de seguridad CSP — 26/10/2026
+
+Implementación finalizada y desplegada mediante la PR #1, integrada en `main`
+el 23/10/2026; commit `1b1b2face12c286b46a6c9d2af43b5b68c5eb2e9`.
+La titular confirma la cabecera CSP efectiva en `automatizza.es`, el
+funcionamiento de GTM/GA4 y del consentimiento, y un envío de formulario con
+correo recibido en `info@automatizza.es`. Las variables de GTM incompatibles
+con CSP fueron sustituidas y publicadas en la versión 3 del contenedor.
+
+Solo queda pendiente, dentro de esta implementación, el próximo análisis
+automático de Aikido para confirmar que desaparece la alerta de ausencia de
+CSP. No hay cambios de código ni nuevos despliegues en este cierre documental.
+Véanse el [detalle técnico](security-csp.md) y el [diario de progreso](progress.md).

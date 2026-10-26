@@ -1,14 +1,33 @@
-# CSP de Automatizza — política efectiva preparada para revisión
+# CSP de Automatizza — implementación finalizada en producción
 
-Fecha: 2026-10-23. Rama independiente `codex/security-csp`, basada en `main` (`54d55d3`). No incorpora ni publica la página de servicio de la otra rama.
+Cierre documental: **2026-10-26**. Implementación integrada mediante la
+[PR #1](https://github.com/Automatizza-es/automatizza-web/pull/1), fusionada en
+`main` el 23/10/2026 a las 14:03 UTC. Commit de integración y despliegue:
+`1b1b2face12c286b46a6c9d2af43b5b68c5eb2e9`.
 
-## Estado y límite de esta PR
+## Estado final
 
-Producción `https://automatizza.es/` devuelve HTTP 200, HTML estático servido por Vercel y HSTS `max-age=63072000`, pero no CSP ni CSP Report-Only. No se ha cambiado la configuración externa de Vercel ni se ha desplegado esta rama a producción.
+La titular confirma que la implementación está desplegada y comprobada en
+`https://automatizza.es`: cabecera **Content-Security-Policy efectiva**, GTM y
+GA4 funcionando, consentimiento de cookies validado y formulario enviado con
+éxito, con correo recibido en `info@automatizza.es`. La implementación CSP se da
+por finalizada.
 
-No hay `vercel.json` ni un proyecto `.vercel` enlazado en este checkout. La revisión de Vercel se basa en el flujo Next.js del repositorio y las respuestas HTTP públicas; no se ha inspeccionado el panel privado de ajustes/WAF/variables de la cuenta.
+La ausencia de CSP y CSP Report-Only detectada al inicio de la revisión del
+23/10/2026 corresponde al estado anterior al despliegue; no describe el estado
+actual. La política efectiva se aplica a las builds optimizadas; `next dev`
+conserva Report-Only para las herramientas de desarrollo.
 
-Esta PR prepara **Content-Security-Policy efectiva** para las builds optimizadas, tras comprobar GTM versión 3 con Report-Only y después con bloqueo activo en local. `next dev` mantiene Report-Only para las herramientas de desarrollo. No se ha hecho merge ni se ha desplegado producción; la alerta de Aikido sigue pendiente hasta un despliegue autorizado y un nuevo escaneo.
+La integración en GitHub y su registro de despliegue se han contrastado durante
+este cierre. Las comprobaciones funcionales finales en producción son las
+confirmadas por la titular; no se repiten envíos ni pruebas de conversión en
+esta actualización exclusivamente documental. No se cambia código,
+configuración externa ni se realiza un nuevo despliegue.
+
+**Único pendiente de esta implementación:** el próximo análisis automático de
+Aikido debe confirmar que desaparece la alerta «Content Security Policy (CSP)
+header not set». No se afirma que el escáner ya haya cerrado la alerta ni se
+solicita un nuevo análisis manual.
 
 ### Incompatibilidad con eval resuelta en GTM versión 3
 
@@ -30,7 +49,7 @@ La titular ha sustituido y publicado ambas variables, y confirma en Tag Assistan
 - La tabla de ajustes de la etiqueta de Google sigue apuntando a esas variables para los mismos parámetros.
 - Primero se repitieron aceptación y navegación con Report-Only; después con la política efectiva exacta de producción. GTM y el Google tag cargaron y no aparecieron nuevos informes CSP ni errores del navegador en las rutas probadas.
 
-No se ha añadido `unsafe-eval` a las builds optimizadas. La declaración de una función que contiene `eval` en el runtime genérico de GTM no equivale a su ejecución; la validación comprueba también el comportamiento en el navegador. Esta PR no modifica ni publica GTM/GA4.
+No se ha añadido `unsafe-eval` a las builds optimizadas. La declaración de una función que contiene `eval` en el runtime genérico de GTM no equivale a su ejecución; la validación comprueba también el comportamiento en el navegador. La implementación no modificó ni publicó GTM/GA4; las plantillas compatibles fueron publicadas por la titular.
 
 ## Inventario real
 
@@ -68,7 +87,7 @@ No se autorizan orígenes arbitrarios con `https:`, Ads, DoubleClick, datos como
 
 ### Excepciones deliberadas y alternativas evaluadas
 
-Esta política basada en orígenes **no es una CSP estricta basada en nonces/hashes**. Permitir scripts inline limita la protección frente a XSS y debe seguir figurando como deuda de endurecimiento.
+Esta política basada en orígenes **no es una CSP estricta basada en nonces/hashes**. Permitir scripts inline limita la protección frente a XSS. Es una excepción técnica documentada de la implementación actual, no una tarea pendiente de este cierre.
 
 - La portada publicada contiene bootstrap y Flight inline de Next, distintos según página/build. Un nonce fijo o hashes copiados de un despliegue son incorrectos.
 - Un nonce por petición requiere renderizado dinámico y afecta a la generación estática y caché CDN actuales. No se impone ese cambio sin una decisión expresa sobre rendimiento.
@@ -87,7 +106,7 @@ Solo registra directiva conocida, origen bloqueado (sin credenciales/ruta/query/
 
 El endpoint relativo evita mandar informes locales/previews a producción. Se mantiene `report-uri` por compatibilidad entre navegadores; no se declara un report-to absoluto que apunte erróneamente a producción desde un preview.
 
-## Validación realizada
+## Validación previa a la integración (23/10/2026)
 
 - Lint correcto.
 - 9 pruebas de seguridad: directivas, separación desarrollo/producción, cabeceras únicas, saneamiento, formatos, límites y protección de logs.
@@ -98,9 +117,9 @@ El endpoint relativo evita mandar informes locales/previews a producción. Se ma
 - Imágenes de la escena de oficina cargadas y animaciones activas; navegación a APC y Contacto conservada. Vídeo APC reproducido con teclado, readyState 4, avance de currentTime y sin error. HTTP Range devuelve 206 y `video/mp4`.
 - Formulario visible con envío local desactivado; validación, errores, éxito y generate_lead comprobados mediante el manejador con proveedor simulado. No se ha enviado otro email real ni se ha emitido una conversión ficticia a Google.
 
-Vista local de la política efectiva de producción: `http://localhost:3012/`. Report-Only se comprobó en `http://localhost:3011/`. La vista del servicio en el puerto 3007 sigue siendo independiente. Se ha probado también móvil de 390 px, cambio de idioma ES → EN y retirada desde preferencias traducidas, sin desbordamiento.
+Direcciones utilizadas durante la revisión local (registro histórico, no enlaces de revisión pendientes): política efectiva de producción: `http://localhost:3012/`. Report-Only se comprobó en `http://localhost:3011/`. La vista del servicio en el puerto 3007 sigue siendo independiente. Se ha probado también móvil de 390 px, cambio de idioma ES → EN y retirada desde preferencias traducidas, sin desbordamiento.
 
-## Archivos de la PR
+## Archivos de la PR integrada
 
 - `next.config.ts`: aplicación de cabeceras y separación de previews.
 - `src/lib/security-policy.ts`: política central, efectiva en builds optimizadas y Report-Only en desarrollo.
@@ -109,12 +128,21 @@ Vista local de la política efectiva de producción: `http://localhost:3012/`. R
 - `package.json`: comando test:security, sin dependencias nuevas.
 - `docs/security-csp.md`: evidencia, excepciones y límites de la validación.
 
-## Revisión final y despliegue posterior
+## Verificación final y cierre (26/10/2026)
 
-1. La incompatibilidad de las dos variables GTM queda resuelta con el contenedor publicado v3. CSP efectiva preparada y probada localmente; la PR se actualiza sin merge.
-2. El preview de Vercel está protegido por SSO. No se altera ni se omite esa protección; queda pendiente la revisión visual autenticada de la titular, incluidas Toolbar/Tag Assistant si se utilizan. Sus fuentes están limitadas a preview según las guías oficiales.
-3. No se ha enviado otro email real ni se ha generado una conversión ficticia a GA4. El éxito/error y generate_lead siguen cubiertos por el manejador real con proveedor simulado. La recepción en la cuenta GA4 es una comprobación de cuenta, no certificada por esta PR.
-4. La excepción inline de Next sigue explícita: esta es una CSP basada en orígenes, no una política estricta basada en nonces/hashes. Un endurecimiento posterior debe conservar o evaluar el coste sobre renderizado estático y caché.
-5. Tras revisión/aprobación, integrar y desplegar únicamente cuando se autorice. Verificar entonces la cabecera efectiva de `https://automatizza.es`, consentimiento y medición, y ejecutar otra vez Aikido. La alerta no está cerrada en producción todavía.
+| Comprobación | Estado y evidencia |
+| --- | --- |
+| Integración en `main` | Completada: PR #1 fusionada; commit `1b1b2face12c286b46a6c9d2af43b5b68c5eb2e9`, contrastado en GitHub. |
+| Despliegue | Completado: registro Production de GitHub para ese commit, creado el 23/10/2026 a las 14:03:53 UTC; despliegue confirmado por la titular. |
+| CSP efectiva en `automatizza.es` | Verificada mediante las cabeceras HTTP por la titular. |
+| GTM y GA4 | Funcionamiento confirmado por la titular con el contenedor publicado compatible con CSP, sin añadir `unsafe-eval` a producción. |
+| Consentimiento | Comprobado por la titular; se conserva la carga de medición solo tras aceptar estadísticas y la publicidad denegada. |
+| Formulario | Envío real correcto y recepción en `info@automatizza.es`, confirmados por la titular. |
+| Pruebas previas | Lint, builds y comprobaciones de seguridad, SEO, contacto, analítica, navegación y recursos completadas según el registro anterior. No se vuelven a ejecutar por este cambio solo documental. |
+| Próximo análisis automático de Aikido | **Único pendiente:** confirmar que desaparece la alerta de ausencia de cabecera CSP. |
+
+La revisión local y sus límites descritos arriba se conservan como historial;
+no representan tareas de validación aún abiertas. No se cambian las
+protecciones de previews ni se requiere otro despliegue para cerrar esta fase.
 
 Referencias primarias: [Next.js y CSP](https://nextjs.org/docs/app/guides/content-security-policy), [Google Tag Manager y CSP](https://developers.google.com/tag-platform/security/guides/csp), [Vercel Toolbar y CSP](https://vercel.com/docs/vercel-toolbar/managing-toolbar), [MDN: despliegue CSP](https://developer.mozilla.org/en-US/docs/Web/Security/Practical_implementation_guides/CSP).
