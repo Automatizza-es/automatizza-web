@@ -65,7 +65,7 @@ son las ya aprobadas: 6 px, 850 ms, sin fundido, sin bucles ni parallax, con
 
 - `npm run lint`: correcto.
 - `npm run test:i18n`: 10 pruebas; rutas directas, equivalentes, castellano intacto,
-  catálogo completo y 54 textos de arrays de ejemplos/pasos/FAQ sin fallback.
+  catálogo completo y 56 textos de arrays de ejemplos/pasos/FAQ sin fallback.
 - `npm run test:contact`: 23 pruebas, sin envíos reales ni llamadas a Resend real.
 - `npm run test:analytics`: 26 pruebas. Ambos servicios y sus cambios de idioma
   respetan consentimiento, cargan un GTM, producen una visita por navegación y
@@ -99,3 +99,24 @@ Capturas locales en el directorio de evidencias `services-review`:
 Pendiente: revisión de contenido y composición por la propietaria, fotografía real
 si se desea añadir, y autorización posterior de integración/publicación. No se ha
 probado medición ni entrega real en producción en esta fase: no hay despliegue.
+
+
+## Ajuste de «Cuando tus herramientas se quedan cortas»
+
+Se sustituye únicamente el bloque de situaciones de Software: nuevo H2 con el
+estilo existente, tres títulos breves con explicación en columnas iguales y
+separadores verticales finos, sin tarjetas ni fondos. En móvil se apilan con
+separadores horizontales. Debajo aparece una sola frase: «Antes de desarrollar,
+valoramos si una herramienta existente puede resolverlo».
+
+Los textos facilitados se adaptan a «tú / tu equipo / tu forma de trabajar» y se
+traducen íntegramente a EN, FR y PT-PT. No cambian otras secciones, la página de
+Automatización ni metadatos, rutas, consentimiento, analítica, formulario o CSP.
+
+Lint y las 10 pruebas de idiomas pasan. Builds optimizadas de producción/preview
+correctas; 154 escenarios HTTP/SEO verifican además los tres títulos y explicaciones
+más la frase final en el HTML inicial. Revisión en navegador: 1440 px con tres
+columnas, ES en 390 px y EN/FR/PT en 320 px con una columna; sin desbordamientos ni
+errores de consola. H2 español: 34 px/peso 700/x=120 en escritorio; 28 px/x=16 en móvil.
+Capturas: `software-needs-desktop.jpg` y `software-needs-mobile.jpg` en `services-review`.
+Sin integración ni despliegue.

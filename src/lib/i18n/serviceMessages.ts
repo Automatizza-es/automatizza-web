@@ -240,36 +240,6 @@ const serviceMessages: Record<string, readonly [string, string, string]> = {
     "Nous développons des applications pour gérer le travail de votre entreprise : clients, réservations, documents ou opérations. Nous partons des besoins de votre équipe pour créer un outil qu’elle puisse utiliser au quotidien",
     "Desenvolvemos aplicações para gerir o trabalho da sua empresa: clientes, reservas, documentação ou operações. Partimos das necessidades da sua equipa e construímos uma ferramenta que possa utilizar no dia a dia"
   ],
-  "Cuándo tiene sentido una aplicación a medida": [
-    "When a bespoke application makes sense",
-    "Quand une application sur mesure est pertinente",
-    "Quando faz sentido uma aplicação à medida"
-  ],
-  "Primero valoramos si una herramienta existente puede resolver la necesidad. El desarrollo a medida tiene sentido cuando adaptarse a las opciones disponibles deja trabajo importante sin resolver.": [
-    "First, we assess whether an existing tool can meet the need. Bespoke development makes sense when adapting to the available options leaves important work unresolved.",
-    "Nous évaluons d’abord si un outil existant peut répondre au besoin. Le développement sur mesure est pertinent lorsque les options disponibles laissent une partie importante du travail sans solution.",
-    "Primeiro avaliamos se uma ferramenta existente pode responder à necessidade. O desenvolvimento à medida faz sentido quando a adaptação às opções disponíveis deixa trabalho importante por resolver."
-  ],
-  "Las herramientas actuales no cubren un proceso importante.": [
-    "Your current tools do not cover an important process.",
-    "Les outils actuels ne couvrent pas un processus important.",
-    "As ferramentas atuais não abrangem um processo importante."
-  ],
-  "La información está repartida entre hojas de cálculo, correos y documentos.": [
-    "Information is scattered across spreadsheets, emails and documents.",
-    "Les informations sont dispersées entre feuilles de calcul, e-mails et documents.",
-    "A informação está dispersa por folhas de cálculo, e-mails e documentos."
-  ],
-  "Varias personas necesitan trabajar sobre la misma información.": [
-    "Several people need to work with the same information.",
-    "Plusieurs personnes doivent travailler sur les mêmes informations.",
-    "Várias pessoas precisam de trabalhar com a mesma informação."
-  ],
-  "Tu equipo necesita registrar o consultar información desde el móvil.": [
-    "Your team needs to record or access information on a mobile phone.",
-    "Votre équipe doit enregistrer ou consulter des informations sur mobile.",
-    "A sua equipa precisa de registar ou consultar informação no telemóvel."
-  ],
   "Qué podemos desarrollar": [
     "What we can build",
     "Ce que nous pouvons développer",
@@ -434,6 +404,46 @@ const serviceMessages: Record<string, readonly [string, string, string]> = {
     "Tell us how your team works and what you need to improve. We review your situation and assess where to start.",
     "Expliquez-nous comment travaille votre équipe et ce que vous souhaitez améliorer. Nous examinons votre situation pour déterminer par où commencer.",
     "Conte-nos como trabalha a sua equipa e o que precisa de melhorar. Analisamos o caso e avaliamos por onde começar."
+  ],
+  "Cuando tus herramientas se quedan cortas": [
+    "When your tools fall short",
+    "Quand vos outils atteignent leurs limites",
+    "Quando as suas ferramentas já não chegam"
+  ],
+  "El trabajo acaba fuera del programa.": [
+    "Work ends up outside the software.",
+    "Le travail finit en dehors du logiciel.",
+    "O trabalho acaba fora do programa."
+  ],
+  "Utilizas una herramienta, pero terminas completando cada gestión con hojas de cálculo, correos y documentos aparte.": [
+    "You use a tool, but end up completing each task with separate spreadsheets, emails and documents.",
+    "Vous utilisez un outil, mais finissez par compléter chaque tâche avec des feuilles de calcul, des e-mails et des documents séparés.",
+    "Utiliza uma ferramenta, mas acaba por completar cada tarefa com folhas de cálculo, e-mails e documentos à parte."
+  ],
+  "Tu equipo se adapta al programa.": [
+    "Your team adapts to the software.",
+    "Votre équipe s’adapte au logiciel.",
+    "A sua equipa adapta-se ao programa."
+  ],
+  "Para completar una tarea tienes que dar rodeos o seguir pasos que no encajan con tu forma de trabajar.": [
+    "To complete a task, you have to work around the software or follow steps that do not fit the way you work.",
+    "Pour accomplir une tâche, vous devez contourner le logiciel ou suivre des étapes qui ne correspondent pas à votre façon de travailler.",
+    "Para concluir uma tarefa, tem de recorrer a alternativas ou seguir passos que não se ajustam à sua forma de trabalhar."
+  ],
+  "Falta una herramienta para un proceso concreto.": [
+    "A specific process needs its own tool.",
+    "Il manque un outil pour un processus précis.",
+    "Falta uma ferramenta para um processo específico."
+  ],
+  "Necesitas gestionar reservas, registrar operaciones o dar acceso a clientes con unas reglas que las opciones existentes no cubren.": [
+    "You need to manage bookings, record operations or give customers access with rules that the available options do not support.",
+    "Vous devez gérer des réservations, enregistrer des opérations ou donner un accès à vos clients selon des règles que les solutions existantes ne prennent pas en charge.",
+    "Precisa de gerir reservas, registar operações ou dar acesso a clientes com regras que as opções existentes não permitem aplicar."
+  ],
+  "Antes de desarrollar, valoramos si una herramienta existente puede resolverlo": [
+    "Before building, we assess whether an existing tool can solve it",
+    "Avant de développer, nous évaluons si un outil existant peut répondre au besoin",
+    "Antes de desenvolver, avaliamos se uma ferramenta existente pode resolver a necessidade"
   ]
 };
 export default serviceMessages;

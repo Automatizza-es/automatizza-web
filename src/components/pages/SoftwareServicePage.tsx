@@ -11,11 +11,10 @@ import styles from "./ProcessAutomationPage.module.css";
 import software from "./SoftwareServicePage.module.css";
 
 export const softwareNeeds = [
-  "Las herramientas actuales no cubren un proceso importante.",
-  "La información está repartida entre hojas de cálculo, correos y documentos.",
-  "Varias personas necesitan trabajar sobre la misma información.",
-  "Tu equipo necesita registrar o consultar información desde el móvil.",
-];
+  ["El trabajo acaba fuera del programa.", "Utilizas una herramienta, pero terminas completando cada gestión con hojas de cálculo, correos y documentos aparte."],
+  ["Tu equipo se adapta al programa.", "Para completar una tarea tienes que dar rodeos o seguir pasos que no encajan con tu forma de trabajar."],
+  ["Falta una herramienta para un proceso concreto.", "Necesitas gestionar reservas, registrar operaciones o dar acceso a clientes con unas reglas que las opciones existentes no cubren."],
+] as const;
 export const softwareExamples = [
   ["Herramientas de gestión interna", "Reunir clientes, documentación y tareas en una herramienta que refleje cómo trabaja tu equipo."],
   ["Portales para clientes y colaboradores", "Permitir que clientes y colaboradores consulten o aporten la información que necesitan, con los accesos acordados."],
@@ -64,11 +63,11 @@ export default function SoftwareServicePage({ locale = "es" }: { locale?: Locale
 
       <section className={styles.section} aria-labelledby="software-needs-title">
         <Container className="editorial-container">
-          <h2 id="software-needs-title" data-service-reveal>{t("Cuándo tiene sentido una aplicación a medida")}</h2>
-          <div className={software.needs} data-service-reveal>
-            <p>{t("Primero valoramos si una herramienta existente puede resolver la necesidad. El desarrollo a medida tiene sentido cuando adaptarse a las opciones disponibles deja trabajo importante sin resolver.")}</p>
-            <ul>{softwareNeeds.map(need => <li key={need}>{t(need)}</li>)}</ul>
-          </div>
+          <h2 id="software-needs-title" data-service-reveal>{t("Cuando tus herramientas se quedan cortas")}</h2>
+          <ul className={software.needs} role="list" data-service-reveal>
+            {softwareNeeds.map(([title, text]) => <li key={title}><h3>{t(title)}</h3><p>{t(text)}</p></li>)}
+          </ul>
+          <p className={software.needsConclusion} data-service-reveal>{t("Antes de desarrollar, valoramos si una herramienta existente puede resolverlo")}</p>
         </Container>
       </section>
 

@@ -114,5 +114,5 @@ test("all service example, step and FAQ arrays have complete translations",async
   function visit(node){if(ts.isVariableDeclaration(node)&&names.has(node.name.getText(source))&&node.initializer)check(node.initializer);else ts.forEachChild(node,visit);}
   visit(source);
  }
- assert.equal(strings,54,"both services covered, including dynamically translated arrays");
+ assert.equal(strings,56,"both services covered, including dynamically translated arrays");
 });

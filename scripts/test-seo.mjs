@@ -203,6 +203,12 @@ async function verify(environment) {
       assert.equal(count(main, new RegExp(`href="${contact}"`, "g")), 2, "both software CTAs use localized contact");
       assert.equal(count(main, /<form\b/g), 0, "software does not duplicate the form");
       assert.equal(count(main, /<img\b/g), 0, "no invented photo or placeholder");
+      const needs = main.match(/<section[^>]*aria-labelledby="software-needs-title"[\s\S]*?<\/section>/)?.[0] ?? "";
+      assert.equal(count(needs, /<h3\b/g), 3, "three headed situations in initial HTML");
+      assert.equal(count(needs, /<p\b/g), 4, "three explanations followed by one conclusion");
+      assert.ok(needs.indexOf("</ul>") < needs.lastIndexOf("<p"), "conclusion follows the three blocks");
+      assert.ok(!needs.includes("Cuándo tiene sentido una aplicación a medida"));
+
       const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
       assert.equal(count(faq, /<details\b/g), 5);
       assert.equal(count(faq, /<details\b[^>]*\bopen(?:[\s=>])/g), 0);
@@ -217,7 +223,7 @@ async function verify(environment) {
       const firstStep = ["Definimos una primera versión","We define a first version","Nous définissons une première version","Definimos uma primeira versão"][i];
       assert.ok(main.includes(firstStep), "localized step rendered server-side");
       if(i>0)assert.ok(!main.includes("¿")&&!main.includes("Herramientas de gestión interna"), "no Spanish fallback in software");
-      else for(const text of ["Primero valoramos si una herramienta existente", "posibilidades de integración de cada herramienta", "costes recurrentes de infraestructura, licencias y mantenimiento", "El alcance de ese trabajo se define para cada proyecto"])assert.ok(main.includes(text));
+      else for(const text of ["Antes de desarrollar, valoramos si una herramienta existente puede resolverlo", "posibilidades de integración de cada herramienta", "costes recurrentes de infraestructura, licencias y mantenimiento", "El alcance de ese trabajo se define para cada proyecto"])assert.ok(main.includes(text));
       assert.ok(!html.includes("FAQPage"));
     }
     if (spanishService) {
