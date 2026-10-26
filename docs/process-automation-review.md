@@ -47,12 +47,14 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 - `ProcessAutomationMotion` usa IntersectionObserver, sin manejadores de scroll,
   bucles ni parallax. Cada elemento deja de observarse tras su primera entrada.
 - Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 850 ms y
-  10 px en los bloques, incluido el hero; la escalera usa 850 ms y 8 px por
-  paso, con intervalos de 140 ms (máximo 420 ms). Las entradas no cambian la altura de las secciones.
-- El HTML y CSS parten de contenido visible. Solo se anima cuando hay soporte;
-  ni la carga de JavaScript ni IntersectionObserver ocultan contenido en espera.
-  El fundido se inicia al entrar en pantalla, de opacidad 0 a 1; el HTML y CSS
-  base siguen siendo visibles cuando no se ejecuta JavaScript. No se utiliza la clase global `motion-ready`.
+  6 px de desplazamiento. La escalera conserva intervalos de 140 ms (máximo
+  420 ms). Las entradas no cambian la altura de las secciones.
+- Sin fundidos: la opacidad permanece en 1 antes, durante y después de la
+  entrada. El HTML y CSS parten de contenido visible, sin `motion-ready`.
+- Los bloques ya visibles al iniciar la página quedan estáticos. Solo se
+  preparan con 6 px de desplazamiento los elementos situados bajo el viewport;
+  al entrar vuelven suavemente a su posición. Si JavaScript se interrumpe,
+  el contenido preparado sigue siendo visible, sin estados de ocultación.
 - En escritorio la escalera espera a que su primer peldaño inferior sea visible
   y revela los cuatro pasos del 01 al 04; en móvil cada fila entra al aparecer.
   El título entra por separado, evitando animaciones superpuestas del contenedor.
@@ -68,7 +70,7 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
   errores de consola. Lint, builds y 140 escenarios HTTP/SEO correctos; regresión
   de contacto (23), analítica (25) y seguridad (9) sin fallos ni envíos reales.
 
-## Ajuste de perceptibilidad
+## Ajustes previos de perceptibilidad (historial)
 
 La comprobación del navegador confirmó que la primera versión sí se activaba,
 pero el fundido desde 0,55 y los 4–6 px resultaban poco perceptibles. Se añade
@@ -98,6 +100,21 @@ No se cambian la CSP, las preferencias de movimiento ni la composición.
   correctas. Lint y builds optimizadas correctos; 140 escenarios HTTP/SEO pasan.
 - No cambia el resto de la composición, los textos, metadatos, formulario,
   consentimiento, analítica ni CSP. Sin integración ni despliegue.
+
+## Corrección del parpadeo
+
+El fundido empezaba desde opacidad 0 sobre contenido que ya se había pintado,
+lo que podía hacerlo desaparecer y reaparecer al entrar. Se elimina la animación
+de opacidad. Tampoco se reinician bloques que ya están visibles al cargar.
+Se preparan únicamente los bloques fuera de pantalla y se restauran sus estilos
+antes de animar, evitando saltos al terminar o cancelar el movimiento.
+
+Comprobado en el navegador: hero estático con opacidad 1; pasos preparados con
+opacidad 1 y desplazamiento de 6 px; durante la secuencia un paso muestra un
+desplazamiento intermedio de 4,86 px y opacidad 1. Sin errores de consola.
+Comprobaciones aisladas correctas para contenido visible intacto, secuencia,
+cancelación y restauración de los estilos pendientes con movimiento reducido.
+Lint, builds y 140 escenarios HTTP/SEO correctos. Sin integración ni despliegue.
 
 ## Revisar
 
