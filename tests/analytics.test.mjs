@@ -401,10 +401,10 @@ test("translated legal pages keep consent gating and deduplicate page events", (
 });
 
 
-test("language switches across both services record one visit each and never replay conversions", async()=>{
+test("language switches across all services record one visit each and never replay conversions", async()=>{
  const {indexableRoutes,equivalents}=await compiled("lib/i18n/routes.js");
  const {translator}=await compiled("lib/i18n/translate.js");
- for(const id of indexableRoutes.filter(id=>["process-automation","bespoke-software"].includes(id))){
+ for(const id of indexableRoutes.filter(id=>["process-automation","bespoke-software","artificial-intelligence"].includes(id))){
   const state=browser("denied");
   const paths=equivalents(id);
   for(const path of Object.values(paths)){window.location.pathname=path;assert.equal(trackPage(ids,path,"denied"),false);}
@@ -414,7 +414,7 @@ test("language switches across both services record one visit each and never rep
    window.location.pathname=path;
    assert.equal(trackPage(ids,path,"granted"),true);assert.equal(trackPage(ids,path,"granted"),false);
    assert.equal(events().at(-1).page_location,`https://automatizza.es${path}`);
-   const title=id==="process-automation"?"Automatización de procesos para empresas | Automatizza":"Software a medida para empresas | Automatizza";
+   const title=id==="process-automation"?"Automatización de procesos para empresas | Automatizza":id==="bespoke-software"?"Software a medida para empresas | Automatizza":"Inteligencia artificial para empresas | Automatizza";
    assert.equal(events().at(-1).page_title,translator(locale)(title));
   }
   assert.equal(events().length,4);assert.equal(state.scripts.size,1);

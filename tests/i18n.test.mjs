@@ -14,7 +14,7 @@ const legalMessages=legalModule.default ?? legalModule;
 test("published commercial routes resolve directly to their own language",()=>{
  const all=[];
  for(const id of indexableRoutes) for(const [locale,path] of Object.entries(equivalents(id))){assert.ok(path);all.push(path);assert.deepEqual(resolveRoute(path),{id,locale});}
- assert.equal(all.length,28);assert.equal(new Set(all).size,28);
+ assert.equal(all.length,32);assert.equal(new Set(all).size,32);
  assert.equal(equivalents("home").es,"/");assert.equal(languageInfo.pt.tag,"pt-PT");
  for(const path of ["/es","/en/contacto","/fr/contacto","/pt/contact","/en/services","/en/unknown","/fr/contact?email=private@example.test"])assert.equal(resolveRoute(path),null);
 });
@@ -106,13 +106,21 @@ test("software has complete equivalents without Spanish-prefixed or service-inde
 test("all service example, step and FAQ arrays have complete translations",async()=>{
  const {readFileSync}=await import("node:fs");
  const {default:ts}=await import("typescript");
- const names=new Set(["automationExamples","automationSteps","automationQuestions","softwareNeeds","softwareExamples","softwareSteps","softwareQuestions"]);
+ const names=new Set(["automationExamples","automationSteps","automationQuestions","softwareNeeds","softwareExamples","softwareSteps","softwareQuestions","aiExamples","aiSteps","aiQuestions","conversationMessages"]);
  let strings=0;
- for(const file of ["ProcessAutomationPage.tsx","SoftwareServicePage.tsx"]){
+ for(const file of ["ProcessAutomationPage.tsx","SoftwareServicePage.tsx","AiServicePage.tsx","../services/IllustrativeConversation.tsx"]){
   const source=ts.createSourceFile(file,readFileSync(join("src/components/pages",file),"utf8"),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
-  function check(node){if(ts.isStringLiteral(node)){strings++;assert.ok(messages[node.text],`Missing service translation: ${node.text}`);for(const locale of ["en","fr","pt"])assert.notEqual(translator(locale)(node.text),node.text);}ts.forEachChild(node,check);}
+  function check(node){if(ts.isStringLiteral(node)){strings++;assert.ok(messages[node.text],`Missing service translation: ${node.text}`);for(const locale of ["en","fr","pt"])assert.equal(translator(locale)(node.text),messages[node.text][{en:0,fr:1,pt:2}[locale]]);}ts.forEachChild(node,check);}
   function visit(node){if(ts.isVariableDeclaration(node)&&names.has(node.name.getText(source))&&node.initializer)check(node.initializer);else ts.forEachChild(node,visit);}
   visit(source);
  }
- assert.equal(strings,56,"both services covered, including dynamically translated arrays");
+ assert.equal(strings,90,"all services and the conversation covered, including dynamically translated arrays");
+});
+
+
+test("AI service equivalents preserve the page when changing language",()=>{
+ const paths=equivalents("artificial-intelligence");
+ assert.deepEqual(paths,{es:"/servicios/inteligencia-artificial-para-empresas",en:"/en/services/artificial-intelligence-for-businesses",fr:"/fr/services/intelligence-artificielle-pour-les-entreprises",pt:"/pt/servicos/inteligencia-artificial-para-empresas"});
+ for(const locale of locales){assert.deepEqual(resolveRoute(paths[locale]),{id:"artificial-intelligence",locale});assert.equal(localizeHref(paths.es,locale),paths[locale]);}
+ assert.equal(resolveRoute("/es/servicios/inteligencia-artificial-para-empresas"),null);
 });

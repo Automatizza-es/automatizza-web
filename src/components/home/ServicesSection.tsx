@@ -31,8 +31,8 @@ export function ServicesSection() {
           {services.map((service) => (
             <li className={styles.service} key={service.number} data-reveal>
               <span className={styles.number}>{service.number}</span>
-              <h3><span>{service.number === "01" || service.number === "02"
-                ? <Link className={styles.serviceLink} href={localePath(service.number === "01" ? "process-automation" : "bespoke-software", locale)!}>{t(service.title)}</Link>
+              <h3><span>{service.number === "01" || service.number === "02" || service.number === "03"
+                ? <Link className={styles.serviceLink} href={localePath(service.number === "01" ? "process-automation" : service.number === "02" ? "bespoke-software" : "artificial-intelligence", locale)!}>{t(service.title)}</Link>
                 : t(service.title)}</span></h3>
               <p>{t(service.text)}</p>
             </li>

@@ -23,6 +23,7 @@ const pageTitles: Record<string, string> = {
   "/": "Automatizza", "/proyectos": "Proyectos | Automatizza",
   "/contacto": "Contacto | Automatizza",
   "/servicios/automatizacion-de-procesos": "Automatización de procesos para empresas | Automatizza",
+  "/servicios/inteligencia-artificial-para-empresas": "Inteligencia artificial para empresas | Automatizza",
   "/servicios/software-a-medida": "Software a medida para empresas | Automatizza",
   "/proyectos/apc": "APC Europe | Automatizza", "/proyectos/silos-spain": "Silos Spain | Automatizza",
   "/proyectos/la-factory-coworking": "La Factory Coworking | Automatizza",

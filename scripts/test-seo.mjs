@@ -19,11 +19,14 @@ const automationPaths = ["/servicios/automatizacion-de-procesos", "/en/services/
 const automationTitles = ["Automatización de procesos para empresas | Automatizza", "Process automation for businesses | Automatizza", "Automatisation des processus pour les entreprises | Automatizza", "Automatização de processos para empresas | Automatizza"];
 const softwarePaths = ["/servicios/software-a-medida", "/en/services/bespoke-software", "/fr/services/logiciel-sur-mesure", "/pt/servicos/software-a-medida"];
 const softwareTitles = ["Software a medida para empresas | Automatizza", "Bespoke software for businesses | Automatizza", "Logiciels sur mesure pour les entreprises | Automatizza", "Software à medida para empresas | Automatizza"];
+const aiPaths = ["/servicios/inteligencia-artificial-para-empresas", "/en/services/artificial-intelligence-for-businesses", "/fr/services/intelligence-artificielle-pour-les-entreprises", "/pt/servicos/inteligencia-artificial-para-empresas"];
+const aiTitles = ["Inteligencia artificial para empresas | Automatizza", "Artificial intelligence for businesses | Automatizza", "Intelligence artificielle pour les entreprises | Automatizza", "Inteligência artificial para empresas | Automatizza"];
 const pages = [
   ["/", "Automatizza | Automatización de procesos e IA para empresas"],
   ["/contacto", "Contacto | Automatizza"],
   ...automationPaths.map((path,i)=>[path,automationTitles[i]]),
   ...softwarePaths.map((path,i)=>[path,softwareTitles[i]]),
+  ...aiPaths.map((path,i)=>[path,aiTitles[i]]),
   ["/proyectos/silos-spain", "Silos Spain | CRM y gestión comercial a medida | Automatizza"],
   ["/proyectos/apc", "APC Europe | App para logística y recogidas | Automatizza"],
   ["/proyectos/la-factory-coworking", "La Factory Coworking | App de reservas de salas | Automatizza"],
@@ -149,6 +152,7 @@ async function verify(environment) {
       const languageIndex = ["/", "/en", "/fr", "/pt"].indexOf(path);
       assert.ok(services.includes(`href="${automationPaths[languageIndex]}"`), "homepage links to its automation language");
       assert.ok(services.includes(`href="${softwarePaths[languageIndex]}"`), "homepage links to its software language");
+      assert.ok(services.includes(`href="${aiPaths[languageIndex]}"`), "homepage links to its AI language");
     }
     const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
     assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);
@@ -177,7 +181,7 @@ async function verify(environment) {
     const alternateLinks = [...head.matchAll(/<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"/g)];
     const spanishService = path === "/servicios/automatizacion-de-procesos";
     assert.deepEqual(alternateLinks.map(m => m[1]).sort(), ["en", "es", "fr", "pt-PT", "x-default"].sort(), `hreflang set: ${path}`);
-    const group = automationPaths.includes(path) ? automationPaths : softwarePaths.includes(path) ? softwarePaths : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
+    const group = automationPaths.includes(path) ? automationPaths : softwarePaths.includes(path) ? softwarePaths : aiPaths.includes(path) ? aiPaths : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
       : path.includes("/apc") ? ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"]
       : path.includes("la-factory-coworking") ? ["/proyectos/la-factory-coworking","/en/projects/la-factory-coworking","/fr/projets/la-factory-coworking","/pt/projetos/la-factory-coworking"]
       : /contact/.test(path) ? ["/contacto","/en/contact","/fr/contact","/pt/contacto"] : ["/","/en","/fr","/pt"];
@@ -225,6 +229,27 @@ async function verify(environment) {
       if(i>0)assert.ok(!main.includes("¿")&&!main.includes("Herramientas de gestión interna"), "no Spanish fallback in software");
       else for(const text of ["Antes de desarrollar, valoramos si una herramienta existente puede resolverlo", "posibilidades de integración de cada herramienta", "costes recurrentes de infraestructura, licencias y mantenimiento", "El alcance de ese trabajo se define para cada proyecto"])assert.ok(main.includes(text));
       assert.ok(!html.includes("FAQPage"));
+    }
+    if (aiPaths.includes(path)) {
+      const main = unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "");
+      const i = aiPaths.indexOf(path);
+      const contact = ["/contacto","/en/contact","/fr/contact","/pt/contacto"][i];
+      assert.equal(count(main, new RegExp(`href="${contact}"`, "g")), 2);
+      assert.equal(count(main, /<form\b|<iframe\b|<video\b/g), 0);
+      assert.equal(count(main, /data-chat-message/g), 4, "entire conversation in server HTML");
+      assert.equal(count(main, /data-chat-summary/g), 1);
+      assert.equal(count(main, /<details\b/g), 5, "all FAQ answers are server-rendered");
+      assert.equal(count(main, /<details\b[^>]*\bopen(?:[\s=>])/g), 0);
+      assert.equal(count(main.match(/<ol[^>]*data-service-staircase[\s\S]*?<\/ol>/)?.[0]??"", /<li\b/g),4);
+      const caption = ["Conversación ilustrativa basada en el flujo desarrollado","Illustrative conversation based on the developed flow","Conversation illustrative fondée sur le parcours développé","Conversa ilustrativa baseada no fluxo desenvolvido"][i];
+      assert.ok(main.includes(caption));
+      const firstMessage = ["Hola, necesitamos almacenar unas 5.000 toneladas de trigo en Marruecos","Hello, we need to store around 5,000 tonnes of wheat in Morocco","Bonjour, nous avons besoin de stocker environ 5 000 tonnes de blé au Maroc","Olá, precisamos de armazenar cerca de 5.000 toneladas de trigo em Marrocos"][i];
+      assert.ok(main.includes(firstMessage));
+      for (const label of ["Pausar","Pause","Mettre en pause","Pausar"].filter((_,n)=>n===i)) assert.ok(main.includes(label));
+      assert.ok(main.includes(`href="${["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"][i]}"`));
+      assert.ok(!main.includes('aria-live=')&&!main.includes('role="log"'), "no repeated announcements");
+      assert.ok(!html.includes("FAQPage"));
+      if(i>0)assert.ok(!main.includes("¿")&&!main.includes("Una primera conversación"), "no Spanish fallback");
     }
     if (spanishService) {
       assert.equal(count(selector, /<a\b/g), 4, "all complete service languages are shown");
