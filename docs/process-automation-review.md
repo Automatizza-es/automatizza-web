@@ -6,7 +6,7 @@ Base: `origin/main` incorporado en `1b1b2fa`, con los datos estructurados y la C
 ## Alcance — acabado y entradas sutiles
 
 - Nueva página española `/servicios/automatizacion-de-procesos`, con el contenido aprobado, un único H1, cuatro ejemplos, cuatro pasos, el caso de Silos Spain y cuatro preguntas en acordeón nativo.
-- Reutiliza cabecera, footer, contenedor editorial, fuentes, colores, botones y estilos del acordeón existente. Incorpora únicamente la foto original adjunta del equipo de Silos Spain, sin recortar personas ni retocar el archivo. Las entradas reutilizan la curva y duración editorial de la portada mediante un componente acotado a esta página, sin cambiar el movimiento de la home.
+- Reutiliza cabecera, footer, contenedor editorial, fuentes, colores, botones y estilos del acordeón existente. Incorpora únicamente la foto original adjunta del equipo de Silos Spain, sin recortar personas ni retocar el archivo. Las entradas reutilizan la curva y el lenguaje de movimiento editorial de la portada mediante un componente acotado a esta página, sin cambiar el movimiento de la home.
 - Cabecera proporcionada como la del proyecto de Silos Spain: retorno a `/#servicios`, etiqueta «SERVICIOS / AUTOMATIZACIÓN» y un único H1, sin el anterior segundo titular.
 - Esquema accesible y estático, identificado como ejemplo: Solicitud recibida → Registro en el CRM → Responsable asignado → Revisión del equipo, con una explicación breve bajo cada título; vertical en móvil.
 - Hero conservado, con más separación antes de los ejemplos.
@@ -47,13 +47,13 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 
 - `ProcessAutomationMotion` usa IntersectionObserver, sin manejadores de scroll,
   bucles ni parallax. Cada elemento deja de observarse tras su primera entrada.
-- Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 520 ms y
-  6 px en los bloques; 420 ms y 4 px en el recorrido, con intervalos de 70 ms
-  (máximo 210 ms). El hero permanece estático y las secciones no cambian de alto.
+- Misma curva editorial `cubic-bezier(.22,.7,.25,1)` que la portada: 620 ms y
+  10 px en los bloques, incluido el hero; 520 ms y 8 px en el recorrido, con
+  intervalos de 110 ms (máximo 330 ms). Las secciones no cambian de alto.
 - El HTML y CSS parten de contenido visible. Solo se anima cuando hay soporte;
   ni la carga de JavaScript ni IntersectionObserver ocultan contenido en espera.
-  Incluso durante la animación la opacidad inicial es 0,55, sin exigir esperar
-  para leer. No se utiliza la clase global `motion-ready`.
+  El fundido se inicia al entrar en pantalla, de opacidad 0 a 1; el HTML y CSS
+  base siguen siendo visibles cuando no se ejecuta JavaScript. No se utiliza la clase global `motion-ready`.
 - `prefers-reduced-motion` evita las entradas; activarlo durante una animación
   cancela las animaciones activas y la observación. La limpieza al salir de la
   página cancela también los efectos pendientes.
@@ -65,6 +65,21 @@ El sitemap de una build de producción incluye la nueva página completa: 21 URL
 - Escritorio 1440 px y móviles 390/320 px revisados, sin desbordamientos ni
   errores de consola. Lint, builds y 140 escenarios HTTP/SEO correctos; regresión
   de contacto (23), analítica (25) y seguridad (9) sin fallos ni envíos reales.
+
+## Ajuste de perceptibilidad
+
+La comprobación del navegador confirmó que la primera versión sí se activaba,
+pero el fundido desde 0,55 y los 4–6 px resultaban poco perceptibles. Se añade
+entrada al hero y se ajustan fundido, desplazamiento e intervalos indicados arriba.
+El observador exige un 15 % de intersección y un margen inferior del 5 %, para
+no consumir la entrada demasiado pronto.
+
+Verificación real mediante instrumentación temporal exclusiva de la copia local:
+keyframes, duración, intervalo e iteración única de hero y cuatro pasos correctos.
+Tras subir y bajar de nuevo, cada paso conserva una sola ejecución. La copia
+local se restaura sin instrumentación después de comprobarlo. Evidencia en
+`motion-runtime-verification.json`, junto a las capturas de la revisión.
+No se cambian la CSP, las preferencias de movimiento ni la composición.
 
 ## Revisar
 

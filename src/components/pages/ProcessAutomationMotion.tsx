@@ -9,7 +9,7 @@ export function ProcessAutomationMotion() {
     if (preference.matches || !root || !("IntersectionObserver" in window) ||
         typeof Element.prototype.animate !== "function") return;
 
-    // The homepage's timing and easing, scoped to this page. Content stays
+    // The homepage's editorial easing, scoped to this page. Content stays
     // visible in server HTML: nothing is hidden while waiting for JavaScript.
     const animations = new Set<Animation>();
     const observer = new IntersectionObserver((entries) => {
@@ -21,18 +21,18 @@ export function ProcessAutomationMotion() {
         const isFlowStep = entry.target.parentElement?.hasAttribute("data-service-flow");
         const index = isFlowStep ? Array.from(entry.target.parentElement!.children).indexOf(entry.target) : 0;
         const animation = entry.target.animate([
-          { opacity: .55, transform: `translateY(${isFlowStep ? 4 : 6}px)` },
+          { opacity: 0, transform: `translateY(${isFlowStep ? 8 : 10}px)` },
           { opacity: 1, transform: "none" },
         ], {
-          duration: isFlowStep ? 420 : 520,
+          duration: isFlowStep ? 520 : 620,
           easing: "cubic-bezier(.22,.7,.25,1)",
-          delay: index * 70,
+          delay: index * 110,
           fill: "backwards",
         });
         animations.add(animation);
         animation.onfinish = () => animations.delete(animation);
       }
-    }, { rootMargin: "0px 0px -9%", threshold: .08 });
+    }, { rootMargin: "0px 0px -5%", threshold: .15 });
 
     root.querySelectorAll("[data-service-reveal], [data-service-flow] > li")
       .forEach((element) => observer.observe(element));

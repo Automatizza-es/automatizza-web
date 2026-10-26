@@ -37,7 +37,7 @@ export default function ProcessAutomationPage() {
         <Container className="editorial-container">
           <Link className={styles.back} href="/#servicios"><span aria-hidden="true">←</span> Todos los servicios</Link>
           <p className={styles.eyebrow}>SERVICIOS / AUTOMATIZACIÓN</p>
-          <div className={styles.heroGrid}>
+          <div className={styles.heroGrid} data-service-reveal>
             <h1 id="automation-title">Automatización de procesos para empresas</h1>
             <div className={styles.copy}>
               <p>Conectamos aplicaciones y automatizamos tareas repetitivas para que la información llegue donde hace falta, sin tener que trasladarla a mano cada vez.</p>
