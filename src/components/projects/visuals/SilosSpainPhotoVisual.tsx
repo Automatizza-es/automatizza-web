@@ -35,10 +35,8 @@ export function SilosSpainPhotoVisual() {
           sizes="(max-width: 760px) 650px, (max-width: 1440px) 34vw, 500px"
         />
         <div className={styles.screen}>
-          <div className={styles.entrance}>
-            <div className={styles.content}>
-              <CrmDashboard />
-            </div>
+          <div className={styles.content}>
+            <CrmDashboard />
           </div>
         </div>
       </div>

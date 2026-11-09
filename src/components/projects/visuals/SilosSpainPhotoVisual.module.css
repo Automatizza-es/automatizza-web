@@ -45,13 +45,17 @@
   .content { transition: none; transform: none; }
 }
 
-/* A single gentle zoom of the live UI when the card enters view. */
-.entrance { position: absolute; inset: 0; transform: scale(1.055); transform-origin: 50% 40%; }
+/* Animate only the first three green funnel bars, once on entering view. */
 @media (prefers-reduced-motion: no-preference) {
-  .scene:global(.is-armed):not(:global(.is-playing)) .entrance { transform: scale(1); }
-  .scene:global(.is-playing) .entrance { animation: dashboard-enter 2000ms ease-in-out 200ms both; }
+  .scene:global(.is-armed):not(:global(.is-playing)) .content :global(.ss-funnel-row:nth-of-type(-n + 3) i span) { transform: scaleX(.78); }
+  .scene:global(.is-playing) .content :global(.ss-funnel-row:nth-of-type(-n + 3) i span) {
+    transform-origin: left;
+    animation: funnel-fill 1500ms ease-in-out 250ms both;
+  }
+  .scene:global(.is-playing) .content :global(.ss-funnel-row:nth-of-type(2) i span) { animation-delay: 400ms; }
+  .scene:global(.is-playing) .content :global(.ss-funnel-row:nth-of-type(3) i span) { animation-delay: 550ms; }
 }
-@keyframes dashboard-enter { from { transform: scale(1); } to { transform: scale(1.055); } }
+@keyframes funnel-fill { from { transform: scaleX(.78); } to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) {
-  .entrance { animation: none; transform: none; }
+  .content :global(.ss-funnel-row i span) { animation: none; transform: none; }
 }
