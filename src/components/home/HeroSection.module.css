@@ -3,9 +3,9 @@
   display: grid;
   min-height: max(720px, 100svh);
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(7, 18, 30, .46), rgba(7, 18, 30, .32) 45%, rgba(7, 18, 30, .08)),
-    #0b1826 url("/images/hero-background.jpeg") center top / cover no-repeat;
-  color: #f4f2ed;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand-night) 46%, transparent), color-mix(in srgb, var(--brand-night) 32%, transparent) 45%, color-mix(in srgb, var(--brand-night) 8%, transparent)),
+    var(--brand-night) url("/images/hero-background.jpeg") center top / cover no-repeat;
+  color: var(--brand-paper);
   isolation: isolate;
   place-items: center;
 }
@@ -29,7 +29,7 @@
 .description {
   max-width: 660px;
   margin: 2.5rem auto 0;
-  color: #c3c8cf;
+  color: var(--color-inverse-muted);
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   line-height: 1.7;
   text-wrap: balance;
@@ -37,11 +37,11 @@
 }
 .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-top: 2rem; animation: enter 900ms 180ms ease-out both; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; border: 1px solid transparent; border-radius: 999px; padding: .75rem 1.4rem; font-size: .875rem; font-weight: 500; transition: background-color 180ms ease, border-color 180ms ease; }
-.primary { gap: .85rem; background: #f4f2ed; color: #0b1826; }
-.primary:hover { background: #fff; }
-.secondary { border-color: #ffffff40; color: #f4f2ed; }
-.secondary:hover { border-color: #ffffff80; background: #ffffff0d; }
-.button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.primary { gap: .85rem; background: var(--brand-paper); color: var(--brand-night); }
+.primary:hover { background: var(--color-surface-accent); }
+.secondary { border-color: color-mix(in srgb, var(--brand-paper) 25.098%, transparent); color: var(--brand-paper); }
+.secondary:hover { border-color: color-mix(in srgb, var(--brand-paper) 50.196%, transparent); background: color-mix(in srgb, var(--brand-paper) 5.098%, transparent); }
+.button:focus-visible { outline: 2px solid var(--brand-paper); outline-offset: 4px; }
 @keyframes enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
 @media (max-width: 600px) {
   .hero { min-height: max(680px, 100svh); }

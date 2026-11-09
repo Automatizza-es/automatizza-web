@@ -1,10 +1,10 @@
 /* Palette is local to the home collection; client mockups keep their branding. */
 .section {
-  --projects-night: #101f2d;
-  --projects-paper: #f7f8f7;
-  --projects-graphite: #171b20;
-  --projects-muted: #77818b;
-  --projects-accent: #4a9cc5;
+  --projects-night: var(--brand-night);
+  --projects-paper: var(--brand-paper);
+  --projects-graphite: var(--brand-graphite);
+  --projects-muted: var(--brand-slate);
+  --projects-accent: var(--brand-steel);
   padding-block: clamp(5rem, 9vw, 9rem);
   background: var(--projects-paper);
   color: var(--projects-graphite);

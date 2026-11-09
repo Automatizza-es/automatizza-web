@@ -1,8 +1,8 @@
 .shell, .theme {
-  --heading-night: #101f2d;
-  --heading-slate: #59656f;
-  --heading-steel: #397a9b;
-  --heading-paper: #f7f8f7;
+  --heading-night: var(--brand-night);
+  --heading-slate: var(--color-text-muted);
+  --heading-steel: var(--color-accent-text);
+  --heading-paper: var(--brand-paper);
   --heading-size: clamp(2rem, 2.8vw, 2.5rem);
 }
 .shell { width: min(100%, var(--editorial-width)); margin-inline: auto; }

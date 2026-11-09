@@ -1,23 +1,23 @@
-.page { --project-surface: #f3f5f6; background: #fff; color: #02135f; }
-.apc { --project-surface: #f1f4f5; }
-.la-factory-coworking { --project-surface: #f5f1e9; }
+.page { --project-surface: var(--color-surface); background: var(--brand-paper); color: var(--brand-night); }
+.apc { --project-surface: var(--color-surface); }
+.la-factory-coworking { --project-surface: var(--color-surface); }
 .container { max-width: 1120px; }
 .hero { padding-top: clamp(2rem, 4vw, 3.5rem); }
-.back { display: inline-flex; gap: .7rem; align-items: center; color: #6d7580; font-size: .8rem; }
-.back:hover { color: #02135f; }
-.eyebrow { margin: 3rem 0 1.6rem; color: #02a0fc; font-size: .6875rem; font-weight: 650; letter-spacing: .13em; line-height: 1.7; text-transform: uppercase; }
-.eyebrow span { padding-inline: .6rem; color: #a1a6ae; }
+.back { display: inline-flex; gap: .7rem; align-items: center; color: var(--color-text-muted); font-size: .8rem; }
+.back:hover { color: var(--brand-night); }
+.eyebrow { margin: 3rem 0 1.6rem; color: var(--color-accent-text); font-size: .6875rem; font-weight: 650; letter-spacing: .13em; line-height: 1.7; text-transform: uppercase; }
+.eyebrow span { padding-inline: .6rem; color: var(--color-text-muted); }
 .heroCopy { display: grid; grid-template-columns: 1.3fr 1fr; align-items: end; gap: clamp(2.5rem, 5vw, 5rem); }
 .heroCopy h1 { max-width: 690px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2.5rem, 4.1vw, 3.5rem); font-weight: 600; letter-spacing: -.04em; line-height: 1.09; text-wrap: balance; }
-.introduction > p { margin: 0; color: #6d7580; font-size: .9375rem; line-height: 1.75; }
-.tags { display: flex; flex-wrap: wrap; gap: .5rem 1rem; padding: 1.3rem 0 0; margin: 1.5rem 0 0; border-top: 1px solid #e4e6e9; list-style: none; color: #787e88; font-size: .6875rem; }
+.introduction > p { margin: 0; color: var(--color-text-muted); font-size: .9375rem; line-height: 1.75; }
+.tags { display: flex; flex-wrap: wrap; gap: .5rem 1rem; padding: 1.3rem 0 0; margin: 1.5rem 0 0; border-top: 1px solid var(--color-border); list-style: none; color: var(--color-text-muted); font-size: .6875rem; }
 .heroFigure { margin: 3.5rem 0 0; }
 .heroStage { position: relative; height: clamp(440px, 44vw, 560px); overflow: hidden; border-radius: 8px; background: var(--project-surface); container-type: inline-size; }
-.page figcaption { margin-top: .75rem; color: #6d7580; font-size: .8125rem; line-height: 1.6; }
-.context { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 6rem; padding-block: 5.5rem; margin-top: 2rem; border-bottom: 1px solid #e4e6e9; }
-.sectionLabel { margin: 0 0 1.25rem; color: #6d7580; font-size: .875rem; font-weight: 500; line-height: 1.5; }
+.page figcaption { margin-top: .75rem; color: var(--color-text-muted); font-size: .8125rem; line-height: 1.6; }
+.context { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 6rem; padding-block: 5.5rem; margin-top: 2rem; border-bottom: 1px solid var(--color-border); }
+.sectionLabel { margin: 0 0 1.25rem; color: var(--color-text-muted); font-size: .875rem; font-weight: 500; line-height: 1.5; }
 .context h2, .feature h3, .operationStory h3 { margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; text-wrap: balance; }
-.context div > p:last-child, .featureCopy > p:last-child { margin: 1.3rem 0 0; color: #6d7580; font-size: .9375rem; line-height: 1.75; }
+.context div > p:last-child, .featureCopy > p:last-child { margin: 1.3rem 0 0; color: var(--color-text-muted); font-size: .9375rem; line-height: 1.75; }
 .inside { padding-block: 4.5rem 0; }
 .insideHeading .eyebrow { margin-top: 0; }
 .insideHeading h2 { max-width: 800px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(1.9rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.2; }
@@ -28,7 +28,7 @@
 .reverse > figure { grid-column: 1; grid-row: 1; }
 .recording, .dashboardFigure, .factoryWebFigure { min-width: 0; margin: 0; }
 .recordingSurface { display: flex; justify-content: center; align-items: center; padding: 2.75rem; background: var(--project-surface); border-radius: 6px; }
-.recording video { display: block; max-width: 100%; background: #fff; border-radius: 6px; box-shadow: 0 18px 40px -25px rgba(20, 25, 40, .28); }
+.recording video { display: block; max-width: 100%; background: var(--brand-paper); border-radius: 6px; box-shadow: 0 18px 40px -25px color-mix(in srgb, var(--brand-night) 28%, transparent); }
 .wideRecording video { width: 100%; aspect-ratio: 1280 / 758; }
 .phoneRecording video { width: min(100%, 300px); height: auto; max-height: none; aspect-ratio: auto 201 / 437; object-fit: contain; }
 .operationStory { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); grid-template-rows: 1fr 1fr; gap: 2.5rem 4rem; margin-top: 3.5rem; }
@@ -41,18 +41,18 @@
 .dashboard :global(.ss-nav), .dashboard :global(.ss-user) { font-size: 1.15em; }
 .factoryWeb { position: relative; container-type: inline-size; overflow: hidden; aspect-ratio: 100 / 61.6; border: 1px solid #e8e2d8; border-radius: 6px; background: #f5f1e9; }
 .factoryWeb :global(.lf-web) { font-size: calc(100cqw / 100); }
-.contact { margin-top: 5.5rem; padding-block: 4.5rem; border-top: 1px solid #e4e6e9; scroll-margin-top: 90px; }
+.contact { margin-top: 5.5rem; padding-block: 4.5rem; border-top: 1px solid var(--color-border); scroll-margin-top: 90px; }
 .contact .eyebrow { margin-top: 0; }
 .contact h2 { max-width: 670px; margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.15; text-wrap: balance; }
-.contactLink { display: inline-flex; align-items: center; gap: 1.5rem; margin-top: 2rem; padding-bottom: .7rem; border-bottom: 1px solid #02135f; font-size: .9rem; }
-.otherProjects { border-top: 1px solid #e4e6e9; padding-block: 2.5rem 3.5rem; }
+.contactLink { display: inline-flex; align-items: center; gap: 1.5rem; margin-top: 2rem; padding-bottom: .7rem; border-bottom: 1px solid var(--brand-night); font-size: .9rem; }
+.otherProjects { border-top: 1px solid var(--color-border); padding-block: 2.5rem 3.5rem; }
 .otherProjects > div { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .otherProjects a { display: flex; justify-content: space-between; gap: 1.5rem; padding-block: .5rem; font-family: var(--font-display), sans-serif; font-size: 1.375rem; }
-.otherProjects a small { display: block; margin-top: .5rem; color: #8a8f98; font-family: var(--font-sans), sans-serif; font-size: .75rem; font-weight: 400; }
+.otherProjects a small { display: block; margin-top: .5rem; color: var(--color-text-muted); font-family: var(--font-sans), sans-serif; font-size: .75rem; font-weight: 400; }
 .contactLink span, .otherProjects a > span:last-child { transition: transform 250ms ease; }
-.footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; border-top: 1px solid #e4e6e9; padding-block: 1.8rem; color: #8a8f98; font-size: .75rem; }
-.footer > a:first-child { color: #02135f; font-weight: 600; }
-.page a:focus-visible, .page video:focus-visible { outline: 2px solid #02135f; outline-offset: 6px; }
+.footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; border-top: 1px solid var(--color-border); padding-block: 1.8rem; color: var(--color-text-muted); font-size: .75rem; }
+.footer > a:first-child { color: var(--brand-night); font-weight: 600; }
+.page a:focus-visible, .page video:focus-visible { outline: 2px solid var(--brand-night); outline-offset: 6px; }
 
 /* Recompose the existing home visuals into wide product portraits. The home
    keeps its original proportions and entrances; here the interface is visible
