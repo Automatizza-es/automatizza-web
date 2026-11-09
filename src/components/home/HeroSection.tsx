@@ -1,103 +1,30 @@
 "use client";
 
 import { useI18n } from "@/components/i18n/LocaleProvider";
-
 import Link from "@/components/i18n/LocaleLink";
-import type { CSSProperties } from "react";
-
 import { Container } from "@/components/layout/Container";
 import styles from "./HeroSection.module.css";
-
-const convergenceParticles = Array.from({ length: 24 }, (_, index) => {
-  const angle = (index / 24) * Math.PI * 2;
-  const distance = 2.6 + (index % 4) * 0.45;
-  return {
-    "--from-x": `${(Math.cos(angle) * distance).toFixed(3)}em`,
-    "--from-y": `${(Math.sin(angle) * distance * 0.58).toFixed(3)}em`,
-    "--to-x": `${(Math.cos(angle) * 0.7).toFixed(3)}em`,
-    "--to-y": `${(Math.sin(angle) * 0.15).toFixed(3)}em`,
-    "--delay": `${(index % 6) * 65}ms`,
-    "--size": `${index % 3 === 0 ? 5 : 4}px`,
-  } as CSSProperties;
-});
 
 export function HeroSection() {
   const { t } = useI18n();
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
-      <div className={styles.network} aria-hidden="true">
-        <svg viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
-          <g className={styles.lines}>
-            <path d="M-30 188 154 188 258 86 430 86" />
-            <path d="M80 586 244 424 414 424 516 322" />
-            <path d="M314 720 314 588 494 408 662 408" />
-            <path d="M1026 78 1144 196 1470 196" />
-            <path d="M844 316 1010 316 1134 440 1470 440" />
-            <path d="M930 596 1094 596 1230 460" />
-            <path d="M558 126 676 244 840 244 956 128" />
-            <path d="M556 598 672 482 834 482 948 596" />
-          </g>
-          <g className={styles.routes}>
-            <path d="M-30 188 154 188 258 86 430 86" />
-            <path d="M80 586 244 424 414 424 516 322" />
-            <path d="M1026 78 1144 196 1470 196" />
-            <path d="M844 316 1010 316 1134 440 1470 440" />
-          </g>
-          <g className={styles.nodes}>
-            <circle className="node-secondary" cx="154" cy="188" r="3.5" />
-            <circle className="node-primary" cx="258" cy="86" r="6" />
-            <circle cx="244" cy="424" r="4" />
-            <circle className="node-primary" cx="414" cy="424" r="6" />
-            <circle cx="314" cy="588" r="4" />
-            <circle cx="676" cy="244" r="4" />
-            <circle cx="834" cy="482" r="4" />
-            <circle className="node-primary" cx="1010" cy="316" r="6" />
-            <circle cx="1134" cy="440" r="4" />
-            <circle className="node-primary" cx="1144" cy="196" r="6" />
-            <circle cx="1230" cy="460" r="4" />
-          </g>
-          <g className={styles.travelers}>
-            <circle r="4.2">
-              <animateMotion dur="18s" repeatCount="indefinite" path="M-30 188 154 188 258 86 430 86" />
-            </circle>
-            <circle r="3.6">
-              <animateMotion dur="22s" begin="-4s" repeatCount="indefinite" path="M844 316 1010 316 1134 440 1470 440" />
-            </circle>
-            <circle r="3.6">
-              <animateMotion dur="20s" begin="-6s" repeatCount="indefinite" path="M556 598 672 482 834 482 948 596" />
-            </circle>
-          </g>
-        </svg>
-      </div>
+      <div className={styles.background} aria-hidden="true" />
+      <div className={styles.overlay} aria-hidden="true" />
       <Container className={styles.inner}>
         <div className={styles.copy}>
+          <p className={styles.eyebrow}>{t("SOFTWARE · AUTOMATIZACIÓN · INTELIGENCIA ARTIFICIAL")}</p>
           <h1 id="hero-title" className={styles.title}>
-            <span className={styles.lead}>{t("Menos tareas repetitivas.")}</span>{" "}
-            <span className={styles.benefit}>
-              <strong className={styles.emphasis}>
-                <span className={`${styles.word} ${styles.wordMore}`}>{t("Más")}</span>{" "}
-                <span className={`${styles.word} ${styles.wordTime}`}>{t("tiempo")}<span className={styles.particles} aria-hidden="true">
-                    {convergenceParticles.map((style, index) => (
-                      <i className={styles.particle} key={index} style={style} />
-                    ))}
-                  </span>
-                </span>
-              </strong>
-            </span>{" "}
-            <span className={styles.closing}>{t("para hacer crecer tu empresa.")}</span>
+            {t("Automatización a medida, en producción.")}
           </h1>
-          <p className={styles.description}>{t("Creamos aplicaciones y automatizaciones a medida que conectan procesos y simplifican tu día a día.")}</p>
+          <p className={styles.description}>{t("Diseñamos, desarrollamos y mantenemos software y automatizaciones que conectan los procesos de tu empresa.")}</p>
           <div className={styles.actions}>
-            <Link className={`${styles.button} ${styles.primary}`} href="/contacto">
-              <span>{t("Hablemos de tu proyecto")}</span>
-              <span className={styles.arrow} aria-hidden="true">
-                →
-              </span>
-            </Link>
-            <Link className={`${styles.button} ${styles.secondary}`} href="#proyectos">{t("Ver proyectos")}</Link>
+            <Link className={styles.primary} href="/contacto">{t("Hablemos de tu proyecto")} <span aria-hidden="true">↗</span></Link>
+            <Link className={styles.secondary} href="#proyectos">{t("Ver proyectos")} <span aria-hidden="true">↘</span></Link>
           </div>
         </div>
       </Container>
+      <div className={styles.lowerLine} aria-hidden="true" />
     </section>
   );
 }
