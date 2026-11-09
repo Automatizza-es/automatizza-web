@@ -1,9 +1,27 @@
+Warning: truncated output (original token count: 20598)
+Total output lines: 1801
+
 import aiMessages from "./aiMessages";
 import serviceMessages from "./serviceMessages";
 
 const messages: Record<string, readonly [string, string, string]> = {
   ...serviceMessages,
   ...aiMessages,
+  "SOFTWARE · AUTOMATIZACIÓN · INTELIGENCIA ARTIFICIAL": [
+    "SOFTWARE · AUTOMATION · ARTIFICIAL INTELLIGENCE",
+    "LOGICIELS · AUTOMATISATION · INTELLIGENCE ARTIFICIELLE",
+    "SOFTWARE · AUTOMAÇÃO · INTELIGÊNCIA ARTIFICIAL"
+  ],
+  "Automatización a medida, en producción.": [
+    "Bespoke automation, running in production.",
+    "Automatisation sur mesure, en production.",
+    "Automatização à medida, em produção."
+  ],
+  "Diseñamos, desarrollamos y mantenemos software y automatizaciones que conectan los procesos de tu empresa.": [
+    "We design, build and maintain software and automation that connect your business processes.",
+    "Nous concevons, développons et maintenons des logiciels et automatisations qui relient les processus de votre entreprise.",
+    "Concebemos, desenvolvemos e mantemos software e automatizações que ligam os processos da sua empresa."
+  ],
   "Menos tareas repetitivas.": [
     "Fewer repetitive tasks.",
     "Moins de tâches répétitives.",
@@ -792,45 +810,7 @@ const messages: Record<string, readonly [string, string, string]> = {
   "Enviar mensaje": [
     "Send message",
     "Envoyer le message",
-    "Enviar mensagem"
-  ],
-  "Necesitas JavaScript para usar el formulario. Puedes escribirnos por email.": [
-    "JavaScript is required to use this form. You can contact us by email.",
-    "JavaScript est nécessaire pour utiliser ce formulaire. Vous pouvez nous écrire par e-mail.",
-    "Precisa de JavaScript para utilizar o formulário. Pode contactar-nos por email."
-  ],
-  "Preferencias de cookies": [
-    "Cookie preferences",
-    "Préférences de cookies",
-    "Preferências de cookies"
-  ],
-  "Cookies": [
-    "Cookies",
-    "Cookies",
-    "Cookies"
-  ],
-  "Utilizamos cookies de Google Analytics para entender cómo se usa nuestra web, solo si las aceptas. Puedes rechazarlas y seguir navegando. Guardamos tu elección para recordarla.": [
-    "We use Google Analytics cookies to understand how our website is used, only if you accept them. You can reject them and keep browsing. We store your choice to remember it.",
-    "Nous utilisons des cookies de Google Analytics pour comprendre l'utilisation de notre site, uniquement si vous les acceptez. Vous pouvez les refuser et continuer à naviguer. Nous conservons votre choix pour le mémoriser.",
-    "Utilizamos cookies do Google Analytics para compreender como o nosso site é utilizado, apenas se os aceitar. Pode rejeitá-los e continuar a navegar. Guardamos a sua escolha para a recordar."
-  ],
-  "Vista de prueba local: no envía datos a Google.": [
-    "Local test preview: no data is sent to Google.",
-    "Aperçu de test local : aucune donnée n'est envoyée à Google.",
-    "Pré-visualização de teste local: não envia dados para a Google."
-  ],
-  "Prueba local de Tag Assistant: solo al aceptar se cargará Google y se enviarán datos reales de navegación. La analítica pública sigue desactivada.": [
-    "Local Tag Assistant test: Google will load and real navigation data will be sent only after acceptance. Public analytics remains disabled.",
-    "Test local de Tag Assistant : Google ne sera chargé et les données de navigation réelles envoyées qu'après acceptation. Les statistiques publiques restent désactivées.",
-    "Teste local do Tag Assistant: só após aceitar será carregada a Google e enviados dados reais de navegação. A análise pública continua desativada."
-  ],
-  "Rechazar cookies": [
-    "Reject cookies",
-    "Refuser les cookies",
-    "Rejeitar cookies"
-  ],
-  "Aceptar cookies": [
-    "Accept cookies",
+    "Enviar me…598 tokens truncated…"Accept cookies",
     "Accepter les cookies",
     "Aceitar cookies"
   ],
