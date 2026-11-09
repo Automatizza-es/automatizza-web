@@ -27,7 +27,7 @@
   max-width: none;
   margin: 0;
   color: var(--heading-night);
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-size: clamp(2rem, 2.9vw, 2.625rem);
   font-weight: 700;
   letter-spacing: -.03em;
