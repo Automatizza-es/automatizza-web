@@ -50,7 +50,7 @@ function Icon({ name }: { name: IconName }) {
 
 // The APC driver app's home screen (real layout and labels), with
 // fictitious driver, plate and slaughterhouse.
-function ApcHome() {
+export function ApcHome() {
   const { t } = useI18n();
   return (
     <div className="apc-app">

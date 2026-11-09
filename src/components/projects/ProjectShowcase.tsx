@@ -6,13 +6,13 @@ import type { ReactNode } from "react";
 import Link from "@/components/i18n/LocaleLink";
 
 import { projects } from "@/components/projects/ProjectGallery";
-import { ApcVisual } from "@/components/projects/visuals/ApcVisual";
+import { ApcPhotoVisual } from "@/components/projects/visuals/ApcPhotoVisual";
 import { LaFactoryVisual } from "@/components/projects/visuals/LaFactoryVisual";
 import { SilosSpainPhotoVisual } from "@/components/projects/visuals/SilosSpainPhotoVisual";
 
 const visuals: Partial<Record<string, ReactNode>> = {
   "silos-spain": <SilosSpainPhotoVisual />,
-  apc: <ApcVisual />,
+  apc: <ApcPhotoVisual />,
   "la-factory-coworking": <LaFactoryVisual />,
 };
 
