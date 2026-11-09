@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { usePlayOnView } from "../usePlayOnView";
 import { CrmDashboard } from "./SilosSpainVisual";
 import styles from "./SilosSpainPhotoVisual.module.css";
 
 /** The photograph and the screen share its original 1254 × 1254 coordinate space. */
 export function SilosSpainPhotoVisual() {
-  const sceneRef = useRef<HTMLDivElement>(null);
+  const sceneRef = usePlayOnView<HTMLDivElement>();
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -20,7 +21,7 @@ export function SilosSpainPhotoVisual() {
     const observer = new ResizeObserver(resize);
     observer.observe(scene);
     return () => observer.disconnect();
-  }, []);
+  }, [sceneRef]);
 
   return (
     <div ref={sceneRef} className={styles.scene} aria-hidden="true">
@@ -34,8 +35,10 @@ export function SilosSpainPhotoVisual() {
           sizes="(max-width: 760px) 650px, (max-width: 1440px) 34vw, 500px"
         />
         <div className={styles.screen}>
-          <div className={styles.content}>
-            <CrmDashboard />
+          <div className={styles.entrance}>
+            <div className={styles.content}>
+              <CrmDashboard />
+            </div>
           </div>
         </div>
       </div>
