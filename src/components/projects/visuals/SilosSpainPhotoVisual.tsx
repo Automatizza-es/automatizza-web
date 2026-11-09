@@ -8,7 +8,7 @@ import styles from "./SilosSpainPhotoVisual.module.css";
 
 /** The photograph and the screen share its original 1254 × 1254 coordinate space. */
 export function SilosSpainPhotoVisual() {
-  const sceneRef = usePlayOnView<HTMLDivElement>();
+  const sceneRef = usePlayOnView<HTMLDivElement>(0.65);
 
   useEffect(() => {
     const scene = sceneRef.current;
