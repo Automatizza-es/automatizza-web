@@ -251,7 +251,7 @@ export function WebHome() {
 }
 
 // Phone app home, same product in one column with the bottom tab bar.
-function MobileHome() {
+export function MobileHome() {
   const { t } = useI18n();
   return (
     <div className="lf-mobile">
