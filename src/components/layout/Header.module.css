@@ -55,9 +55,6 @@
 .transparent :global(.mobile-navigation summary span) { background: #f4f2ed; }
 .transparent .actions > details > summary { color: #f4f2ed; }
 .transparent a:focus-visible, .transparent summary:focus-visible { outline-color: #fff; }
-@media (max-width: 900px) {
-  .transparent .actions > details > summary { color: var(--color-navy); }
-}
 @media (prefers-reduced-motion: reduce) {
   .overHero { transition: none; }
 }
