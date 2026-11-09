@@ -1,10 +1,10 @@
 .compact:global(.contact-section) { padding-block: clamp(3rem, 5vw, 4.5rem); }
-.compact :global(.contact-layout > .contact-kicker) { margin: 0 0 1.25rem; color: var(--color-cyan); font-size: .75rem; line-height: 1.4; }
-.compact :global(.contact-layout h2) { max-width: 800px; font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1.15; }
-.compact :global(.contact-layout > p:not(.contact-kicker)) { max-width: 620px; margin-top: 1.25rem; font-size: 1rem; line-height: 1.7; }
+.compact :global(.contact-layout > .contact-kicker) { margin: 0 0 1.25rem; color: #4a9cc5; font-size: .75rem; line-height: 1.4; }
+.compact :global(.contact-layout h2) { max-width: 800px; color: var(--heading-paper); font-size: clamp(2rem, 3.4vw, 2.875rem); letter-spacing: -.03em; line-height: 1.18; }
+.compact :global(.contact-layout > p:not(.contact-kicker)) { max-width: 620px; margin-top: 1.25rem; color: #c4cbd0; font-size: 1rem; line-height: 1.75; }
 .compact :global(.contact-actions) { margin-top: 1.75rem; }
 .compact :global(.contact-button) { border-radius: 999px; }
 .compact a:focus-visible { outline: 2px solid #8cd7ff; outline-offset: 5px; }
 @media (max-width: 600px) {
-  .compact :global(.contact-layout h2) { font-size: 1.875rem; }
+  .compact :global(.contact-layout h2) { font-size: 2rem; }
 }

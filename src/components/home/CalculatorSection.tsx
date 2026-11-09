@@ -4,6 +4,9 @@ import { useI18n } from "@/components/i18n/LocaleProvider";
 
 import Link from "@/components/i18n/LocaleLink";
 
+import styles from "./CalculatorSection.module.css";
+import headingStyles from "./SectionHeading.module.css";
+
 import { Container } from "@/components/layout/Container";
 import { SavingsCalculator } from "@/components/home/SavingsCalculator";
 
@@ -12,7 +15,7 @@ export function CalculatorSection() {
   return (
     <section className="calculator-section" id="calculadora" aria-labelledby="calculator-title">
       <Container className="calculator-shell">
-        <div className="calculator-copy" data-reveal>
+        <div className={`calculator-copy ${headingStyles.theme} ${styles.heading}`} data-reveal>
           <p className="section-eyebrow">{t("CALCULADORA AUTOMATIZZA")}</p>
           <h2 id="calculator-title">{t("¿Cuánto te cuesta no automatizar?")}</h2>
           <p>{t("Calcula cuánto te cuestan las tareas repetitivas de tu empresa y estima el tiempo y el valor económico que podrías recuperar al automatizarlas.")}</p>

@@ -2,6 +2,8 @@
 
 import { useI18n } from "@/components/i18n/LocaleProvider";
 
+import headingStyles from "./SectionHeading.module.css";
+
 import { Container } from "@/components/layout/Container";
 import styles from "./FaqSection.module.css";
 
@@ -41,7 +43,7 @@ export function FaqSection() {
   return (
     <section className={styles.section} aria-labelledby="faq-title">
       <Container className="editorial-container">
-        <header>
+        <header className={headingStyles.theme} data-reveal>
           <p className={`section-eyebrow ${styles.eyebrow}`}>{t("PREGUNTAS FRECUENTES")}</p>
           <h2 id="faq-title" className={styles.title}>{t("Antes de empezar")}</h2>
         </header>

@@ -1,0 +1,7 @@
+.heading:global(.calculator-copy) > :global(.section-eyebrow) { margin: 0 0 1.5rem; color: var(--heading-steel); font-size: .75rem; line-height: 1.4; }
+.heading:global(.calculator-copy) > h2 { color: var(--heading-night); font-size: clamp(2.25rem, 3.3vw, 2.875rem); letter-spacing: -.03em; line-height: 1.18; }
+.heading:global(.calculator-copy) > p:not(:global(.section-eyebrow)) { color: var(--heading-slate); line-height: 1.75; }
+@media (max-width: 600px) {
+  .heading:global(.calculator-copy) > :global(.section-eyebrow) { font-size: .6875rem; letter-spacing: .13em; }
+  .heading:global(.calculator-copy) > h2 { font-size: clamp(2rem, 9.7vw, 2.625rem); line-height: 1.22; }
+}
