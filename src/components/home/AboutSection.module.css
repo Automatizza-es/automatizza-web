@@ -1,7 +1,7 @@
 .section {
   padding-block: clamp(3rem, 5vw, 4rem);
   scroll-margin-top: 80px;
-  background: var(--color-white);
+  background: var(--color-surface);
   color: var(--color-navy);
 }
 
