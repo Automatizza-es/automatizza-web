@@ -3,7 +3,8 @@
   display: grid;
   min-height: max(720px, 100svh);
   overflow: hidden;
-  background: #0b1826;
+  background: linear-gradient(180deg, rgba(7, 18, 30, .46), rgba(7, 18, 30, .32) 45%, rgba(7, 18, 30, .08)),
+    #0b1826 url("/images/hero-background.jpeg") center top / cover no-repeat;
   color: #f4f2ed;
   isolation: isolate;
   place-items: center;
