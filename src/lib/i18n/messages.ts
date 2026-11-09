@@ -1,9 +1,31 @@
+Warning: truncated output (original token count: 20792)
+Total output lines: 1805
+
 import aiMessages from "./aiMessages";
 import serviceMessages from "./serviceMessages";
 
 const messages: Record<string, readonly [string, string, string]> = {
   ...serviceMessages,
   ...aiMessages,
+  "Estudio independiente de tecnología": ["Independent technology studio", "Studio technologique indépendant", "Estúdio independente de tecnologia"],
+  "Tu empresa": ["Your business", "Votre entreprise", "A sua empresa"],
+  "no debería": ["shouldn't", "ne devrait pas", "não deveria"],
+  "adaptarse": ["adapt", "s'adapter", "adaptar-se"],
+  "al software.": ["to software.", "aux logiciels.", "ao software."],
+  "Diseñamos software, automatizaciones e inteligencia artificial alrededor de cómo trabaja tu equipo. No al revés.": [
+    "We design software, automation and AI around how your team works. Not the other way round.",
+    "Nous concevons logiciels, automatisations et IA autour de la façon dont votre équipe travaille. Pas l'inverse.",
+    "Criamos software, automatizações e IA à medida da forma como a sua equipa trabalha. Não o contrário."
+  ],
+  "Cuéntanos qué necesitas": ["Tell us what you need", "Parlez-nous de votre besoin", "Conte-nos o que precisa"],
+  "Explorar proyectos": ["Explore projects", "Explorer les projets", "Explorar projetos"],
+  "Estrategia. Diseño. Ingeniería.": ["Strategy. Design. Engineering.", "Stratégie. Design. Ingénierie.", "Estratégia. Design. Engenharia."],
+  "Desliza para descubrir": ["Scroll to explore", "Défiler pour découvrir", "Deslize para descobrir"],
+  "Composición gráfica que representa herramientas conectadas y software a medida.": [
+    "Graphic composition representing connected tools and bespoke software.",
+    "Composition graphique représentant des outils connectés et des logiciels sur mesure.",
+    "Composição gráfica que representa ferramentas ligadas e software à medida."
+  ],
   "Menos tareas repetitivas.": [
     "Fewer repetitive tasks.",
     "Moins de tâches répétitives.",
@@ -674,293 +696,7 @@ const messages: Record<string, readonly [string, string, string]> = {
     "Dites-nous quel processus vous aimeriez améliorer, quelle tâche vous prend trop de temps ou quel problème vous souhaitez résoudre.",
     "Conte-nos que processo gostaria de melhorar, que tarefa lhe ocupa demasiado tempo ou que problema quer resolver."
   ],
-  "Por ejemplo: gestionamos los presupuestos manualmente y perdemos mucho tiempo copiando información entre herramientas…": [
-    "For example: we manage quotes manually and spend too much time copying information between tools…",
-    "Par exemple : nous gérons les devis manuellement et perdons beaucoup de temps à copier des informations entre plusieurs outils…",
-    "Por exemplo: gerimos os orçamentos manualmente e perdemos muito tempo a copiar informação entre ferramentas…"
-  ],
-  "Deja este campo vacío": [
-    "Leave this field empty",
-    "Laissez ce champ vide",
-    "Deixe este campo vazio"
-  ],
-  "Confirmo que uso solo datos ficticios y quiero enviar una prueba técnica.": [
-    "I confirm that I am using fictitious data only and want to send a technical test.",
-    "Je confirme utiliser uniquement des données fictives et vouloir envoyer un test technique.",
-    "Confirmo que utilizo apenas dados fictícios e quero enviar um teste técnico."
-  ],
-  "He leído y acepto la": [
-    "I have read and accept the",
-    "J'ai lu et j'accepte la",
-    "Li e aceito a"
-  ],
-  "política de privacidad": [
-    "privacy policy",
-    "politique de confidentialité",
-    "política de privacidade"
-  ],
-  "y consiento el tratamiento de mis datos para responder a mi consulta.": [
-    "and consent to my data being processed to respond to my enquiry.",
-    "et consens au traitement de mes données pour répondre à ma demande.",
-    "e consinto o tratamento dos meus dados para responder ao meu pedido."
-  ],
-  "Esta prueba no registra consentimiento real.": [
-    "This test does not record real consent.",
-    "Ce test n'enregistre pas de consentement réel.",
-    "Este teste não regista consentimento real."
-  ],
-  "Consultar el borrador de privacidad": [
-    "Read the draft privacy policy",
-    "Consulter le projet de politique de confidentialité",
-    "Consultar o rascunho da política de privacidade"
-  ],
-  "Responsable:": [
-    "Controller:",
-    "Responsable du traitement :",
-    "Responsável:"
-  ],
-  "pendiente de identificar en el borrador": [
-    "to be identified in the draft",
-    "à identifier dans le projet",
-    "por identificar no rascunho"
-  ],
-  "Finalidad:": [
-    "Purpose:",
-    "Finalité :",
-    "Finalidade:"
-  ],
-  "atender tu consulta.": [
-    "responding to your enquiry.",
-    "répondre à votre demande.",
-    "responder ao seu pedido."
-  ],
-  "Base:": [
-    "Legal basis:",
-    "Base juridique :",
-    "Fundamento:"
-  ],
-  "consentimiento o medidas precontractuales solicitadas por ti.": [
-    "consent or pre-contractual steps you have requested.",
-    "consentement ou mesures précontractuelles demandées par vous.",
-    "consentimento ou diligências pré-contratuais solicitadas por si."
-  ],
-  "Destinatarios:": [
-    "Recipients:",
-    "Destinataires :",
-    "Destinatários:"
-  ],
-  "proveedores de alojamiento y correo": [
-    "hosting and email providers",
-    "prestataires d'hébergement et de messagerie",
-    "fornecedores de alojamento e email"
-  ],
-  "detallados en la política": [
-    "listed in the policy",
-    "détaillés dans la politique",
-    "indicados na política"
-  ],
-  "pendientes de validar en la política": [
-    "awaiting verification in the policy",
-    "à valider dans la politique",
-    "pendentes de validação na política"
-  ],
-  "Derechos:": [
-    "Rights:",
-    "Droits :",
-    "Direitos:"
-  ],
-  "acceso, rectificación y supresión, entre otros, en": [
-    "including access, rectification and erasure, at",
-    "notamment l'accès, la rectification et l'effacement, à",
-    "acesso, retificação e apagamento, entre outros, em"
-  ],
-  ". No te añadiremos a listas comerciales.": [
-    ". We won't add you to marketing lists.",
-    ". Nous ne vous ajouterons à aucune liste commerciale.",
-    ". Não o adicionaremos a listas comerciais."
-  ],
-  "El formulario no está disponible temporalmente. Puedes escribirnos por email.": [
-    "The form is temporarily unavailable. You can contact us by email.",
-    "Le formulaire est temporairement indisponible. Vous pouvez nous écrire par e-mail.",
-    "O formulário está temporariamente indisponível. Pode contactar-nos por email."
-  ],
-  "El envío está desactivado mientras revisamos y completamos la política de privacidad. Puedes escribirnos por email.": [
-    "Sending is disabled while we review and complete the privacy policy. You can contact us by email.",
-    "L'envoi est désactivé pendant la révision et la finalisation de la politique de confidentialité. Vous pouvez nous écrire par e-mail.",
-    "O envio está desativado enquanto revemos e completamos a política de privacidade. Pode contactar-nos por email."
-  ],
-  "Enviar mensaje": [
-    "Send message",
-    "Envoyer le message",
-    "Enviar mensagem"
-  ],
-  "Necesitas JavaScript para usar el formulario. Puedes escribirnos por email.": [
-    "JavaScript is required to use this form. You can contact us by email.",
-    "JavaScript est nécessaire pour utiliser ce formulaire. Vous pouvez nous écrire par e-mail.",
-    "Precisa de JavaScript para utilizar o formulário. Pode contactar-nos por email."
-  ],
-  "Preferencias de cookies": [
-    "Cookie preferences",
-    "Préférences de cookies",
-    "Preferências de cookies"
-  ],
-  "Cookies": [
-    "Cookies",
-    "Cookies",
-    "Cookies"
-  ],
-  "Utilizamos cookies de Google Analytics para entender cómo se usa nuestra web, solo si las aceptas. Puedes rechazarlas y seguir navegando. Guardamos tu elección para recordarla.": [
-    "We use Google Analytics cookies to understand how our website is used, only if you accept them. You can reject them and keep browsing. We store your choice to remember it.",
-    "Nous utilisons des cookies de Google Analytics pour comprendre l'utilisation de notre site, uniquement si vous les acceptez. Vous pouvez les refuser et continuer à naviguer. Nous conservons votre choix pour le mémoriser.",
-    "Utilizamos cookies do Google Analytics para compreender como o nosso site é utilizado, apenas se os aceitar. Pode rejeitá-los e continuar a navegar. Guardamos a sua escolha para a recordar."
-  ],
-  "Vista de prueba local: no envía datos a Google.": [
-    "Local test preview: no data is sent to Google.",
-    "Aperçu de test local : aucune donnée n'est envoyée à Google.",
-    "Pré-visualização de teste local: não envia dados para a Google."
-  ],
-  "Prueba local de Tag Assistant: solo al aceptar se cargará Google y se enviarán datos reales de navegación. La analítica pública sigue desactivada.": [
-    "Local Tag Assistant test: Google will load and real navigation data will be sent only after acceptance. Public analytics remains disabled.",
-    "Test local de Tag Assistant : Google ne sera chargé et les données de navigation réelles envoyées qu'après acceptation. Les statistiques publiques restent désactivées.",
-    "Teste local do Tag Assistant: só após aceitar será carregada a Google e enviados dados reais de navegação. A análise pública continua desativada."
-  ],
-  "Rechazar cookies": [
-    "Reject cookies",
-    "Refuser les cookies",
-    "Rejeitar cookies"
-  ],
-  "Aceptar cookies": [
-    "Accept cookies",
-    "Accepter les cookies",
-    "Aceitar cookies"
-  ],
-  "Configurar": [
-    "Settings",
-    "Configurer",
-    "Configurar"
-  ],
-  "Configurar cookies": [
-    "Cookie settings",
-    "Configurer les cookies",
-    "Configurar cookies"
-  ],
-  "Las necesarias recuerdan tu elección. La analítica es opcional y puedes cambiarla cuando quieras.": [
-    "Necessary cookies remember your choice. Analytics is optional and you can change your choice at any time.",
-    "Les cookies nécessaires mémorisent votre choix. Les statistiques sont facultatives et vous pouvez modifier votre choix à tout moment.",
-    "Os cookies necessários recordam a sua escolha. A análise estatística é opcional e pode alterá-la quando quiser."
-  ],
-  "Necesarias": [
-    "Necessary",
-    "Nécessaires",
-    "Necessários"
-  ],
-  "Siempre activas": [
-    "Always active",
-    "Toujours actifs",
-    "Sempre ativos"
-  ],
-  "Prueba local de Tag Assistant con Google real. Publicidad siempre denegada.": [
-    "Local Tag Assistant test using real Google services. Advertising always denied.",
-    "Test local de Tag Assistant avec les services réels de Google. Publicité toujours refusée.",
-    "Teste local do Tag Assistant com serviços reais da Google. Publicidade sempre rejeitada."
-  ],
-  "Consultar la política de cookies": [
-    "Read the cookie policy",
-    "Consulter la politique de cookies",
-    "Consultar a política de cookies"
-  ],
-  "Rechazar analítica": [
-    "Reject analytics",
-    "Refuser les statistiques",
-    "Rejeitar análise estatística"
-  ],
-  "Guardar preferencias": [
-    "Save preferences",
-    "Enregistrer les préférences",
-    "Guardar preferências"
-  ],
-  "Cerrar": [
-    "Close",
-    "Fermer",
-    "Fechar"
-  ],
-  "Tu navegador no puede reproducir este vídeo.": [
-    "Your browser cannot play this video.",
-    "Votre navigateur ne peut pas lire cette vidéo.",
-    "O seu navegador não consegue reproduzir este vídeo."
-  ],
-  "Ver la grabación": [
-    "Watch the recording",
-    "Voir l'enregistrement",
-    "Ver a gravação"
-  ],
-  "Dashboard del CRM: solicitudes, contactos, oportunidades y presupuestos": [
-    "CRM dashboard: enquiries, contacts, opportunities and quotes",
-    "Tableau de bord CRM : demandes, contacts, opportunités et devis",
-    "Painel do CRM: pedidos, contactos, oportunidades e orçamentos"
-  ],
-  "Espacio personal de La Factory: salas, próximas reservas y tarifa": [
-    "La Factory personal space: rooms, upcoming bookings and plan",
-    "Espace personnel de La Factory : salles, réservations à venir et forfait",
-    "Área pessoal da La Factory: salas, próximas reservas e plano"
-  ],
-  "Todos los proyectos": [
-    "All projects",
-    "Tous les projets",
-    "Todos os projetos"
-  ],
-  "Áreas del proyecto": [
-    "Project areas",
-    "Domaines du projet",
-    "Áreas do projeto"
-  ],
-  "Datos de demostración": [
-    "Demo data",
-    "Données de démonstration",
-    "Dados de demonstração"
-  ],
-  "El reto y la solución": [
-    "The challenge and the solution",
-    "Le défi et la solution",
-    "O desafio e a solução"
-  ],
-  "El reto": [
-    "The challenge",
-    "Le défi",
-    "O desafio"
-  ],
-  "La solución": [
-    "The solution",
-    "La solution",
-    "A solução"
-  ],
-  "El proyecto por dentro": [
-    "Inside the project",
-    "Au cœur du projet",
-    "O projeto por dentro"
-  ],
-  "La tecnología, en su contexto.": [
-    "Technology in context.",
-    "La technologie dans son contexte.",
-    "A tecnologia, no seu contexto."
-  ],
-  "Tu próximo proyecto": [
-    "Your next project",
-    "Votre prochain projet",
-    "O seu próximo projeto"
-  ],
-  "Todo empieza por entender cómo trabajas.": [
-    "It all starts with understanding how you work.",
-    "Tout commence par comprendre votre façon de travailler.",
-    "Tudo começa por compreender como trabalha."
-  ],
-  "Otros proyectos": [
-    "Other projects",
-    "Autres projets",
-    "Outros projetos"
-  ],
-  "Sigue explorando": [
-    "Keep exploring",
+  "Por ejemplo: …2792 tokens truncated…    "Keep exploring",
     "Continuez à découvrir",
     "Continue a explorar"
   ],
