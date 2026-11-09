@@ -8,10 +8,10 @@ import Link from "@/components/i18n/LocaleLink";
 import { projects } from "@/components/projects/ProjectGallery";
 import { ApcVisual } from "@/components/projects/visuals/ApcVisual";
 import { LaFactoryVisual } from "@/components/projects/visuals/LaFactoryVisual";
-import { SilosSpainVisual } from "@/components/projects/visuals/SilosSpainVisual";
+import { SilosSpainPhotoVisual } from "@/components/projects/visuals/SilosSpainPhotoVisual";
 
 const visuals: Partial<Record<string, ReactNode>> = {
-  "silos-spain": <SilosSpainVisual />,
+  "silos-spain": <SilosSpainPhotoVisual />,
   apc: <ApcVisual />,
   "la-factory-coworking": <LaFactoryVisual />,
 };

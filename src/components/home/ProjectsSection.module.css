@@ -104,3 +104,7 @@
   .section :global(.showcase-link span),
   .section :global(.showcase-card[data-reveal]) { transition: none; }
 }
+
+/* The Silos photograph stays fixed; only its inset dashboard moves. */
+.section :global(.showcase-card-silos-spain .showcase-stage),
+.section :global(.showcase-card-silos-spain:hover .showcase-stage) { transform: none; transition: none; }
