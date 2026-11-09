@@ -21,7 +21,7 @@ export default function Home() {
       <SiteIdentityStructuredData />
       <LegacyContactRedirect />
       <EditorialMotion />
-      <Header redesign />
+      <Header redesign overlayHero />
       <main>
         <HeroSection />
         <ChangeShowcaseSection />

@@ -46,3 +46,18 @@
   .redesigned :global(.header-cta) { padding-inline: .75rem; }
   .actions { gap: .5rem; }
 }
+
+.overHero { position: fixed; width: 100%; transition: background-color 220ms ease, border-color 220ms ease; }
+.transparent { border-bottom-color: transparent; background: transparent; }
+.transparent :global(.desktop-navigation) { color: #f4f2ed; }
+.transparent :global(.header-cta) { background: #f4f2ed; color: #0b1826; }
+.transparent :global(.header-cta):hover { background: #fff; }
+.transparent :global(.mobile-navigation summary span) { background: #f4f2ed; }
+.transparent .actions > details > summary { color: #f4f2ed; }
+.transparent a:focus-visible, .transparent summary:focus-visible { outline-color: #fff; }
+@media (max-width: 900px) {
+  .transparent .actions > details > summary { color: var(--color-navy); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overHero { transition: none; }
+}

@@ -4,6 +4,21 @@ import serviceMessages from "./serviceMessages";
 const messages: Record<string, readonly [string, string, string]> = {
   ...serviceMessages,
   ...aiMessages,
+  "La tecnología debería adaptarse a ti.": [
+    "Technology should adapt to you.",
+    "La technologie devrait s’adapter à vous.",
+    "A tecnologia deve adaptar-se a si."
+  ],
+  "No al revés.": [
+    "Not the other way around.",
+    "Pas l’inverse.",
+    "Não o contrário."
+  ],
+  "Desarrollamos software a medida, automatizaciones e inteligencia artificial para empresas.": [
+    "We develop bespoke software, automations and artificial intelligence for businesses.",
+    "Nous développons des logiciels sur mesure, des automatisations et de l’intelligence artificielle pour les entreprises.",
+    "Desenvolvemos software à medida, automatizações e inteligência artificial para empresas."
+  ],
   "Menos tareas repetitivas.": [
     "Fewer repetitive tasks.",
     "Moins de tâches répétitives.",
