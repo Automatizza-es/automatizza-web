@@ -130,7 +130,7 @@ const sliders: {
             <small className="calc-rate-help" id="calc-rate-help">
               {validRate
                 ? t("Salario bruto + costes de empresa.")
-                : "Introduce un coste por hora mayor que 0 y de hasta 500 €."}
+                : t("Introduce un coste por hora mayor que 0 y de hasta 500 €.")}
             </small>
           </div>
 

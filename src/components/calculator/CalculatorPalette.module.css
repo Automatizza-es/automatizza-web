@@ -1,0 +1,14 @@
+/* Shared by the real tool and its inert home preview; no global theme changes. */
+.palette {
+  --color-navy: #101f2d;
+  --color-white: #f7f8f7;
+  --color-dark-gray: #171b20;
+  --color-medium-gray: #59656f;
+  --color-cyan: #4a9cc5;
+}
+.palette :global(.calc-card) { border-color: #dce2e4; border-radius: 18px; background: #fff; box-shadow: 0 16px 48px -36px #101f2d55; }
+.palette :global(.calc-eyebrow) { color: #397a9b; }
+.palette :global(.calc-head) { border-bottom-color: #e3e7e7; }
+.palette :global(.calc-result-detail span) { color: #cad3d9; }
+.palette :global(.calc-rate) { border-radius: 8px; }
+.palette :global(.calc-rate):focus-within { box-shadow: 0 0 0 3px #4a9cc51a; }

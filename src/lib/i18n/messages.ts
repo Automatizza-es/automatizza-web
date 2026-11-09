@@ -4,6 +4,15 @@ import serviceMessages from "./serviceMessages";
 const messages: Record<string, readonly [string, string, string]> = {
   ...serviceMessages,
   ...aiMessages,
+  "¿Cuánto tiempo se va en tareas que podrías automatizar?": ["How much time goes into tasks you could automate?", "Combien de temps consacrez-vous à des tâches que vous pourriez automatiser ?", "Quanto tempo dedica a tarefas que poderia automatizar?"],
+  "Descubre cuánto tiempo podrías recuperar y qué valor tendría para tu empresa. Explora una estimación a tu medida.": ["Discover how much time you could reclaim and what it could be worth to your business. Explore an estimate tailored to you.", "Découvrez le temps que vous pourriez récupérer et sa valeur pour votre entreprise. Explorez une estimation adaptée à votre situation.", "Descubra quanto tempo poderia recuperar e que valor teria para a sua empresa. Explore uma estimativa à sua medida."],
+  "Explorar la calculadora": ["Explore the calculator", "Explorer le calculateur", "Explorar a calculadora"],
+  "Vista previa de la calculadora de Automatizza": ["Preview of the Automatizza calculator", "Aperçu du calculateur Automatizza", "Pré-visualização da calculadora da Automatizza"],
+  "Volver a la portada": ["Back to the homepage", "Retour à l’accueil", "Voltar à página inicial"],
+  "Calculadora de automatización": ["Automation calculator", "Calculateur d’automatisation", "Calculadora de automatização"],
+  "Calculadora de automatización | Automatizza": ["Automation calculator | Automatizza", "Calculateur d’automatisation | Automatizza", "Calculadora de automatização | Automatizza"],
+  "Estima el tiempo y el valor económico que podrías recuperar al automatizar tareas repetitivas de tu empresa.": ["Estimate the time and economic value you could reclaim by automating repetitive tasks in your business.", "Estimez le temps et la valeur économique que vous pourriez récupérer en automatisant les tâches répétitives de votre entreprise.", "Estime o tempo e o valor económico que poderia recuperar ao automatizar tarefas repetitivas da sua empresa."],
+  "Introduce un coste por hora mayor que 0 y de hasta 500 €.": ["Enter an hourly cost greater than 0 and up to €500.", "Saisissez un coût horaire supérieur à 0 et inférieur ou égal à 500 €.", "Introduza um custo por hora superior a 0 e até 500 €."],
   "La tecnología debería adaptarse a ti.": [
     "Technology should adapt to you.",
     "La technologie devrait s’adapter à vous.",
