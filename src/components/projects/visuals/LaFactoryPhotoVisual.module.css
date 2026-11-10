@@ -39,7 +39,6 @@
 .desktop::after, .mobile::after { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(120deg, #ffffff06, #38291906); content: ""; }
 .island { position: absolute; left: 904px; top: 697px; width: 59px; height: 18px; overflow: hidden; border-radius: 12px; pointer-events: none; }
 .islandImage { position: absolute; left: -904px; top: -697px; width: 1122px; height: 1402px; max-width: none; }
-:global(.showcase-visual-la-factory-coworking) > :global(.showcase-stage):has(.scene) { transform: none !important; transition: none; }
 
 /* Existing quota bars fill once, with a small offset between the two screens. */
 @media (prefers-reduced-motion: no-preference) {

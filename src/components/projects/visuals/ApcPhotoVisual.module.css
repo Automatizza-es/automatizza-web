@@ -26,8 +26,7 @@
 .island { position: absolute; left: 500px; top: 215px; width: 124px; height: 38px; overflow: hidden; border-radius: 22px; pointer-events: none; }
 .islandPhoto { position: absolute; left: -500px; top: -215px; width: 1122px; height: 1402px; max-width: none; }
 
-/* Only the existing app content animates; the photographed phone stays fixed. */
-:global(.showcase-visual-apc) > :global(.showcase-stage):has(.scene) { transform: none !important; transition: none; }
+/* App entrance animations stay independent of the shared card hover zoom. */
 @media (prefers-reduced-motion: no-preference) {
   .scene:global(.is-armed):not(:global(.is-playing)) .screen :global(.apc-item) { opacity: .6; transform: translateY(10px); }
   .scene:global(.is-playing) .screen :global(.apc-item) { animation: pickup-enter 1400ms ease-in-out 250ms both; }
