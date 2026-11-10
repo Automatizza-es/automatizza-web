@@ -3,6 +3,7 @@
 import { useI18n } from "@/components/i18n/LocaleProvider";
 
 import Image from "next/image";
+import { brandAssets } from "@/lib/brand-assets";
 import { useEffect, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
 
@@ -34,10 +35,10 @@ export function Header({ redesign = false, homeLinks = false, overlayHero = fals
       <Container className="header-inner">
         <Link className="brand" href="/" aria-label={t("Automatizza, inicio")}>
           <Image
-            src={transparent ? "/brand/automatizza-horizontal-light.svg" : "/brand/automatizza-horizontal-dark.svg"}
+            src={transparent ? brandAssets.wordmark.white : brandAssets.wordmark.dark}
             alt="Automatizza"
-            width={762}
-            height={80}
+            width={brandAssets.wordmark.width}
+            height={brandAssets.wordmark.height}
             priority
           />
         </Link>

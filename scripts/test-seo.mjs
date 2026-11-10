@@ -321,7 +321,7 @@ async function verify(environment) {
     assert.ok(!html.includes('<link rel="canonical"'), "404 must not canonicalize to the home");
     checks++;
   }
-  for (const icon of ["/favicon.ico", "/icon1.png", "/icon2.png", "/apple-icon.png", "/brand/automatizza-logo.png"]) {
+  for (const icon of ["/favicon.ico", "/icon1.png", "/icon2.png", "/apple-icon.png", "/brand/automatizza-logo.png", "/brand/editorial-2026-11/automatizza-logo.png", "/brand/editorial-2026-11/automatizza-logo-dark-web.svg", "/brand/editorial-2026-11/automatizza-logo-white-web.svg", "/brand/editorial-2026-11/automatizza-symbol-web.svg", "/icons/icon-192.png", "/icons/icon-512.png"]) {
     const asset = await get(icon);
     assert.equal(asset.response.status,200,icon);
     assert.match(asset.response.headers.get("content-type"),/image\//);
