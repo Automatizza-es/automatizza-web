@@ -1,3 +1,4 @@
+@property --factory-hover-zoom { syntax: "<number>"; inherits: false; initial-value: 1; }
 .scene { position: absolute; inset: 0; overflow: hidden; background: #b7a18a; }
 .canvas {
   position: absolute;
@@ -5,7 +6,9 @@
   left: 50%;
   width: 1122px;
   height: 1402px;
-  transform: translate(-50%, -50%) scale(var(--factory-photo-scale, 0));
+  transform: translate(-50%, -50%);
+  zoom: calc(var(--factory-photo-scale, 1) * var(--factory-hover-zoom));
+  transition: --factory-hover-zoom 700ms cubic-bezier(.2, .7, .2, 1);
   transform-origin: center;
   font-family: var(--font-sans), sans-serif;
 }
@@ -55,3 +58,13 @@
 @media (prefers-reduced-motion: reduce) {
   .scene :global(.lf-bar span) { animation: none; transform: none; }
 }
+
+/* Layout zoom keeps the live interface sharp instead of scaling a rasterised layer twice. */
+:global(.showcase-visual-la-factory-coworking) > :global(.showcase-stage):has(.scene) { transform: none !important; transition: none; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global(.showcase-card-la-factory-coworking):hover .canvas,
+  :global(.showcase-card-la-factory-coworking):focus-within .canvas { --factory-hover-zoom: 1.012; }
+}
+@media (prefers-reduced-motion: reduce) { .canvas { transition: none; } }
+
+@supports not (zoom: 1) { .canvas { transform: translate(-50%, -50%) scale(var(--factory-photo-scale, 0)); } }

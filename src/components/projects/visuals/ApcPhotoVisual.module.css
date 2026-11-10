@@ -1,3 +1,4 @@
+@property --apc-hover-zoom { syntax: "<number>"; inherits: false; initial-value: 1; }
 .scene { position: absolute; inset: 0; overflow: hidden; background: #292e31; }
 .canvas {
   position: absolute;
@@ -5,7 +6,9 @@
   left: 50%;
   width: 1122px;
   height: 1402px;
-  transform: translate(-50%, -50%) scale(var(--apc-photo-scale, 0));
+  transform: translate(-50%, -50%);
+  zoom: calc(var(--apc-photo-scale, 1) * var(--apc-hover-zoom));
+  transition: --apc-hover-zoom 700ms cubic-bezier(.2, .7, .2, 1);
   transform-origin: center;
 }
 .photo { display: block; width: 1122px; height: 1402px; }
@@ -42,3 +45,13 @@
 @media (prefers-reduced-motion: reduce) {
   .screen :global(.apc-item), .screen :global(.apc-item-tile) { animation: none; transform: none; opacity: 1; }
 }
+
+/* Layout zoom keeps the live interface sharp instead of scaling a rasterised layer twice. */
+:global(.showcase-visual-apc) > :global(.showcase-stage):has(.scene) { transform: none !important; transition: none; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global(.showcase-card-apc):hover .canvas,
+  :global(.showcase-card-apc):focus-within .canvas { --apc-hover-zoom: 1.012; }
+}
+@media (prefers-reduced-motion: reduce) { .canvas { transition: none; } }
+
+@supports not (zoom: 1) { .canvas { transform: translate(-50%, -50%) scale(var(--apc-photo-scale, 0)); } }
