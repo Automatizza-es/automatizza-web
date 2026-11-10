@@ -1,6 +1,7 @@
 .section:global(.whatwedo-section) {
   padding-block: clamp(3.5rem, 4.5vw, 4rem);
   background: var(--color-surface);
+  scroll-margin-top: 80px;
 }
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: clamp(3rem, 7vw, 7rem); }
 .intro { max-width: 500px; }
@@ -25,6 +26,7 @@
   :global(.motion-ready) .service[data-reveal]:nth-child(4) { transition-delay: 300ms; }
 }
 @media (max-width: 900px) {
+  .section:global(.whatwedo-section) { scroll-margin-top: 72px; }
   .layout { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
   .intro { max-width: 600px; }
   .services { max-width: 620px; }
