@@ -29,12 +29,12 @@ export function LaFactoryPhotoVisual() {
     <div ref={sceneRef} className={styles.scene} aria-hidden="true">
       <div className={styles.canvas}>
         <Image className={styles.photo} src={photo} alt="" width={1122} height={1402} sizes={sizes} />
-        <div className={styles.desktop}><WebHome /></div>
+        <div className={styles.desktop}><div className={styles.content}><WebHome /></div></div>
         {/* The real phone is in front of the monitor: preserve its photographed bezel. */}
         <div className={styles.phoneFrame}>
           <Image className={styles.phoneFrameImage} src={photo} alt="" width={1122} height={1402} sizes={sizes} />
         </div>
-        <div className={styles.mobile}><MobileHome /></div>
+        <div className={styles.mobile}><div className={styles.content}><MobileHome /></div></div>
         <div className={styles.island}>
           <Image className={styles.islandImage} src={photo} alt="" width={1122} height={1402} sizes={sizes} />
         </div>

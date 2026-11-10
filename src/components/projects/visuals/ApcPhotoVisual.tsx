@@ -30,7 +30,7 @@ export function ApcPhotoVisual() {
       <div className={styles.canvas}>
         <Image className={styles.photo} src={photo} alt="" width={1122} height={1402} sizes={sizes} />
         <div className={styles.screen}>
-          <ApcHome />
+          <div className={styles.content}><ApcHome /></div>
         </div>
         {/* Keep the photographed camera cutout, including its lens and lighting. */}
         <div className={styles.island}>
