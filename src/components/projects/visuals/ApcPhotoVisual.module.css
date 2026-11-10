@@ -10,6 +10,7 @@
   zoom: calc(var(--apc-photo-scale, 1) * var(--apc-hover-zoom));
   transition: --apc-hover-zoom 700ms cubic-bezier(.2, .7, .2, 1);
   transform-origin: center;
+  opacity: clamp(0, calc(var(--apc-photo-scale, 0) * 1000), 1);
 }
 .photo { display: block; width: 1122px; height: 1402px; }
 /* Coordinates of the inner display in the original photograph; bezel stays visible. */
