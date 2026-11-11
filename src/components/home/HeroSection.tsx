@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { useI18n } from "@/components/i18n/LocaleProvider";
 import Link from "@/components/i18n/LocaleLink";
 import { Container } from "@/components/layout/Container";
@@ -21,6 +21,18 @@ const interactiveWords = {
   pt: /(?:tecnologia|adaptar-se a si)/gu,
 };
 
+// The original word interaction used a small, one-shot particle convergence.
+const particles = Array.from({ length: 12 }, (_, index) => {
+  const angle = index / 12 * Math.PI * 2;
+  return {
+    "--from-x": `${(Math.cos(angle) * 1.9).toFixed(3)}em`,
+    "--from-y": `${(Math.sin(angle) * .8).toFixed(3)}em`,
+    "--to-x": `${(Math.cos(angle) * .35).toFixed(3)}em`,
+    "--to-y": `${(Math.sin(angle) * .12).toFixed(3)}em`,
+    "--delay": `${index % 4 * 55}ms`,
+  } as CSSProperties;
+});
+
 export function HeroSection() {
   const { locale, t } = useI18n();
   const heroRef = useRef<HTMLElement>(null);
@@ -30,7 +42,12 @@ export function HeroSection() {
   let start = 0;
   for (const [index, word] of words.entries()) {
     segments.push(lead.slice(start, word.index));
-    segments.push(<span className={index === 0 ? styles.technology : styles.adapt} key={word.index}>{word[0]}</span>);
+    segments.push(<span className={index === 0 ? styles.technology : styles.adapt} key={word.index}>
+      {word[0]}
+      <span className={styles.particles} aria-hidden="true">
+        {particles.map((style, particle) => <i className={styles.particle} key={particle} style={style} />)}
+      </span>
+    </span>);
     start = word.index + word[0].length;
   }
   segments.push(lead.slice(start));
