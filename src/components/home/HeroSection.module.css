@@ -35,7 +35,7 @@
 .nodes circle { fill: currentColor; opacity: .55; transform-box: fill-box; transform-origin: center; animation: breathe 8s ease-in-out infinite paused; transition: opacity 700ms ease; }
 .hero[data-visible="true"] .routes path, .hero[data-visible="true"] .nodes circle { animation-play-state: running; }
 .nodes circle:nth-child(even) { animation-delay: -4s; }
-.technology, .adapt { position: relative; display: inline-block; transform-origin: center 65%; transition: transform 500ms cubic-bezier(.22, 1, .36, 1); }
+.technology, .adapt { position: relative; display: inline-block; font-weight: 700; transform-origin: center 65%; transition: transform 500ms cubic-bezier(.22, 1, .36, 1); }
 .particles { position: absolute; top: 50%; left: 50%; width: 0; height: 0; pointer-events: none; }
 .particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--brand-steel); opacity: 0; }
 @keyframes breathe { 50% { transform: scale(1.3); } }
