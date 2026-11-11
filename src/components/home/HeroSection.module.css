@@ -35,7 +35,7 @@
 .nodes circle { fill: currentColor; opacity: .55; transform-box: fill-box; transform-origin: center; animation: breathe 8s ease-in-out infinite paused; transition: opacity 700ms ease; }
 .hero[data-visible="true"] .routes path, .hero[data-visible="true"] .nodes circle { animation-play-state: running; }
 .nodes circle:nth-child(even) { animation-delay: -4s; }
-.technology, .adapt { position: relative; }
+.technology, .adapt { position: relative; display: inline-block; transform-origin: center 65%; transition: transform 500ms cubic-bezier(.22, 1, .36, 1); }
 .particles { position: absolute; top: 50%; left: 50%; width: 0; height: 0; pointer-events: none; }
 .particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--brand-steel); opacity: 0; }
 @keyframes breathe { 50% { transform: scale(1.3); } }
@@ -52,6 +52,7 @@
 }
 @keyframes route { to { stroke-dashoffset: -726; } }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .technology:hover, .adapt:hover { transform: scale(1.035); }
   .technology:hover .particle { animation: connect 1600ms ease-out var(--delay) both; }
   .adapt:hover .particle { animation: converge 1700ms ease-in-out var(--delay) both; }
   .hero:has(.technology:hover) .lines path:nth-child(-n + 2),
@@ -104,7 +105,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .title, .description, .actions { animation: none; }
-  .button, .lines path, .nodes circle { transition: none; }
+  .button, .lines path, .nodes circle, .technology, .adapt { transition: none; }
   .routes, .particles { display: none; }
   .routes path, .nodes circle { animation: none; }
 }
