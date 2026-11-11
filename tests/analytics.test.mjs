@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 const compiled = path => import(pathToFileURL(join(process.env.ANALYTICS_TEST_BUILD, path)));
-const { readConsent, encodeConsent, consentLifetime } = await compiled("lib/analytics/consent.js");
+const { readConsent, encodeConsent, consentLifetime, analyticsPage } = await compiled("lib/analytics/consent.js");
 const { getAnalyticsConfig, cookiePolicy } = await compiled("lib/analytics/config.js");
 const { trackPage, stopAnalytics, trackContactResult } = await compiled("lib/analytics/browser.js");
 const ids = { measurementId: "G-1Y94M3HZRB", containerId: "GTM-59RBDRPH" };
@@ -430,4 +430,34 @@ test("language switches across all services record one visit each and never repl
   assert.equal(trackPage(ids,paths.fr,"granted"),false);assert.equal(state.scripts.size,0);
   assert.ok(commands().filter(c=>c[0]==="consent").every(c=>c[2].ad_storage==="denied"&&c[2].ad_user_data==="denied"&&c[2].ad_personalization==="denied"));
  }
+});
+
+
+test("every published commercial route has a nonempty analytics page title", async () => {
+  const { indexableRoutes, equivalents } = await compiled("lib/i18n/routes.js");
+  for (const id of indexableRoutes) for (const path of Object.values(equivalents(id))) {
+    const page = analyticsPage(path);
+    assert.ok(page, `missing analytics route: ${path}`);
+    assert.ok(page.title.trim().length > 0, `missing analytics title: ${path}`);
+  }
+});
+
+test("calculator visits are consent gated, localized and deduplicated", () => {
+  const titles = {
+    "/calculadora": "Calculadora de automatización | Automatizza",
+    "/en/calculator": "Automation calculator | Automatizza",
+    "/fr/calculateur": "Calculateur d’automatisation | Automatizza",
+    "/pt/calculadora": "Calculadora de automatização | Automatizza",
+  };
+  for (const [path, title] of Object.entries(titles)) {
+    const state = browser("denied");
+    window.location.pathname = path;
+    assert.equal(trackPage(ids, path, "denied"), false);
+    assert.equal(state.scripts.size, 0);
+    state.grant();
+    assert.equal(trackPage(ids, path, "granted"), true);
+    assert.equal(trackPage(ids, path, "granted"), false);
+    assert.deepEqual(events().map(e => [e.page_location, e.page_title]), [[`https://automatizza.es${path}`, title]]);
+    assert.equal(events().some(e => e.event === "automatizza_contact_success"), false);
+  }
 });

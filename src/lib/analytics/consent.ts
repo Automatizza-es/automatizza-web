@@ -22,6 +22,7 @@ export function readConsent(raw: string | null, now = Date.now()): { analytics: 
 const pageTitles: Record<string, string> = {
   "/": "Automatizza", "/proyectos": "Proyectos | Automatizza",
   "/contacto": "Contacto | Automatizza",
+  "/calculadora": "Calculadora de automatización | Automatizza",
   "/servicios/automatizacion-de-procesos": "Automatización de procesos para empresas | Automatizza",
   "/servicios/inteligencia-artificial-para-empresas": "Inteligencia artificial para empresas | Automatizza",
   "/servicios/software-a-medida": "Software a medida para empresas | Automatizza",
