@@ -36,6 +36,7 @@ export function Header({ redesign = false, homeLinks = false, overlayHero = fals
         <Link className="brand" href="/" aria-label={t("Automatizza, inicio")}>
           <Image
             src={transparent ? brandAssets.wordmark.white : brandAssets.wordmark.dark}
+            unoptimized
             alt="Automatizza"
             width={brandAssets.wordmark.width}
             height={brandAssets.wordmark.height}

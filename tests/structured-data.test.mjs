@@ -63,9 +63,9 @@ test("the confirmed clean LinkedIn URL identifies only the Automatizza brand", (
 
 test("the public logo is the current brand PNG with its real dimensions", () => {
   const logo = entity("ImageObject");
-  assert.equal(logo.url, "https://automatizza.es/brand/editorial-2026-11/automatizza-logo.png");
+  assert.equal(logo.url, "https://automatizza.es/brand/final-2026-11-11/logo-automatizza-2-marino-002B49-acero-4A9CC5.png");
   assert.equal(logo.contentUrl, logo.url);
-  const png = readFileSync("public/brand/editorial-2026-11/automatizza-logo.png");
+  const png = readFileSync("public/brand/final-2026-11-11/logo-automatizza-2-marino-002B49-acero-4A9CC5.png");
   assert.equal(png.subarray(1, 4).toString(), "PNG");
   assert.equal(logo.width, png.readUInt32BE(16));
   assert.equal(logo.height, png.readUInt32BE(20));

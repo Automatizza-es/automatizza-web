@@ -321,7 +321,7 @@ async function verify(environment) {
     assert.ok(!html.includes('<link rel="canonical"'), "404 must not canonicalize to the home");
     checks++;
   }
-  for (const icon of ["/favicon.ico", "/icon1.png", "/icon2.png", "/apple-icon.png", "/brand/automatizza-logo.png", "/brand/editorial-2026-11/automatizza-logo.png", "/brand/editorial-2026-11/automatizza-logo-dark-web.svg", "/brand/editorial-2026-11/automatizza-logo-white-web.svg", "/brand/editorial-2026-11/automatizza-symbol-web.svg", "/icons/icon-192.png", "/icons/icon-512.png"]) {
+  for (const icon of ["/favicon.ico", "/icon1.png", "/icon2.png", "/apple-icon.png", "/brand/automatizza-logo.png", "/brand/final-2026-11-11/logo-automatizza-2-marino-002B49-acero-4A9CC5.png", "/brand/final-2026-11-11/logo-automatizza-2-blanco-acero-4A9CC5.png", "/brand/final-2026-11-11/icono-automatizza-acero-4A9CC5.svg", "/icons/icon-192.png", "/icons/icon-512.png"]) {
     const asset = await get(icon);
     assert.equal(asset.response.status,200,icon);
     assert.match(asset.response.headers.get("content-type"),/image\//);
