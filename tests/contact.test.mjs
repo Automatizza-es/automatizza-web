@@ -105,7 +105,7 @@ test("cross-site and missing origins, and non-JSON requests, are refused", async
 });
 test("development accepts the browser Host when Next normalizes its URL; production still requires an allowlist", async () => {
   for (const [mode, expected] of [["development", 503], ["production", 403]]) {
-    const { handler, calls } = setup({ env: { NODE_ENV: mode, CONTACT_ALLOWED_ORIGINS: "" }, policyReady: () => false });
+    const { handler, calls } = setup({ env: { NODE_ENV: mode, VERCEL: mode === "development" ? "" : "1", CONTACT_ALLOWED_ORIGINS: "" }, policyReady: () => false });
     const response = await handler(new Request("http://0.0.0.0:3000/api/contacto", {
       method: "POST", headers: { Host: "127.0.0.1:3000", Origin: "http://127.0.0.1:3000", "Content-Type": "application/json" }, body: "{}",
     }));
@@ -217,4 +217,34 @@ test("a global ceiling limits aggregate traffic across trusted client IPs", asyn
   const { handler } = setup();
   for (let i = 0; i < 30; i++) assert.equal((await handler(request({ ...base(), email: `test${i}@example.test` }, { "x-vercel-forwarded-for": `192.0.2.${i + 1}` }))).status, 202);
   assert.equal((await handler(request(base(), { "x-vercel-forwarded-for": "192.0.2.99" }))).status, 429);
+});
+
+test("local development accepts its current port alongside configured production and old local origins", async () => {
+  for (const host of ["localhost:3001", "127.0.0.1:3001"]) {
+    const { handler, calls } = setup({ env: { NODE_ENV: "development", VERCEL: "", CONTACT_ALLOWED_ORIGINS: "https://example.test,http://localhost:3000,http://127.0.0.1:3000" } });
+    const response = await handler(new Request("http://0.0.0.0:3001/api/contacto", {
+      method: "POST", headers: { Host: host, Origin: `http://${host}`, "Content-Type": "application/json", "sec-fetch-site": "same-origin" }, body: JSON.stringify(base()),
+    }));
+    assert.equal(response.status, 202);
+    assert.equal(calls.length, 2);
+  }
+});
+
+test("local-port exception never applies to production, Vercel or cross-site requests", async () => {
+  for (const extra of [{ NODE_ENV: "production", VERCEL: "1" }, { NODE_ENV: "production", VERCEL: "" }, { NODE_ENV: "development", VERCEL: "1" }]) {
+    const { handler, calls } = setup({ env: extra });
+    const response = await handler(new Request("http://localhost:3001/api/contacto", {
+      method: "POST", headers: { Host: "localhost:3001", Origin: "http://localhost:3001", "Content-Type": "application/json" }, body: JSON.stringify(base()),
+    }));
+    assert.equal(response.status, 403);
+    assert.equal(calls.length, 0);
+  }
+  const { handler, calls } = setup({ env: { NODE_ENV: "development", VERCEL: "" } });
+  for (const headers of [{ Origin: "https://attacker.test" }, { Origin: "http://localhost:3001", "sec-fetch-site": "cross-site" }]) {
+    const response = await handler(new Request("http://localhost:3001/api/contacto", {
+      method: "POST", headers: { Host: "localhost:3001", "Content-Type": "application/json", ...headers }, body: JSON.stringify(base()),
+    }));
+    assert.equal(response.status, 403);
+  }
+  assert.equal(calls.length, 0);
 });
