@@ -3,7 +3,6 @@
 import { useI18n } from "@/components/i18n/LocaleProvider";
 
 import Link from "@/components/i18n/LocaleLink";
-import { Fragment } from "react";
 
 import { Header } from "@/components/layout/Header";
 import { Container } from "@/components/layout/Container";
@@ -93,15 +92,12 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
             </div>
             {project.slug === "apc" ? (
               <div className={styles.operationStory}>
-                {project.features.map((feature, index) => (
-                  <Fragment key={feature.label}>
-                    <article className={styles.featureCopy}>
-                      <p className={styles.sectionLabel}>{t(feature.label)}</p>
-                      <h3>{t(feature.title)}</h3>
-                      <p>{t(feature.text)}</p>
-                    </article>
-                    {index === 0 && <Recording project={project} />}
-                  </Fragment>
+                {project.features.map((feature) => (
+                  <article className={styles.featureCopy} key={feature.label}>
+                    <p className={styles.sectionLabel}>{t(feature.label)}</p>
+                    <h3>{t(feature.title)}</h3>
+                    <p>{t(feature.text)}</p>
+                  </article>
                 ))}
               </div>
             ) : project.features.map((feature, index) => (

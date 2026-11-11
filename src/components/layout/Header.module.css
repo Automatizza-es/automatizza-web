@@ -50,6 +50,8 @@
 .overHero { position: fixed; width: 100%; transition: background-color 220ms ease, border-color 220ms ease; }
 .transparent { border-bottom-color: transparent; background: transparent; }
 .transparent :global(.desktop-navigation) { color: var(--brand-paper); }
+.transparent :global(.desktop-navigation a):hover,
+.transparent :global(.desktop-navigation a):focus-visible { color: var(--brand-steel); }
 .transparent :global(.header-cta) { background: var(--brand-paper); color: var(--brand-night); }
 .transparent :global(.header-cta):hover { background: var(--color-surface-accent); }
 .transparent :global(.mobile-navigation summary span) { background: var(--brand-paper); }
