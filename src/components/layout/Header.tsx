@@ -32,7 +32,7 @@ export function Header({ redesign = false, homeLinks = false, overlayHero = fals
   const hrefFor = (href: string) => homeLinks && href.startsWith("#") ? `/${href}` : href;
   return (
     <header className={`site-header${redesign ? ` ${styles.redesigned}` : ""}${overlayHero ? ` ${styles.overHero}` : ""}${transparent ? ` ${styles.transparent}` : ""}`}>
-      <Container className="header-inner">
+      <Container className="header-inner editorial-container">
         <Link className="brand" href="/" aria-label={t("Automatizza, inicio")}>
           <Image
             src={transparent ? brandAssets.wordmark.white : brandAssets.wordmark.dark}
