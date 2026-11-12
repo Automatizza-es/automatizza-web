@@ -6,14 +6,14 @@ import type { ReactNode } from "react";
 import Link from "@/components/i18n/LocaleLink";
 
 import { projects } from "@/components/projects/ProjectGallery";
-import { ApcVisual } from "@/components/projects/visuals/ApcVisual";
-import { LaFactoryVisual } from "@/components/projects/visuals/LaFactoryVisual";
-import { SilosSpainVisual } from "@/components/projects/visuals/SilosSpainVisual";
+import { ApcPhotoVisual } from "@/components/projects/visuals/ApcPhotoVisual";
+import { LaFactoryPhotoVisual } from "@/components/projects/visuals/LaFactoryPhotoVisual";
+import { SilosSpainPhotoVisual } from "@/components/projects/visuals/SilosSpainPhotoVisual";
 
 const visuals: Partial<Record<string, ReactNode>> = {
-  "silos-spain": <SilosSpainVisual />,
-  apc: <ApcVisual />,
-  "la-factory-coworking": <LaFactoryVisual />,
+  "silos-spain": <SilosSpainPhotoVisual />,
+  apc: <ApcPhotoVisual />,
+  "la-factory-coworking": <LaFactoryPhotoVisual />,
 };
 
 // Native horizontal scrolling keeps the same card proportions as the project

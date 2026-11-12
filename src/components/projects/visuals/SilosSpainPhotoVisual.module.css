@@ -1,0 +1,61 @@
+.scene { position: absolute; inset: 0; overflow: hidden; background: #d5c7b3; }
+.canvas {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1254px;
+  height: 1254px;
+  transform: translateY(-50%) scale(var(--silos-photo-scale, 0));
+  transform-origin: left center;
+}
+.photo { display: block; width: 1254px; height: 1254px; }
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1000px;
+  height: 666px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f5f5f5;
+  font-size: 32.258px;
+  transform-origin: 0 0;
+  /* Maps the four dashboard corners to the actual inner screen, excluding its bezel:
+     (192,415), (922,437), (968,902), (236,921), in original photo pixels. */
+  transform: matrix3d(
+    .810983748176, .0603838372591, 0, .0000878348678697,
+    .0631419630171, .748348323709, 0, -.0000123902671565,
+    0, 0, 1, 0,
+    192, 415, 0, 1
+  );
+}
+.screen::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, #ffffff0a, #17202d08);
+  content: "";
+}
+.content { position: absolute; inset: 0 -1px -12px; background: #f5f5f5; transition: transform 900ms cubic-bezier(.22, .7, .25, 1); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global(.showcase-card-silos-spain):hover .content,
+  :global(.showcase-card-silos-spain):focus-within .content { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .content { transition: none; transform: none; }
+}
+
+/* Animate only the first three green funnel bars, once on entering view. */
+@media (prefers-reduced-motion: no-preference) {
+  .scene:global(.is-armed):not(:global(.is-playing)) .content :global(.ss-funnel-row:nth-of-type(-n + 3) i span) { transform: scaleX(.78); }
+  .scene:global(.is-playing) .content :global(.ss-funnel-row:nth-of-type(-n + 3) i span) {
+    transform-origin: left;
+    animation: funnel-fill 1500ms ease-in-out 250ms both;
+  }
+  .scene:global(.is-playing) .content :global(.ss-funnel-row:nth-of-type(2) i span) { animation-delay: 400ms; }
+  .scene:global(.is-playing) .content :global(.ss-funnel-row:nth-of-type(3) i span) { animation-delay: 550ms; }
+}
+@keyframes funnel-fill { from { transform: scaleX(.78); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .content :global(.ss-funnel-row i span) { animation: none; transform: none; }
+}

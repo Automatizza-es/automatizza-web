@@ -3,6 +3,8 @@
 import { useI18n } from "@/components/i18n/LocaleProvider";
 
 import Image from "next/image";
+import { brandAssets } from "@/lib/brand-assets";
+import { useEffect, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
 
 import { Container } from "@/components/layout/Container";
@@ -16,18 +18,28 @@ const navigation = [
   { label: "Contacto", href: "/contacto" },
 ];
 
-export function Header({ redesign = false, homeLinks = false }: { redesign?: boolean; homeLinks?: boolean }) {
+export function Header({ redesign = false, homeLinks = false, overlayHero = false }: { redesign?: boolean; homeLinks?: boolean; overlayHero?: boolean }) {
   const { t } = useI18n();
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    if (!overlayHero) return;
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [overlayHero]);
+  const transparent = overlayHero && !scrolled;
   const hrefFor = (href: string) => homeLinks && href.startsWith("#") ? `/${href}` : href;
   return (
-    <header className={`site-header${redesign ? ` ${styles.redesigned}` : ""}`}>
-      <Container className="header-inner">
+    <header className={`site-header${redesign ? ` ${styles.redesigned}` : ""}${overlayHero ? ` ${styles.overHero}` : ""}${transparent ? ` ${styles.transparent}` : ""}`}>
+      <Container className="header-inner editorial-container">
         <Link className="brand" href="/" aria-label={t("Automatizza, inicio")}>
           <Image
-            src="/brand/automatizza-logo.png"
+            src={transparent ? brandAssets.wordmark.white : brandAssets.wordmark.dark}
+            unoptimized
             alt="Automatizza"
-            width={1909}
-            height={280}
+            width={brandAssets.wordmark.width}
+            height={brandAssets.wordmark.height}
             priority
           />
         </Link>

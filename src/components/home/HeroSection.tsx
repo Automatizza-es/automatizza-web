@@ -1,98 +1,92 @@
 "use client";
 
+import { useEffect, useRef, type CSSProperties } from "react";
 import { useI18n } from "@/components/i18n/LocaleProvider";
-
 import Link from "@/components/i18n/LocaleLink";
-import type { CSSProperties } from "react";
-
 import { Container } from "@/components/layout/Container";
 import styles from "./HeroSection.module.css";
 
-const convergenceParticles = Array.from({ length: 24 }, (_, index) => {
-  const angle = (index / 24) * Math.PI * 2;
-  const distance = 2.6 + (index % 4) * 0.45;
+// Reuse the original hero's SVG routes and CSS hover response, with fewer nodes.
+const connections = [
+  "M-30 188 154 188 258 86 430 86",
+  "M-30 630 160 630 244 546 410 546",
+  "M1026 78 1144 196 1470 196",
+  "M1030 620 1190 620 1310 500 1470 500",
+];
+const nodes = [[154, 188], [258, 86], [160, 630], [244, 546], [1144, 196], [1026, 78], [1190, 620], [1310, 500]];
+const interactiveWords = {
+  es: /(?:tecnología|adaptarse a ti)/gu,
+  en: /(?:Technology|adapt to you)/gu,
+  fr: /(?:technologie|s’adapter à vous)/gu,
+  pt: /(?:tecnologia|adaptar-se a si)/gu,
+};
+
+// The original word interaction used a small, one-shot particle convergence.
+const particles = Array.from({ length: 12 }, (_, index) => {
+  const angle = index / 12 * Math.PI * 2;
   return {
-    "--from-x": `${(Math.cos(angle) * distance).toFixed(3)}em`,
-    "--from-y": `${(Math.sin(angle) * distance * 0.58).toFixed(3)}em`,
-    "--to-x": `${(Math.cos(angle) * 0.7).toFixed(3)}em`,
-    "--to-y": `${(Math.sin(angle) * 0.15).toFixed(3)}em`,
-    "--delay": `${(index % 6) * 65}ms`,
-    "--size": `${index % 3 === 0 ? 5 : 4}px`,
+    "--from-x": `${(Math.cos(angle) * 1.9).toFixed(3)}em`,
+    "--from-y": `${(Math.sin(angle) * .8).toFixed(3)}em`,
+    "--to-x": `${(Math.cos(angle) * .35).toFixed(3)}em`,
+    "--to-y": `${(Math.sin(angle) * .12).toFixed(3)}em`,
+    "--delay": `${index % 4 * 55}ms`,
   } as CSSProperties;
 });
 
 export function HeroSection() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const heroRef = useRef<HTMLElement>(null);
+  const lead = t("La tecnología debería adaptarse a ti.");
+  const words = [...lead.matchAll(interactiveWords[locale])];
+  const segments = [];
+  let start = 0;
+  for (const [index, word] of words.entries()) {
+    segments.push(lead.slice(start, word.index));
+    segments.push(<span className={index === 0 ? styles.technology : styles.adapt} key={word.index}>
+      {word[0]}
+      <span className={styles.particles} aria-hidden="true">
+        {particles.map((style, particle) => <i className={styles.particle} key={particle} style={style} />)}
+      </span>
+    </span>);
+    start = word.index + word[0].length;
+  }
+  segments.push(lead.slice(start));
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      hero.dataset.visible = String(entry.isIntersecting);
+    });
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
   return (
-    <section className={styles.hero} aria-labelledby="hero-title">
+    <section ref={heroRef} className={styles.hero} aria-labelledby="hero-title">
       <div className={styles.network} aria-hidden="true">
-        <svg viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
+        <svg viewBox="0 0 1440 720" preserveAspectRatio="xMinYMid slice" focusable="false">
           <g className={styles.lines}>
-            <path d="M-30 188 154 188 258 86 430 86" />
-            <path d="M80 586 244 424 414 424 516 322" />
-            <path d="M314 720 314 588 494 408 662 408" />
-            <path d="M1026 78 1144 196 1470 196" />
-            <path d="M844 316 1010 316 1134 440 1470 440" />
-            <path d="M930 596 1094 596 1230 460" />
-            <path d="M558 126 676 244 840 244 956 128" />
-            <path d="M556 598 672 482 834 482 948 596" />
+            {connections.map((path) => <path d={path} key={path} />)}
           </g>
           <g className={styles.routes}>
-            <path d="M-30 188 154 188 258 86 430 86" />
-            <path d="M80 586 244 424 414 424 516 322" />
-            <path d="M1026 78 1144 196 1470 196" />
-            <path d="M844 316 1010 316 1134 440 1470 440" />
+            {connections.map((path) => <path d={path} key={path} />)}
           </g>
           <g className={styles.nodes}>
-            <circle className="node-secondary" cx="154" cy="188" r="3.5" />
-            <circle className="node-primary" cx="258" cy="86" r="6" />
-            <circle cx="244" cy="424" r="4" />
-            <circle className="node-primary" cx="414" cy="424" r="6" />
-            <circle cx="314" cy="588" r="4" />
-            <circle cx="676" cy="244" r="4" />
-            <circle cx="834" cy="482" r="4" />
-            <circle className="node-primary" cx="1010" cy="316" r="6" />
-            <circle cx="1134" cy="440" r="4" />
-            <circle className="node-primary" cx="1144" cy="196" r="6" />
-            <circle cx="1230" cy="460" r="4" />
-          </g>
-          <g className={styles.travelers}>
-            <circle r="4.2">
-              <animateMotion dur="18s" repeatCount="indefinite" path="M-30 188 154 188 258 86 430 86" />
-            </circle>
-            <circle r="3.6">
-              <animateMotion dur="22s" begin="-4s" repeatCount="indefinite" path="M844 316 1010 316 1134 440 1470 440" />
-            </circle>
-            <circle r="3.6">
-              <animateMotion dur="20s" begin="-6s" repeatCount="indefinite" path="M556 598 672 482 834 482 948 596" />
-            </circle>
+            {nodes.map(([cx, cy]) => <circle cx={cx} cy={cy} r="2.2" key={`${cx}-${cy}`} />)}
           </g>
         </svg>
       </div>
       <Container className={styles.inner}>
         <div className={styles.copy}>
           <h1 id="hero-title" className={styles.title}>
-            <span className={styles.lead}>{t("Menos tareas repetitivas.")}</span>{" "}
-            <span className={styles.benefit}>
-              <strong className={styles.emphasis}>
-                <span className={`${styles.word} ${styles.wordMore}`}>{t("Más")}</span>{" "}
-                <span className={`${styles.word} ${styles.wordTime}`}>{t("tiempo")}<span className={styles.particles} aria-hidden="true">
-                    {convergenceParticles.map((style, index) => (
-                      <i className={styles.particle} key={index} style={style} />
-                    ))}
-                  </span>
-                </span>
-              </strong>
-            </span>{" "}
-            <span className={styles.closing}>{t("para hacer crecer tu empresa.")}</span>
+            <span className={styles.lead}>{segments}</span>{" "}
+            <span className={styles.closing}>{t("No al revés.")}</span>
           </h1>
-          <p className={styles.description}>{t("Creamos aplicaciones y automatizaciones a medida que conectan procesos y simplifican tu día a día.")}</p>
+          <p className={styles.description}>{t("Desarrollamos software a medida, automatizaciones e inteligencia artificial para empresas.")}</p>
           <div className={styles.actions}>
             <Link className={`${styles.button} ${styles.primary}`} href="/contacto">
               <span>{t("Hablemos de tu proyecto")}</span>
-              <span className={styles.arrow} aria-hidden="true">
-                →
-              </span>
+              <span className={styles.arrow} aria-hidden="true">→</span>
             </Link>
             <Link className={`${styles.button} ${styles.secondary}`} href="#proyectos">{t("Ver proyectos")}</Link>
           </div>

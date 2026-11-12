@@ -1,3 +1,4 @@
+import { brandAssets } from "./brand-assets";
 import { privacyPolicy } from "../content/privacy";
 import { languageInfo, locales } from "./i18n/routes";
 import { siteOrigin } from "./seo";
@@ -56,10 +57,10 @@ export function siteIdentityStructuredData() {
       {
         "@type": "ImageObject",
         "@id": siteIdentityIds.logo,
-        url: `${siteOrigin}/brand/automatizza-logo.png`,
-        contentUrl: `${siteOrigin}/brand/automatizza-logo.png`,
-        width: 1909,
-        height: 280,
+        url: `${siteOrigin}${brandAssets.logoImage.src}`,
+        contentUrl: `${siteOrigin}${brandAssets.logoImage.src}`,
+        width: brandAssets.logoImage.width,
+        height: brandAssets.logoImage.height,
       },
     ],
   };

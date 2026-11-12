@@ -13,6 +13,7 @@ export const isLocale = (value: string): value is Locale => (locales as readonly
 // Aliases are never SEO equivalents.
 export const routes = {
   home: { es: "/", en: "/en", fr: "/fr", pt: "/pt" },
+  calculator: { es: "/calculadora", en: "/en/calculator", fr: "/fr/calculateur", pt: "/pt/calculadora" },
   contact: { es: "/contacto", en: "/en/contact", fr: "/fr/contact", pt: "/pt/contacto" },
   "process-automation": { es: "/servicios/automatizacion-de-procesos", en: "/en/services/process-automation", fr: "/fr/services/automatisation-des-processus", pt: "/pt/servicos/automatizacao-de-processos" },
   "artificial-intelligence": { es: "/servicios/inteligencia-artificial-para-empresas", en: "/en/services/artificial-intelligence-for-businesses", fr: "/fr/services/intelligence-artificielle-pour-les-entreprises", pt: "/pt/servicos/inteligencia-artificial-para-empresas" },
@@ -25,7 +26,7 @@ export const routes = {
   legal: { es: "/aviso-legal", en: "/en/legal-notice", fr: "/fr/mentions-legales", pt: "/pt/aviso-legal" },
 } satisfies Record<string, Partial<Record<Locale, string>>>;
 export type RouteId = keyof typeof routes;
-export const indexableRoutes: RouteId[] = ["home", "contact", "process-automation", "bespoke-software", "artificial-intelligence", "silos-spain", "apc", "la-factory-coworking"];
+export const indexableRoutes: RouteId[] = ["home", "calculator", "contact", "process-automation", "bespoke-software", "artificial-intelligence", "silos-spain", "apc", "la-factory-coworking"];
 export const legalRoutes = ["privacy", "cookies", "legal"] as const;
 export const equivalents = (id: RouteId): Partial<Record<Locale, string>> => routes[id];
 export function resolveRoute(path: string): { id: RouteId; locale: Locale } | null {

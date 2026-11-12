@@ -14,7 +14,7 @@ const legalMessages=legalModule.default ?? legalModule;
 test("published commercial routes resolve directly to their own language",()=>{
  const all=[];
  for(const id of indexableRoutes) for(const [locale,path] of Object.entries(equivalents(id))){assert.ok(path);all.push(path);assert.deepEqual(resolveRoute(path),{id,locale});}
- assert.equal(all.length,32);assert.equal(new Set(all).size,32);
+ assert.equal(all.length,36);assert.equal(new Set(all).size,36);
  assert.equal(equivalents("home").es,"/");assert.equal(languageInfo.pt.tag,"pt-PT");
  for(const path of ["/es","/en/contacto","/fr/contacto","/pt/contact","/en/services","/en/unknown","/fr/contact?email=private@example.test"])assert.equal(resolveRoute(path),null);
 });
@@ -123,4 +123,17 @@ test("AI service equivalents preserve the page when changing language",()=>{
  assert.deepEqual(paths,{es:"/servicios/inteligencia-artificial-para-empresas",en:"/en/services/artificial-intelligence-for-businesses",fr:"/fr/services/intelligence-artificielle-pour-les-entreprises",pt:"/pt/servicos/inteligencia-artificial-para-empresas"});
  for(const locale of locales){assert.deepEqual(resolveRoute(paths[locale]),{id:"artificial-intelligence",locale});assert.equal(localizeHref(paths.es,locale),paths[locale]);}
  assert.equal(resolveRoute("/es/servicios/inteligencia-artificial-para-empresas"),null);
+});
+
+test("calculator and home links retain all four languages",()=>{
+ const expected={es:"/calculadora",en:"/en/calculator",fr:"/fr/calculateur",pt:"/pt/calculadora"};
+ assert.deepEqual(equivalents("calculator"),expected);
+ for(const locale of locales){
+  assert.equal(localizeHref("/calculadora",locale),expected[locale]);
+  assert.equal(localizeHref("/#calculadora",locale),`${equivalents("home")[locale]}#calculadora`);
+  for(const source of ["Explorar la calculadora","Calculadora de automatización","Introduce un coste por hora mayor que 0 y de hasta 500 €."]){
+   assert.ok(translator(locale)(source));
+   if(locale!=="es")assert.notEqual(translator(locale)(source),source);
+  }
+ }
 });

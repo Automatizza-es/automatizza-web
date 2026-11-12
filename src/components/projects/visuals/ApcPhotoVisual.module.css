@@ -1,0 +1,48 @@
+.scene { position: absolute; inset: 0; overflow: hidden; background: #292e31; }
+.canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1122px;
+  height: 1402px;
+  transform: translate(-50%, -50%) scale(var(--apc-photo-scale, 0));
+  transform-origin: center;
+}
+.photo { display: block; width: 1122px; height: 1402px; }
+/* Coordinates of the inner display in the original photograph; bezel stays visible. */
+.screen {
+  position: absolute;
+  left: 367px;
+  top: 203px;
+  width: 390px;
+  height: 852px;
+  overflow: hidden;
+  border-radius: 67px;
+  background: #fff;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 24.75px;
+}
+.screen::after { position: absolute; inset: 0; background: linear-gradient(120deg, #ffffff06, #121c2b06); pointer-events: none; content: ""; }
+.island { position: absolute; left: 500px; top: 215px; width: 124px; height: 38px; overflow: hidden; border-radius: 22px; pointer-events: none; }
+.islandPhoto { position: absolute; left: -500px; top: -215px; width: 1122px; height: 1402px; max-width: none; }
+
+/* Only the existing app content animates; the photographed phone stays fixed. */
+:global(.showcase-visual-apc) > :global(.showcase-stage):has(.scene) { transform: none !important; transition: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .scene:global(.is-armed):not(:global(.is-playing)) .screen :global(.apc-item) { opacity: .6; transform: translateY(10px); }
+  .scene:global(.is-playing) .screen :global(.apc-item) { animation: pickup-enter 1400ms ease-in-out 250ms both; }
+  .scene:global(.is-playing) .screen :global(.apc-item-tile) { animation: truck-enter 1400ms ease-in-out 400ms both; }
+}
+@keyframes pickup-enter { from { opacity: .6; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes truck-enter { from { transform: translateX(-8px); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .screen :global(.apc-item), .screen :global(.apc-item-tile) { animation: none; transform: none; opacity: 1; }
+}
+
+/* Same hover as Silos: the photograph stays fixed and the whole UI shifts together. */
+.content { position: absolute; inset: 0 0 -12px; transition: transform 900ms cubic-bezier(.22, .7, .25, 1); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global(.showcase-card-apc):hover .content,
+  :global(.showcase-card-apc):focus-within .content { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: reduce) { .content { transition: none; transform: none; } }

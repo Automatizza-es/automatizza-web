@@ -1,28 +1,25 @@
 "use client";
 
 import { useI18n } from "@/components/i18n/LocaleProvider";
-
 import Link from "@/components/i18n/LocaleLink";
-
 import { Container } from "@/components/layout/Container";
-import { SavingsCalculator } from "@/components/home/SavingsCalculator";
+import { CalculatorPreview } from "@/components/calculator/CalculatorPreview";
+import styles from "./CalculatorSection.module.css";
 
 export function CalculatorSection() {
   const { t } = useI18n();
   return (
-    <section className="calculator-section" id="calculadora" aria-labelledby="calculator-title">
-      <Container className="calculator-shell">
-        <div className="calculator-copy" data-reveal>
-          <p className="section-eyebrow">{t("CALCULADORA AUTOMATIZZA")}</p>
-          <h2 id="calculator-title">{t("¿Cuánto te cuesta no automatizar?")}</h2>
-          <p>{t("Calcula cuánto te cuestan las tareas repetitivas de tu empresa y estima el tiempo y el valor económico que podrías recuperar al automatizarlas.")}</p>
-          <Link className="button button-primary" href="/contacto">{t("Cuéntanos tu proyecto ")}<span aria-hidden="true">→</span>
+    <section className={styles.section} id="calculadora" aria-labelledby="calculator-title">
+      <Container className={`editorial-container ${styles.layout}`}>
+        <div className={styles.copy} data-reveal>
+          <p className={styles.eyebrow}>{t("CALCULADORA AUTOMATIZZA")}</p>
+          <h2 id="calculator-title">{t("¿Cuánto tiempo se va en tareas que podrías automatizar?")}</h2>
+          <p className={styles.description}>{t("Descubre cuánto tiempo podrías recuperar y qué valor tendría para tu empresa. Explora una estimación a tu medida.")}</p>
+          <Link className={styles.link} href="/calculadora">
+            {t("Explorar la calculadora")}<span aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12 12 4M4 4h8v8" /></svg></span>
           </Link>
         </div>
-
-        <div className="calculator-app" data-reveal>
-          <SavingsCalculator />
-        </div>
+        <div className={styles.visual} data-reveal><CalculatorPreview /></div>
       </Container>
     </section>
   );

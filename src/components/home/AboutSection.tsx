@@ -2,6 +2,8 @@
 
 import { useI18n } from "@/components/i18n/LocaleProvider";
 
+import headingStyles from "./SectionHeading.module.css";
+
 import { Container } from "@/components/layout/Container";
 import styles from "./AboutSection.module.css";
 
@@ -10,7 +12,7 @@ export function AboutSection() {
   return (
     <section className={styles.section} id="sobre-automatizza" aria-labelledby="about-title">
       <Container className="editorial-container">
-        <div data-reveal>
+        <div className={headingStyles.theme} data-reveal>
           <p className={`section-eyebrow ${styles.eyebrow}`}>{t("SOBRE AUTOMATIZZA")}</p>
           <div className={styles.introduction}>
             <div className={styles.statement}>

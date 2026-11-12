@@ -21,7 +21,12 @@ const softwarePaths = ["/servicios/software-a-medida", "/en/services/bespoke-sof
 const softwareTitles = ["Software a medida para empresas | Automatizza", "Bespoke software for businesses | Automatizza", "Logiciels sur mesure pour les entreprises | Automatizza", "Software à medida para empresas | Automatizza"];
 const aiPaths = ["/servicios/inteligencia-artificial-para-empresas", "/en/services/artificial-intelligence-for-businesses", "/fr/services/intelligence-artificielle-pour-les-entreprises", "/pt/servicos/inteligencia-artificial-para-empresas"];
 const aiTitles = ["Inteligencia artificial para empresas | Automatizza", "Artificial intelligence for businesses | Automatizza", "Intelligence artificielle pour les entreprises | Automatizza", "Inteligência artificial para empresas | Automatizza"];
+const calculatorPaths = ["/calculadora", "/en/calculator", "/fr/calculateur", "/pt/calculadora"];
 const pages = [
+  ["/calculadora", "Calculadora de automatización | Automatizza"],
+  ["/en/calculator", "Automation calculator | Automatizza"],
+  ["/fr/calculateur", "Calculateur d’automatisation | Automatizza"],
+  ["/pt/calculadora", "Calculadora de automatização | Automatizza"],
   ["/", "Automatizza | Automatización de procesos e IA para empresas"],
   ["/contacto", "Contacto | Automatizza"],
   ...automationPaths.map((path,i)=>[path,automationTitles[i]]),
@@ -150,6 +155,9 @@ async function verify(environment) {
     if (["/", "/en", "/fr", "/pt"].includes(path)) {
       const services = html.match(/<section[^>]*id="servicios"[\s\S]*?<\/section>/)?.[0] ?? "";
       const languageIndex = ["/", "/en", "/fr", "/pt"].indexOf(path);
+      const calculatorPromo = html.match(/<section[^>]*id="calculadora"[\s\S]*?<\/section>/)?.[0] ?? "";
+      assert.ok(calculatorPromo.includes(`href="${calculatorPaths[languageIndex]}"`), "homepage links to its calculator language");
+      assert.ok(calculatorPromo.includes('inert=""'), "home calculator is only a non-interactive preview");
       assert.ok(services.includes(`href="${automationPaths[languageIndex]}"`), "homepage links to its automation language");
       assert.ok(services.includes(`href="${softwarePaths[languageIndex]}"`), "homepage links to its software language");
       assert.ok(services.includes(`href="${aiPaths[languageIndex]}"`), "homepage links to its AI language");
@@ -181,7 +189,7 @@ async function verify(environment) {
     const alternateLinks = [...head.matchAll(/<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"/g)];
     const spanishService = path === "/servicios/automatizacion-de-procesos";
     assert.deepEqual(alternateLinks.map(m => m[1]).sort(), ["en", "es", "fr", "pt-PT", "x-default"].sort(), `hreflang set: ${path}`);
-    const group = automationPaths.includes(path) ? automationPaths : softwarePaths.includes(path) ? softwarePaths : aiPaths.includes(path) ? aiPaths : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
+    const group = calculatorPaths.includes(path) ? calculatorPaths : automationPaths.includes(path) ? automationPaths : softwarePaths.includes(path) ? softwarePaths : aiPaths.includes(path) ? aiPaths : path.includes("silos-spain") ? ["/proyectos/silos-spain","/en/projects/silos-spain","/fr/projets/silos-spain","/pt/projetos/silos-spain"]
       : path.includes("/apc") ? ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"]
       : path.includes("la-factory-coworking") ? ["/proyectos/la-factory-coworking","/en/projects/la-factory-coworking","/fr/projets/la-factory-coworking","/pt/projetos/la-factory-coworking"]
       : /contact/.test(path) ? ["/contacto","/en/contact","/fr/contact","/pt/contacto"] : ["/","/en","/fr","/pt"];
@@ -313,7 +321,7 @@ async function verify(environment) {
     assert.ok(!html.includes('<link rel="canonical"'), "404 must not canonicalize to the home");
     checks++;
   }
-  for (const icon of ["/favicon.ico", "/icon1.png", "/icon2.png", "/apple-icon.png", "/brand/automatizza-logo.png"]) {
+  for (const icon of ["/favicon.ico", "/icon1.png", "/icon2.png", "/apple-icon.png", "/brand/automatizza-logo.png", "/brand/final-2026-11-11/logo-automatizza-2-marino-002B49-acero-4A9CC5.png", "/brand/final-2026-11-11/logo-automatizza-2-blanco-acero-4A9CC5.png", "/brand/final-2026-11-11/icono-automatizza-acero-4A9CC5.svg", "/icons/icon-192.png", "/icons/icon-512.png"]) {
     const asset = await get(icon);
     assert.equal(asset.response.status,200,icon);
     assert.match(asset.response.headers.get("content-type"),/image\//);

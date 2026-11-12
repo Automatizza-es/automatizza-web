@@ -1,13 +1,13 @@
 .section {
   padding-block: clamp(3rem, 5vw, 4rem);
   scroll-margin-top: 80px;
-  background: var(--color-white);
+  background: var(--color-surface);
   color: var(--color-navy);
 }
 
 .eyebrow {
   margin: 0 0 1.5rem;
-  color: var(--color-cyan);
+  color: var(--heading-steel);
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .16em;
@@ -20,16 +20,17 @@
   align-items: start;
   gap: 2rem 3rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid #e1e4e8;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .statement h2 {
   max-width: none;
   margin: 0;
+  color: var(--heading-night);
   font-family: var(--font-sans), sans-serif;
-  font-size: clamp(2rem, 2.8vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -.025em;
+  font-size: clamp(2rem, 2.9vw, 2.625rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
   line-height: 1.2;
   text-wrap: balance;
 }
@@ -37,6 +38,7 @@
 .highlight {
   max-width: 580px;
   margin: 1.25rem 0 0;
+  color: var(--heading-night);
   font-family: var(--font-display), sans-serif;
   font-size: clamp(1.125rem, 1.6vw, 1.375rem);
   letter-spacing: -.02em;
@@ -49,9 +51,9 @@
 .description {
   max-width: 420px;
   margin: 0;
-  color: #6d7580;
+  color: var(--heading-slate);
   font-size: .9375rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .detail {
@@ -60,7 +62,7 @@
   justify-content: flex-start;
   gap: 1.25rem;
   margin: 1rem 0 0;
-  color: #6d7580;
+  color: var(--heading-slate);
   font-size: .75rem;
   letter-spacing: .1em;
   line-height: 1.6;
@@ -70,7 +72,7 @@
 .detail::before {
   flex: 0 0 2.5rem;
   height: 2px;
-  background: var(--color-cyan);
+  background: var(--heading-steel);
   content: "";
 }
 
@@ -83,7 +85,7 @@
 @media (max-width: 600px) {
   .section { padding-block: 2.5rem; }
   .eyebrow { margin-bottom: 1.25rem; font-size: .6875rem; letter-spacing: .13em; }
-  .statement h2 { font-size: 1.875rem; line-height: 1.25; }
+  .statement h2 { font-size: 2rem; line-height: 1.25; }
   .highlight { margin-top: 1rem; }
   .detail { gap: 1rem; letter-spacing: .06em; }
   .detail::before { flex-basis: 2rem; }

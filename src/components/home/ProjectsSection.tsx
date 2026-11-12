@@ -4,12 +4,13 @@ import { useI18n } from "@/components/i18n/LocaleProvider";
 
 import { Container } from "@/components/layout/Container";
 import { ProjectShowcase } from "@/components/projects/ProjectShowcase";
+import styles from "./ProjectsSection.module.css";
 import { SectionHeading } from "./SectionHeading";
 
 export function ProjectsSection() {
   const { t } = useI18n();
   return (
-    <section className="projects-section projects-home" id="proyectos" aria-labelledby="projects-title">
+    <section className={`projects-section projects-home ${styles.section}`} id="proyectos" aria-labelledby="projects-title">
       <Container className="editorial-container">
         <SectionHeading
           id="projects-title"

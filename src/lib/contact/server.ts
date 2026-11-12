@@ -87,18 +87,20 @@ export function createContactHandler(dependencies: Dependencies = {}) {
     const config = getContactConfig(env, policyReady());
     const origin = request.headers.get("origin");
     const localOrigins: string[] = [];
-    if (env.NODE_ENV !== "production") {
+    if (env.NODE_ENV === "development" && env.VERCEL !== "1") {
       const url = new URL(request.url);
       localOrigins.push(url.origin);
       // Next's dev server can normalize the URL to 0.0.0.0. Keep the browser's
-      // actual host available locally; production always uses the allowlist.
+      // actual host and current port available locally, even when an old
+      // port or production origins are configured. Vercel/production use only
+      // the explicit allowlist.
       const host = request.headers.get("host");
       if (host && !/[\\/@?#\s]/.test(host)) {
         try { localOrigins.push(new URL(`${url.protocol}//${host}`).origin); }
         catch { /* Invalid Host is never an allowed origin. */ }
       }
     }
-    const allowedOrigins = config.origins.length ? config.origins : localOrigins;
+    const allowedOrigins = [...config.origins, ...localOrigins];
     if (!origin || !allowedOrigins.includes(origin) || request.headers.get("sec-fetch-site") === "cross-site") return json(403, { error: "No se ha podido validar la solicitud." });
     if (request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") return json(415, { error: "Formato de solicitud no válido." });
 

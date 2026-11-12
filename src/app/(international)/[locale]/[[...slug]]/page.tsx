@@ -1,4 +1,6 @@
 import { notFound, permanentRedirect } from "next/navigation";
+import CalculatorPage from "@/components/pages/CalculatorPage";
+import { calculatorMetadata } from "@/lib/calculator-seo";
 import HomePage from "@/components/pages/HomePage";
 import ProcessAutomationPage from "@/components/pages/ProcessAutomationPage";
 import AiServicePage from "@/components/pages/AiServicePage";
@@ -36,6 +38,7 @@ export async function generateMetadata({ params }: Props) {
   const { id, path, t, locale } = await routeFor(params);
   if (id === "privacy" || id === "cookies" || id === "legal") return legalPageMetadata(id, locale);
   if (id === "process-automation" || id === "bespoke-software" || id === "artificial-intelligence") return serviceMetadata(id, locale);
+  if (id === "calculator") return calculatorMetadata(locale);
   const project = findProject(id);
   const title = project ? t(project.seo.title) : id === "home" ? t("Automatizza | Automatización de procesos e IA para empresas") : t("Contacto | Automatizza");
   const description = project ? t(project.seo.description) : id === "home" ? t("Automatizamos tareas repetitivas, conectamos herramientas y desarrollamos soluciones a medida para que tu empresa trabaje mejor.") : t("Cuéntanos cómo trabaja tu empresa y qué te gustaría mejorar. En Automatizza te ayudamos a encontrar una solución práctica y adaptada a tu negocio.");
@@ -45,6 +48,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function Page({ params }: Props) {
   const { id, locale } = await routeFor(params);
   if (id === "home") return <HomePage />;
+  if (id === "calculator") return <CalculatorPage locale={locale} />;
   if (id === "process-automation") return <ProcessAutomationPage locale={locale} />;
   if (id === "artificial-intelligence") return <AiServicePage locale={locale} />;
   if (id === "bespoke-software") return <SoftwareServicePage locale={locale} />;

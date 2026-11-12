@@ -1,0 +1,14 @@
+/* Shared by the real tool and its inert home preview; no global theme changes. */
+.palette {
+  --color-navy: var(--brand-night);
+  --color-white: var(--brand-paper);
+  --color-dark-gray: var(--brand-graphite);
+  --color-medium-gray: var(--color-text-muted);
+  --color-cyan: var(--brand-steel);
+}
+.palette :global(.calc-card) { border-color: var(--color-border); border-radius: 18px; background: var(--brand-paper); box-shadow: 0 16px 48px -36px color-mix(in srgb, var(--brand-night) 33.333%, transparent); }
+.palette :global(.calc-eyebrow) { color: var(--color-accent-text); }
+.palette :global(.calc-head) { border-bottom-color: var(--color-border); }
+.palette :global(.calc-result-detail span) { color: var(--color-inverse-muted); }
+.palette :global(.calc-rate) { border-radius: 8px; }
+.palette :global(.calc-rate):focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-steel) 10.196%, transparent); }

@@ -10,7 +10,7 @@ type SectionHeadingProps = {
   reveal?: boolean;
 };
 
-export function SectionHeading({ id, eyebrow, title, description, reveal = false }: SectionHeadingProps) {
+export function SectionHeading({ id, eyebrow, title, description, reveal = true }: SectionHeadingProps) {
   return (
     <div className={styles.shell}>
       <header className={`section-header ${styles.heading}`} data-reveal={reveal ? "" : undefined}>
