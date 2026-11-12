@@ -1,0 +1,23 @@
+{
+  "en": {
+    "path": "/en/services/bespoke-software",
+    "title": "Bespoke software for businesses | Automatizza",
+    "description": "We build bespoke applications to manage customers, bookings and operations. We assess your team’s needs and define a solution that fits your business.",
+    "mainTextSha256": "bf0925cf0596d303670c5b5313d60a52f0ffabdda8b1f62faae6d81bae72d379",
+    "mainLinksSha256": "2e288fb09866e4c8bedf6631f4c6d85d20cbb18535a28f86e8e1465a692f874d"
+  },
+  "fr": {
+    "path": "/fr/services/logiciel-sur-mesure",
+    "title": "Logiciels sur mesure pour les entreprises | Automatizza",
+    "description": "Nous créons des applications sur mesure pour gérer clients, réservations et opérations, en définissant une solution adaptée aux besoins de votre équipe.",
+    "mainTextSha256": "838e4cdc4a543ac397cc2e21553f477c6a0ba091c915af6a1167473c69764a8d",
+    "mainLinksSha256": "98805ce160c4a0882d66e1e8bf2cfbd013231a15c834b35b09d5d9273c5ece03"
+  },
+  "pt": {
+    "path": "/pt/servicos/software-a-medida",
+    "title": "Software à medida para empresas | Automatizza",
+    "description": "Desenvolvemos aplicações à medida para gerir clientes, reservas e operações. Avaliamos as necessidades da sua equipa e definimos uma solução para a sua empresa.",
+    "mainTextSha256": "a6ec53d7b7e73cf4a732f46282061201ac74935d9c3326e4acbb7f0278237fa4",
+    "mainLinksSha256": "a1636e2f1ac21174c601fbecc197cc3fdaee848d83d6b85b6dd48fd3bbacb3de"
+  }
+}

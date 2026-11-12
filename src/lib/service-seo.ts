@@ -1,3 +1,4 @@
+import { softwareSpanishMetadata } from "../content/software-spanish";
 import { pageMetadata } from "./seo";
 import { localePath, type Locale } from "./i18n/routes";
 import { translator } from "./i18n/translate";
@@ -18,6 +19,9 @@ export const serviceSeo = {
 } as const;
 
 export function serviceMetadata(id: keyof typeof serviceSeo, locale: Locale) {
+  if (id === "bespoke-software" && locale === "es") {
+    return pageMetadata(localePath(id, locale)!, softwareSpanishMetadata.title, softwareSpanishMetadata.description);
+  }
   const t = translator(locale);
   return pageMetadata(localePath(id, locale)!, t(serviceSeo[id].title), t(serviceSeo[id].description));
 }

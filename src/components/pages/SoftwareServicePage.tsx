@@ -1,3 +1,4 @@
+import { softwareSpanishContent } from "@/content/software-spanish";
 import { ContextualText } from "@/components/links/ContextualText";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
@@ -43,6 +44,24 @@ const projects = [
 export default function SoftwareServicePage({ locale = "es" }: { locale?: Locale }) {
   const t = translator(locale);
   const href = (path: string) => localizeHref(path, locale);
+  const content = locale === "es" ? softwareSpanishContent : {
+    h1: t("Software a medida para empresas."),
+    introduction: t("Desarrollamos aplicaciones para gestionar el trabajo de tu empresa: clientes, reservas, documentación u operaciones. Partimos de lo que necesita tu equipo y construimos una herramienta que pueda utilizar en su día a día"),
+    needsTitle: t("Cuando tus herramientas se quedan cortas"),
+    needs: softwareNeeds.map(([title, text]) => [t(title), t(text)] as const),
+    needsConclusion: t("Antes de desarrollar, valoramos si una herramienta existente puede resolverlo"),
+    examplesTitle: t("Qué podemos desarrollar"),
+    examples: softwareExamples.map(([title, text]) => [t(title), t(text)] as const),
+    projectsTitle: t("Dos ejemplos, necesidades distintas"),
+    projects: projects.map(project => ({ ...project, text: t(project.text), link: t(project.link) })),
+    stepsTitle: t("Cómo lo desarrollamos"),
+    steps: softwareSteps.map(([title, text]) => [t(title), t(text)] as const),
+    faqTitle: t("Antes de empezar"),
+    questions: softwareQuestions.map(([question, answer]) => [t(question), t(answer)] as const),
+    integrationQuestion: t("¿Puede conectarse con las herramientas que ya utilizamos?"),
+    closingTitle: t("¿Qué necesita tu equipo que tus herramientas actuales no resuelven?"),
+    closingText: t("Cuéntanos cómo trabaja tu equipo y qué necesitas mejorar. Revisamos el caso y valoramos por dónde empezar."),
+  };
   const rootId = `software-service-content-${locale}`;
   return <>
     <Header redesign homeLinks />
@@ -53,9 +72,9 @@ export default function SoftwareServicePage({ locale = "es" }: { locale?: Locale
           <Link className={styles.back} href={href("/#servicios")}><span aria-hidden="true">←</span>{t(" Todos los servicios")}</Link>
           <p className={styles.eyebrow}>{t("SERVICIOS / SOFTWARE A MEDIDA")}</p>
           <div className={styles.heroGrid} data-service-reveal>
-            <h1 id="software-title">{t("Software a medida para empresas.")}</h1>
+            <h1 id="software-title">{content.h1}</h1>
             <div className={styles.copy}>
-              <p>{t("Desarrollamos aplicaciones para gestionar el trabajo de tu empresa: clientes, reservas, documentación u operaciones. Partimos de lo que necesita tu equipo y construimos una herramienta que pueda utilizar en su día a día")}</p>
+              <p>{content.introduction}</p>
               <Link className={`button button-primary ${styles.button}`} href={href("/contacto")}>{t("Hablemos de tu proyecto")}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
@@ -64,46 +83,46 @@ export default function SoftwareServicePage({ locale = "es" }: { locale?: Locale
 
       <section className={styles.section} aria-labelledby="software-needs-title">
         <Container className="editorial-container">
-          <h2 id="software-needs-title" data-service-reveal>{t("Cuando tus herramientas se quedan cortas")}</h2>
+          <h2 id="software-needs-title" data-service-reveal>{content.needsTitle}</h2>
           <ul className={software.needs} role="list" data-service-reveal>
-            {softwareNeeds.map(([title, text]) => <li key={title}><h3>{t(title)}</h3><p>{t(text)}</p></li>)}
+            {content.needs.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
           </ul>
-          <p className={software.needsConclusion} data-service-reveal>{t("Antes de desarrollar, valoramos si una herramienta existente puede resolverlo")}</p>
+          <p className={software.needsConclusion} data-service-reveal>{content.needsConclusion}</p>
         </Container>
       </section>
 
       <section className={styles.section} aria-labelledby="software-examples-title">
         <Container className="editorial-container">
-          <h2 id="software-examples-title" data-service-reveal>{t("Qué podemos desarrollar")}</h2>
+          <h2 id="software-examples-title" data-service-reveal>{content.examplesTitle}</h2>
           <ul className={styles.examples} data-service-reveal>
-            {softwareExamples.map(([title, text]) => <li key={title}><h3>{t(title)}</h3><p>{t(text)}</p></li>)}
+            {content.examples.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
           </ul>
         </Container>
       </section>
 
       <section className={styles.case} aria-labelledby="software-projects-title">
         <Container className="editorial-container">
-          <h2 id="software-projects-title" data-service-reveal>{t("Dos ejemplos, necesidades distintas")}</h2>
+          <h2 id="software-projects-title" data-service-reveal>{content.projectsTitle}</h2>
           <div className={software.projects}>
-            {projects.map(project => <article key={project.path} className={software.project} data-service-reveal>
+            {content.projects.map(project => <article key={project.path} className={software.project} data-service-reveal>
               <h3>{project.name}</h3>
               <div className={styles.copy}>
-                <p>{t(project.text)}</p>
-                <Link className={styles.textLink} href={href(project.path)}>{t(project.link)}<span aria-hidden="true">→</span></Link>
+                <p>{project.text}</p>
+                <Link className={styles.textLink} href={href(project.path)}>{project.link}<span aria-hidden="true">→</span></Link>
               </div>
             </article>)}
           </div>
         </Container>
       </section>
 
-      <ServiceSteps title={t("Cómo lo desarrollamos")} steps={softwareSteps.map(([title, text]) => [t(title), t(text)] as const)} />
-      <ServiceFaq title={t("Antes de empezar")} questions={softwareQuestions.map(([question, answer]) => [t(question), <ContextualText key={question} text={t(answer)} links={question === "¿Puede conectarse con las herramientas que ya utilizamos?" ? [{ phrase: t("posibilidades de integración"), href: href("/servicios/automatizacion-de-procesos") }] : []} />] as const)} />
+      <ServiceSteps title={content.stepsTitle} steps={content.steps} />
+      <ServiceFaq title={content.faqTitle} questions={content.questions.map(([question, answer]) => [question, <ContextualText key={question} text={answer} links={question === content.integrationQuestion ? [{ phrase: t("posibilidades de integración"), href: href("/servicios/automatizacion-de-procesos") }] : []} />] as const)} />
 
       <section className={styles.closing} aria-labelledby="service-contact-title">
         <Container className={`editorial-container ${styles.split}`} data-service-reveal>
-          <h2 id="service-contact-title">{t("¿Qué necesita tu equipo que tus herramientas actuales no resuelven?")}</h2>
+          <h2 id="service-contact-title">{content.closingTitle}</h2>
           <div className={styles.copy}>
-            <p>{t("Cuéntanos cómo trabaja tu equipo y qué necesitas mejorar. Revisamos el caso y valoramos por dónde empezar.")}</p>
+            <p>{content.closingText}</p>
             <Link className={`button ${styles.button} ${styles.contactButton}`} href={href("/contacto")}>{t("Hablemos de tu proyecto")}<span aria-hidden="true">→</span></Link>
           </div>
         </Container>
