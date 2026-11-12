@@ -1,3 +1,4 @@
+import { ContextualText } from "@/components/links/ContextualText";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
@@ -72,7 +73,7 @@ export default function AiServicePage({ locale = "es" }: { locale?: Locale }) {
         </Container>
       </section>
       <ServiceSteps title={t("Cómo lo ponemos en marcha")} steps={aiSteps.map(([title, text]) => [t(title), t(text)] as const)} />
-      <ServiceFaq title={t("Antes de empezar")} questions={aiQuestions.map(([question, answer]) => [t(question), t(answer)] as const)} />
+      <ServiceFaq title={t("Antes de empezar")} questions={aiQuestions.map(([question, answer]) => [t(question), <ContextualText key={question} text={t(answer)} links={question === "¿Todas las automatizaciones necesitan inteligencia artificial?" ? [{ phrase: t("conectando herramientas y definiendo reglas"), href: href("/servicios/automatizacion-de-procesos") }] : []} />] as const)} />
       <section className={styles.closing} aria-labelledby="service-contact-title">
         <Container className={`editorial-container ${styles.split}`} data-service-reveal>
           <h2 id="service-contact-title">{t("¿En qué tarea te gustaría incorporar inteligencia artificial?")}</h2>

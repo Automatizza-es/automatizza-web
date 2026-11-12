@@ -58,6 +58,24 @@ const legal = [
 ];
 const unescape = (text) => text.replaceAll("&amp;", "&").replaceAll("&quot;", '"').replaceAll("&#x27;", "'");
 const count = (html, pattern) => [...html.matchAll(pattern)].length;
+function assertInternalServiceLinks(html, path) {
+  // SEO-02/03: contextual links must be crawlable before hydration, in the
+  // correct language and inside the content (footer links cannot mask a miss).
+  const languageIndex = path === "/en" || path.startsWith("/en/") ? 1 : path === "/fr" || path.startsWith("/fr/") ? 2 : path === "/pt" || path.startsWith("/pt/") ? 3 : 0;
+  const content = html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "";
+  const contextualTargets = path.includes("silos-spain") ? [automationPaths[languageIndex], softwarePaths[languageIndex], aiPaths[languageIndex]]
+    : path.endsWith("/apc") || path.includes("la-factory-coworking") ? [softwarePaths[languageIndex]]
+    : automationPaths.includes(path) ? [softwarePaths[languageIndex], aiPaths[languageIndex], calculatorPaths[languageIndex]]
+    : softwarePaths.includes(path) || aiPaths.includes(path) || calculatorPaths.includes(path) ? [automationPaths[languageIndex]] : [];
+  for (const target of contextualTargets) {
+    assert.ok(content.includes(`href="${target}"`), `localized contextual anchor in initial main HTML: ${path} → ${target}`);
+  }
+  const footer = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
+  if (footer) for (const target of [automationPaths[languageIndex], softwarePaths[languageIndex], aiPaths[languageIndex]]) {
+    assert.ok(footer.includes(`href="${target}"`), `direct localized service navigation in existing footer: ${path} → ${target}`);
+  }
+}
+
 const results = {};
 let server;
 let checks = 0;
@@ -152,6 +170,7 @@ async function verify(environment) {
     const headings = [...html.matchAll(/<(h[12])\b[^>]*>([\s\S]*?)<\/\1>/g)].map(([, level, text]) => [level, unescape(text.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim())]);
     assert.equal(headings.filter(([level]) => level === "h1").length, 1, path);
     documents.set(path, html);
+    assertInternalServiceLinks(html, path);
     if (["/", "/en", "/fr", "/pt"].includes(path)) {
       const services = html.match(/<section[^>]*id="servicios"[\s\S]*?<\/section>/)?.[0] ?? "";
       const languageIndex = ["/", "/en", "/fr", "/pt"].indexOf(path);
@@ -235,7 +254,7 @@ async function verify(environment) {
       const firstStep = ["Definimos una primera versión","We define a first version","Nous définissons une première version","Definimos uma primeira versão"][i];
       assert.ok(main.includes(firstStep), "localized step rendered server-side");
       if(i>0)assert.ok(!main.includes("¿")&&!main.includes("Herramientas de gestión interna"), "no Spanish fallback in software");
-      else for(const text of ["Antes de desarrollar, valoramos si una herramienta existente puede resolverlo", "posibilidades de integración de cada herramienta", "costes recurrentes de infraestructura, licencias y mantenimiento", "El alcance de ese trabajo se define para cada proyecto"])assert.ok(main.includes(text));
+      else for(const text of ["Antes de desarrollar, valoramos si una herramienta existente puede resolverlo", "posibilidades de integración de cada herramienta", "costes recurrentes de infraestructura, licencias y mantenimiento", "El alcance de ese trabajo se define para cada proyecto"])assert.ok(main.replace(/<[^>]*>/g, "").includes(text));
       assert.ok(!html.includes("FAQPage"));
     }
     if (aiPaths.includes(path)) {
@@ -282,7 +301,7 @@ async function verify(environment) {
       assert.equal(count(faq, /<details\b[^>]*\bopen(?:[\s=>])/g), 0, "answers start closed");
       assert.equal(count(faq, /<summary\b/g), 4);
       assert.equal(count(faq, /<p\b/g), 4, "all answers are server-rendered");
-      for (const answer of ["Siempre que permitan una conexión adecuada", "Muchas tareas se resuelven conectando aplicaciones", "costes recurrentes de herramientas, infraestructura y mantenimiento", "sin confundir una estimación con un ahorro demostrado"]) assert.ok(faq.includes(answer), `answer in initial HTML: ${answer}`);
+      for (const answer of ["Siempre que permitan una conexión adecuada", "Muchas tareas se resuelven conectando aplicaciones", "costes recurrentes de herramientas, infraestructura y mantenimiento", "sin confundir una estimación con un ahorro demostrado"]) assert.ok(faq.replace(/<[^>]*>/g, "").includes(answer), `answer in initial HTML: ${answer}`);
       assert.ok(main.includes('href="/proyectos/silos-spain"'));
       assert.equal(count(main, /href="\/contacto"/g), 2, "both service CTAs use the existing contact page");
       assert.ok(!html.includes("FAQPage"));
@@ -312,6 +331,7 @@ async function verify(environment) {
     assert.equal(count(selector,/<a\b/g),4,`all legal equivalents available: ${path}`);
     assert.ok(!main.includes("(In Spanish)")&&!main.includes("(En espagnol)")&&!main.includes("(Em espanhol)"),path);
     documents.set(path, html);
+    assertInternalServiceLinks(html, path);
     checks++;
   }
   for (const path of ["/no-existe-seo-audit", "/proyectos/no-existe-seo-audit", "/es", "/es/contacto", "/en/contacto", "/fr/contacto", "/pt/contact", "/en/politica-de-privacidad", "/en/services", "/es/servicios/automatizacion-de-procesos", "/en/servicios/automatizacion-de-procesos", "/fr/servicios/automatizacion-de-procesos", "/pt/servicios/automatizacion-de-procesos", "/servicios", "/automatizacion-de-procesos"]) {

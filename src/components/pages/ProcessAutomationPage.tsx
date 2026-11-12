@@ -1,3 +1,4 @@
+import { ContextualText } from "@/components/links/ContextualText";
 import Link from "next/link";
 import { translator } from "@/lib/i18n/translate";
 import { localizeHref, type Locale } from "@/lib/i18n/routes";
@@ -72,7 +73,7 @@ export default function ProcessAutomationPage({ locale = "es" }: { locale?: Loca
           </figure>
           <div className={styles.copy}>
             <h2 id="silos-example-title">{t("Así lo aplicamos en Silos Spain")}</h2>
-            <p>{t("En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.")}</p>
+            <p><ContextualText text={t("En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.")} links={[{ phrase: t("una plataforma"), href: href("/servicios/software-a-medida") }]} /></p>
             <p>{t("El equipo puede consultar la información y continuar cada gestión desde la misma plataforma, sin ir pasando de una herramienta a otra.")}</p>
             <Link className={styles.textLink} href={href("/proyectos/silos-spain")}>{t("Ver el proyecto de Silos Spain ")}<span aria-hidden="true">→</span></Link>
           </div>
@@ -80,7 +81,7 @@ export default function ProcessAutomationPage({ locale = "es" }: { locale?: Loca
       </section>
 
       <ServiceSteps title={t("Cómo lo ponemos en marcha")} steps={automationSteps.map(([title, text]) => [t(title), t(text)] as const)} />
-      <ServiceFaq title={t("Antes de empezar")} questions={automationQuestions.map(([question, answer]) => [t(question), t(answer)] as const)} />
+      <ServiceFaq title={t("Antes de empezar")} questions={automationQuestions.map(([question, answer]) => [t(question), <ContextualText key={question} text={t(answer)} links={question === "¿Hace falta inteligencia artificial?" ? [{ phrase: t("IA"), href: href("/servicios/inteligencia-artificial-para-empresas") }] : question === "¿Cómo sabemos si ha merecido la pena?" ? [{ phrase: t("una estimación"), href: href("/calculadora") }] : []} />] as const)} />
 
       <section className={styles.closing} aria-labelledby="service-contact-title">
         <Container className={`editorial-container ${styles.split}`} data-service-reveal>

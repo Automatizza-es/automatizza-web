@@ -6,7 +6,11 @@ import Link from "@/components/i18n/LocaleLink";
 import { Container } from "./Container";
 
 const navigation = [
-  ["Servicios", "#servicios"], ["Proyectos", "#proyectos"],
+  ["Servicios", "#servicios"],
+  ["Automatización de procesos", "/servicios/automatizacion-de-procesos"],
+  ["Software a medida", "/servicios/software-a-medida"],
+  ["Inteligencia artificial", "/servicios/inteligencia-artificial-para-empresas"],
+  ["Proyectos", "#proyectos"],
   ["Sobre Automatizza", "#sobre-automatizza"], ["Contacto", "/contacto"],
 ];
 

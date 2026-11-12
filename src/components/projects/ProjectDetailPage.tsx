@@ -10,6 +10,8 @@ import { ApcVisual } from "./visuals/ApcVisual";
 import { LaFactoryVisual, WebHome } from "./visuals/LaFactoryVisual";
 import { CrmDashboard, SilosSpainVisual } from "./visuals/SilosSpainVisual";
 import { projectDetails, type ProjectDetail } from "./projectDetails";
+import { ContextualText } from "@/components/links/ContextualText";
+import { localizeHref } from "@/lib/i18n/routes";
 import styles from "./ProjectDetailPage.module.css";
 
 function ProjectVisual({ slug }: { slug: ProjectDetail["slug"] }) {
@@ -54,7 +56,14 @@ function FeatureVisual({ project, index }: { project: ProjectDetail; index: numb
 }
 
 export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const href = (path: string) => localizeHref(path, locale);
+  const softwarePath = "/servicios/software-a-medida";
+  const tagServices: Record<string, string> = {
+    "Software a medida": softwarePath,
+    "Automatización": "/servicios/automatizacion-de-procesos",
+  };
+  const featureText = (text: string) => <ContextualText text={t(text)} links={project.slug === "silos-spain" ? [{ phrase: t("IA"), href: href("/servicios/inteligencia-artificial-para-empresas") }] : []} />;
   return (
     <>
       <Header redesign homeLinks />
@@ -66,9 +75,9 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
             <div className={styles.heroCopy}>
               <h1 id="project-title">{t(project.title)}</h1>
               <div className={styles.introduction}>
-                <p>{t(project.introduction)}</p>
+                <p><ContextualText text={t(project.introduction)} links={project.slug === "la-factory-coworking" ? [{ phrase: t("Una aplicación web"), href: href(softwarePath) }] : []} /></p>
                 <ul className={styles.tags} aria-label={t("Áreas del proyecto")}>
-                  {project.tags.map((tag) => <li key={tag}>{t(tag)}</li>)}
+                  {project.tags.map((tag) => <li key={tag}>{project.slug === "silos-spain" && tagServices[tag] ? <Link href={tagServices[tag]}>{t(tag)}</Link> : t(tag)}</li>)}
                 </ul>
               </div>
             </div>
@@ -82,7 +91,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
 
           <section className={styles.context} aria-label={t("El reto y la solución")}>
             <div><p className={styles.sectionLabel}>{t("El reto")}</p><h2>{t(project.challengeTitle)}</h2><p>{t(project.challenge)}</p></div>
-            <div><p className={styles.sectionLabel}>{t("La solución")}</p><h2>{t(project.focus)}</h2><p>{t(project.solution)}</p></div>
+            <div><p className={styles.sectionLabel}>{t("La solución")}</p><h2>{t(project.focus)}</h2><p><ContextualText text={t(project.solution)} links={project.slug === "apc" ? [{ phrase: t("una aplicación adaptada al móvil"), href: href(softwarePath) }] : []} /></p></div>
           </section>
 
           <section className={styles.inside} aria-labelledby="inside-title">
@@ -96,7 +105,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
                   <article className={styles.featureCopy} key={feature.label}>
                     <p className={styles.sectionLabel}>{t(feature.label)}</p>
                     <h3>{t(feature.title)}</h3>
-                    <p>{t(feature.text)}</p>
+                    <p>{featureText(feature.text)}</p>
                   </article>
                 ))}
               </div>
@@ -105,7 +114,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
                 <div className={styles.featureCopy}>
                   <p className={styles.sectionLabel}>{t(feature.label)}</p>
                   <h3>{t(feature.title)}</h3>
-                  <p>{t(feature.text)}</p>
+                  <p>{featureText(feature.text)}</p>
                 </div>
                 <FeatureVisual project={project} index={index} />
               </article>
