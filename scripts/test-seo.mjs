@@ -1,7 +1,8 @@
 // Real production builds, HTTP headers and metadata, without touching the
 // running local servers, .env.local, Vercel, or the production deployment.
 import assert from "node:assert/strict";
-import { cpSync, existsSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { createRequire } from "node:module";
@@ -18,7 +19,7 @@ const pageUrl = (path) => `${canonical}${path === "/" ? "" : path}`;
 const automationPaths = ["/servicios/automatizacion-de-procesos", "/en/services/process-automation", "/fr/services/automatisation-des-processus", "/pt/servicos/automatizacao-de-processos"];
 const automationTitles = ["Automatización de procesos para empresas | Automatizza", "Process automation for businesses | Automatizza", "Automatisation des processus pour les entreprises | Automatizza", "Automatização de processos para empresas | Automatizza"];
 const softwarePaths = ["/servicios/software-a-medida", "/en/services/bespoke-software", "/fr/services/logiciel-sur-mesure", "/pt/servicos/software-a-medida"];
-const softwareTitles = ["Software a medida para empresas | Automatizza", "Bespoke software for businesses | Automatizza", "Logiciels sur mesure pour les entreprises | Automatizza", "Software à medida para empresas | Automatizza"];
+const softwareTitles = ["Desarrollo de software a medida para empresas | Automatizza", "Bespoke software for businesses | Automatizza", "Logiciels sur mesure pour les entreprises | Automatizza", "Software à medida para empresas | Automatizza"];
 const aiPaths = ["/servicios/inteligencia-artificial-para-empresas", "/en/services/artificial-intelligence-for-businesses", "/fr/services/intelligence-artificielle-pour-les-entreprises", "/pt/servicos/inteligencia-artificial-para-empresas"];
 const aiTitles = ["Inteligencia artificial para empresas | Automatizza", "Artificial intelligence for businesses | Automatizza", "Intelligence artificielle pour les entreprises | Automatizza", "Inteligência artificial para empresas | Automatizza"];
 const calculatorPaths = ["/calculadora", "/en/calculator", "/fr/calculateur", "/pt/calculadora"];
@@ -76,6 +77,8 @@ function assertInternalServiceLinks(html, path) {
   }
 }
 
+const softwareBaseline = JSON.parse(readFileSync("tests/fixtures/software-international-baseline.json", "utf8"));
+const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const results = {};
 let server;
 let checks = 0;
@@ -241,20 +244,33 @@ async function verify(environment) {
       assert.ok(!needs.includes("Cuándo tiene sentido una aplicación a medida"));
 
       const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
-      assert.equal(count(faq, /<details\b/g), 5);
+      assert.equal(count(faq, /<details\b/g), i === 0 ? 6 : 5);
       assert.equal(count(faq, /<details\b[^>]*\bopen(?:[\s=>])/g), 0);
-      assert.equal(count(faq, /<summary\b/g), 5);
-      assert.equal(count(faq, /<p\b/g), 5, "all software answers in initial HTML");
+      assert.equal(count(faq, /<summary\b/g), i === 0 ? 6 : 5);
+      assert.equal(count(faq, /<p\b/g), i === 0 ? 6 : 5, "all software answers in initial HTML");
       assert.equal(count(main.match(/<ol[^>]*data-service-staircase[\s\S]*?<\/ol>/)?.[0]??"", /<li\b/g),4);
       const factory = ["/proyectos/la-factory-coworking","/en/projects/la-factory-coworking","/fr/projets/la-factory-coworking","/pt/projetos/la-factory-coworking"][i];
       const apc = ["/proyectos/apc","/en/projects/apc","/fr/projets/apc","/pt/projetos/apc"][i];
       for(const project of [factory,apc]) assert.ok(main.includes(`href="${project}"`));
       const order = ["software-title","software-needs-title","software-examples-title","software-projects-title","approach-title","service-faq-title","service-contact-title"].map(id=>main.indexOf(`aria-labelledby="${id}"`));
       assert.ok(order.every(position=>position>=0));assert.deepEqual(order,[...order].sort((a,b)=>a-b));
-      const firstStep = ["Definimos una primera versión","We define a first version","Nous définissons une première version","Definimos uma primeira versão"][i];
+      const firstStep = ["Entendemos el proceso y definimos una primera versión","We define a first version","Nous définissons une première version","Definimos uma primeira versão"][i];
       assert.ok(main.includes(firstStep), "localized step rendered server-side");
       if(i>0)assert.ok(!main.includes("¿")&&!main.includes("Herramientas de gestión interna"), "no Spanish fallback in software");
-      else for(const text of ["Antes de desarrollar, valoramos si una herramienta existente puede resolverlo", "posibilidades de integración de cada herramienta", "costes recurrentes de infraestructura, licencias y mantenimiento", "El alcance de ese trabajo se define para cada proyecto"])assert.ok(main.replace(/<[^>]*>/g, "").includes(text));
+      if (i === 0) {
+        assert.ok(main.includes("Desarrollo de software a medida para empresas."));
+        assert.equal(description, "Desarrollamos software a medida para gestionar clientes, reservas y operaciones. Definimos contigo el alcance, las integraciones y la puesta en marcha.");
+        assert.ok(main.includes('href="/proyectos/silos-spain"'), "Spanish software includes the real Silos case");
+        const cases = main.match(/<section[^>]*aria-labelledby="software-projects-title"[\s\S]*?<\/section>/)?.[0] ?? "";
+        assert.equal(count(cases, /<article\b/g), 3, "three real projects in the existing case component");
+        for (const text of ["Antes de proponer un desarrollo", "posibilidades de integración de cada herramienta", "costes recurrentes de alojamiento", "El mantenimiento y el soporte se definen para cada proyecto", "La propuesta y el contrato deben concretar la titularidad"]) assert.ok(main.replace(/<[^>]*>/g, "").includes(text), text);
+      } else {
+        const baseline = softwareBaseline[["es", "en", "fr", "pt"][i]];
+        assert.equal(title, baseline.title, "international title unchanged");
+        assert.equal(description, baseline.description, "international description unchanged");
+        assert.equal(sha256(main.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()), baseline.mainTextSha256, `international main text unchanged: ${path}`);
+        assert.equal(sha256(JSON.stringify([...main.matchAll(/href="([^"]+)"/g)].map(match => match[1]))), baseline.mainLinksSha256, `international main links unchanged: ${path}`);
+      }
       assert.ok(!html.includes("FAQPage"));
     }
     if (aiPaths.includes(path)) {
