@@ -1,7 +1,9 @@
+import linkMessages from "./linkMessages";
 import aiMessages from "./aiMessages";
 import serviceMessages from "./serviceMessages";
 
 const messages: Record<string, readonly [string, string, string]> = {
+  ...linkMessages,
   ...serviceMessages,
   ...aiMessages,
   "¿Cuánto tiempo se va en tareas que podrías automatizar?": ["How much time goes into tasks you could automate?", "Combien de temps consacrez-vous à des tâches que vous pourriez automatiser ?", "Quanto tempo dedica a tarefas que poderia automatizar?"],

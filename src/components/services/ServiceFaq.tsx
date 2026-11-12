@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import { Container } from "@/components/layout/Container";
 import faqStyles from "@/components/home/FaqSection.module.css";
 import styles from "@/components/pages/ProcessAutomationPage.module.css";
 
-type Props = { title: string; questions: readonly (readonly [string, string])[]; id?: string };
+type Props = { title: string; questions: readonly (readonly [string, ReactNode])[]; id?: string };
 
 export function ServiceFaq({ title, questions, id = "service-faq-title" }: Props) {
   return <section className={`${styles.section} ${styles.faq}`} aria-labelledby={id}>

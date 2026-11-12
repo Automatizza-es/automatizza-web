@@ -1,3 +1,4 @@
+import { ContextualText } from "@/components/links/ContextualText";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Header } from "@/components/layout/Header";
@@ -96,7 +97,7 @@ export default function SoftwareServicePage({ locale = "es" }: { locale?: Locale
       </section>
 
       <ServiceSteps title={t("Cómo lo desarrollamos")} steps={softwareSteps.map(([title, text]) => [t(title), t(text)] as const)} />
-      <ServiceFaq title={t("Antes de empezar")} questions={softwareQuestions.map(([question, answer]) => [t(question), t(answer)] as const)} />
+      <ServiceFaq title={t("Antes de empezar")} questions={softwareQuestions.map(([question, answer]) => [t(question), <ContextualText key={question} text={t(answer)} links={question === "¿Puede conectarse con las herramientas que ya utilizamos?" ? [{ phrase: t("posibilidades de integración"), href: href("/servicios/automatizacion-de-procesos") }] : []} />] as const)} />
 
       <section className={styles.closing} aria-labelledby="service-contact-title">
         <Container className={`editorial-container ${styles.split}`} data-service-reveal>
