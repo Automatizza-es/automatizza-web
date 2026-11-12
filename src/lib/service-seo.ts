@@ -1,3 +1,4 @@
+import { automationSpanishMetadata } from "../content/automation-spanish";
 import { softwareSpanishMetadata } from "../content/software-spanish";
 import { pageMetadata } from "./seo";
 import { localePath, type Locale } from "./i18n/routes";
@@ -21,6 +22,9 @@ export const serviceSeo = {
 export function serviceMetadata(id: keyof typeof serviceSeo, locale: Locale) {
   if (id === "bespoke-software" && locale === "es") {
     return pageMetadata(localePath(id, locale)!, softwareSpanishMetadata.title, softwareSpanishMetadata.description);
+  }
+  if (id === "process-automation" && locale === "es") {
+    return pageMetadata(localePath(id, locale)!, automationSpanishMetadata.title, automationSpanishMetadata.description);
   }
   const t = translator(locale);
   return pageMetadata(localePath(id, locale)!, t(serviceSeo[id].title), t(serviceSeo[id].description));

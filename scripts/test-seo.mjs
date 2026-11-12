@@ -17,7 +17,7 @@ const fixture = mkdtempSync(join(tmpdir(), "automatizza-seo-"));
 const canonical = "https://automatizza.es";
 const pageUrl = (path) => `${canonical}${path === "/" ? "" : path}`;
 const automationPaths = ["/servicios/automatizacion-de-procesos", "/en/services/process-automation", "/fr/services/automatisation-des-processus", "/pt/servicos/automatizacao-de-processos"];
-const automationTitles = ["Automatización de procesos para empresas | Automatizza", "Process automation for businesses | Automatizza", "Automatisation des processus pour les entreprises | Automatizza", "Automatização de processos para empresas | Automatizza"];
+const automationTitles = ["Automatización de procesos empresariales | Automatizza", "Process automation for businesses | Automatizza", "Automatisation des processus pour les entreprises | Automatizza", "Automatização de processos para empresas | Automatizza"];
 const softwarePaths = ["/servicios/software-a-medida", "/en/services/bespoke-software", "/fr/services/logiciel-sur-mesure", "/pt/servicos/software-a-medida"];
 const softwareTitles = ["Desarrollo de software a medida para empresas | Automatizza", "Bespoke software for businesses | Automatizza", "Logiciels sur mesure pour les entreprises | Automatizza", "Software à medida para empresas | Automatizza"];
 const aiPaths = ["/servicios/inteligencia-artificial-para-empresas", "/en/services/artificial-intelligence-for-businesses", "/fr/services/intelligence-artificielle-pour-les-entreprises", "/pt/servicos/inteligencia-artificial-para-empresas"];
@@ -77,6 +77,7 @@ function assertInternalServiceLinks(html, path) {
   }
 }
 
+const automationBaseline = JSON.parse(readFileSync("tests/fixtures/automation-international-baseline.json", "utf8"));
 const softwareBaseline = JSON.parse(readFileSync("tests/fixtures/software-international-baseline.json", "utf8"));
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const results = {};
@@ -225,10 +226,17 @@ async function verify(environment) {
       const i = automationPaths.indexOf(path);
       const contact = ["/contacto", "/en/contact", "/fr/contact", "/pt/contacto"][i];
       assert.equal(count(main, new RegExp(`href="${contact}"`, "g")), 2, "both localized CTAs use contact");
-      assert.equal(count(main, /<details\b/g), 4);
+      assert.equal(count(main, /<details\b/g), i === 0 ? 6 : 4);
       assert.equal(count(main.match(/<ol[^>]*data-service-staircase[\s\S]*?<\/ol>/)?.[0]??"", /<li\b/g),4);
       for (const text of ["We understand your process", "Nous comprenons votre processus", "Compreendemos o seu processo"].filter((_, n)=>n===i-1)) assert.ok(main.includes(text));
       if(i>0) assert.ok(!main.includes("¿") && !main.includes("Revisamos cómo trabaja tu equipo"), "translated service HTML");
+      if (i > 0) {
+        const baseline = automationBaseline[["es", "en", "fr", "pt"][i]];
+        assert.equal(title, baseline.title, "international automation title unchanged");
+        assert.equal(description, baseline.description, "international automation description unchanged");
+        assert.equal(sha256(main.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()), baseline.mainTextSha256, `international automation main text unchanged: ${path}`);
+        assert.equal(sha256(JSON.stringify([...main.matchAll(/href="([^"]+)"/g)].map(match => match[1]))), baseline.mainLinksSha256, `international automation links unchanged: ${path}`);
+      }
     }
     if (softwarePaths.includes(path)) {
       const main = unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "");
@@ -296,7 +304,7 @@ async function verify(environment) {
     }
     if (spanishService) {
       assert.equal(count(selector, /<a\b/g), 4, "all complete service languages are shown");
-      assert.equal(description, "Conectamos herramientas y automatizamos solicitudes, documentos y seguimientos. Revisamos tu proceso y definimos qué automatizar y qué debe seguir bajo revisión.");
+      assert.equal(description, "Automatizamos solicitudes, presupuestos, documentos y seguimientos. Conectamos tus herramientas y definimos qué tareas requieren revisión de tu equipo.");
       const main = unescape(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "");
       assert.equal(count(main, /<form\b/g), 0, "no duplicated contact form");
       assert.ok(!main.includes("Menos copiar y pegar. Menos pendientes entre herramientas."));
@@ -310,15 +318,19 @@ async function verify(environment) {
       assert.ok(!main.includes("Tu equipo mantiene el control"), "removed control block stays absent");
       assert.ok(main.includes('alt="Equipo de Silos Spain en la fábrica."'));
       assert.ok(main.includes("silos-spain-team.jpg"));
-      assert.ok(main.includes("acordamos el mantenimiento y los siguientes pasos."));
-      for (const example of ["Solicitudes y seguimiento comercial", "Documentos y presupuestos", "Conexión entre herramientas", "Avisos y tareas pendientes"]) assert.ok(main.includes(example), `example in initial HTML: ${example}`);
+      assert.ok(main.includes("según las necesidades y condiciones de cada proyecto."));
+      assert.ok(main.includes("Automatización de procesos empresariales."));
+      for (const example of ["Solicitudes y asignación de tareas", "Presupuestos y documentos", "Conexiones entre herramientas", "Seguimientos, avisos y tareas pendientes"]) assert.ok(main.includes(example), `example in initial HTML: ${example}`);
       const faq = main.match(/<section[^>]*aria-labelledby="service-faq-title"[\s\S]*?<\/section>/)?.[0] ?? "";
-      assert.equal(count(faq, /<details\b/g), 4);
+      assert.equal(count(faq, /<details\b/g), 6);
       assert.equal(count(faq, /<details\b[^>]*\bopen(?:[\s=>])/g), 0, "answers start closed");
-      assert.equal(count(faq, /<summary\b/g), 4);
-      assert.equal(count(faq, /<p\b/g), 4, "all answers are server-rendered");
-      for (const answer of ["Siempre que permitan una conexión adecuada", "Muchas tareas se resuelven conectando aplicaciones", "costes recurrentes de herramientas, infraestructura y mantenimiento", "sin confundir una estimación con un ahorro demostrado"]) assert.ok(faq.replace(/<[^>]*>/g, "").includes(answer), `answer in initial HTML: ${answer}`);
-      assert.ok(main.includes('href="/proyectos/silos-spain"'));
+      assert.equal(count(faq, /<summary\b/g), 6);
+      assert.equal(count(faq, /<p\b/g), 6, "all answers are server-rendered");
+      for (const answer of ["Siempre que permitan una conexión adecuada", "La automatización coordina pasos", "La propuesta debe concretar el proceso", "los costes recurrentes de herramientas, licencias, infraestructura y mantenimiento", "El mantenimiento y las condiciones de atención se concretan para cada proyecto", "los días laborables al mes y el coste medio por hora", "porcentaje de tiempo que estimas", "12 meses con la misma carga de trabajo", "los costes de implantación, mantenimiento y licencias no están incluidos"]) assert.ok(faq.replace(/<[^>]*>/g, "").includes(answer), `answer in initial HTML: ${answer}`);
+      for (const target of ["/proyectos/silos-spain", "/proyectos/apc", "/proyectos/la-factory-coworking"]) assert.ok(main.includes(`href="${target}"`), `real case link: ${target}`);
+      const caseBlock = main.match(/<section[^>]*aria-labelledby="silos-example-title"[\s\S]*?<\/section>/)?.[0] ?? "";
+      assert.equal(count(caseBlock, /<img\b/g), 1, "existing Silos photo remains the only case image");
+      assert.ok(caseBlock.replace(/<[^>]*>/g, "").includes("Otros ejemplos de procesos digitalizados"), "APC and Factory are described only as digitisation examples");
       assert.equal(count(main, /href="\/contacto"/g), 2, "both service CTAs use the existing contact page");
       assert.ok(!html.includes("FAQPage"));
     }

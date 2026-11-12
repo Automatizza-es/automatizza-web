@@ -1,3 +1,4 @@
+import { automationSpanishContent } from "@/content/automation-spanish";
 import { ContextualText } from "@/components/links/ContextualText";
 import Link from "next/link";
 import { translator } from "@/lib/i18n/translate";
@@ -34,6 +35,29 @@ export const automationQuestions = [
 export default function ProcessAutomationPage({ locale = "es" }: { locale?: Locale }) {
   const t = translator(locale);
   const href = (path: string) => localizeHref(path, locale);
+  const content = locale === "es" ? automationSpanishContent : {
+    h1: t("Automatización de procesos para empresas"),
+    introduction: t("Conectamos aplicaciones y automatizamos tareas repetitivas para que la información llegue donde hace falta, sin tener que trasladarla a mano cada vez."),
+    introductionClosing: t("Empezamos por entender cómo trabaja tu equipo y qué proceso necesita mejorar."),
+    examplesTitle: t("¿Dónde se puede reducir el trabajo manual?"),
+    examples: automationExamples.map(([title, text]) => [t(title), t(text)] as const),
+    caseTitle: t("Así lo aplicamos en Silos Spain"),
+    caseFirst: t("En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno."),
+    caseSecond: t("El equipo puede consultar la información y continuar cada gestión desde la misma plataforma, sin ir pasando de una herramienta a otra."),
+    caseSecondLinks: [],
+    caseReference: "",
+    caseReferenceLinks: [],
+    stepsTitle: t("Cómo lo ponemos en marcha"),
+    steps: automationSteps.map(([title, text]) => [t(title), t(text)] as const),
+    faqTitle: t("Antes de empezar"),
+    questions: automationQuestions.map(([question, answer]) => [t(question), t(answer)] as const),
+    comparisonQuestion: t("¿Hace falta inteligencia artificial?"),
+    comparisonLinks: [{ phrase: t("IA"), href: href("/servicios/inteligencia-artificial-para-empresas") }],
+    calculatorQuestion: t("¿Cómo sabemos si ha merecido la pena?"),
+    calculatorLinks: [{ phrase: t("una estimación"), href: href("/calculadora") }],
+    closingTitle: t("¿Qué tarea sigue pasando por demasiadas manos?"),
+    closingText: t("Cuéntanos qué ocurre desde que empieza hasta que termina. En una primera conversación gratuita y sin compromiso, podemos valorar por dónde empezar."),
+  };
   const rootId = locale === "es" ? "process-automation-content" : `process-automation-content-${locale}`;
   return <>
     <Header redesign homeLinks />
@@ -44,10 +68,10 @@ export default function ProcessAutomationPage({ locale = "es" }: { locale?: Loca
           <Link className={styles.back} href={href("/#servicios")}><span aria-hidden="true">←</span>{t(" Todos los servicios")}</Link>
           <p className={styles.eyebrow}>{t("SERVICIOS / AUTOMATIZACIÓN")}</p>
           <div className={styles.heroGrid} data-service-reveal>
-            <h1 id="automation-title">{t("Automatización de procesos para empresas")}</h1>
+            <h1 id="automation-title">{content.h1}</h1>
             <div className={styles.copy}>
-              <p>{t("Conectamos aplicaciones y automatizamos tareas repetitivas para que la información llegue donde hace falta, sin tener que trasladarla a mano cada vez.")}</p>
-              <p>{t("Empezamos por entender cómo trabaja tu equipo y qué proceso necesita mejorar.")}</p>
+              <p>{content.introduction}</p>
+              <p>{content.introductionClosing}</p>
               <Link className={`button button-primary ${styles.button}`} href={href("/contacto")}>{t("Hablemos de tu proceso ")}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
@@ -57,10 +81,10 @@ export default function ProcessAutomationPage({ locale = "es" }: { locale?: Loca
       <section className={styles.section} aria-labelledby="manual-work-title">
         <Container className="editorial-container">
           <div className={styles.sectionIntro} data-service-reveal>
-            <h2 id="manual-work-title">{t("¿Dónde se puede reducir el trabajo manual?")}</h2>
+            <h2 id="manual-work-title">{content.examplesTitle}</h2>
           </div>
           <ul className={styles.examples} data-service-reveal>
-            {automationExamples.map(([title, text]) => <li key={title}><h3>{t(title)}</h3><p>{t(text)}</p></li>)}
+            {content.examples.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
           </ul>
         </Container>
       </section>
@@ -72,22 +96,23 @@ export default function ProcessAutomationPage({ locale = "es" }: { locale?: Loca
             <figcaption>{t("Con el equipo de Silos Spain en la fábrica")}</figcaption>
           </figure>
           <div className={styles.copy}>
-            <h2 id="silos-example-title">{t("Así lo aplicamos en Silos Spain")}</h2>
-            <p><ContextualText text={t("En el proyecto de Silos Spain desarrollamos una plataforma que reúne solicitudes, contactos, oportunidades y presupuestos en un mismo entorno.")} links={[{ phrase: t("una plataforma"), href: href("/servicios/software-a-medida") }]} /></p>
-            <p>{t("El equipo puede consultar la información y continuar cada gestión desde la misma plataforma, sin ir pasando de una herramienta a otra.")}</p>
+            <h2 id="silos-example-title">{content.caseTitle}</h2>
+            <p><ContextualText text={content.caseFirst} links={[{ phrase: t("una plataforma"), href: href("/servicios/software-a-medida") }]} /></p>
+            <p><ContextualText text={content.caseSecond} links={content.caseSecondLinks} /></p>
+            {content.caseReference && <p><ContextualText text={content.caseReference} links={content.caseReferenceLinks} /></p>}
             <Link className={styles.textLink} href={href("/proyectos/silos-spain")}>{t("Ver el proyecto de Silos Spain ")}<span aria-hidden="true">→</span></Link>
           </div>
         </Container>
       </section>
 
-      <ServiceSteps title={t("Cómo lo ponemos en marcha")} steps={automationSteps.map(([title, text]) => [t(title), t(text)] as const)} />
-      <ServiceFaq title={t("Antes de empezar")} questions={automationQuestions.map(([question, answer]) => [t(question), <ContextualText key={question} text={t(answer)} links={question === "¿Hace falta inteligencia artificial?" ? [{ phrase: t("IA"), href: href("/servicios/inteligencia-artificial-para-empresas") }] : question === "¿Cómo sabemos si ha merecido la pena?" ? [{ phrase: t("una estimación"), href: href("/calculadora") }] : []} />] as const)} />
+      <ServiceSteps title={content.stepsTitle} steps={content.steps} />
+      <ServiceFaq title={content.faqTitle} questions={content.questions.map(([question, answer]) => [question, <ContextualText key={question} text={answer} links={question === content.comparisonQuestion ? content.comparisonLinks : question === content.calculatorQuestion ? content.calculatorLinks : []} />] as const)} />
 
       <section className={styles.closing} aria-labelledby="service-contact-title">
         <Container className={`editorial-container ${styles.split}`} data-service-reveal>
-          <h2 id="service-contact-title">{t("¿Qué tarea sigue pasando por demasiadas manos?")}</h2>
+          <h2 id="service-contact-title">{content.closingTitle}</h2>
           <div className={styles.copy}>
-            <p>{t("Cuéntanos qué ocurre desde que empieza hasta que termina. En una primera conversación gratuita y sin compromiso, podemos valorar por dónde empezar.")}</p>
+            <p>{content.closingText}</p>
             <Link className={`button ${styles.button} ${styles.contactButton}`} href={href("/contacto")}>{t("Cuéntanos tu proceso ")}<span aria-hidden="true">→</span></Link>
           </div>
         </Container>
