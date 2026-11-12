@@ -1,0 +1,23 @@
+{
+  "en": {
+    "path": "/en/services/process-automation",
+    "title": "Process automation for businesses | Automatizza",
+    "description": "We connect tools and automate enquiries, documents and follow-ups. We review your process and define what to automate and what still needs human review.",
+    "mainTextSha256": "ba8d7f4c3356fd32431aafee32a4c521179af0c26db6338d3a0bb6bfbf3b9f5b",
+    "mainLinksSha256": "4567ecedca1335c29c32187dd8b4f5f3b07f50ef219f3aa3d7ca7546dcb352f2"
+  },
+  "fr": {
+    "path": "/fr/services/automatisation-des-processus",
+    "title": "Automatisation des processus pour les entreprises | Automatizza",
+    "description": "Nous connectons vos outils et automatisons demandes, documents et suivis, en définissant ce qui peut être automatisé et ce qui nécessite une vérification.",
+    "mainTextSha256": "7eca28072ee669f46eaaee6dd115a7f2bf23ed6b21f90d8f843758598b66d221",
+    "mainLinksSha256": "82d1a6549ce4dded8199f7d9efc7ff47adb84594f42e871d11c8aefde63688c0"
+  },
+  "pt": {
+    "path": "/pt/servicos/automatizacao-de-processos",
+    "title": "Automatização de processos para empresas | Automatizza",
+    "description": "Ligamos ferramentas e automatizamos pedidos, documentos e acompanhamentos. Analisamos o seu processo e definimos o que automatizar e o que deve continuar a ser revisto.",
+    "mainTextSha256": "781d0ca23d20e2cc5b85f8ade319ccf60b49365f8300086f5495fc445e682dc8",
+    "mainLinksSha256": "5f4a775db0563a8498b56960d3b496c51bb998c1128d24ff25e7159ded282059"
+  }
+}
