@@ -18,7 +18,8 @@ Estos textos están incluidos en la vista previa para revisión, no publicados e
 
 1. «En la primera reunión revisamos cómo trabaja tu equipo, qué herramientas utiliza y dónde aparece el problema.» Confirmar que describe el alcance habitual de esa reunión.
 2. «Construimos las funcionalidades acordadas y comprobamos su funcionamiento con ejemplos del trabajo diario. Revisamos los recorridos de usuario, los permisos y los intercambios de información incluidos en el alcance.» Confirmar el trabajo de validación descrito.
-3. «Preparamos la entrega y comprobamos el uso de la aplicación con tu equipo. Dejamos definido cómo gestionar incidencias, mantenimiento y posibles ampliaciones según las condiciones del proyecto.» Confirmar el acompañamiento de puesta en marcha y la definición de responsabilidades.
+
+El cuarto paso se ha sustituido por el texto solicitado por la propietaria: «Preparamos la puesta en marcha de la aplicación y verificamos las funcionalidades acordadas. Definimos contigo cómo gestionar las incidencias, el mantenimiento y las posibles ampliaciones según las necesidades y condiciones de cada proyecto.» Se mantienen pendientes de confirmación únicamente las descripciones anteriores de la primera reunión y de las pruebas, para verificar que reflejan el proceso habitual.
 
 Las FAQ remiten alcance, costes recurrentes, soporte y titularidad a la propuesta o contrato de cada proyecto. No se fijan precios, plazos, horas de soporte, tiempos de respuesta, mantenimiento incluido ni cesión de propiedad o código fuente.
 

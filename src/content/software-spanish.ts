@@ -34,7 +34,7 @@ export const softwareSpanishContent = {
     ["Entendemos el proceso y definimos una primera versión", "En la primera reunión revisamos cómo trabaja tu equipo, qué herramientas utiliza y dónde aparece el problema. Acordamos qué debe resolver la primera versión y qué puede quedar para una ampliación."],
     ["Diseñamos pantallas, información y permisos", "Concretamos qué necesita hacer cada usuario, qué datos debe manejar la aplicación y cómo se relacionan sus pantallas. Revisamos también las integraciones y las dependencias de otros sistemas."],
     ["Desarrollamos y probamos con situaciones reales", "Construimos las funcionalidades acordadas y comprobamos su funcionamiento con ejemplos del trabajo diario. Revisamos los recorridos de usuario, los permisos y los intercambios de información incluidos en el alcance."],
-    ["Ponemos en marcha y acordamos los siguientes pasos", "Preparamos la entrega y comprobamos el uso de la aplicación con tu equipo. Dejamos definido cómo gestionar incidencias, mantenimiento y posibles ampliaciones según las condiciones del proyecto."],
+    ["Ponemos en marcha y acordamos los siguientes pasos", "Preparamos la puesta en marcha de la aplicación y verificamos las funcionalidades acordadas. Definimos contigo cómo gestionar las incidencias, el mantenimiento y las posibles ampliaciones según las necesidades y condiciones de cada proyecto."],
   ],
   faqTitle: "Antes de contratar un desarrollo a medida",
   questions: [
