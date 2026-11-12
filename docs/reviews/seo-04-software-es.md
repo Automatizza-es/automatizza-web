@@ -12,14 +12,14 @@ Rama creada desde `main` (`720bb93`). Solo cambia el contenido y la metadata de 
 - Seis FAQ: adecuación, alcance, presupuesto, integraciones y datos, mantenimiento/soporte, propiedad y accesos. La primera versión y las ampliaciones ya se explican en el proceso; no se repiten como otra pregunta.
 - Enlace contextual a automatización conservado en la respuesta sobre integraciones; navegación y demás enlaces publicados en SEO-02/03 conservados.
 
-## Frases de método y entrega pendientes de aprobación comercial
+## Aprobación comercial
 
-Estos textos están incluidos en la vista previa para revisión, no publicados en producción:
+La propietaria confirmó el 12 de noviembre de 2026 que las siguientes descripciones reflejan el proceso habitual y aprobó el PR #7 para fusionarlo y desplegarlo en producción:
 
-1. «En la primera reunión revisamos cómo trabaja tu equipo, qué herramientas utiliza y dónde aparece el problema.» Confirmar que describe el alcance habitual de esa reunión.
-2. «Construimos las funcionalidades acordadas y comprobamos su funcionamiento con ejemplos del trabajo diario. Revisamos los recorridos de usuario, los permisos y los intercambios de información incluidos en el alcance.» Confirmar el trabajo de validación descrito.
+1. «En la primera reunión revisamos cómo trabaja tu equipo, qué herramientas utiliza y dónde aparece el problema.»
+2. «Construimos las funcionalidades acordadas y comprobamos su funcionamiento con ejemplos del trabajo diario. Revisamos los recorridos de usuario, los permisos y los intercambios de información incluidos en el alcance.»
 
-El cuarto paso se ha sustituido por el texto solicitado por la propietaria: «Preparamos la puesta en marcha de la aplicación y verificamos las funcionalidades acordadas. Definimos contigo cómo gestionar las incidencias, el mantenimiento y las posibles ampliaciones según las necesidades y condiciones de cada proyecto.» Se mantienen pendientes de confirmación únicamente las descripciones anteriores de la primera reunión y de las pruebas, para verificar que reflejan el proceso habitual.
+El cuarto paso se ha sustituido por el texto solicitado por la propietaria: «Preparamos la puesta en marcha de la aplicación y verificamos las funcionalidades acordadas. Definimos contigo cómo gestionar las incidencias, el mantenimiento y las posibles ampliaciones según las necesidades y condiciones de cada proyecto.» Las descripciones de la primera reunión y de las pruebas también quedaron confirmadas expresamente.
 
 Las FAQ remiten alcance, costes recurrentes, soporte y titularidad a la propuesta o contrato de cada proyecto. No se fijan precios, plazos, horas de soporte, tiempos de respuesta, mantenimiento incluido ni cesión de propiedad o código fuente.
 
@@ -29,4 +29,4 @@ Se reutilizan Header, Footer, ServiceSteps, ServiceFaq y los mismos bloques, cla
 
 La implementación del contenido español se separa de las cadenas originales que siguen utilizando las traducciones. Las pruebas comparan el texto completo, los enlaces y la metadata de las tres páginas internacionales con la versión publicada antes del cambio.
 
-No fusionar ni publicar en producción hasta aprobar la vista previa y las frases anteriores.
+La aprobación final de la vista previa, de los textos y de la publicación se recibió el 12 de noviembre de 2026.
