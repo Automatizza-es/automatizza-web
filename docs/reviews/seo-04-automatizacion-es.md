@@ -31,4 +31,4 @@ Se conservan los componentes, clases, identificadores, tipografías, imagen y an
 
 La nueva copia y metadata son exclusivas de ES. EN, FR y PT conservan texto completo, enlaces y metadata anteriores, verificados mediante snapshots del HTML publicado. No se cambian URL, canonical, hreflang, robots, sitemap, otras páginas, calculadora, Analytics ni eventos.
 
-Pendiente de revisión final de esta vista previa. No fusionar ni publicar en producción sin aprobación.
+La propietaria revisó y aprobó expresamente los textos y la implementación del PR #8 el 12 de noviembre de 2026, autorizando la fusión en `main` y el despliegue en producción. La versión anterior se conserva en `pre-seo-04-automatizacion-2026-11-12`.
