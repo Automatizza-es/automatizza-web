@@ -77,6 +77,7 @@ function assertInternalServiceLinks(html, path) {
   }
 }
 
+const homeFaqBaseline = JSON.parse(readFileSync("tests/fixtures/home-faq-baseline.json", "utf8"));
 const automationBaseline = JSON.parse(readFileSync("tests/fixtures/automation-international-baseline.json", "utf8"));
 const softwareBaseline = JSON.parse(readFileSync("tests/fixtures/software-international-baseline.json", "utf8"));
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
@@ -181,9 +182,39 @@ async function verify(environment) {
       const calculatorPromo = html.match(/<section[^>]*id="calculadora"[\s\S]*?<\/section>/)?.[0] ?? "";
       assert.ok(calculatorPromo.includes(`href="${calculatorPaths[languageIndex]}"`), "homepage links to its calculator language");
       assert.ok(calculatorPromo.includes('inert=""'), "home calculator is only a non-interactive preview");
+      const promoLabel = ["Calcular mi ahorro potencial", "Calculate my potential savings", "Calculer mes économies potentielles", "Calcular a minha poupança potencial"][languageIndex];
+      assert.ok(unescape(calculatorPromo).includes(promoLabel), "localized new homepage calculator CTA");
+      const homeFaq = unescape(html.match(/<section[^>]*aria-labelledby="faq-title"[\s\S]*?<\/section>/)?.[0] ?? "");
+      const faqItems = [...homeFaq.matchAll(/<details\b[\s\S]*?<\/details>/g)].map(match => match[0].replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim());
+      assert.equal(faqItems.length, 9, "seven original FAQs plus two additions");
+      const locale = ["es", "en", "fr", "pt"][languageIndex];
+      assert.equal(sha256(JSON.stringify(faqItems.slice(0, 7))), homeFaqBaseline[locale].textSha256, `original seven FAQs preserved in ${locale}`);
+      const differenceQuestion = ["¿Cuál es la diferencia entre automatización, software a medida e inteligencia artificial?", "What is the difference between automation, bespoke software and artificial intelligence?", "Quelle est la différence entre automatisation, logiciel sur mesure et intelligence artificielle ?", "Qual é a diferença entre automatização, software à medida e inteligência artificial?"][languageIndex];
+      assert.ok(faqItems[7].includes(differenceQuestion), "new difference FAQ translated in initial HTML");
+      assert.ok(faqItems[8].includes("WhatsApp") && faqItems[8].includes("API"), "new connection FAQ retains integration and API conditions");
       assert.ok(services.includes(`href="${automationPaths[languageIndex]}"`), "homepage links to its automation language");
       assert.ok(services.includes(`href="${softwarePaths[languageIndex]}"`), "homepage links to its software language");
       assert.ok(services.includes(`href="${aiPaths[languageIndex]}"`), "homepage links to its AI language");
+    }
+    if (calculatorPaths.includes(path)) {
+      const i = calculatorPaths.indexOf(path);
+      const main = unescape(html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "");
+      const newHeading = ["¿Cuánto te cuesta no automatizar?", "What does not automating cost you?", "Combien vous coûte l'absence d'automatisation ?", "Quanto custa não automatizar?"][i];
+      assert.ok(main.includes(newHeading), "new localized H1 with unchanged SEO title");
+      assert.equal(count(main, /<input\b/g), 5, "only the original five calculator inputs");
+      for (const [id, min, max, step, initial] of [["employees","1","50","1","3"],["hours","0.5","8","0.5","2"],["days","15","23","1","22"],["automation","0","100","5","30"],["rate","0.01","500","0.01","25"]]) {
+        const input = main.match(new RegExp(`<input\\b[^>]*id="calc-${id}"[^>]*>`))?.[0] ?? "";
+        for (const [attribute, expected] of [["min",min],["max",max],["step",step],["value",initial]]) assert.ok(input.includes(`${attribute}="${expected}"`), `${id} preserves ${attribute}=${expected}`);
+      }
+      assert.equal(count(main, /<form\b|<button\b/g), 0, "calculator stays live without a submit button");
+      const closing = main.match(/<section[^>]*aria-labelledby="calculator-contact-title"[\s\S]*?<\/section>/)?.[0] ?? "";
+      const contactPath = ["/contacto", "/en/contact", "/fr/contact", "/pt/contacto"][i];
+      assert.ok(closing.includes(`href="${contactPath}"`), "new final CTA uses localized contact, not mailto");
+      const ctaLabel = ["Quiero analizar mi proceso", "I want to analyse my process", "Je souhaite analyser mon processus", "Quero analisar o meu processo"][i];
+      assert.ok(closing.includes(ctaLabel));
+      const disclaimer = main.match(/<p class="calc-disclaimer"[\s\S]*?<\/p>/)?.[0] ?? "";
+      assert.ok(disclaimer.includes("12"), "expanded translated warning retains annual workload assumption");
+      assert.ok(disclaimer.includes(["supervisión", "supervision", "supervision", "supervisão"][i]), "solution supervision is identified as an excluded cost");
     }
     const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
     assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);
@@ -204,8 +235,8 @@ async function verify(environment) {
       const firstQuestion = { "/en": "Which processes can an SME automate?", "/fr": "Quels processus d'une PME peut-on automatiser ?", "/pt": "Que processos de uma PME podem ser automatizados?" }[path];
       const faq = unescape(html.match(/<section[^>]*aria-labelledby="faq-title"[\s\S]*?<\/section>/)?.[0] ?? "");
       assert.ok(faq.includes(firstQuestion), `translated FAQ in initial HTML: ${path}`);
-      assert.equal(count(faq, /<details\b/g), 7);
-      assert.equal(count(faq, /<p class="[^"]*answer/g), 7);
+      assert.equal(count(faq, /<details\b/g), 9);
+      assert.equal(count(faq, /<p class="[^"]*answer/g), 9);
       assert.ok(!faq.includes("¿"), `no Spanish FAQ questions: ${path}`);
       assert.ok(!html.includes("FAQPage"));
     }
