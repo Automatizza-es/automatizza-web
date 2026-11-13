@@ -36,6 +36,14 @@ const questions = [
     question: "¿Se puede empezar automatizando un solo proceso?",
     answer: "Sí. Podemos empezar por una tarea concreta, comprobar cómo funciona en el día a día y ampliar la solución por fases. Esto permite ajustar lo necesario antes de incorporar otros procesos, sin abordar todos los cambios a la vez.",
   },
+  {
+    question: "¿Cuál es la diferencia entre automatización, software a medida e inteligencia artificial?",
+    answer: "La automatización permite que tareas y datos avancen siguiendo reglas definidas; el software a medida crea una herramienta adaptada a un proceso concreto; y la inteligencia artificial resulta útil cuando es necesario interpretar información menos estructurada. Por ejemplo, trasladar automáticamente los datos de un formulario al CRM puede resolverse con una automatización. Si una empresa necesita gestionar un proceso propio que no encaja en las herramientas existentes, puede tener sentido desarrollar una aplicación a medida. Y si el sistema necesita leer documentos, clasificar mensajes o interpretar texto, la inteligencia artificial puede aportar valor. En muchos proyectos se combinan varias de estas tecnologías. La solución depende siempre del problema que se quiere resolver.",
+  },
+  {
+    question: "¿Se pueden conectar el CRM, el correo, WhatsApp y otras herramientas de la empresa?",
+    answer: "Sí, muchas herramientas empresariales pueden conectarse para compartir información y evitar tareas manuales entre sistemas. Según las integraciones disponibles, una solicitud recibida desde la web o por email puede registrarse automáticamente en el CRM, asignarse a una persona, generar una tarea de seguimiento y activar posteriormente una comunicación por email o WhatsApp. La viabilidad depende de las integraciones y APIs disponibles en cada herramienta. Antes de plantear una solución, revisamos qué sistemas utiliza ya la empresa y qué se puede conectar de forma fiable.",
+  },
 ];
 
 export function FaqSection() {

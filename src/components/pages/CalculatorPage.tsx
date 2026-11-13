@@ -19,12 +19,16 @@ export default function CalculatorPage({ locale = "es" }: { locale?: Locale }) {
         <Container className={styles.container}>
           <header className={styles.intro}>
             <Link className={styles.back} href="/#calculadora"><span aria-hidden="true">←</span>{t("Volver a la portada")}</Link>
-            <p className={styles.eyebrow}>{t("CALCULADORA AUTOMATIZZA")}</p>
-            <h1>{t("Calculadora de automatización")}</h1>
-            <p><ContextualText text={t("Estima el tiempo y el valor económico que podrías recuperar al automatizar tareas repetitivas de tu empresa.")} links={[{ phrase: t("automatizar tareas repetitivas"), href: localizeHref("/servicios/automatizacion-de-procesos", locale) }]} /></p>
+            <p className={styles.eyebrow}>{t("CALCULADORA DE AHORRO POTENCIAL")}</p>
+            <h1>{t("¿Cuánto te cuesta no automatizar?")}</h1>
+            <p><ContextualText text={t("Calcula cuánto te cuestan las tareas repetitivas de tu empresa y estima el tiempo y el valor económico que podrías recuperar al automatizarlas.")} links={[{ phrase: t("tareas repetitivas"), href: localizeHref("/servicios/automatizacion-de-procesos", locale) }]} /></p>
           </header>
           <div className={`${styles.tool} ${palette.palette}`}><SavingsCalculator /></div>
-          <Link className={styles.contact} href="/contacto">{t("Hablemos de tu proyecto")}<span aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12 12 4M4 4h8v8" /></svg></span></Link>
+          <section className={styles.closing} aria-labelledby="calculator-contact-title">
+            <h2 id="calculator-contact-title">{t("¿Y si empezamos por uno de tus procesos?")}</h2>
+            <p>{t("Cuéntanos qué tareas te gustaría simplificar. Analizaremos contigo el proceso y valoraremos qué parte merece la pena automatizar y cómo hacerlo.")}</p>
+            <Link className={styles.contact} href="/contacto">{t("Quiero analizar mi proceso")}<span aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12 12 4M4 4h8v8" /></svg></span></Link>
+          </section>
         </Container>
       </main>
       <Footer homeLinks />

@@ -167,7 +167,7 @@ const sliders: {
       </p>
 
       <p className="calc-disclaimer">
-        <strong>{t("Estimación orientativa, no ahorro garantizado.")}</strong>{t(" El valor del tiempo recuperado no equivale necesariamente a una reducción de gastos. El ahorro efectivo dependerá de cómo se reorganice el trabajo y de los costes de implantación, mantenimiento y licencias, no incluidos en el cálculo.")}</p>
+        <strong>{t("Estimación orientativa, no ahorro garantizado.")}</strong>{t(" Aplicamos el porcentaje que eliges al tiempo y al coste introducidos. La estimación anual supone 12 meses con la misma carga de trabajo. El resultado representa el valor potencial del tiempo recuperado, no necesariamente una reducción de gastos o nóminas. No incluye costes de implantación, mantenimiento, licencias ni supervisión de la solución. El resultado real dependerá del proceso y de cómo se reorganice el trabajo.")}</p>
     </div>
   );
 }

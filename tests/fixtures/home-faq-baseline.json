@@ -1,0 +1,22 @@
+{
+  "es": {
+    "path": "/",
+    "originalQuestions": 7,
+    "textSha256": "180a48bc151bd1ff74510fbdfc90aa64133d236e12224e13ee6771224c0da5ca"
+  },
+  "en": {
+    "path": "/en",
+    "originalQuestions": 7,
+    "textSha256": "debfc7df5bb151122ab2f942fca8be7b43fa367fd300e449e35cec62e2c11e3a"
+  },
+  "fr": {
+    "path": "/fr",
+    "originalQuestions": 7,
+    "textSha256": "814c2562681553d468eb236e15c1c64e841f27a2ce4419804dc78d27ab4fcb22"
+  },
+  "pt": {
+    "path": "/pt",
+    "originalQuestions": 7,
+    "textSha256": "0112e0e7b38b65ee752fa5c00b2ecc6ba1e0bb83a8f5ea656c145d78a3d05af6"
+  }
+}

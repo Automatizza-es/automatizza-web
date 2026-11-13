@@ -6,6 +6,9 @@
 .intro h1 { margin: 0; font-family: var(--font-display), sans-serif; font-size: clamp(2.25rem, 4.5vw, 3.5rem); font-weight: 500; letter-spacing: -.04em; line-height: 1.12; text-wrap: balance; }
 .intro > p:last-child { max-width: 660px; margin: 1.5rem 0 0; color: var(--color-text-muted); font-size: 1rem; line-height: 1.75; }
 .tool { margin-top: 3rem; animation: enter 800ms 100ms ease-out both; }
+.closing { margin-top: clamp(2.5rem, 5vw, 4rem); }
+.closing h2 { margin: 0; color: var(--brand-night); font-family: var(--font-display), sans-serif; font-size: clamp(1.6rem, 2.8vw, 2.25rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.2; text-wrap: balance; }
+.closing p { max-width: 660px; margin: 1rem 0 0; color: var(--color-text-muted); font-size: 1rem; line-height: 1.75; }
 .contact { display: inline-flex; align-items: center; gap: 1.5rem; min-height: 48px; margin-top: 2rem; border-bottom: 1px solid var(--brand-steel); font-size: .875rem; }
 .contact span { color: var(--color-accent-text); }
 .page a:focus-visible { outline: 2px solid var(--brand-steel); outline-offset: 5px; }
