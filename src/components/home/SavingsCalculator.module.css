@@ -1,0 +1,7 @@
+.submit { width: 100%; margin-top: 1.5rem; border-radius: 999px; font-family: inherit; font-size: .875rem; cursor: pointer; }
+.submit:disabled { opacity: .6; cursor: not-allowed; }
+.empty { margin: 0; color: var(--color-inverse-muted); font-size: 1rem; line-height: 1.75; text-wrap: pretty; }
+.result > strong { font-size: clamp(1.65rem, 3.2vw, 2.9rem); white-space: normal; overflow-wrap: anywhere; }
+.metrics { display: grid; gap: 1rem; margin: 0 0 1.75rem; padding-bottom: 1.5rem; border-bottom: 1px solid color-mix(in srgb, var(--brand-paper) 20%, transparent); }
+.metrics dt { color: var(--color-inverse-muted); font-size: .8125rem; line-height: 1.5; }
+.metrics dd { margin: .25rem 0 0; font-family: var(--font-display), sans-serif; font-size: 1.35rem; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }

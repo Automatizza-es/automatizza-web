@@ -22,7 +22,7 @@ export function CalculatorPreview() {
     <div className={styles.frame} role="img" aria-label={t("Vista previa de la calculadora de Automatizza")}>
       <div ref={viewport} className={styles.viewport}>
         <div className={`${styles.canvas} ${palette.palette}`} inert aria-hidden="true">
-          <SavingsCalculator />
+          <SavingsCalculator preview />
         </div>
       </div>
     </div>

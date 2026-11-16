@@ -4,6 +4,7 @@ import { languageInfo } from "@/lib/i18n/routes";
 import { useI18n } from "@/components/i18n/LocaleProvider";
 
 import { useState, type CSSProperties } from "react";
+import styles from "./SavingsCalculator.module.css";
 
 const spanishNumber = (n: number) =>
   Math.round(n)
@@ -12,10 +13,10 @@ const spanishNumber = (n: number) =>
 
 type SliderId = "employees" | "hours" | "days" | "automation";
 
-// Live savings calculator, styled like the original preview card. Same
-// arithmetic as the standalone tool: employees × hours × hourly cost × days,
+// The tool calculates on submit; the inert home preview keeps its snapshot.
+// Unchanged arithmetic: employees × hours × hourly cost × days,
 // times the recoverable share the visitor chooses (a hypothesis).
-export function SavingsCalculator() {
+export function SavingsCalculator({ preview = false }: { preview?: boolean }) {
   const { t, locale } = useI18n();
   const numberFormat = (n: number) => locale === "es" ? spanishNumber(n) : new Intl.NumberFormat(languageInfo[locale].format, { maximumFractionDigits: 0 }).format(n);
   const moneyFormat = (n: number) => locale === "es" ? `${numberFormat(n)} €` : new Intl.NumberFormat(languageInfo[locale].format, { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
@@ -58,6 +59,9 @@ const sliders: {
     automation: 30,
   });
   const [rate, setRate] = useState("25");
+  const [calculated, setCalculated] = useState(false);
+  const showResults = preview || calculated;
+  const Card = preview ? "div" : "form";
 
   const hourly = Number(rate.replace(",", "."));
   const validRate = rate.trim() !== "" && Number.isFinite(hourly) && hourly > 0 && hourly <= 500;
@@ -69,7 +73,10 @@ const sliders: {
 
   return (
     <div className="calc">
-      <div className="calc-card">
+      <Card className="calc-card" aria-label={preview ? undefined : t("Calculadora de automatización")} noValidate={preview ? undefined : true} onSubmit={(event) => {
+        event.preventDefault();
+        setCalculated(validRate);
+      }}>
         <div className="calc-head">
           <div>
             <span className="calc-eyebrow">{t("Estimación")}</span>
@@ -101,9 +108,10 @@ const sliders: {
                     step={slider.step}
                     value={value}
                     aria-describedby={slider.hint ? `calc-${slider.id}-hint` : undefined}
-                    onChange={(event) =>
-                      setValues((current) => ({ ...current, [slider.id]: Number(event.target.value) }))
-                    }
+                    onChange={(event) => {
+                      setCalculated(false);
+                      setValues((current) => ({ ...current, [slider.id]: Number(event.target.value) }));
+                    }}
                     style={{ "--progress": `${progress}%` } as CSSProperties}
                   />
                 </div>
@@ -121,7 +129,8 @@ const sliders: {
                   max="500"
                   step="0.01"
                   inputMode="decimal"
-                  onChange={(event) => setRate(event.target.value)}
+                  onChange={(event) => { setCalculated(false); setRate(event.target.value); }}
+                  aria-invalid={!validRate}
                   aria-describedby="calc-rate-help"
                 />
                 €
@@ -132,39 +141,48 @@ const sliders: {
                 ? t("Salario bruto + costes de empresa.")
                 : t("Introduce un coste por hora mayor que 0 y de hasta 500 €.")}
             </small>
+            {!preview && <button className={`button button-primary ${styles.submit}`} type="submit" disabled={!validRate} aria-controls="calc-results" aria-describedby="calc-rate-help">{t("Calcular mi ahorro potencial")}<span className="button-arrow" aria-hidden="true">→</span></button>}
           </div>
 
-          <div className="calc-result" aria-live="polite">
-            <span>{t("Valor potencial anual")}</span>
-            <strong>{moneyFormat(annualValue)}</strong>
-            <div className="calc-result-detail">
-              <i aria-hidden="true" />
-              <span>{t("Horas recuperables al año")}</span>
-              <b>{numberFormat(annualHours)} h</b>
+          <div className={`calc-result${preview ? "" : ` ${styles.result}`}`} id={preview ? undefined : "calc-results"} aria-live={preview ? undefined : "polite"} aria-atomic="true">
+            {showResults ? <>
+              {!preview && <dl className={styles.metrics}>
+                <div><dt>{t("Coste mensual de las tareas")}</dt><dd data-metric="monthly-cost">{moneyFormat(monthlyCost)}</dd></div>
+                <div><dt>{t("Valor mensual recuperable")}</dt><dd data-metric="monthly-value">{moneyFormat(monthlyValue)}</dd></div>
+              </dl>}
+              <span>{preview ? t("Valor potencial anual") : t("Potencial anual estimado")}</span>
+              <strong data-metric="annual-value">{moneyFormat(annualValue)}</strong>
+              <div className="calc-result-detail">
+                <i aria-hidden="true" />
+                <span>{t("Horas recuperables al año")}</span>
+                <b data-metric="annual-hours">{numberFormat(annualHours)} h</b>
+              </div>
+            </> : <p className={styles.empty}>{t("Introduce los datos y pulsa «Calcular mi ahorro potencial» para ver la estimación.")}</p>}
+          </div>
+        </div>
+      </Card>
+
+      {showResults && <>
+        <div className="calc-comparison" role="group" aria-label={t("Comparación mensual")}>
+          <div className="calc-comparison-row">
+            <span>{t("Coste mensual de las tareas")}</span>
+            <div className="calc-comparison-track" aria-hidden="true">
+              <span style={{ width: monthlyCost > 0 ? "100%" : "0%" }} />
             </div>
+            <strong>{moneyFormat(monthlyCost)}</strong>
+          </div>
+          <div className="calc-comparison-row">
+            <span>{t("Valor mensual recuperable")}</span>
+            <div className="calc-comparison-track is-recoverable" aria-hidden="true">
+              <span style={{ width: monthlyCost > 0 ? `${values.automation}%` : "0%" }} />
+            </div>
+            <strong>{moneyFormat(monthlyValue)}</strong>
           </div>
         </div>
-      </div>
 
-      <div className="calc-comparison" role="group" aria-label={t("Comparación mensual")}>
-        <div className="calc-comparison-row">
-          <span>{t("Coste mensual de las tareas")}</span>
-          <div className="calc-comparison-track" aria-hidden="true">
-            <span style={{ width: monthlyCost > 0 ? "100%" : "0%" }} />
-          </div>
-          <strong>{moneyFormat(monthlyCost)}</strong>
-        </div>
-        <div className="calc-comparison-row">
-          <span>{t("Valor mensual recuperable")}</span>
-          <div className="calc-comparison-track is-recoverable" aria-hidden="true">
-            <span style={{ width: monthlyCost > 0 ? `${values.automation}%` : "0%" }} />
-          </div>
-          <strong>{moneyFormat(monthlyValue)}</strong>
-        </div>
-      </div>
-
-      <p className="calc-insight">{t("Con esta hipótesis, tu equipo podría recuperar ")}<strong>{numberFormat(annualHours)}{t(" horas al año")}</strong>{t(", con un valor potencial de ")}<strong>{moneyFormat(annualValue)}</strong>{t(". El cálculo anual supone")}<strong>{t(" 12 meses con la misma carga de trabajo")}</strong>.
-      </p>
+        <p className="calc-insight">{t("Con esta hipótesis, tu equipo podría recuperar ")}<strong>{numberFormat(annualHours)}{t(" horas al año")}</strong>{t(", con un valor potencial de ")}<strong>{moneyFormat(annualValue)}</strong>{t(". El cálculo anual supone")}<strong>{t(" 12 meses con la misma carga de trabajo")}</strong>.
+        </p>
+      </>}
 
       <p className="calc-disclaimer">
         <strong>{t("Estimación orientativa, no ahorro garantizado.")}</strong>{t(" Aplicamos el porcentaje que eliges al tiempo y al coste introducidos. La estimación anual supone 12 meses con la misma carga de trabajo. El resultado representa el valor potencial del tiempo recuperado, no necesariamente una reducción de gastos o nóminas. No incluye costes de implantación, mantenimiento, licencias ni supervisión de la solución. El resultado real dependerá del proceso y de cómo se reorganice el trabajo.")}</p>

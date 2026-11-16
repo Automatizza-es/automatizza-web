@@ -6,6 +6,12 @@ import serviceMessages from "./serviceMessages";
 const messages: Record<string, readonly [string, string, string]> = {
   ...linkMessages,
   ...calculatorPhaseOneMessages,
+  "Potencial anual estimado": ["Estimated annual potential", "Potentiel annuel estimé", "Potencial anual estimado"],
+  "Introduce los datos y pulsa «Calcular mi ahorro potencial» para ver la estimación.": [
+    "Enter your details and select ‘Calculate my potential savings’ to see the estimate.",
+    "Saisissez vos données et cliquez sur « Calculer mes économies potentielles » pour voir l’estimation.",
+    "Introduza os dados e selecione «Calcular a minha poupança potencial» para ver a estimativa."
+  ],
   ...serviceMessages,
   ...aiMessages,
   "¿Cuánto tiempo se va en tareas que podrías automatizar?": ["How much time goes into tasks you could automate?", "Combien de temps consacrez-vous à des tâches que vous pourriez automatiser ?", "Quanto tempo dedica a tarefas que poderia automatizar?"],
