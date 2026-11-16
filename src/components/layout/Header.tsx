@@ -4,6 +4,7 @@ import { useI18n } from "@/components/i18n/LocaleProvider";
 
 import Image from "next/image";
 import { brandAssets } from "@/lib/brand-assets";
+import { localePath } from "@/lib/i18n/routes";
 import { useEffect, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
 
@@ -19,7 +20,7 @@ const navigation = [
 ];
 
 export function Header({ redesign = false, homeLinks = false, overlayHero = false }: { redesign?: boolean; homeLinks?: boolean; overlayHero?: boolean }) {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     if (!overlayHero) return;
@@ -33,7 +34,12 @@ export function Header({ redesign = false, homeLinks = false, overlayHero = fals
   return (
     <header className={`site-header${redesign ? ` ${styles.redesigned}` : ""}${overlayHero ? ` ${styles.overHero}` : ""}${transparent ? ` ${styles.transparent}` : ""}`}>
       <Container className="header-inner editorial-container">
-        <Link className="brand" href="/" aria-label={t("Automatizza, inicio")}>
+        <Link className="brand" href="/" aria-label={t("Automatizza, inicio")} onNavigate={() => {
+          // Next preserves the scroll position when the home route is already open.
+          if (window.location.pathname === localePath("home", locale)) {
+            window.scrollTo({ top: 0, behavior: "instant" });
+          }
+        }}>
           <Image
             src={transparent ? brandAssets.wordmark.white : brandAssets.wordmark.dark}
             unoptimized
