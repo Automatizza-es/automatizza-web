@@ -3,17 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:tag-assistant": "node scripts/dev-tag-assistant.mjs",
-    "build": "next build --webpack",
-    "start": "next start",
+    "dev": "node scripts/check-node-runtime.mjs && next dev",
+    "dev:tag-assistant": "node scripts/check-node-runtime.mjs && node scripts/dev-tag-assistant.mjs",
+    "build": "node scripts/check-node-runtime.mjs && next build --webpack",
+    "start": "node scripts/check-node-runtime.mjs && next start",
     "lint": "eslint .",
     "test:contact": "node scripts/test-contact.mjs",
     "test:analytics": "node scripts/test-analytics.mjs",
     "test:seo": "node scripts/test-seo.mjs",
     "test:i18n": "node scripts/test-i18n.mjs",
     "test:structured-data": "node scripts/test-structured-data.mjs",
-    "test:security": "node scripts/test-security.mjs"
+    "test:security": "node scripts/test-security.mjs",
+    "check:runtime": "node scripts/check-node-runtime.mjs",
+    "test:runtime": "node --test tests/node-runtime.test.mjs"
   },
   "dependencies": {
     "next": "^16.3.5",
@@ -29,5 +31,8 @@
     "eslint-config-next": "^16.3.5",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }
