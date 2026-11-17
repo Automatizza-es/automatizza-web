@@ -40,6 +40,10 @@
   legal ni habilita envíos. Instrucciones y límites en
   [gtm-configuration.md](gtm-configuration.md#prueba-del-workspace-sin-publicar-ni-desplegar).
 
+En la corrección de atribución pendiente de publicación, ese comando exige
+IDs de una propiedad y un contenedor de prueba. Vercel Preview queda sin
+medición. Véase [atribución y separación de entornos](gtm-configuration.md#atribución-y-separación-de-entornos).
+
 ## Contrato entre web y GTM
 
 La web obtiene consentimiento y emite únicamente dos eventos de dataLayer:
@@ -50,8 +54,10 @@ La web obtiene consentimiento y emite únicamente dos eventos de dataLayer:
 | `automatizza_contact_success` | `generate_lead` | Los anteriores y `form_id=contact` |
 
 Ambos incluyen `analytics_consent=granted` para el filtro del activador. Las URL
-se construyen con el dominio canónico y una lista cerrada de rutas; nunca incluyen
-query, hash, rutas arbitrarias o referrer externo. No se transmiten nombre, email,
+se construyen con el dominio canónico y una lista cerrada de rutas. En la
+corrección pendiente de publicación, solo la primera vista admite las tres UTMs
+que superan la validación documentada. El referente externo se limita a su origen y la navegación interna
+usa rutas canónicas. No se transmiten fragmentos, rutas arbitrarias, nombre, email,
 mensaje, servicio elegido, respuestas de error, identificadores de envío, user_id
 ni propiedades de usuario. Los IDs de reintento solo se usan en memoria para
 no duplicar la conversión.

@@ -8,15 +8,20 @@ const { getAnalyticsConfig, cookiePolicy } = await compiled("lib/analytics/confi
 const { trackPage, stopAnalytics, trackContactResult } = await compiled("lib/analytics/browser.js");
 const ids = { measurementId: "G-1Y94M3HZRB", containerId: "GTM-59RBDRPH" };
 
+const testIds = { measurementId: "G-TESTGA1234", containerId: "GTM-TEST123" };
+const production = { NODE_ENV: "production", VERCEL_ENV: "production", ANALYTICS_ENABLED: "true" };
+
 test("GTM stays off until enabling AND cookie review, with validated IDs", () => {
   assert.equal(cookiePolicy.reviewed, true);
-  assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true" }, false).enabled, false);
-  assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true" }).enabled, true);
+  assert.equal(getAnalyticsConfig(production, false).enabled, false);
+  assert.equal(getAnalyticsConfig(production).enabled, true);
   assert.equal(getAnalyticsConfig({}, true).enabled, false);
   for (const invalid of [{ GOOGLE_ANALYTICS_ID: "invalid" }, { GOOGLE_TAG_MANAGER_ID: "invalid" }]) {
-    assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true", ...invalid }, true).enabled, false);
+    assert.equal(getAnalyticsConfig({ ...production, ...invalid }, true).enabled, false);
   }
-  assert.equal(getAnalyticsConfig({ ANALYTICS_ENABLED: "true" }, true).enabled, true);
+  for (const overrides of [{ VERCEL_ENV: "preview" }, { VERCEL_ENV: undefined }, { NODE_ENV: "development" }]) {
+    assert.equal(getAnalyticsConfig({ ...production, ...overrides }).enabled, false);
+  }
   assert.equal(getAnalyticsConfig({}).containerId, ids.containerId);
 });
 test("network-free preview cannot enable production or Vercel", () => {
@@ -26,14 +31,20 @@ test("network-free preview cannot enable production or Vercel", () => {
   assert.equal(getAnalyticsConfig({ ...env, VERCEL: "1" }).preview, false);
 });
 test("Tag Assistant is explicit, development-only, and never approves production", () => {
-  const env = { NODE_ENV: "development", ANALYTICS_TAG_ASSISTANT: "true" };
+  const env = { NODE_ENV: "development", ANALYTICS_TAG_ASSISTANT: "true",
+    ANALYTICS_TEST_MEASUREMENT_ID: testIds.measurementId, ANALYTICS_TEST_CONTAINER_ID: testIds.containerId };
   assert.equal(getAnalyticsConfig(env).tagAssistant, true);
+  assert.equal(getAnalyticsConfig(env).measurementId, testIds.measurementId);
+  assert.equal(getAnalyticsConfig(env).containerId, testIds.containerId);
   assert.equal(getAnalyticsConfig(env).enabled, false);
   assert.equal(getAnalyticsConfig(env).preview, false);
   for (const overrides of [
     { NODE_ENV: "production" }, { NODE_ENV: "test" }, { NODE_ENV: undefined },
     { VERCEL: "1" }, { ANALYTICS_TAG_ASSISTANT: "false" },
-    { GOOGLE_TAG_MANAGER_ID: "invalid" }, { GOOGLE_ANALYTICS_ID: "invalid" },
+    { VERCEL_ENV: "preview" }, { VERCEL_ENV: "production" },
+    { ANALYTICS_TEST_CONTAINER_ID: "invalid" }, { ANALYTICS_TEST_MEASUREMENT_ID: undefined },
+    { ANALYTICS_TEST_MEASUREMENT_ID: ids.measurementId }, { ANALYTICS_TEST_CONTAINER_ID: ids.containerId },
+    { GOOGLE_ANALYTICS_ID: testIds.measurementId }, { GOOGLE_TAG_MANAGER_ID: testIds.containerId },
     { ANALYTICS_PREVIEW: "true" },
   ]) assert.equal(getAnalyticsConfig({ ...env, ...overrides }).tagAssistant, false);
   assert.equal(getAnalyticsConfig({ ...env, ANALYTICS_PREVIEW: "true" }).preview, true);
@@ -60,10 +71,11 @@ function browser(choice = "granted") {
   let raw = choice ? encodeConsent(choice) : null;
   let reloads = 0;
   globalThis.window = {
-    location: { origin: "https://automatizza.es", hostname: "www.automatizza.es", pathname: "/", reload() { reloads++; } },
+    location: { origin: "https://automatizza.es", hostname: "automatizza.es", pathname: "/", search: "", reload() { reloads++; } },
     localStorage: { getItem() { return raw; } },
   };
   globalThis.document = {
+    referrer: "",
     getElementById: id => scripts.get(id),
     createElement: () => ({ remove() { scripts.delete(this.id); } }),
     head: { appendChild: script => scripts.set(script.id, script) },
@@ -78,23 +90,23 @@ test("local Tag Assistant still needs consent and refuses public or LAN hostname
   for (const hostname of ["automatizza.es", "automatizza-web.vercel.app", "192.168.1.10", "localhost.example.com"]) {
     const b = browser();
     window.location.hostname = hostname;
-    assert.equal(trackPage({ ...ids, localDebug: true }, "/contacto", "granted"), false);
+    assert.equal(trackPage({ ...testIds, localDebug: true }, "/contacto", "granted"), false);
     assert.equal(b.scripts.size, 0);
     assert.equal(events().length, 0);
   }
   for (const hostname of ["localhost", "127.0.0.1", "[::1]"]) {
     const b = browser(null);
     window.location.hostname = hostname;
-    assert.equal(trackPage({ ...ids, localDebug: true }, "/contacto"), false);
+    assert.equal(trackPage({ ...testIds, localDebug: true }, "/contacto"), false);
     assert.equal(b.scripts.size, 0);
     b.grant();
-    assert.equal(trackPage({ ...ids, localDebug: true }, "/contacto", "granted"), true);
+    assert.equal(trackPage({ ...testIds, localDebug: true }, "/contacto", "granted"), true);
     assert.equal(b.scripts.size, 1);
     assert.equal(trackContactResult({ responseOk: true, result: { ok: true }, submissionId: "test", testMode: true }), false);
     assert.equal(events().filter(e => e.event === "automatizza_contact_success").length, 0);
     assert.equal(commands()[1][2].ad_storage, "denied");
     b.deny();
-    stopAnalytics(ids.measurementId);
+    stopAnalytics(testIds.measurementId);
     assert.equal(b.reloads, 1);
   }
 });
@@ -239,6 +251,121 @@ test("arbitrary URLs, query strings, hashes and user-provided titles are exclude
   assert.ok(!layer.includes("secret"));
   assert.equal(events()[0].page_title, "APC Europe | Automatizza");
   assert.equal(events()[0].page_referrer, "");
+});
+
+test("the external referrer is reduced to its origin, then SPA visits use the previous canonical page", () => {
+  browser();
+  document.referrer = "https://www.google.es/buscar?q=email%40example.test#fragmento";
+  trackPage(ids, "/", "granted");
+  trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/contacto", "granted");
+  trackPage(ids, "/", "granted");
+  assert.deepEqual(events().map(event => event.page_referrer), [
+    "https://www.google.es", "https://automatizza.es/", "https://automatizza.es/contacto",
+  ]);
+  assert.equal(commands().find(args => args[0] === "set")[1].page_referrer, "https://www.google.es");
+});
+
+test("unsafe referrers are dropped and full document transitions only retain known internal paths", () => {
+  for (const [referrer, expected] of [
+    ["https://automatizza.es/proyectos/apc?email=personal%40example.test#private", "https://automatizza.es/proyectos/apc"],
+    ["https://automatizza.es/private", ""],
+    ["https://person:secret@www.google.es/", ""],
+    ["http://127.0.0.1/", ""],
+    ["http://host.local/", ""],
+    ["ftp://www.google.es/", ""],
+  ]) {
+    browser();
+    document.referrer = referrer;
+    trackPage(ids, "/contacto", "granted");
+    assert.equal(events()[0].page_referrer, expected, referrer);
+  }
+});
+
+test("the first consented visit recovers campaign and referrer after the legacy redirect", () => {
+  const campaign = "utm_source=newsletter&utm_medium=email&utm_campaign=lanzamiento";
+  const entryUrl = `https://automatizza.es/?${campaign}&email=persona%40example.test&utm_content=private#contacto`;
+  const b = browser(null);
+  document.referrer = "https://www.google.es/search?q=private";
+  window.location.hash = "#contacto";
+  let reads = 0;
+  window.performance = {
+    getEntriesByType: () => { reads++; return [{ name: entryUrl }]; },
+  };
+  assert.equal(trackPage(ids, "/", undefined), false);
+  assert.equal(window.dataLayer, undefined);
+  assert.equal(reads, 0);
+  window.location.pathname = "/contacto";
+  window.location.hash = "";
+  b.grant();
+  trackPage(ids, "/contacto", "granted");
+  const landing = `https://automatizza.es/contacto?${campaign}`;
+  assert.equal(commands().find(args => args[0] === "set")[1].page_location, landing);
+  assert.equal(events()[0].page_referrer, "https://www.google.es");
+  assert.equal(trackContactResult(success), true);
+  trackPage(ids, "/proyectos/apc", "granted");
+  assert.deepEqual(events().map(event => event.page_location), [
+    landing, "https://automatizza.es/contacto", "https://automatizza.es/proyectos/apc",
+  ]);
+  assert.equal(events().at(-1).page_referrer, "https://automatizza.es/contacto");
+  assert.equal(reads, 1);
+});
+
+test("unsafe, partial and ambiguous campaigns never enter the tracking queue", () => {
+  const utms = "utm_source=newsletter&utm_medium=email&utm_campaign=lanzamiento";
+  for (const query of [
+    "utm_source=newsletter", utms + "&utm_campaign=lanzamiento",
+    ...["persona%40example.test", "https%3A%2F%2Fexample.test", "promo-600-123-456", "promo-dni-12345678a",
+      "promo-secret-xyz", "promo-abcdefab-abcd-abcd-abcd-abcdefabcdef", "promo%20mayo",
+      "a".repeat(65)].map(value => utms.replace("lanzamiento", value)),
+    utms.replace("newsletter", "a".repeat(41)), utms.replace("email", "a".repeat(25)),
+  ]) {
+    browser();
+    window.location.search = `?${query}`;
+    trackPage(ids, "/", "granted");
+    assert.equal(events()[0].page_location, "https://automatizza.es/");
+    assert.equal(commands().find(args => args[0] === "set")[1].page_location, "https://automatizza.es/");
+  }
+});
+
+test("delayed consent after normal SPA navigation retains the initial campaign, with no registration", () => {
+  const b = browser(null);
+  const campaign = "utm_source=linkedin&utm_medium=paid_social&utm_campaign=feria-industrial-202611";
+  document.referrer = "https://www.linkedin.com/posts/private?key=hidden";
+  window.performance = { getEntriesByType: () => [{ name: `https://automatizza.es/?${campaign}` }] };
+  trackPage(ids, "/", undefined);
+  window.location.pathname = "/proyectos/apc";
+  window.location.search = "?utm_source=navegacion";
+  trackPage(ids, "/proyectos/apc", undefined);
+  assert.equal(window.dataLayer, undefined);
+  b.grant();
+  assert.equal(trackPage(ids, "/proyectos/apc", "granted"), true);
+  assert.equal(trackPage(ids, "/proyectos/apc", "granted"), false);
+  assert.equal(events()[0].page_location, `https://automatizza.es/proyectos/apc?${campaign}`);
+  assert.equal(events()[0].page_referrer, "https://www.linkedin.com");
+});
+
+test("commercial tracking cannot load GTM on loopback or Vercel Preview", () => {
+  for (const origin of ["http://127.0.0.1:3003", "https://branch.vercel.app", "https://www.automatizza.es"]) {
+    const b = browser();
+    window.location.origin = origin;
+    window.location.hostname = new URL(origin).hostname;
+    assert.equal(trackPage(ids, "/", "granted"), false);
+    assert.equal(b.scripts.size, 0);
+    assert.equal(window.dataLayer, undefined);
+  }
+});
+
+test("the server's Vercel Production configuration enables the canonical browser without client environment variables", () => {
+  const { enabled, tagAssistant, measurementId, containerId } = getAnalyticsConfig(production);
+  const b = browser(null);
+  assert.equal(enabled, true);
+  assert.equal(tagAssistant, false);
+  const browserIds = { measurementId, containerId, localDebug: tagAssistant };
+  assert.equal(trackPage(browserIds, "/", undefined), false);
+  b.grant();
+  assert.equal(trackPage(browserIds, "/", "granted"), true);
+  assert.equal(b.scripts.get("automatizza-gtm").src, `https://www.googletagmanager.com/gtm.js?id=${ids.containerId}`);
 });
 test("withdrawal disables first, keeps the GTM queue identity, deletes cookies and unloads the document", () => {
   const b = browser();

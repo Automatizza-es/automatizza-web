@@ -1,9 +1,11 @@
 import { resolveRoute } from "../i18n/routes";
 import { analyticsPage, consentKey, consentLifetime, readConsent } from "./consent";
+import { campaignQuery } from "./attribution";
+import { siteOrigin } from "../seo";
 
 type LayerEntry = IArguments | Record<string, unknown>;
 export type AnalyticsIds = { measurementId: string; containerId: string; localDebug?: boolean };
-type Session = AnalyticsIds & { path: string; submissions: Set<string> };
+type Session = AnalyticsIds & { path: string; referrer: string; submissions: Set<string> };
 
 declare global {
   interface Window {
@@ -57,32 +59,66 @@ function consentIsCurrent() {
   catch { return true; } // Storage-blocked consent lasts only in this document.
 }
 
-function pageData(path: string) {
+function pageData(path: string, referrer = "") {
   const page = analyticsPage(path);
-  return page ? { page_location: `https://automatizza.es${page.path}`, page_title: page.title, page_referrer: "" } : null;
+  return page ? { page_location: `${siteOrigin}${page.path}`, page_title: page.title, page_referrer: referrer } : null;
+}
+
+function landingReferrer() {
+  try {
+    const url = new URL(document.referrer);
+    if (!["https:", "http:"].includes(url.protocol) || url.username || url.password) return "";
+    if (url.origin === window.location.origin || url.origin === siteOrigin) {
+      return pageData(url.pathname)?.page_location ?? "";
+    }
+    // Only a DNS origin, without a path, query, fragment, IP address or private suffix.
+    return !url.port && /\.[a-z]{2,63}$/.test(url.hostname) &&
+      !/\.(localhost|local|internal|test|invalid|example|onion)$/.test(url.hostname) ? url.origin : "";
+  } catch {
+    return "";
+  }
+}
+
+function landingCampaign() {
+  // The document navigation entry survives client routing, including the legacy
+  // contact redirect. Read it only after consent, without storing the raw URL.
+  const entry = window.performance?.getEntriesByType?.("navigation")[0];
+  if (!entry) return campaignQuery(window.location.search);
+  try {
+    const url = new URL(entry.name);
+    return url.origin === window.location.origin ? campaignQuery(url.search) : "";
+  } catch {
+    return "";
+  }
 }
 
 export function trackPage(ids: AnalyticsIds, path: string, consent?: "granted" | "denied") {
   // A development server must not expose the local testing exception on a LAN
   // or a public hostname, even if someone starts it with a broader bind address.
-  if (ids.localDebug && !["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname)) {
+  const allowedHost = ids.localDebug ? ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname)
+    : window.location.origin === siteOrigin;
+  if (!allowedHost) {
     stopAnalytics(ids.measurementId);
     return false;
   }
   if (consent !== "granted" || !consentIsCurrent()) { stopAnalytics(ids.measurementId); return false; }
   // The old home anchor is only an alias for /contacto, not an extra visit.
   if (resolveRoute(path)?.id === "home" && window.location.hash === "#contacto") return false;
-  const page = pageData(path);
-  if (!page || !/^GTM-[A-Z0-9]{5,20}$/.test(ids.containerId) || !/^G-[A-Z0-9]{6,20}$/.test(ids.measurementId)) return false;
+  if (!/^GTM-[A-Z0-9]{5,20}$/.test(ids.containerId) || !/^G-[A-Z0-9]{6,20}$/.test(ids.measurementId)) return false;
   let session = sessions.get(window);
   if (session && (session.containerId !== ids.containerId || session.measurementId !== ids.measurementId || session.localDebug !== ids.localDebug)) {
     stopAnalytics(session.measurementId);
     return false;
   }
   if (session?.path === path) return false;
+  const referrer = session ? pageData(session.path)?.page_location ?? "" : landingReferrer();
+  const page = pageData(path, referrer);
+  if (!page) return false;
   if (!session) {
+    const campaign = landingCampaign();
+    if (campaign) page.page_location += `?${campaign}`;
     window[`ga-disable-${ids.measurementId}`] = false;
-    session = { ...ids, path: "", submissions: new Set() };
+    session = { ...ids, path: "", referrer: "", submissions: new Set() };
     sessions.set(window, session);
     window.dataLayer ??= [];
     window.gtag = command;
@@ -104,6 +140,7 @@ export function trackPage(ids: AnalyticsIds, path: string, consent?: "granted" |
     document.head.appendChild(script);
   }
   session.path = path;
+  session.referrer = referrer;
   window.dataLayer!.push({ event: "automatizza_page_view", analytics_consent: "granted", ...page });
   return true;
 }
@@ -118,7 +155,8 @@ export function trackContactResult(outcome: { responseOk: boolean; result: unkno
     if (!session || window[`ga-disable-${session.measurementId}`]) return false;
     if (!consentIsCurrent()) { stopAnalytics(session.measurementId); return false; }
     if (session.submissions.has(outcome.submissionId)) return false;
-    const page = pageData(window.location.pathname);
+    const path = window.location.pathname;
+    const page = pageData(path, session.path === path ? session.referrer : "");
     if (!page) return false;
     session.submissions.add(outcome.submissionId);
     if (session.submissions.size > 100) session.submissions.delete(session.submissions.values().next().value!);
