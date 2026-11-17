@@ -13,16 +13,54 @@ Actualización de lanzamiento: el 20/10/2026 se ha revisado y publicado la
 con consentimiento básico; Tag Assistant verifica un hit `generate_lead` tras
 un envío real confirmado, `form_id=contact`, sin datos del formulario y sin
 repetición tras recargar. Configuración y pruebas: [launch.md](launch.md).
-Las instrucciones locales siguientes se conservan para futuras modificaciones;
-no representan tareas pendientes para esta publicación.
+La corrección de atribución de este checkout está pendiente de validación en
+Tag Assistant y GA4. El precedente de lanzamiento describe la versión histórica.
+
+## Atribución y separación de entornos
+
+- El sitio solo carga el contenedor comercial en Vercel Production, con
+  `ANALYTICS_ENABLED=true` y origen de navegador `https://automatizza.es`.
+  Confirmar que el proyecto expone las variables de sistema y que durante la
+  build de producción `VERCEL_ENV=production` y `NODE_ENV=production`. El
+  servidor pasa la activación al navegador, que comprueba el origen.
+  Vercel Preview verifica el bloqueo de Google aunque herede el interruptor.
+  Para las pruebas que emiten hits, usar Tag Assistant local con los IDs de prueba.
+- El primer `page_view` consentido lleva el origen HTTP(S) saneado del referente
+  externo o la ruta canónica si el referente es una página conocida del
+  mismo sitio. En la SPA se usa la última página medida. Directo o referente
+  descartado conserva el valor vacío.
+- La primera URL medida admite `utm_source` (40 caracteres), `utm_medium` (24)
+  y `utm_campaign` (64). Deben venir los tres, una vez cada uno, comenzar por
+  una letra minúscula ASCII y contener solo letras minúsculas, números y
+  guiones o guiones bajos entre segmentos. Si falla un valor, se descarta la
+  combinación completa. Se rechazan patrones como correos, URLs, UUID,
+  cadenas hexadecimales largas, valores con nueve o más dígitos y etiquetas
+  de credenciales o identificadores. No hay registro por campaña.
+  Usar siempre nombres públicos y genéricos. Un nombre o identificador
+  que parezca un nombre de campaña puede superar una validación de formato.
+  Ejemplo: `?utm_source=newsletter&utm_medium=email&utm_campaign=prueba-atribucion`.
+- Los demás parámetros se descartan, incluidos `utm_term` y `utm_content`.
+  Se recupera del documento de entrada incluso tras navegación interna o el
+  alias `/#contacto`. Las vistas posteriores y los leads usan URLs sin query.
+  El referente tampoco lleva UTMs, ruta externa ni fragmento.
+- Mantener las variables `DLV - page_location` y `DLV - page_referrer` en la
+  etiqueta base y en las etiquetas de evento, sin sustituirlas por Page URL o
+  Referrer integradas. No hacen falta variables GTM adicionales para UTMs.
+  GA4 interpreta las UTMs del primer `page_location`.
+  Comprobarlo en el hit y en Adquisición de tráfico, dimensión *Fuente/medio de
+  la sesión*. DebugView por sí solo comprueba la recepción del evento.
 
 ## Prueba del workspace sin publicar ni desplegar
 
-1. En el proyecto, ejecutar `npm run dev:tag-assistant` y mantener la terminal
+1. Definir en el entorno local `ANALYTICS_TEST_CONTAINER_ID` y
+   `ANALYTICS_TEST_MEASUREMENT_ID` con un contenedor y una propiedad de prueba.
+   Confirmar en ese contenedor que la etiqueta base, los eventos y cualquier
+   destino vinculado apuntan exclusivamente a la propiedad de prueba. Ejecutar
+   `npm run dev:tag-assistant` y mantener la terminal
    abierta. La URL exacta es **http://127.0.0.1:3003/contacto**. El servidor solo
    escucha en loopback y utiliza `.next-tag-assistant`, sin alterar los servidores
    existentes, `.env.local`, main ni la configuración de Vercel.
-2. En Chrome, abrir GTM → `GTM-59RBDRPH` → el workspace con los cambios guardados
+2. En Chrome, abrir GTM → el contenedor de prueba → el workspace con los cambios guardados
    → **Vista previa**. Introducir esa URL exacta en Tag Assistant y pulsar
    **Conectar**. Usar la ventana que abre Tag Assistant y el mismo navegador.
    No pulsar Enviar/Publicar. No copiar parámetros privados de una sesión de
@@ -47,19 +85,16 @@ no representan tareas pendientes para esta publicación.
    ventana limpia sin Tag Assistant; después ejecutar la prueba conectada.
    Desactivar solo para esta prueba bloqueadores que impidan Google, si existen.
 
-**La vista previa ejecuta etiquetas reales**: los eventos pueden llegar a la
-propiedad GA4 aunque el contenedor no se publique. Usar únicamente navegación
-de prueba y revisar DebugView; no introducir datos personales en URLs. Las
-URL enviadas por la web son las canónicas (`https://automatizza.es/...`), no
-localhost, y se excluyen query/hash/referrer. El modo no añade otra instalación
-GA4, ni fuerza etiquetas, ni simula el evento de contacto.
+**La vista previa ejecuta etiquetas reales** aunque el contenedor no se
+publique. Revisar DebugView en la propiedad de prueba. Las URLs medidas usan
+el origen canónico y la regla de atribución anterior.
 
 El comando establece variables solo para ese proceso:
 `ANALYTICS_TAG_ASSISTANT=true`, `ANALYTICS_PREVIEW=false`,
 `ANALYTICS_ENABLED=false`, `CONTACT_FORM_ENABLED=false` y
-`CONTACT_FORM_TEST_MODE=false`. Los IDs ya están configurados en el código;
-no falta una clave secreta de Google ni hay que cambiar variables de Vercel.
-El modo de Tag Assistant se ignora en producción y Vercel, y rechaza hosts
+`CONTACT_FORM_TEST_MODE=false`. Si los IDs de prueba faltan, son inválidos o
+coinciden con IDs comerciales, el modo se desactiva. Tag Assistant local se
+ignora en Vercel, y rechaza hosts
 públicos o de la red local. El modo anterior `ANALYTICS_PREVIEW=true` continúa
 siendo una vista sin red y tiene prioridad si se activan ambos flags.
 
@@ -68,10 +103,10 @@ aprobada por la titular. El comando local de Tag Assistant mantiene el envío
 desactivado por configuración; esta prueba no lo habilita. Tampoco convierte los
 envíos con `testMode` en leads. `generate_lead` se comprueba ahora mediante las
 pruebas del manejador real con proveedor simulado, sin correos ni Google.
-La comprobación extremo a extremo de esa etiqueta en Tag Assistant queda
-pendiente de habilitar un envío real autorizado con la configuración de Resend.
-No usar clic, visualización de confirmación
-ni `dataLayer.push` manual como sustituto de la confirmación del servidor.
+Para comprobar la etiqueta de extremo a extremo en Tag Assistant y DebugView,
+usar un entorno aislado con el manejador real, Resend simulado y la propiedad
+de prueba. La confirmación debe proceder del manejador. Comprobar cero eventos
+por clic, error o consentimiento rechazado y uno por éxito consentido.
 
 Guía oficial: [Vista previa de contenedores](https://support.google.com/tagmanager/answer/6107056?hl=es).
 
