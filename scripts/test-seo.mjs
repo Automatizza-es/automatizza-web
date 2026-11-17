@@ -206,7 +206,12 @@ async function verify(environment) {
         const input = main.match(new RegExp(`<input\\b[^>]*id="calc-${id}"[^>]*>`))?.[0] ?? "";
         for (const [attribute, expected] of [["min",min],["max",max],["step",step],["value",initial]]) assert.ok(input.includes(`${attribute}="${expected}"`), `${id} preserves ${attribute}=${expected}`);
       }
-      assert.equal(count(main, /<form\b|<button\b/g), 0, "calculator stays live without a submit button");
+      assert.equal(count(main, /<form\b/g), 1, "one calculator form");
+      assert.equal(count(main, /<button\b[^>]*type="submit"/g), 1, "explicit calculation button");
+      const calculateLabel = ["Calcular mi ahorro potencial", "Calculate my potential savings", "Calculer mes économies potentielles", "Calcular a minha poupança potencial"][i];
+      assert.ok(main.includes(calculateLabel), "localized calculation button");
+      assert.ok(main.includes('id="calc-results"') && main.includes('aria-live="polite"'), "results have a stable live region");
+      assert.ok(!main.includes('data-metric=') && !main.includes('class="calc-comparison"') && !main.includes('class="calc-insight"'), "results hidden before first calculation");
       const closing = main.match(/<section[^>]*aria-labelledby="calculator-contact-title"[\s\S]*?<\/section>/)?.[0] ?? "";
       const contactPath = ["/contacto", "/en/contact", "/fr/contact", "/pt/contacto"][i];
       assert.ok(closing.includes(`href="${contactPath}"`), "new final CTA uses localized contact, not mailto");
