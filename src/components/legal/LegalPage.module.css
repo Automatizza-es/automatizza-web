@@ -5,6 +5,7 @@
 .page h1 { margin: 0; color: var(--brand-night); font-family: var(--font-display), sans-serif; font-size: clamp(2.4rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.15; }
 .intro { max-width: 720px; margin-top: 2rem; font-size: 1.0625rem; line-height: 1.8; }
 .version { color: var(--color-text-muted); font-size: .75rem; line-height: 1.6; }
+.contaLink { margin-top: .75rem; font-size: .8125rem; line-height: 1.6; }
 .draft { margin-top: 2rem; padding: 1.2rem 1.4rem; border-left: 2px solid var(--color-border-strong); background: var(--color-surface); font-size: .875rem; line-height: 1.7; }
 .draft strong { color: var(--brand-night); font-weight: 550; }
 .draft p { margin: .5rem 0 0; }

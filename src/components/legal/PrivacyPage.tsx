@@ -25,6 +25,7 @@ export default function PrivacyPage({ locale = "es" }: { locale?: Locale }) {
           {!ready && <div className={styles.draft} role="note"><strong>{t("Versión preparada para revisión final")}</strong><p>{t("El formulario público permanece desactivado hasta la aprobación de esta versión y la activación del servicio.")}</p></div>}
           <p className={styles.intro}>{t("Información sobre el tratamiento de los datos que nos facilites para consultar sobre nuestros servicios y sobre los datos técnicos necesarios para utilizar esta web.")}</p>
           <p className={styles.version}>{t("Última actualización: 20 de octubre de 2026.")}</p>
+          {locale === "es" && <p className={styles.contaLink}><Link href="/privacidad-automatizza-conta">Si utilizas Automatizza Conta, consulta su política de privacidad específica.</Link></p>}
 
           <section aria-labelledby="privacy-controller">
             <h2 id="privacy-controller">{t("01. Quién es responsable de tus datos")}</h2>
