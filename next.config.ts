@@ -10,9 +10,18 @@ const localDevHosts = Object.values(networkInterfaces()).flatMap((addresses) =>
 const nextConfig: NextConfig = {
   distDir: process.env.NODE_ENV === "development" && process.env.VERCEL !== "1" && process.env.ANALYTICS_TAG_ASSISTANT === "true" ? ".next-tag-assistant" : ".next",
   agentRules: false,
+  outputFileTracingIncludes: {
+    "/blog/[[...path]]": ["./content/blog/**/*"],
+    "/revision-blog/[[...path]]": ["./content/blog/**/*"],
+    "/api/blog-images/[image]": ["./content/blog/**/*"],
+    "/sitemap.xml": ["./content/blog/**/*"],
+  },
   allowedDevOrigins: ["127.0.0.1", ...localDevHosts],
   async headers() {
     return [{
+      source: "/revision-blog/:path*",
+      headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "private, no-store" }],
+    }, {
       source: "/:path*",
       headers: securityHeaders(process.env.NODE_ENV === "development", process.env.VERCEL_ENV === "preview"),
     }, {

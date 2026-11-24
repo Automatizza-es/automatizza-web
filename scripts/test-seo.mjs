@@ -1,5 +1,6 @@
 // Real production builds, HTTP headers and metadata, without touching the
 // running local servers, .env.local, Vercel, or the production deployment.
+import { publicArticles, articlePath } from "../src/lib/blog/content.ts";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
@@ -434,7 +435,7 @@ async function verify(environment) {
   assert.equal(sitemap.response.status, 200);
   assert.match(sitemap.response.headers.get("content-type"), /(?:application|text)\/xml/);
   const urls = [...sitemap.html.matchAll(/<loc>(.*?)<\/loc>/g)].map(([, url]) => url);
-  assert.deepEqual(urls.sort(), production ? pages.map(([path]) => pageUrl(path)).sort() : []);
+  assert.deepEqual(urls.sort(), production ? [...pages.map(([path]) => pageUrl(path)), pageUrl("/blog"), pageUrl("/blog/historico"), ...publicArticles().map(a => pageUrl(articlePath(a)))].sort() : []);
   assert.equal(count(sitemap.html, /<xhtml:link\b/g), production ? pages.length * 5 : 0, "only published multilingual sitemap alternatives");
   checks += 2;
   for (const host of ["www.automatizza.es", "automatizza-web.vercel.app"]) {
@@ -463,6 +464,11 @@ async function verify(environment) {
     assert.equal(slash.response.headers.get("location"),`/${lang}`);
     checks += 2;
   }
+  for (const path of ["/privacidad-automatizza-conta", "/blog", "/blog/historico", ...publicArticles().map(a => articlePath(a))]) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, path);
+    documents.set(path, html);
+  }
   for (const html of documents.values()) {
     for (const [, href] of html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)) {
       if (!href.startsWith("/") && !href.startsWith("#")) continue;
@@ -479,7 +485,7 @@ async function verify(environment) {
 }
 
 try {
-  for (const name of ["src", "package.json", "package-lock.json", "next.config.ts", "next-env.d.ts", "tsconfig.json", "postcss.config.mjs"]) {
+  for (const name of ["src", "content", "package.json", "package-lock.json", "next.config.ts", "next-env.d.ts", "tsconfig.json", "postcss.config.mjs"]) {
     if (existsSync(name)) cpSync(name, join(fixture, name), { recursive: true });
   }
   symlinkSync(resolve("node_modules"), join(fixture, "node_modules"), "dir");
