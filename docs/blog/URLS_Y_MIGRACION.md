@@ -1,10 +1,10 @@
 # URL del blog y migración pendiente
 
-Las URL siguen la convención del proyecto: sin barra final. Next.js normaliza la variante con barra. Todas las entradas están inicialmente en borrador. Esta tabla es documentación; no configura redirecciones.
+Las URL siguen la convención del proyecto: sin barra final. Next.js normaliza la variante con barra. En el lanzamiento autorizado el 24-11-2026 solo CRM está marcado como publicado; las otras 18 entradas siguen en borrador. Esta tabla es documentación; no configura redirecciones.
 
 | Origen en mjlopezz.com | URL definitiva en Automatizza | Estado | Redirección futura prevista |
 |---|---|---|---|
-| https://mjlopezz.com/que-es-el-crm-social/ | https://automatizza.es/blog/crm-conectado-seguimiento-comercial | Borrador actual | Ninguna; contenido actualizado o reescrito, según documentación editorial |
+| https://mjlopezz.com/que-es-el-crm-social/ | https://automatizza.es/blog/crm-conectado-seguimiento-comercial | Publicación aprobada 24-11-2026 | Ninguna; contenido actualizado o reescrito, según documentación editorial |
 | https://mjlopezz.com/upstream-como-resolver-problemas-antes-de-que-ocurran/ | https://automatizza.es/blog/automatizacion-preventiva-empresas | Borrador actual | Ninguna; contenido actualizado o reescrito, según documentación editorial |
 | https://mjlopezz.com/como-analizar-y-sacar-provecho-del-big-data-para-mejorar-nuestro-negocio/ | https://automatizza.es/blog/datos-cuadro-de-mando-pymes | Borrador actual | Ninguna; contenido actualizado o reescrito, según documentación editorial |
 | https://mjlopezz.com/que-es-una-aplicacion-web-progresiva-pwa-y-que-ventajas-tiene/ | https://automatizza.es/blog/aplicaciones-web-progresivas-pwa-empresas | Borrador actual | Ninguna; contenido actualizado o reescrito, según documentación editorial |

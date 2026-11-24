@@ -3,9 +3,9 @@ titulo: 'CRM conectado: cómo centralizar los datos de clientes y automatizar el
 slug: crm-conectado-seguimiento-comercial
 meta_title: CRM conectado y seguimiento comercial | Automatizza
 meta_description: Un CRM solo es útil si reúne la información de clientes y se conecta con el resto de herramientas. Qué integrar, qué automatizar y cómo empezar en una pyme.
-estado: versión final revisada, pendiente de maquetación y publicación
+estado: publicación aprobada en Automatizza
 fecha_preparacion: 2026-11-22
-fecha_publicacion: la fecha real de publicación en Automatizza
+fecha_publicacion: "2026-11-24"
 orden_publicacion: 1
 autoria: María José López
 tratamiento: reescritura completa a partir de la idea original
@@ -14,9 +14,9 @@ origen:
   titulo: Qué es el CRM Social
   fecha: 2012-11-20
   autora: María José López
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: "2026-11-24"
 scheduledAt: null
 updatedAt: null
 kind: actual
