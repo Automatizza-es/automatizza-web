@@ -37,7 +37,7 @@ Las rutas públicas `/blog` no muestran borradores ni siquiera en preview. Para 
 
 - Las fichas sugerían originalmente 1200 × 630; los WebP definitivos son 720 × 700. Se conserva el material recibido y se muestra completo dentro de un marco horizontal, sin deformación ni recorte.
 - Los enlaces históricos externos se conservan por su valor documental; no se certifica que todos sus recursos sigan disponibles. No se han alterado ni reescrito las notas heredadas.
-- `npm audit` informa 11 avisos de dependencias existentes (7 moderados, 3 altos y 1 crítico, incluido Next.js). Se comprobó que sus versiones ya eran las mismas en el lockfile de partida; las nuevas dependencias Markdown no figuran en esos avisos. No se ha hecho una actualización transversal del framework dentro de este trabajo. Conviene revisar esos avisos antes de autorizar producción.
+- La revisión inicial encontró 11 avisos preexistentes de dependencias. **Resueltos posteriormente, por autorización de Eva**, mediante Next.js 16.4.6 y actualizaciones compatibles: auditoría con cero avisos. Ver [corrección de dependencias](../security/2026-11-24-dependencias.md). La corrección está en la rama de revisión; no se ha desplegado en producción.
 - La batería SEO necesitó incorporar los nuevos índices al inventario de enlaces y una página de privacidad ya existente (`/privacidad-automatizza-conta`) que antes no estaba auditada. No se modificó esa página.
 - GTM, Google Analytics y consentimiento no se han editado. La lista de rutas que admite la analítica actual se conserva: no se han añadido eventos ni ampliado la medición a nuevas rutas editoriales.
 - Las capturas y pruebas locales no equivalen a una auditoría de todos los navegadores. La frecuencia quincenal está documentada, no programada.
