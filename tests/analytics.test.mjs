@@ -588,3 +588,60 @@ test("calculator visits are consent gated, localized and deduplicated", () => {
     assert.equal(events().some(e => e.event === "automatizza_contact_success"), false);
   }
 });
+
+test("published blog routes are consent gated and SPA page views are deduplicated", () => {
+  const crm = "/blog/crm-conectado-seguimiento-comercial";
+  const b = browser(null);
+  assert.equal(trackPage(ids, crm), false);
+  assert.equal(b.scripts.size, 0);
+  assert.equal(events().length, 0);
+  b.grant();
+  for (const path of [crm, "/blog", "/blog/historico", "/contacto", crm]) {
+    assert.equal(trackPage(ids, path, "granted"), true);
+    assert.equal(trackPage(ids, path, "granted"), false);
+  }
+  assert.equal(events().length, 5);
+  assert.equal(b.scripts.size, 1);
+  assert.equal(events()[0].page_title, "CRM conectado y seguimiento comercial | Automatizza");
+  assert.equal(events()[1].page_referrer, "https://automatizza.es" + crm);
+  assert.equal(events()[4].page_referrer, "https://automatizza.es/contacto");
+  assert.ok(events().every(e => e.event === "automatizza_page_view"));
+  b.deny();
+  assert.equal(trackPage(ids, "/blog", "denied"), false);
+  assert.equal(b.scripts.size, 0);
+  assert.equal(b.reloads, 1);
+});
+
+test("drafts, private review, unknown blog URLs and query values cannot enter analytics", () => {
+  const b = browser();
+  for (const path of ["/revision-blog", "/revision-blog/crm-conectado-seguimiento-comercial", "/blog/desconocido", "/blog/automatizacion-preventiva-empresas", "/blog/historico/manual-de-google-analytics", "/blog?email=private@example.com", "/blog#private", "/blog/crm-conectado-seguimiento-comercial?secret=123"]) {
+    assert.equal(analyticsPage(path), null);
+    assert.equal(trackPage(ids, path, "granted"), false);
+  }
+  assert.equal(events().length, 0);
+  assert.equal(b.scripts.size, 0);
+});
+
+test("blog visits remain disabled on Vercel previews and after consent expiry", () => {
+  const b = browser();
+  window.location.origin = "https://automatizza-preview.vercel.app";
+  window.location.hostname = "automatizza-preview.vercel.app";
+  assert.equal(trackPage(ids, "/blog", "granted"), false);
+  assert.equal(b.scripts.size, 0);
+  window.location.origin = "https://automatizza.es";
+  window.location.hostname = "automatizza.es";
+  b.expire();
+  assert.equal(trackPage(ids, "/blog", "granted"), false);
+  assert.equal(events().length, 0);
+});
+
+test("generated blog allowlist exactly matches the current public editorial inventory", async () => {
+  const { publicArticles, articlePath } = await import("../src/lib/blog/content.ts");
+  const { blogPageTitles } = await compiled("lib/analytics/generated/blog-pages.js");
+  const expected = Object.fromEntries([
+    ["/blog", "Blog | Automatizza"],
+    ["/blog/historico", "Archivo histórico | Automatizza"],
+    ...publicArticles().map(a => [articlePath(a), a.meta_title]),
+  ]);
+  assert.deepEqual(blogPageTitles, expected);
+});

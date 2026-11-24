@@ -168,3 +168,9 @@ La batería SEO verifica compilaciones locales de producción y preview sin envi
 - [Preview protegida: trece históricos](https://automatizza-web-git-codex-blog-editorial-mjlopezzs-projects.vercel.app/revision-blog/historico).
 
 Son enlaces de la última preview de la rama, incluida la corrección de dependencias. Requieren entrar con la cuenta de Vercel que tenga acceso al proyecto. Si aparece «You Need Access», usa «Switch Account» para entrar con esa cuenta; no desactives la protección. Cada push posterior a la rama genera su nueva preview.
+
+## Medición de visitas
+
+El blog usa la instalación existente de Google Analytics a través de GTM, solo después de aceptar las cookies analíticas. La lista de artículos medibles se genera automáticamente con cada compilación, usando únicamente los publicados. No es necesario tocar Analytics al publicar el próximo artículo. No se mide la revisión privada ni los borradores.
+
+Las visitas se consultan en GA4 en páginas y pantallas, filtrando las rutas `/blog`. Ver `docs/analytics.md` para los límites y pruebas. No se han añadido eventos de conversión ni seguimiento de scroll o clics.

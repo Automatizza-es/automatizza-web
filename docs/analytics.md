@@ -173,3 +173,15 @@ Measurement Protocol ni bypass de consentimiento por servidor.
 - [Medición de aplicaciones SPA](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications).
 - [Eventos de medición mejorada](https://support.google.com/analytics/answer/9216061?hl=es).
 - [Precedencia de parámetros](https://developers.google.com/tag-platform/gtagjs/reference).
+
+## Blog — ampliación del 24 de noviembre de 2026
+
+Las visitas de `/blog`, `/blog/historico` y los artículos publicados usan el evento existente `automatizza_page_view`. GTM ya lo transforma en `page_view`; no se añaden etiquetas, propiedades GA4 ni eventos de conversión.
+
+Antes de cada `npm run build` y `npm run dev`, `scripts/generate-blog-analytics.mjs` genera `src/lib/analytics/generated/blog-pages.ts` a partir del mismo filtro `publicArticles()` usado por el sitemap. Solo se incorporan URL y títulos SEO públicos. No editar el archivo generado a mano. Al publicar o retirar un artículo y desplegar, la lista se actualiza automáticamente. Para regenerarla manualmente: `npm run analytics:blog`.
+
+Se mantiene el consentimiento explícito, el bloqueo fuera del dominio de producción, la deduplicación de navegación SPA, la retirada de consentimiento y la eliminación de parámetros privados. `/revision-blog`, los borradores, las URL inexistentes y las previews de Vercel quedan fuera. Cambiar el filtro de categoría no genera otra visita de página porque no cambia el pathname.
+
+Verificación: 39 pruebas de analítica, incluidas entrada directa a CRM, navegación blog → contacto, una sola carga GTM, rechazo, retirada, expiración, previews y rutas desconocidas. Las pruebas no envían eventos reales a Google. Esta evidencia valida la emisión de eventos de la aplicación; no acredita su recepción en GA4, que debe comprobarse con una sesión consentida en Tiempo real/DebugView cuando esté disponible el acceso.
+
+Para consultar resultados en GA4: informe de páginas y pantallas, filtrando las rutas que empiezan por `/blog`. El título SEO diferencia cada artículo; no se añaden identificadores de visitantes ni datos de los formularios.

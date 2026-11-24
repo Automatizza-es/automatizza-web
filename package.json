@@ -18,7 +18,13 @@
     "test:runtime": "node --test tests/node-runtime.test.mjs",
     "blog": "node scripts/check-node-runtime.mjs && node scripts/blog.mjs",
     "test:blog": "node --test tests/blog.test.mjs",
-    "test:blog:publication": "node scripts/check-node-runtime.mjs && node scripts/test-blog-publication.mjs"
+    "test:blog:publication": "node scripts/check-node-runtime.mjs && node scripts/test-blog-publication.mjs",
+    "analytics:blog": "node scripts/check-node-runtime.mjs && node scripts/generate-blog-analytics.mjs",
+    "prebuild": "npm run analytics:blog",
+    "predev": "npm run analytics:blog",
+    "pretest:analytics": "npm run analytics:blog",
+    "pretest:seo": "npm run analytics:blog",
+    "pretest:blog:publication": "npm run analytics:blog"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

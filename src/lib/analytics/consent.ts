@@ -1,3 +1,4 @@
+import { blogPageTitles } from "./generated/blog-pages";
 import { indexableRoutes, legalRoutes, equivalents, type Locale } from "../i18n/routes";
 import { translator } from "../i18n/translate";
 export const consentKey = "automatizza-cookie-consent";
@@ -20,6 +21,7 @@ export function readConsent(raw: string | null, now = Date.now()): { analytics: 
 }
 
 const pageTitles: Record<string, string> = {
+  ...blogPageTitles,
   "/": "Automatizza", "/proyectos": "Proyectos | Automatizza",
   "/contacto": "Contacto | Automatizza",
   "/calculadora": "Calculadora de automatización | Automatizza",
