@@ -14,3 +14,7 @@ Validación:
 - Coste 0: aviso y foco en el campo, sin nuevo cálculo.
 - Revisión visual de escritorio y móvil a 400 px: campos, tarjetas y acceso Calculadora en menú móvil.
 - No se envían formularios ni correos en las pruebas.
+
+## Ajuste tras revisión
+
+La usuaria aprueba el diseño y solicita mantener el 30 % inicial anterior. Se modifica únicamente ese valor y su comprobación. Con los demás valores iniciales, los resultados son 3.300 € / 990 € / 11.880 € / 475 h.

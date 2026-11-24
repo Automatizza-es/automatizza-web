@@ -11,10 +11,11 @@ import styles from "./ReferenceCalculator.module.css";
 
 type Result = { monthlyCost: number; monthlyValue: number; annualValue: number; annualHours: number; share: number };
 
-// Layout, control order, defaults and submit behaviour mirror the supplied v3 HTML.
+// Layout, control order and submit behaviour mirror the supplied v3 HTML.
+// The initial automation assumption remains 30%, as requested after review.
 export function ReferenceCalculator() {
   const { t, locale } = useI18n();
-  const [values, setValues] = useState({ employees: 3, hours: 2, days: 22, automation: 80 });
+  const [values, setValues] = useState({ employees: 3, hours: 2, days: 22, automation: 30 });
   const [rate, setRate] = useState("25");
   const [error, setError] = useState(false);
   const [result, setResult] = useState<Result | null>(null);

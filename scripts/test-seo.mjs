@@ -203,7 +203,7 @@ async function verify(environment) {
       const newHeading = ["¿Cuánto te cuesta no automatizar?", "What does not automating cost you?", "Combien vous coûte l'absence d'automatisation ?", "Quanto custa não automatizar?"][i];
       assert.ok(main.includes(newHeading), "new localized H1 with unchanged SEO title");
       assert.equal(count(main, /<input\b/g), 5, "only the original five calculator inputs");
-      for (const [id, min, max, step, initial] of [["employees","1","50","1","3"],["hours","0.5","8","0.5","2"],["days","15","23","1","22"],["automation","0","100","5","80"],["rate","0.01","500","0.01","25"]]) {
+      for (const [id, min, max, step, initial] of [["employees","1","50","1","3"],["hours","0.5","8","0.5","2"],["days","15","23","1","22"],["automation","0","100","5","30"],["rate","0.01","500","0.01","25"]]) {
         const input = main.match(new RegExp(`<input\\b[^>]*id="${id}"[^>]*>`))?.[0] ?? "";
         for (const [attribute, expected] of [["min",min],["max",max],["step",step],["value",initial]]) assert.ok(input.includes(`${attribute}="${expected}"`), `${id} preserves ${attribute}=${expected}`);
       }
