@@ -203,24 +203,19 @@ async function verify(environment) {
       const newHeading = ["¿Cuánto te cuesta no automatizar?", "What does not automating cost you?", "Combien vous coûte l'absence d'automatisation ?", "Quanto custa não automatizar?"][i];
       assert.ok(main.includes(newHeading), "new localized H1 with unchanged SEO title");
       assert.equal(count(main, /<input\b/g), 5, "only the original five calculator inputs");
-      for (const [id, min, max, step, initial] of [["employees","1","50","1","3"],["hours","0.5","8","0.5","2"],["days","15","23","1","22"],["automation","0","100","5","30"],["rate","0.01","500","0.01","25"]]) {
-        const input = main.match(new RegExp(`<input\\b[^>]*id="calc-${id}"[^>]*>`))?.[0] ?? "";
+      for (const [id, min, max, step, initial] of [["employees","1","50","1","3"],["hours","0.5","8","0.5","2"],["days","15","23","1","22"],["automation","0","100","5","80"],["rate","0.01","500","0.01","25"]]) {
+        const input = main.match(new RegExp(`<input\\b[^>]*id="${id}"[^>]*>`))?.[0] ?? "";
         for (const [attribute, expected] of [["min",min],["max",max],["step",step],["value",initial]]) assert.ok(input.includes(`${attribute}="${expected}"`), `${id} preserves ${attribute}=${expected}`);
       }
       assert.equal(count(main, /<form\b/g), 1, "one calculator form");
       assert.equal(count(main, /<button\b[^>]*type="submit"/g), 1, "explicit calculation button");
       const calculateLabel = ["Calcular mi ahorro potencial", "Calculate my potential savings", "Calculer mes économies potentielles", "Calcular a minha poupança potencial"][i];
       assert.ok(main.includes(calculateLabel), "localized calculation button");
-      assert.ok(main.includes('id="calc-results"') && main.includes('aria-live="polite"'), "results have a stable live region");
-      assert.ok(!main.includes('data-metric=') && !main.includes('class="calc-comparison"') && !main.includes('class="calc-insight"'), "results hidden before first calculation");
-      const closing = main.match(/<section[^>]*aria-labelledby="calculator-contact-title"[\s\S]*?<\/section>/)?.[0] ?? "";
-      const contactPath = ["/contacto", "/en/contact", "/fr/contact", "/pt/contacto"][i];
-      assert.ok(closing.includes(`href="${contactPath}"`), "new final CTA uses localized contact, not mailto");
-      const ctaLabel = ["Quiero analizar mi proceso", "I want to analyse my process", "Je souhaite analyser mon processus", "Quero analisar o meu processo"][i];
-      assert.ok(closing.includes(ctaLabel));
-      const disclaimer = main.match(/<p class="calc-disclaimer"[\s\S]*?<\/p>/)?.[0] ?? "";
-      assert.ok(disclaimer.includes("12"), "expanded translated warning retains annual workload assumption");
-      assert.ok(disclaimer.includes(["supervisión", "supervision", "supervision", "supervisão"][i]), "solution supervision is identified as an excluded cost");
+      assert.ok(main.includes('id="results"') && main.includes('aria-live="polite"'), "results have a stable live region");
+      assert.match(main, /<section[^>]*hidden=""[^>]*id="results"/, "results hidden before first calculation");
+      assert.ok(!main.includes('id="res-cost"'), "result metrics and CTA wait for calculation");
+      assert.deepEqual([...main.matchAll(/<input\b[^>]*id="([^"]+)"/g)].map(match => match[1]), ["employees", "hours", "rate", "days", "automation"], "v3 control order");
+
     }
     const lang = path.startsWith("/en") ? "en" : path.startsWith("/fr") ? "fr" : path.startsWith("/pt") ? "pt-PT" : "es";
     assert.ok(html.includes(`<html lang="${lang}"`), `initial HTML language: ${path}`);

@@ -1,3 +1,4 @@
+import calculatorV3Messages from "./calculatorV3Messages";
 import calculatorPhaseOneMessages from "./calculatorPhaseOneMessages";
 import linkMessages from "./linkMessages";
 import aiMessages from "./aiMessages";
@@ -6,6 +7,8 @@ import serviceMessages from "./serviceMessages";
 const messages: Record<string, readonly [string, string, string]> = {
   ...linkMessages,
   ...calculatorPhaseOneMessages,
+  ...calculatorV3Messages,
+  "Calculadora": ["Calculator", "Calculateur", "Calculadora"],
   "Potencial anual estimado": ["Estimated annual potential", "Potentiel annuel estimé", "Potencial anual estimado"],
   "Introduce los datos y pulsa «Calcular mi ahorro potencial» para ver la estimación.": [
     "Enter your details and select ‘Calculate my potential savings’ to see the estimate.",

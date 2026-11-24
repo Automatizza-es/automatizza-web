@@ -16,6 +16,7 @@ const navigation = [
   { label: "Servicios", href: "#servicios" },
   { label: "Proyectos", href: "#proyectos" },
   { label: "Sobre Automatizza", href: "#sobre-automatizza" },
+  { label: "Calculadora", href: "/calculadora" },
   { label: "Blog", href: "/blog" },
   { label: "Contacto", href: "/contacto" },
 ];

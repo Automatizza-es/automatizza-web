@@ -60,3 +60,9 @@
 @media (prefers-reduced-motion: reduce) {
   .overHero { transition: none; }
 }
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .redesigned :global(.header-inner) { gap: .85rem; }
+  .redesigned :global(.desktop-navigation) { gap: .85rem; white-space: nowrap; }
+  .actions { gap: .75rem; }
+}
