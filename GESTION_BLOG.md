@@ -161,3 +161,10 @@ npm run build
 ```
 
 La batería SEO verifica compilaciones locales de producción y preview sin enviar formularios ni desplegar. Ver `docs/blog/VERIFICACION.md` para la evidencia de esta entrega.
+
+## Enlaces de esta entrega
+
+- [Preview protegida: seis artículos actuales](https://automatizza-26m7j5a4d-mjlopezzs-projects.vercel.app/revision-blog).
+- [Preview protegida: trece históricos](https://automatizza-26m7j5a4d-mjlopezzs-projects.vercel.app/revision-blog/historico).
+
+Son enlaces de una versión concreta. Requieren entrar con la cuenta de Vercel que tenga acceso al proyecto. Si aparece «You Need Access», usa «Switch Account» para entrar con esa cuenta; no desactives la protección. Cada push posterior a la rama genera su nueva preview.

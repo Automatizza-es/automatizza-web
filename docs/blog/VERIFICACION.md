@@ -41,3 +41,19 @@ Las rutas públicas `/blog` no muestran borradores ni siquiera en preview. Para 
 - La batería SEO necesitó incorporar los nuevos índices al inventario de enlaces y una página de privacidad ya existente (`/privacidad-automatizza-conta`) que antes no estaba auditada. No se modificó esa página.
 - GTM, Google Analytics y consentimiento no se han editado. La lista de rutas que admite la analítica actual se conserva: no se han añadido eventos ni ampliado la medición a nuevas rutas editoriales.
 - Las capturas y pruebas locales no equivalen a una auditoría de todos los navegadores. La frecuencia quincenal está documentada, no programada.
+
+## Resultado remoto en Vercel
+
+Preview completada (`READY`) del commit `a3e93c8`, sin destino de producción:
+
+- [Revisión de artículos actuales](https://automatizza-26m7j5a4d-mjlopezzs-projects.vercel.app/revision-blog).
+- [Revisión del archivo histórico](https://automatizza-26m7j5a4d-mjlopezzs-projects.vercel.app/revision-blog/historico).
+- [Vista del blog público, sin artículos publicados](https://automatizza-26m7j5a4d-mjlopezzs-projects.vercel.app/blog).
+
+Verificación HTTP autenticada del despliegue: los 19 artículos de revisión y sus imágenes responden 200; las 19 URL públicas y sus imágenes inéditas responden 404; ambos índices públicos están limpios; sitemap de preview vacío; canonical, H1 y noindex correctos, sin `BlogPosting` en borradores. Las peticiones anónimas a los índices de revisión y a una portada quedan interceptadas por Vercel Authentication (302 a su inicio de sesión).
+
+Se utilizó `vercel curl`, el mecanismo oficial de comprobación de deployments protegidos. El acceso técnico temporal generado por la CLI se revocó al terminar las pruebas; no se han compartido secretos ni creado excepciones públicas.
+
+El navegador abierto estaba conectado a una cuenta sin pertenencia al equipo del proyecto y mostró «You Need Access». Para abrir la preview se debe usar una cuenta Vercel autorizada del proyecto. No se solicitó acceso en nombre de esa cuenta ni se cambiaron miembros/permisos.
+
+La producción permanece en el commit `d2eb442` de `main`. No se hizo merge ni se promovió ninguna preview.
