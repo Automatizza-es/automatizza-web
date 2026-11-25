@@ -14,15 +14,15 @@ nota_historica: Artículo publicado originalmente en mjlopezz.com el 30 de marzo
 notas_archivo:
 - Seesmic dejó de funcionar tras su compra por HootSuite en 2012.
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 4f3e9535423c47733265.webp
 imageAlt: Evolución de las conexiones digitales globales
-migrationApproved: false
+migrationApproved: true
 meta_title: Tendencias digitales y sociales según Loic Le Meur | Archivo histórico de Automatizza
 meta_description: Loic Le Meur, fundador de Seesmic y de LeWeb.net, cerró el acto de lanzamiento de la oficina de Linkedin en Francia con una presentación sobre las principales tendencias digitales y sociales (similar…
 summary: Loic Le Meur, fundador de Seesmic y de LeWeb.net, cerró el acto de lanzamiento de la oficina de Linkedin en Francia con una presentación sobre las principales tendencias digitales y sociales (similar…

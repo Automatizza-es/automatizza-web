@@ -13,15 +13,15 @@ destacado_en_mjlopezz: false
 nota_historica: Artículo publicado originalmente en mjlopezz.com el 23 de febrero de 2011. Se conserva como parte del archivo histórico. Algunos datos y enlaces pueden haber quedado desactualizados.
 notas_archivo: []
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 7f48f64075c620a56e29.webp
 imageAlt: Personas mayores utilizando dispositivos digitales
-migrationApproved: false
+migrationApproved: true
 meta_title: Los abuelos también compran por internet | Archivo histórico de Automatizza
 meta_description: Cuatro de cada diez internautas mayores de 60 años ha comprado alguna vez online.
 summary: Cuatro de cada diez internautas mayores de 60 años ha comprado alguna vez online.

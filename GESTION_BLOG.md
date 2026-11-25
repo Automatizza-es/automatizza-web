@@ -2,7 +2,7 @@
 
 ## Estado de esta entrega
 
-Lanzamiento autorizado el 24 de noviembre de 2026 desde la rama `codex/blog-editorial`: «CRM conectado» es el único artículo marcado como publicado, con fecha 2026-11-24. Los otros cinco actuales y los trece históricos siguen en borrador. No hay tareas programadas, base de datos ni CMS.
+Lanzamiento autorizado el 24 de noviembre de 2026 desde la rama `codex/blog-editorial`: «CRM conectado» es el único artículo marcado como publicado, con fecha 2026-11-24. Los otros cinco actuales siguen en borrador. El 25 de noviembre de 2026 se autoriza publicar los trece históricos conservando fechas originales, autoría y notas; las redirecciones de mjlopezz.com se gestionarán por separado con Claude Code. No hay tareas programadas, base de datos ni CMS.
 
 El proyecto sigue usando Next.js, su cabecera, pie, tipografías, consentimiento y mecanismos SEO. El blog está en español; no se inventan traducciones ni equivalentes hreflang. Las URL definitivas no llevan barra final, igual que el resto de la web; la variante con barra se normaliza automáticamente.
 
@@ -135,7 +135,7 @@ Se conserva la primera fecha para no falsearla si se restaura. Tras el despliegu
 
 Conservar `fecha_original`, autoría, notas, atribuciones y contenido. `publishedAt` documentará la migración a Automatizza, mientras la fecha visible y `datePublished` de `BlogPosting` seguirán siendo la fecha original. `migrationApproved` empieza en `false` y bloquea la publicación accidental.
 
-Únicamente tras aprobar la migración de un artículo y coordinar su 301 desde mjlopezz.com:
+Para futuras migraciones, aprobar la publicación y coordinar su 301 desde mjlopezz.com. Los 13 históricos de esta entrega se publican por autorización expresa del 25-11-2026 antes de activar las 301, que realizará Claude Code por separado:
 
 ```sh
 npm run blog -- publish manual-de-google-analytics --approved --migration-approved

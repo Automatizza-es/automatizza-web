@@ -13,15 +13,15 @@ destacado_en_mjlopezz: false
 nota_historica: Artículo publicado originalmente en mjlopezz.com el 17 de mayo de 2011. Se conserva como parte del archivo histórico. Algunos datos y enlaces pueden haber quedado desactualizados.
 notas_archivo: []
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: ae0d351cb45705e76f45.webp
 imageAlt: Red global de usuarios y conexiones
-migrationApproved: false
+migrationApproved: true
 meta_title: 10 cosas que están cambiando en internet - Internet es Tuyo | Archivo histórico de Automatizza
 meta_description: Jesús Encinar, Presidente de Idealista.com , abrió la segunda edición de Internet es Tuyo haciendo una excelente revisión de las 10 cosas que según él están cambiando en Internet con respecto a los…
 summary: Jesús Encinar, Presidente de Idealista.com , abrió la segunda edición de Internet es Tuyo haciendo una excelente revisión de las 10 cosas que según él están cambiando en Internet con respecto a los…

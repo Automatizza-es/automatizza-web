@@ -13,15 +13,15 @@ destacado_en_mjlopezz: false
 nota_historica: Artículo publicado originalmente en mjlopezz.com el 14 de noviembre de 2011. Se conserva como parte del archivo histórico. Algunos datos y enlaces pueden haber quedado desactualizados.
 notas_archivo: []
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 19fe3e7b5c2659ddb5cb.webp
 imageAlt: Red de usuarios y comunidades digitales
-migrationApproved: false
+migrationApproved: true
 meta_title: Qué viene después de la Web 2.0 | Archivo histórico de Automatizza
 meta_description: Muchos nos hemos preguntado alguna vez qué vendrá después de la Web 2.0. ¿La web semántica, alguna especie de realidad virtual, la web social, la web móvil…?
 summary: Muchos nos hemos preguntado alguna vez qué vendrá después de la Web 2.0. ¿La web semántica, alguna especie de realidad virtual, la web social, la web móvil…?

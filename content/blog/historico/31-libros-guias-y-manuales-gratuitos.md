@@ -14,15 +14,15 @@ nota_historica: Artículo publicado originalmente en mjlopezz.com el 5 de enero 
 notas_archivo:
 - Google+ cerró para usuarios particulares en 2019.
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 29fcca99ddc34a07d5b6.webp
 imageAlt: Colección de libros electrónicos y manuales
-migrationApproved: false
+migrationApproved: true
 meta_title: 34 libros, guías y manuales gratuitos sobre marketing y social media | Archivo histórico de Automatizza
 meta_description: Una pequeña selección de libros, guías y manuales gratuitos (y recomendables) sobre marketing, con especial hincapié en las publicaciones que nos pueden ayudar a optimizar nuestra presencia en los…
 summary: Una pequeña selección de libros, guías y manuales gratuitos (y recomendables) sobre marketing, con especial hincapié en las publicaciones que nos pueden ayudar a optimizar nuestra presencia en los…

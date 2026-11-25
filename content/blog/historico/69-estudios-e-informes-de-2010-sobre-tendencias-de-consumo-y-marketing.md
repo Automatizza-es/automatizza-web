@@ -14,15 +14,15 @@ nota_historica: Artículo publicado originalmente en mjlopezz.com el 31 de enero
 notas_archivo:
 - La mayoría de los recursos enlazados en esta recopilación ya no están disponibles; se conservan sus títulos como referencia histórica.
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 6e20adf30f94d9c5fde5.webp
 imageAlt: Informes y datos presentados en un panel
-migrationApproved: false
+migrationApproved: true
 meta_title: 69 estudios e informes de 2010 sobre tendencias de consumo y marketing | Archivo histórico de Automatizza
 meta_description: 'Una selección de informes sobre tendencias de uso de internet, internet móvil, medios sociales y otras tecnologías que se han ido publicando a lo largo de 2010:'
 summary: 'Una selección de informes sobre tendencias de uso de internet, internet móvil, medios sociales y otras tecnologías que se han ido publicando a lo largo de 2010:'

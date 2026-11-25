@@ -13,15 +13,15 @@ destacado_en_mjlopezz: false
 nota_historica: Artículo publicado originalmente en mjlopezz.com el 21 de junio de 2011. Se conserva como parte del archivo histórico. Algunos datos y enlaces pueden haber quedado desactualizados.
 notas_archivo: []
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: d8eb593f3fcc1ee9d624.webp
 imageAlt: Red de recursos compartidos
-migrationApproved: false
+migrationApproved: true
 meta_title: 'La malla: el futuro de los negocios es compartir | Archivo histórico de Automatizza'
 meta_description: La "malla" es esencialmente un cambio fundamental en nuestra relación con las cosas, porque en determinadas ocasiones y para determinado tipo de productos y servicios, acceder a ellos será más…
 summary: La "malla" es esencialmente un cambio fundamental en nuestra relación con las cosas, porque en determinadas ocasiones y para determinado tipo de productos y servicios, acceder a ellos será más…

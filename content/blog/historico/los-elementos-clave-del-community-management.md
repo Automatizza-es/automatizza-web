@@ -13,15 +13,15 @@ destacado_en_mjlopezz: true
 nota_historica: Artículo publicado originalmente en mjlopezz.com el 28 de febrero de 2012. Se conserva como parte del archivo histórico. Algunos datos y enlaces pueden haber quedado desactualizados.
 notas_archivo: []
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: a380c6be6229696ca693.webp
 imageAlt: Comunidad de personas intercambiando mensajes
-migrationApproved: false
+migrationApproved: true
 meta_title: Los elementos clave del Community Management | Archivo histórico de Automatizza
 meta_description: Es curioso ver los ingredientes que se han ido incorporando para la buena gestión de las comunidades online desde que Chris Heuer, fundador del Social Media Club, introdujo las 4 Cs del Social…
 summary: Es curioso ver los ingredientes que se han ido incorporando para la buena gestión de las comunidades online desde que Chris Heuer, fundador del Social Media Club, introdujo las 4 Cs del Social…

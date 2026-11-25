@@ -2,5 +2,18 @@
 export const blogPageTitles: Record<string, string> = {
   "/blog": "Blog | Automatizza",
   "/blog/historico": "Archivo histórico | Automatizza",
+  "/blog/historico/manual-de-google-analytics": "Manual de Google Analytics | Archivo histórico de Automatizza",
+  "/blog/historico/los-elementos-clave-del-community-management": "Los elementos clave del Community Management | Archivo histórico de Automatizza",
+  "/blog/historico/31-libros-guias-y-manuales-gratuitos": "34 libros, guías y manuales gratuitos sobre marketing y social media | Archivo histórico de Automatizza",
+  "/blog/historico/de-la-web-2-0-a-la-inteligencia-colectiva-aumentada-tim-oreilly-en-ficod": "De la Web 2.0 a la inteligencia colectiva aumentada - Tim O'Reilly en FICOD | Archivo histórico de Automatizza",
+  "/blog/historico/que-viene-despues-de-la-web-2-0": "Qué viene después de la Web 2.0 | Archivo histórico de Automatizza",
+  "/blog/historico/como-cambiara-el-futuro-del-marketing-shytech-outernet-gamification": "Cómo cambiará el marketing en un futuro: Shytech, Outernet, Gamification | Archivo histórico de Automatizza",
+  "/blog/historico/la-malla-el-futuro-de-los-negocios-es-compartir": "La malla: el futuro de los negocios es compartir | Archivo histórico de Automatizza",
+  "/blog/historico/10-cosas-que-estan-cambiando-en-internet-internet-es-tuyo": "10 cosas que están cambiando en internet - Internet es Tuyo | Archivo histórico de Automatizza",
+  "/blog/historico/tendencias-digitales-y-sociales-segun-loic-lemeur": "Tendencias digitales y sociales según Loic Le Meur | Archivo histórico de Automatizza",
+  "/blog/historico/los-abuelos-tambien-compran-por-internet": "Los abuelos también compran por internet | Archivo histórico de Automatizza",
+  "/blog/historico/el-futuro-del-mobile-tagging-codigos-qr-de-barras-y-microsoft-tags": "El Futuro del Mobile Tagging: Códigos QR, de barras y Microsoft Tags | Archivo histórico de Automatizza",
+  "/blog/historico/44-libros-guias-y-manuales-gratuitos-sobre-marketing-y-medios-sociales": "44 libros, guías y manuales gratuitos sobre marketing y medios sociales | Archivo histórico de Automatizza",
+  "/blog/historico/69-estudios-e-informes-de-2010-sobre-tendencias-de-consumo-y-marketing": "69 estudios e informes de 2010 sobre tendencias de consumo y marketing | Archivo histórico de Automatizza",
   "/blog/crm-conectado-seguimiento-comercial": "CRM conectado y seguimiento comercial | Automatizza"
 };

@@ -13,15 +13,15 @@ destacado_en_mjlopezz: true
 nota_historica: Artículo publicado originalmente en mjlopezz.com el 28 de noviembre de 2011. Se conserva como parte del archivo histórico. Algunos datos y enlaces pueden haber quedado desactualizados.
 notas_archivo: []
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 936bb7f25961d6d323c9.webp
 imageAlt: Red de nodos de inteligencia colectiva
-migrationApproved: false
+migrationApproved: true
 meta_title: De la Web 2.0 a la inteligencia colectiva aumentada - Tim O'Reilly en FICOD | Archivo histórico de Automatizza
 meta_description: Tim O’Reilly, fundador de O’Reilly Media y uno de los creadores del término Web 2.0, inauguró la V edición del FICOD hablándonos del apasionante mundo del futuro de Internet y de los medios.
 summary: Tim O’Reilly, fundador de O’Reilly Media y uno de los creadores del término Web 2.0, inauguró la V edición del FICOD hablándonos del apasionante mundo del futuro de Internet y de los medios.

@@ -25,7 +25,7 @@ test("rechaza metadatos contradictorios, fechas inválidas y migraciones no apro
   assert.throws(() => validateArticle({...a, scheduledAt: "2026-02-31"}));
   assert.throws(() => validateArticle({...a, image: "../../.env"}));
   const historic = articles.find(a => a.kind === "historico");
-  const published = {...historic, published: true, draft: false, publishedAt: "2026-11-24"};
+  const published = {...historic, migrationApproved: false, published: true, draft: false, publishedAt: "2026-11-24"};
   assert.equal(isPublished(published), false);
   assert.throws(() => validateArticle(published));
   assert.doesNotThrow(() => validateArticle({...published, migrationApproved: true}));

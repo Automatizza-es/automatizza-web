@@ -14,15 +14,15 @@ nota_historica: Artículo publicado originalmente en mjlopezz.com el 12 de marzo
 notas_archivo:
 - La versión de Google Analytics de entonces (Universal Analytics) fue sustituida por Google Analytics 4 en 2023.
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 6e20adf30f94d9c5fde5.webp
 imageAlt: Panel de indicadores de analítica digital
-migrationApproved: false
+migrationApproved: true
 meta_title: Manual de Google Analytics | Archivo histórico de Automatizza
 meta_description: 'Un completo manual sobre Google Analytics, herramienta imprescindible para obtener las métricas fundamentales de un sitio web: "Si no se puede medir, no se puede mejorar".'
 summary: 'Un completo manual sobre Google Analytics, herramienta imprescindible para obtener las métricas fundamentales de un sitio web: "Si no se puede medir, no se puede mejorar".'

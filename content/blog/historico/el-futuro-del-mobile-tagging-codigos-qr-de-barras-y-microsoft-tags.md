@@ -14,15 +14,15 @@ nota_historica: Artículo publicado originalmente en mjlopezz.com el 4 de febrer
 notas_archivo:
 - El servicio Microsoft Tag fue retirado en 2015.
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 9366ec01a331a8252c01.webp
 imageAlt: Teléfono móvil y capas de información digital
-migrationApproved: false
+migrationApproved: true
 meta_title: 'El Futuro del Mobile Tagging: Códigos QR, de barras y Microsoft Tags | Archivo histórico de Automatizza'
 meta_description: Los mobile tags son imágenes bidimensionales que contienen información para ser decodificada mediante una aplicación móvil, es decir, que permiten vincular los soportes físicos con la web, el mundo…
 summary: Los mobile tags son imágenes bidimensionales que contienen información para ser decodificada mediante una aplicación móvil, es decir, que permiten vincular los soportes físicos con la web, el mundo…

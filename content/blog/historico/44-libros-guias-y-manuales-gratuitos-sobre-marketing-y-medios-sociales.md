@@ -14,15 +14,15 @@ nota_historica: Artículo publicado originalmente en mjlopezz.com el 31 de enero
 notas_archivo:
 - La mayoría de los recursos enlazados en esta recopilación ya no están disponibles; se conservan sus títulos como referencia histórica.
 estado: archivo histórico; texto saneado y sin reescribir; pendiente de decisión de migración
-draft: true
-published: false
-publishedAt: null
+draft: false
+published: true
+publishedAt: 2026-11-25
 scheduledAt: null
 updatedAt: null
 kind: historico
 image: 29fcca99ddc34a07d5b6.webp
 imageAlt: Libros y guías digitales
-migrationApproved: false
+migrationApproved: true
 meta_title: 44 libros, guías y manuales gratuitos sobre marketing y medios sociales | Archivo histórico de Automatizza
 meta_description: Una pequeña selección de libros, guías y manuales gratuitos (y recomendables) sobre marketing, con especial hincapié en las publicaciones que nos pueden ayudar a optimizar nuestra presencia en los…
 summary: Una pequeña selección de libros, guías y manuales gratuitos (y recomendables) sobre marketing, con especial hincapié en las publicaciones que nos pueden ayudar a optimizar nuestra presencia en los…
